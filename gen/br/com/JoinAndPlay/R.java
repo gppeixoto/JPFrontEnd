@@ -24,13 +24,25 @@ public final class R {
     public static final class drawable {
         public static final int campo_cinza=0x7f020000;
         public static final int campo_esporte=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int item_list=0x7f020003;
-        public static final int linha=0x7f020004;
-        public static final int linha2=0x7f020005;
-        public static final int select_button=0x7f020006;
-        public static final int seletc_tab=0x7f020007;
-        public static final int seletc_wid_tab=0x7f020008;
+        public static final int ib_cal=0x7f020002;
+        public static final int ib_local=0x7f020003;
+        public static final int ib_perfil=0x7f020004;
+        public static final int ib_pesq=0x7f020005;
+        public static final int ic_cal=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int ic_local=0x7f020008;
+        public static final int ic_perfil=0x7f020009;
+        public static final int ic_pesq=0x7f02000a;
+        public static final int item_list=0x7f02000b;
+        public static final int linha=0x7f02000c;
+        public static final int linha2=0x7f02000d;
+        public static final int select_button=0x7f02000e;
+        public static final int seletc_tab=0x7f02000f;
+        public static final int seletc_wid_tab=0x7f020010;
+        public static final int tab_cal=0x7f020011;
+        public static final int tab_lista=0x7f020012;
+        public static final int tab_perfil=0x7f020013;
+        public static final int tab_pesq=0x7f020014;
     }
     public static final class id {
         public static final int H_scroll=0x7f080000;

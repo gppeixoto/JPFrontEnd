@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Vector;
 
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.R.drawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -25,29 +27,35 @@ public class TabFragment extends Fragment implements
 	private long id;
 	private HorizontalScrollView scroll;
 	private View tamanho;
-	
-	public TabSpec addFragments(Fragment a,String s){
-		fragments.add(a);
 
-		final TabSpec tabSpec =mTabHost.newTabSpec("Tab"+id).setIndicator(s);
-		tabSpec.setContent(new TabFactory(getActivity(),R.drawable.seletc_tab));
-		mTabHost.post(new Runnable() {
-			
+	class postTabpec implements Runnable{
+		TabSpec tabSpec;
+		int id;
+		
+		postTabpec(TabSpec tabSpec,int id){
+			this.id=id;
+			this.tabSpec=tabSpec;
+		}
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				mTabHost.addTab(tabSpec);
+				mTabHost.addTab(			tabSpec);
 				tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
-				mTabHost.getTabWidget().getChildAt(mTabHost.getTabWidget().getChildCount()-1).setBackgroundResource(R.drawable.seletc_tab);//(getResources().getDrawable(R.drawable.seletc_tab));;
+				mTabHost.getTabWidget().getChildAt(mTabHost.getTabWidget().getChildCount()-1).setBackgroundResource(id);//(getResources().getDrawable(R.drawable.seletc_tab));;
 
-			}
-		});
-		//
+			}	
 		
-	/*	
-		*/
-	return null;
-	//	return null;
+	
+}
+
+	public TabSpec addFragments(Fragment a, int id){
+		fragments.add(a);
+		final TabSpec tabSpec =mTabHost.newTabSpec("Tab"+id).setIndicator("").setContent(new TabFactory(getActivity()));
+		
+		mTabHost.post(new postTabpec(tabSpec, id));
+		
+
+	return tabSpec;
 	}	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

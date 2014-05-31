@@ -13,15 +13,15 @@ import android.widget.TabHost.TabSpec;
 
 
 public class MainActivity extends FragmentActivity {
-	//pegou porra
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
 		TabFragment tabs =(TabFragment) getSupportFragmentManager().findFragmentById(R.id.tabmain);
-		tabs.addFragments(ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState), "jogue");
-		tabs.addFragments(PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),"encontre");
-		tabs.addFragments(AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),"agenda");
-		tabs.addFragments(PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),"perfil");
+		tabs.addFragments(ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_lista);
+		tabs.addFragments(PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
+		tabs.addFragments(AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_cal);
+		tabs.addFragments(PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
 		
 	
 	}
