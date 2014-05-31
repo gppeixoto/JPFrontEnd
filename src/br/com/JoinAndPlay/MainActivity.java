@@ -13,7 +13,7 @@ import android.widget.TabHost.TabSpec;
 
 
 public class MainActivity extends FragmentActivity {
-	
+	//pegou porra
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
