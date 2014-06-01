@@ -37,7 +37,7 @@ public class AdapterListView extends BaseAdapter
 				e.printStackTrace();
 			}    
 		   amigos[j]=BitmapFactory.decodeStream(ims);
-		   amigos[j].setDensity(context.getResources().getDisplayMetrics().densityDpi/5);
+		   amigos[j].setDensity(100);
 		   
 		}
 	}
