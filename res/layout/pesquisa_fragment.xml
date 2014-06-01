@@ -1,56 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-    android:orientation="horizontal"
-             android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Local"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <LinearLayout
+        android:id="@+id/white_field_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/campo_branco"
+        android:orientation="vertical"
+        android:padding="5dp" >
 
-        <EditText
-            android:id="@+id/editText2"
+        <LinearLayout
+            android:id="@+id/escolha_esporte_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp" >
+
+            <EditText
+                android:id="@+id/escolha_esporte"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:ems="10"
+                android:height="2dp"
+                android:hint="@string/hint_pesq1"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/pesquisar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/red"
+                android:padding="5dp"
+                android:src="@drawable/ib_pesq" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/esportes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/campo_branco"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonStyleSmall"
+            <ImageButton
+                android:id="@+id/esporte1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:background="@color/white"
+                android:src="@drawable/tab_lista" />
+
+            <ImageButton
+                android:id="@+id/esporte2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:background="@color/white"
+                android:src="@drawable/tab_lista" />
+
+            <ImageButton
+                android:id="@+id/esporte3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:background="@color/white"
+                android:src="@drawable/tab_lista" />
+
+            <ImageButton
+                android:id="@+id/esporte4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:background="@color/white"
+                android:src="@drawable/tab_lista" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/local"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="B" />
+            android:layout_marginLeft="2dp"
+            android:text="@string/local"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/red" />
 
+        <LinearLayout
+            android:id="@+id/escolha_endereco_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/escolha_endereco"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:ems="10"
+                android:height="2dp"
+                android:hint="@string/hint_pesq2"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/my_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/white"
+                android:src="@drawable/ic_local" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
