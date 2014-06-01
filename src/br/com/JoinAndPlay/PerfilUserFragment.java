@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 public class PerfilUserFragment extends Fragment {
 	 RelativeLayout ret;
+	 //ola
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
