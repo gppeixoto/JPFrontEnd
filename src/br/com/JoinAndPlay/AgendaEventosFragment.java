@@ -19,7 +19,7 @@ public class AgendaEventosFragment extends Fragment {
 			return null;
 		}
 		
-		return (RelativeLayout) inflater.inflate(R.layout.tab_layout_a, container, false);
+		return  inflater.inflate(R.layout.agenda_fragment, container, false);
 	}
 
 }

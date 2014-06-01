@@ -13,9 +13,10 @@
         android:divider="@color/trasparent"
         android:dividerHeight="10dp"
         android:drawSelectorOnTop="false"
+        android:fastScrollAlwaysVisible="false"
         android:fastScrollEnabled="true"
-        android:footerDividersEnabled="true"
-        android:headerDividersEnabled="true" >
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" >
 
     </br.com.JoinAndPlay.ListEvent.MyListView>
 
