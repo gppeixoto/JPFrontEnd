@@ -82,7 +82,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			// TODO Auto-generated method stub
 			lista.add(new ItemEvent(null));
 			adapter.notifyDataSetChanged();
-			Button_criar.setTextColor(getResources().getColor(R.color.white));
 
 			
 		}
@@ -102,9 +101,15 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
         
         }
 		@Override
-		public boolean onTouch(View arg0, MotionEvent arg1) {
+		public boolean onTouch(View arg0,MotionEvent  arg1) {
 			// TODO Auto-generated method stub
 			Button_criar.setTextColor(getResources().getColor(R.color.red));
+
+			if(arg1.getAction()==			MotionEvent.ACTION_UP){
+				
+				Button_criar.setTextColor(getResources().getColor(R.color.white));
+
+			}
 			return false;
 		}
 
