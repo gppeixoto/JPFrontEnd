@@ -14,6 +14,7 @@ import android.widget.TabHost.TabSpec;
 
 public class MainActivity extends FragmentActivity {
 
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
@@ -22,8 +23,6 @@ public class MainActivity extends FragmentActivity {
 		tabs.addFragments(PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
 		tabs.addFragments(AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_cal);
 		tabs.addFragments(PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
-		
-	
 	}
 	
 	
