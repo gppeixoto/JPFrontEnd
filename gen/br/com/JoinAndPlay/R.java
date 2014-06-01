@@ -46,14 +46,15 @@ public final class R {
     }
     public static final class id {
         public static final int H_scroll=0x7f080000;
-        public static final int RelativeLayout1=0x7f08001e;
+        public static final int LinearLayout=0x7f08001e;
+        public static final int RelativeLayout1=0x7f080020;
         public static final int TextView03=0x7f08000a;
         public static final int button1=0x7f080007;
         public static final int button2=0x7f08001d;
-        public static final int content=0x7f080023;
+        public static final int content=0x7f080024;
         public static final int editText1=0x7f08001a;
         public static final int editText2=0x7f08001c;
-        public static final int handle=0x7f080024;
+        public static final int handle=0x7f080025;
         public static final int imageView1=0x7f080005;
         public static final int imageView2=0x7f08000f;
         public static final int imageView3=0x7f080010;
@@ -72,17 +73,17 @@ public final class R {
         public static final int linearLayout1=0x7f080014;
         public static final int linearLayout2=0x7f08000c;
         public static final int listView1=0x7f080006;
-        public static final int menu_settings=0x7f080029;
+        public static final int menu_settings=0x7f08002a;
         public static final int pager=0x7f080001;
-        public static final int progressBar1=0x7f080025;
-        public static final int progressBar2=0x7f080026;
+        public static final int progressBar1=0x7f080026;
+        public static final int progressBar2=0x7f080027;
         public static final int rightPane=0x7f080004;
-        public static final int scrollView1=0x7f080028;
-        public static final int seekBar1=0x7f080027;
-        public static final int slidingDrawer1=0x7f080022;
+        public static final int scrollView1=0x7f080029;
+        public static final int seekBar1=0x7f080028;
+        public static final int slidingDrawer1=0x7f080023;
         public static final int sliding_pane_layout=0x7f080002;
-        public static final int spinner1=0x7f080020;
-        public static final int tableRow1=0x7f080021;
+        public static final int spinner1=0x7f080021;
+        public static final int tableRow1=0x7f080022;
         public static final int tabmain=0x7f080019;
         public static final int textView1=0x7f08001b;
         public static final int toggleButton1=0x7f08001f;
