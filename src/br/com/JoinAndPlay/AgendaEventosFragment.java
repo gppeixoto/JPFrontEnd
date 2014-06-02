@@ -1,7 +1,11 @@
 package br.com.JoinAndPlay;
 
 
+import java.util.ArrayList;
+
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.ListEvent.AdapterListView;
+import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,50 +14,92 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-public class AgendaEventosFragment extends Fragment implements OnClickListener{
+public class AgendaEventosFragment extends ListEventosFragment{
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			 View v=inflater.inflate(R.layout.fragment_list_event, container,false);
-		    Button button = (Button) v.findViewById(R.id.button1);
-		    button.setOnClickListener(this);
-			return v;
-		}
 
-		@Override
-		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			Log.v("ola","mundo");
-			fm=getFragmentManager();
-			getFragmentManager().beginTransaction().add(R.id.lista,new AgendaEventosFragmentAntigos(fm)).addToBackStack(this.getClass().getName()).commit();	Log.v("ola","mundo");
+	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
 
-		}
-		FragmentManager fm;
-}
-class AgendaEventosFragmentAntigos extends Fragment implements OnClickListener{
-	FragmentManager fm;
-public AgendaEventosFragmentAntigos(FragmentManager fm) {
-	// TODO Auto-generated constructor stub
-	this.fm=fm;
-}
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		adapter = new AdapterListView(getActivity(),lista);
+
+
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		 View v=inflater.inflate(R.layout.agenda_fragment, container,false);
-	    Button button = (Button) v.findViewById(R.id.handle);
-	    button.setOnClickListener(this);
+		
+		View v=super.onCreateView(inflater, container, savedInstanceState);
+		Button_criar.setText("ja fui");
+		return v;
+	}
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		Log.v("ola","mundo");
+final OnClickListener isthis=this;
+((Button)arg0).setText("vou jogar");
+
+		getFragmentManager().beginTransaction().add(R.id.lista,new AgendaEventosFragmentAntigos()).addToBackStack(this.getClass().getName()).commit();	Log.v("ola","mundo");
+((Button)arg0).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getFragmentManager().popBackStack();
+				((Button)v).setText("ja fui");
+
+				((Button)v).setOnClickListener(isthis);
+			}
+		});
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+
+		ItemEvent item = lista.get(arg2);
+		lista.remove(arg2);
+		AgendaEventosFragmentAntigos.lista.add(	item);
+
+		adapter.notifyDataSetChanged();
+
+	}
+}
+class AgendaEventosFragmentAntigos extends AgendaEventosFragment {
+	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
+
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		adapter = new AdapterListView(getActivity(),lista);
+
+
+	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		ViewGroup v=(ViewGroup)super.onCreateView(inflater, container, savedInstanceState);
+		v.removeView(Button_criar);
 		return v;
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		Log.v("ola","mundo");
 		getFragmentManager().popBackStack();
+	}
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
 	}
 }

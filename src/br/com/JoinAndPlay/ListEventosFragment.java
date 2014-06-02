@@ -32,19 +32,18 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SlidingDrawer;
+import android.widget.Toast;
 
 
 public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener {
-	private static ArrayList<ItemEvent> lista=null;
-	private AdapterListView adapter ;
-	private Button Button_criar;
+	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
+	protected AdapterListView adapter ;
+	protected Button Button_criar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 
-		lista= new ArrayList<ItemEvent>();
-		lista.add(new ItemEvent(null));
 		adapter = new AdapterListView(getActivity(),lista);
 		
 
@@ -130,7 +129,12 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		
+	ItemEvent item = lista.get(arg2);
+lista.remove(arg2);
+AgendaEventosFragment.lista.add(	item);
+
+adapter.notifyDataSetChanged();
+
 	}
 
 
