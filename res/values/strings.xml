@@ -4,5 +4,7 @@
     <string name="app_name">Join &amp; Play</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="id_do_face" >697691156964434</string>
+    
 
 </resources>

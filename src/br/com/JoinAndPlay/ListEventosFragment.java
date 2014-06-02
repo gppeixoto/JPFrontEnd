@@ -3,6 +3,13 @@ package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.Request.GraphUserCallback;
+import com.facebook.model.GraphUser;
+
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.content.res.ColorStateList;
@@ -27,11 +34,9 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
 
@@ -45,7 +50,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		super.onCreate(savedInstanceState);
 
 		adapter = new AdapterListView(getActivity(),lista);
-		
+
 
 	}
 	@Override
@@ -81,15 +86,40 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setOnTouchListener(this);
 		listV.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
+
+
 		return tela;
 	}
-
+	boolean loguin = true;
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		lista.add(new ItemEvent(null));
 		adapter.notifyDataSetChanged();
+		if(loguin){
+			Session.openActiveSession(getActivity(), true, new Session.StatusCallback() {
 
+				// callback when session changes state
+				@Override
+				public void call(Session session, SessionState state, Exception exception) {
+					if (session.isOpened()) {
+
+						// make request to the /me API
+						Request.newMeRequest(session, new GraphUserCallback() {
+
+							// callback after Graph API response with user object
+
+							@Override
+							public void onCompleted(GraphUser user, Response response) {
+								// TODO Auto-generated method stub
+							}
+						}
+								).executeAsync();
+					}
+				}
+			});
+			loguin=false;
+		}
 
 	}
 
@@ -129,11 +159,11 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-	ItemEvent item = lista.get(arg2);
-lista.remove(arg2);
-AgendaEventosFragment.lista.add(	item);
+		ItemEvent item = lista.get(arg2);
+		lista.remove(arg2);
+		AgendaEventosFragment.lista.add(	item);
 
-adapter.notifyDataSetChanged();
+		adapter.notifyDataSetChanged();
 
 	}
 
