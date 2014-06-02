@@ -68,7 +68,6 @@ a.rotateX(-rotation);
     //canvas.rotate(rotation, pivotX, pivotY);
     canvas.scale(scale, scale, pivotX, pivotY);
     super.drawChild(canvas, child, drawingTime);
-    
     canvas.restore();
     return false;
 

@@ -24,6 +24,8 @@ import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
@@ -32,7 +34,7 @@ import android.widget.ListView;
 import android.widget.SlidingDrawer;
 
 
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener {
+public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener {
 	private static ArrayList<ItemEvent> lista=null;
 	private AdapterListView adapter ;
 	private Button Button_criar;
@@ -44,6 +46,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		lista= new ArrayList<ItemEvent>();
 		lista.add(new ItemEvent(null));
 		adapter = new AdapterListView(getActivity(),lista);
+		
 
 	}
 	@Override
@@ -68,6 +71,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		 */
 		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
 		ListView listV=(ListView) tela.findViewById(R.id.listView1);
+		listV.setOnItemClickListener(this);
 		//redundancia para versoes antigas do android
 		listV.setDivider(getResources().getDrawable(R.drawable.linha));
 
@@ -122,6 +126,11 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 
 		return false;
+	}
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
