@@ -58,15 +58,8 @@ public final class R {
     }
     public static final class id {
         public static final int H_scroll=0x7f080000;
-        public static final int ImageView01=0x7f08002a;
-        public static final int ImageView02=0x7f08002b;
-        public static final int ImageView03=0x7f08002c;
-        public static final int ImageView04=0x7f08002d;
-        public static final int ImageView05=0x7f08002e;
         public static final int LinearLayout=0x7f08001e;
-        public static final int RelativeLayout1=0x7f080020;
-        public static final int TextView01=0x7f080029;
-        public static final int TextView02=0x7f08002f;
+        public static final int RelativeLayout1=0x7f080021;
         public static final int TextView03=0x7f08000a;
         public static final int button1=0x7f080007;
         public static final int button2=0x7f08001d;
@@ -76,7 +69,6 @@ public final class R {
         public static final int imageView2=0x7f08000f;
         public static final int imageView3=0x7f080010;
         public static final int imageView4=0x7f080011;
-        public static final int imageView5=0x7f080028;
         public static final int item_list_cidade=0x7f080013;
         public static final int item_list_dia=0x7f080016;
         public static final int item_list_distancia=0x7f080015;
@@ -91,19 +83,32 @@ public final class R {
         public static final int linearLayout1=0x7f080014;
         public static final int linearLayout2=0x7f08000c;
         public static final int listView1=0x7f080006;
-        public static final int menu_settings=0x7f080030;
+        public static final int menu_settings=0x7f080035;
         public static final int pager=0x7f080001;
         public static final int perfil_avatar_usuario=0x7f080022;
         public static final int perfil_button_eventos_anteriores=0x7f080026;
         public static final int perfil_button_quantidade_amigos=0x7f080025;
+        public static final int perfil_estrela_1=0x7f080029;
+        public static final int perfil_estrela_11=0x7f08002f;
+        public static final int perfil_estrela_12=0x7f080030;
+        public static final int perfil_estrela_13=0x7f080031;
+        public static final int perfil_estrela_14=0x7f080032;
+        public static final int perfil_estrela_15=0x7f080033;
+        public static final int perfil_estrela_2=0x7f08002a;
+        public static final int perfil_estrela_3=0x7f08002b;
         public static final int perfil_idade_usuario=0x7f080024;
+        public static final int perfil_imagem_barraesporte=0x7f080027;
+        public static final int perfil_imagem_barraesporte2=0x7f08002d;
         public static final int perfil_nome_usuario=0x7f080023;
+        public static final int perfil_nota_esporte=0x7f080028;
+        public static final int perfil_nota_esporte2=0x7f08002e;
+        public static final int perfil_numero_partidas=0x7f08002c;
+        public static final int perfil_numero_partidas2=0x7f080034;
         public static final int rightPane=0x7f080004;
-        public static final int scrollView1=0x7f080021;
+        public static final int scrollView1=0x7f080020;
         public static final int sliding_pane_layout=0x7f080002;
         public static final int tabmain=0x7f080019;
         public static final int textView1=0x7f08001b;
-        public static final int textView3=0x7f080027;
         public static final int toggleButton1=0x7f08001f;
         public static final int view1=0x7f08000e;
     }
@@ -115,8 +120,8 @@ public final class R {
         public static final int main_active=0x7f030004;
         public static final int pesquisa_fragment=0x7f030005;
         public static final int tab_layout_a=0x7f030006;
-        public static final int tab_layout_b=0x7f030007;
-        public static final int tab_layout_c=0x7f030008;
+        public static final int tab_layout_c=0x7f030007;
+        public static final int tab_layout_perfil=0x7f030008;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;
@@ -130,7 +135,7 @@ public final class R {
         public static final int perfil_mensagens=0x7f050005;
         public static final int perfil_nao=0x7f05000b;
         public static final int perfil_nome_usuario=0x7f050004;
-        public static final int perfil_nota_ususario=0x7f050009;
+        public static final int perfil_nota_usuario=0x7f050009;
         public static final int perfil_notificacoes=0x7f05000d;
         public static final int perfil_quantidade_amigos=0x7f050006;
         public static final int perfil_quantidade_partidas=0x7f05000a;

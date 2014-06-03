@@ -133,7 +133,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/perfil_imagem_barraesporte"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -158,14 +158,14 @@
                     android:layout_height="wrap_content" >
 
                     <TextView
-                        android:id="@+id/textView1"
+                        android:id="@+id/perfil_nota_esporte"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/perfil_nota_ususario"
+                        android:text="@string/perfil_nota_usuario"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/perfil_estrela_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -173,7 +173,7 @@
                         android:src="@drawable/star1" />
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/perfil_estrela_2"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="4dp"
@@ -181,7 +181,7 @@
                         android:src="@drawable/star1" />
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/perfil_estrela_3"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="4dp"
@@ -191,7 +191,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/perfil_numero_partidas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/perfil_quantidade_partidas"
@@ -206,7 +206,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/perfil_imagem_barraesporte2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/futebol2" />
@@ -231,14 +231,14 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/TextView01"
+                        android:id="@+id/perfil_nota_esporte2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/perfil_nota_ususario"
+                        android:text="@string/perfil_nota_usuario"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <ImageView
-                        android:id="@+id/ImageView01"
+                        android:id="@+id/perfil_estrela_11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -246,7 +246,7 @@
                         android:src="@drawable/star1" />
 
                     <ImageView
-                        android:id="@+id/ImageView02"
+                        android:id="@+id/perfil_estrela_12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -254,7 +254,7 @@
                         android:src="@drawable/star1" />
 
                     <ImageView
-                        android:id="@+id/ImageView03"
+                        android:id="@+id/perfil_estrela_13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -262,7 +262,7 @@
                         android:src="@drawable/star1" />
 
                     <ImageView
-                        android:id="@+id/ImageView04"
+                        android:id="@+id/perfil_estrela_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -270,7 +270,7 @@
                         android:src="@drawable/star1" />
 
                     <ImageView
-                        android:id="@+id/ImageView05"
+                        android:id="@+id/perfil_estrela_15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -279,7 +279,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/TextView02"
+                    android:id="@+id/perfil_numero_partidas2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/perfil_quantidade_partidas"

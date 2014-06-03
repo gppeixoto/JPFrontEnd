@@ -10,7 +10,7 @@
     <string name="perfil_quantidade_amigos">10 amigos</string>
     <string name="perfil_eventos_anteriores">Eventos anteriores</string>
     <string name="perfil_idade_usario">20 anos</string>
-    <string name="perfil_nota_ususario">Nota: </string>
+    <string name="perfil_nota_usuario">Nota: </string>
     <string name="perfil_quantidade_partidas">Partidas: 20</string>
     <string name="perfil_nao">Não</string>
 	<string name="perfil_sim">Sim</string>

@@ -19,7 +19,7 @@ public class PerfilUserFragment extends Fragment {
 		if (container == null) {
 			return null;
 		}
-		 ret=(RelativeLayout) inflater.inflate(R.layout.tab_layout_b, container, false);
+		 ret=(RelativeLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);
 		
 		// Inflamos o layout tab_layout_a
 		return ret;
