@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/white_field_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/campo_branco"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:id="@+id/escolha_esporte_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingBottom="0dp"
+                android:paddingTop="0dp" >
+
+                <EditText
+                    android:id="@+id/escolha_esporte"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/my_bottom_line"
+                    android:ems="10"
+                    android:height="2dp"
+                    android:hint="@string/hint_pesq1"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/pesquisar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@color/red"
+                    android:padding="5dp"
+                    android:src="@drawable/my_image_button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/esportes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/campo_branco"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/esporte1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:background="@color/white"
+                    android:src="@drawable/try1" />
+
+                <ImageButton
+                    android:id="@+id/esporte2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/white"
+                    android:src="@drawable/try2" />
+
+                <ImageButton
+                    android:id="@+id/esporte3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/white"
+                    android:src="@drawable/try3" />
+
+                <ImageButton
+                    android:id="@+id/esporte4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/white"
+                    android:src="@drawable/try4" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="@string/local"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red" />
+
+            <LinearLayout
+                android:id="@+id/escolha_endereco_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp" >
+
+                <EditText
+                    android:id="@+id/escolha_endereco"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/my_bottom_line"
+                    android:ems="10"
+                    android:height="2dp"
+                    android:hint="@string/hint_pesq2"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/my_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_local" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/datalayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/data_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="0.75"
+                    android:text="@string/data"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/red" />
+
+                <TextView
+                    android:id="@+id/inicio_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:gravity="left"
+                    android:text="@string/inicio"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/red" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/datafields_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <EditText
+                    android:id="@+id/escolha_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/my_bottom_line"
+                    android:drawableBottom="@color/cinza"
+                    android:ems="10"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:height="2dp"
+                    android:hint="@string/data_default"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/escolha_mes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/my_bottom_line"
+                    android:ems="10"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:height="2dp"
+                    android:hint="@string/mes_default"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <EditText
+                    android:id="@+id/escolha_hora"
+                    android:layout_width="71dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="0dp"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/my_bottom_line"
+                    android:ems="10"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:height="2dp"
+                    android:hint="@string/time_default"
+                    android:inputType="time"
+                    android:singleLine="true"
+                    android:textSize="15sp" >
+
+                    <requestFocus />
+                </EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/eventos_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/evento_pago_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/pago"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/red" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButton1"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/my_toggle_btn"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textOff="@string/nao"
+                    android:textOn="@string/sim" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
