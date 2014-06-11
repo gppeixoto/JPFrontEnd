@@ -15,8 +15,7 @@
     <string name="pago">Eventos pagos</string>
     <string name="sim">Sim</string>
     <string name = "nao">Não</string>
-    <string name="menu_settings">Settings</string>
-	<string name="teste">Teste</string>
+    <string name="teste">Teste</string>
     <string name="perfil_nome_usuario">Artur Alves</string>
     <string name="perfil_mensagens">Mensagens</string>
     <string name="perfil_quantidade_amigos">10 amigos</string>
