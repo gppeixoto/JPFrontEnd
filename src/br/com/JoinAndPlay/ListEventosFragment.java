@@ -4,6 +4,13 @@ package br.com.JoinAndPlay;
 import java.util.ArrayList;
 
 import br.com.JoinAndPlay.Event.EventFragment;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.Request.GraphUserCallback;
+import com.facebook.model.GraphUser;
+
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.content.res.ColorStateList;
@@ -28,87 +35,123 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.SlidingDrawer;
+import android.widget.Toast;
 
- 
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener, OnItemClickListener {
-   private static ArrayList<ItemEvent> lista=null;
-   private AdapterListView adapter ;
-   private 	    Button Button_criar;
-   		
-   	     @Override
-   		public void onCreate(Bundle savedInstanceState){
-   	    	 super.onCreate(savedInstanceState);
 
-   	  	    lista= new ArrayList<ItemEvent>();
-   	  		lista.add(new ItemEvent(null));
-			 adapter = new AdapterListView(getActivity(),lista);
+public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener {
+	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
+	protected AdapterListView adapter ;
+	protected Button Button_criar;
 
-   		}
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
 
-			if (container == null) {
-				return null;
-			}
+		adapter = new AdapterListView(getActivity(),lista);
+
+
+	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		if (container == null) {
+			return null;
+		}
 		//	setListAdapter(adapter);
-			/*
+		/*
 			Button bt = new Button(getActivity());
 			bt.setText("+");
 			LinearLayout linear = new LinearLayout(getActivity() );
 			linear.setOrientation(LinearLayout.VERTICAL);
-		
+
             View v = super.onCreateView(inflater, container, savedInstanceState);
            v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1));
 			v.setBackgroundResource(R.drawable.linha);
            bt.setBackgroundResource(R.drawable.seletc_tab);
            linear.addView(v);
-*/
-			View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
-		    ListView listV=(ListView) tela.findViewById(R.id.listView1);
-		    Button_criar = (Button) tela.findViewById(R.id.button1);
-		    Button_criar.setText("Criar Evento");
-		    Button_criar.setOnClickListener(this);
-			Button_criar.setTextColor(0xffffffff);
-			Button_criar.setOnTouchListener(this);
-			listV.setAdapter(adapter);
-			listV.setOnItemClickListener(this);
-			return tela;
-		}
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			lista.add(new ItemEvent(null));
-			adapter.notifyDataSetChanged();
-			Button_criar.setTextColor(Color.WHITE);
-			
-		}
-		
+		 */
+		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
+		ListView listV=(ListView) tela.findViewById(R.id.listView1);
+		listV.setOnItemClickListener(this);
+		//redundancia para versoes antigas do android
+		listV.setDivider(getResources().getDrawable(R.drawable.linha));
 
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-//this.getListView().setDividerHeight(0);
-        }
-        
-        @Override
-        public    void  onSaveInstanceState( Bundle outState){
-        	
-        	
-        	
-        
-        }
-		@Override
-		public boolean onTouch(View arg0, MotionEvent arg1) {
-			// TODO Auto-generated method stub
-			Button_criar.setTextColor(Color.RED);
-			return false;
+		Button_criar = (Button) tela.findViewById(R.id.button1);
+		Button_criar.setText("Criar Evento");
+		Button_criar.setOnClickListener(this);
+		Button_criar.setTextColor(0xffffffff);
+		Button_criar.setOnTouchListener(this);
+		listV.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
+
+
+		return tela;
+	}
+	boolean loguin = true;
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		lista.add(new ItemEvent(null));
+		adapter.notifyDataSetChanged();
+		if(loguin){
+			Session.openActiveSession(getActivity(), true, new Session.StatusCallback() {
+
+				// callback when session changes state
+				@Override
+				public void call(Session session, SessionState state, Exception exception) {
+					if (session.isOpened()) {
+
+						// make request to the /me API
+						Request.newMeRequest(session, new GraphUserCallback() {
+
+							// callback after Graph API response with user object
+
+							@Override
+							public void onCompleted(GraphUser user, Response response) {
+								// TODO Auto-generated method stub
+							}
+						}
+								).executeAsync();
+					}
+				}
+			});
+			loguin=false;
+		}
+
+	}
+
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	@Override
+	public    void  onSaveInstanceState( Bundle outState){
+
+
+
+
+	}
+	@Override
+	public boolean onTouch(View arg0,MotionEvent  arg1) {
+		// TODO Auto-generated method stub
+		switch (arg1.getAction()&255) {
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_MOVE:
+			Button_criar.setTextColor(getResources().getColor(R.color.red));
+
+
+			break;
+
+		default:
+			Button_criar.setTextColor(getResources().getColor(R.color.white));
+
+			break;
 		}
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -120,5 +163,19 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			
 		}
 
-  
+
+		return false;
+	}
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+		ItemEvent item = lista.get(arg2);
+		lista.remove(arg2);
+		AgendaEventosFragment.lista.add(	item);
+
+		adapter.notifyDataSetChanged();
+
+	}
+
+
 }

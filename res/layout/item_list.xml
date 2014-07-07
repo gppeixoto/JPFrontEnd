@@ -17,8 +17,11 @@
         <ImageView
             android:id="@+id/item_list_icone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="TODO"
+            android:scaleType="centerCrop"
+            android:src="@drawable/futebol2" />
 
         <TextView
             android:id="@+id/item_list_esporte"
@@ -91,24 +94,28 @@
                     android:id="@+id/imageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="2dp"
                     android:src="@drawable/ic_launcher" />
 
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="2dp"
                     android:src="@drawable/ic_launcher" />
 
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="2dp"
                     android:src="@drawable/ic_launcher" />
 
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="2dp"
                     android:src="@drawable/ic_launcher" />
 
             </LinearLayout>

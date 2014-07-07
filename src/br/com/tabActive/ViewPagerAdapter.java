@@ -17,6 +17,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 		mFragments = fragments;
 	}
 	
+	
 	@Override
 	public Fragment getItem(int i) {		
 		return mFragments.get(i);

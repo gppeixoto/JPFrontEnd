@@ -261,7 +261,6 @@
                     android:textOn="@string/sim" />
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>

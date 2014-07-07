@@ -11,7 +11,7 @@ public class PesquisarEventosFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		 View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
-		
+
 		return v;
 	}
 }
