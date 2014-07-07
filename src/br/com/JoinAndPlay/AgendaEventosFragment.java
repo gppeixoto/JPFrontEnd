@@ -30,6 +30,7 @@ public class AgendaEventosFragment extends ListEventosFragment{
 
 		adapter = new AdapterListView(getActivity(),lista);
 
+		
 
 	}
 	@Override
@@ -40,6 +41,7 @@ public class AgendaEventosFragment extends ListEventosFragment{
 		Button_criar.setText("ja fui");
 		return v;
 	}
+	
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub

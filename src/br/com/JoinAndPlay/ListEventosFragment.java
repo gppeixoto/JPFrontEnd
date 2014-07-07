@@ -3,7 +3,6 @@ package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
 
-import br.com.JoinAndPlay.Event.EventFragment;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -152,15 +151,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			Button_criar.setTextColor(getResources().getColor(R.color.white));
 
 			break;
-		}
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			// TODO Auto-generated method stub
-			
-			getFragmentManager().beginTransaction().remove(this).add(R.id.tela,(new EventFragment())).addToBackStack(null).commit();
-
-			
 		}
 
 
