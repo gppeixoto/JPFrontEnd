@@ -3,6 +3,7 @@ package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
 
+import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.content.res.ColorStateList;
@@ -24,6 +25,8 @@ import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
@@ -32,7 +35,7 @@ import android.widget.ListView;
 import android.widget.SlidingDrawer;
 
  
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener {
+public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener, OnItemClickListener {
    private static ArrayList<ItemEvent> lista=null;
    private AdapterListView adapter ;
    private 	    Button Button_criar;
@@ -74,6 +77,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			Button_criar.setTextColor(0xffffffff);
 			Button_criar.setOnTouchListener(this);
 			listV.setAdapter(adapter);
+			listV.setOnItemClickListener(this);
 			return tela;
 		}
 		
@@ -83,7 +87,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			lista.add(new ItemEvent(null));
 			adapter.notifyDataSetChanged();
 			Button_criar.setTextColor(Color.WHITE);
-
 			
 		}
 		
@@ -106,6 +109,15 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			// TODO Auto-generated method stub
 			Button_criar.setTextColor(Color.RED);
 			return false;
+		}
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// TODO Auto-generated method stub
+			
+			getFragmentManager().beginTransaction().remove(this).add(R.id.tela,(new EventFragment())).addToBackStack(null).commit();
+
+			
 		}
 
   
