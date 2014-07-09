@@ -15,18 +15,21 @@ import com.facebook.model.GraphUser;
 
 
 public class MainActivity extends FragmentActivity {
-
+	protected TabFragment tabs;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
-		TabFragment tabs =(TabFragment) getSupportFragmentManager().findFragmentById(R.id.tabmain);
+		tabs =(TabFragment) getSupportFragmentManager().findFragmentById(R.id.tabmain);
 		tabs.addFragments(ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_lista);
 		tabs.addFragments(PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
 		tabs.addFragments(AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_cal);
 		tabs.addFragments(PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
 	}
-	
+	void mudarAba(int i){
+		//apartir de uma aba chamar ((MainActivity)getActivity()).mudarAba(n)
+		tabs.onPageSelected(i);
+	}
 	void mudarFragment(Fragment fm){
 		 getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.tabmain)).add(R.id.tela, fm).commit();
 		
