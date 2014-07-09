@@ -1,5 +1,6 @@
 package br.com.JoinAndPlay;
 
+import br.com.tabActive.TabFragment;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import com.facebook.SessionState;
 import com.facebook.Request.GraphUserCallback;
 import com.facebook.model.GraphUser;
 
+import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.content.res.ColorStateList;
@@ -91,6 +93,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		return tela;
 	}
 	boolean loguin = true;
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -118,11 +121,26 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 					}
 				}
 			});
+			Session session = Session.getActiveSession();
+			
+			
+		    if (session != null && session.isOpened()) {
+		    	Log.v("token","dasasd");
+		    	Log.v("token", session.getAccessToken());
+		        Toast.makeText(getActivity(), session.getAccessToken(), Toast.LENGTH_LONG).show();
+
+		    }
+			
 			loguin=false;
 		}
 
 	}
-
+@Override
+public void onResume(){
+	super.onResume();
+	
+	
+}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -159,6 +177,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
+		((MainActivity)getActivity()).mudarAba(0,new EventFragment() );
 		ItemEvent item = lista.get(arg2);
 		lista.remove(arg2);
 		AgendaEventosFragment.lista.add(	item);
