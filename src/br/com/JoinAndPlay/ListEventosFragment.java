@@ -3,17 +3,20 @@ package br.com.JoinAndPlay;
 import br.com.tabActive.TabFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Request.GraphUserCallback;
+import com.facebook.android.Facebook;
 import com.facebook.model.GraphUser;
 
 import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import android.Manifest.permission;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -99,12 +102,19 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		// TODO Auto-generated method stub
 		lista.add(new ItemEvent(null));
 		adapter.notifyDataSetChanged();
+List<String> PERMISSIONS = new ArrayList<String>();
+PERMISSIONS.add("user_friends");
+PERMISSIONS.add("public_profile");
+
+PERMISSIONS.add("offline_access");
+
 		if(loguin){
-			Session.openActiveSession(getActivity(), true, new Session.StatusCallback() {
+			Session session=			Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
 
 				// callback when session changes state
 				@Override
 				public void call(Session session, SessionState state, Exception exception) {
+					
 					if (session.isOpened()) {
 
 						// make request to the /me API
@@ -115,18 +125,22 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 							@Override
 							public void onCompleted(GraphUser user, Response response) {
 								// TODO Auto-generated method stub
+								
 							}
 						}
 								).executeAsync();
 					}
 				}
 			});
-			Session session = Session.getActiveSession();
-			
-			
+	    	Log.v("token","dasasd"+		session);
+
+	    	Log.v("token","dasasd"+		session.getPermissions());
+	    	Log.v("token","dasasd"+session.isOpened());
+
+	    	Log.v("token"," "+ session.getAccessToken());
+	    	Log.v("token","dasasd");
+
 		    if (session != null && session.isOpened()) {
-		    	Log.v("token","dasasd");
-		    	Log.v("token", session.getAccessToken());
 		        Toast.makeText(getActivity(), session.getAccessToken(), Toast.LENGTH_LONG).show();
 
 		    }

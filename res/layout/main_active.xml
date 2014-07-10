@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <fragment
-        class="br.com.tabActive.TabFragment"
-        android:id="@+id/tabmain"
-        android:layout_width="fill_parent"
-    android:layout_height="fill_parent" />
 
 
 </FrameLayout>
