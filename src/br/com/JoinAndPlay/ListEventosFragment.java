@@ -84,7 +84,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		//redundancia para versoes antigas do android
 		listV.setDivider(getResources().getDrawable(R.drawable.linha));
 
-		Button_criar = (Button) tela.findViewById(R.id.button1);
+		Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setText("Criar Evento");
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);

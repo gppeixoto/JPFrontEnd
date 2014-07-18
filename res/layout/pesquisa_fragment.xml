@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:background="@color/white"
-                    android:src="@drawable/ic_local" />
+                    android:src="@drawable/gps" />
             </LinearLayout>
 
             <LinearLayout
@@ -260,6 +260,32 @@
                     android:textOff="@string/nao"
                     android:textOn="@string/sim" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bigButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/subBigButtonLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="top"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/bigButton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/select_button"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/white" />
+                    
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
