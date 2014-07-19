@@ -2,15 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="10dp"
-    android:padding="4dp"
     android:background="@drawable/item_list"
-    android:orientation="vertical"
->
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="38dp"
         android:background="@drawable/campo_esporte" >
 
         <ImageView
@@ -18,17 +15,28 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:adjustViewBounds="true"
-            android:contentDescription="TODO"
-            android:scaleType="centerCrop"
-            android:src="@drawable/futebol2" />
+            android:src="@drawable/futebol" />
 
         <TextView
             android:id="@+id/item_list_esporte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/item_list_icone"
+            android:layout_alignBaseline="@+id/item_list_qtd_amg"
+            android:layout_alignBottom="@+id/item_list_qtd_amg"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="43dp"
             android:text="Futebol"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/item_list_qtd_amg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/TextView03"
+            android:text="10"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white" />
 
@@ -37,21 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/item_list_esporte"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
             android:gravity="right"
-            android:text="amigos e conhecidos"
+            android:text="amigos confirmados"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/item_list_qtd_amg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/TextView03"
-            android:layout_alignLeft="@+id/TextView03"
-            android:layout_marginLeft="52dp"
-            android:text="10"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white" />
 
     </RelativeLayout>
@@ -59,16 +57,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:layout_weight="4"
-        android:orientation="horizontal" 
-        android:layout_margin="0dp" >
+        android:orientation="horizontal" >
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="3"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
@@ -76,69 +77,89 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pelada na praia"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginBottom="6dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+
 
             <TextView
                 android:id="@+id/item_list_local"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Av boa viagem"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/item_list_cidade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Boa Vieagem - Recife"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13 participantes"
+                android:textSize="14sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_marginTop="6dp"
+                >
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_launcher" />
-            </LinearLayout>
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
 
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/avatar_35x335" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="0dp"
+            android:layout_width="73dp"
             android:layout_height="fill_parent"
             android:background="@drawable/campo_cinza"
             android:gravity="center"
-            android:layout_weight="1"
-            
             android:orientation="vertical" >
 
             <TextView
@@ -146,8 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="60m"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -155,25 +175,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hoje"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/item_list_hora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12:00"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/item_list_preco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R$ 3,00"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
+            <ImageView
+                android:id="@+id/como_chegar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/como_chegar" />
         </LinearLayout>
     </LinearLayout>
 

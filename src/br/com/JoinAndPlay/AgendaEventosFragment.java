@@ -31,7 +31,6 @@ public class AgendaEventosFragment extends ListEventosFragment{
 		adapter = new AdapterListView(getActivity(),lista);
 
 		
-
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +38,7 @@ public class AgendaEventosFragment extends ListEventosFragment{
 		
 		View v=super.onCreateView(inflater, container, savedInstanceState);
 		Button_criar.setText("ja fui");
+		
 		return v;
 	}
 	

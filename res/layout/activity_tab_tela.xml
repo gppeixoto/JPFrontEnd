@@ -22,7 +22,7 @@
 
             <TabWidget
                 android:id="@android:id/tabs"
-                android:layout_width="wrap_content"
+                android:layout_width="51dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/seletc_wid_tab"
                 android:dividerPadding="0dp"

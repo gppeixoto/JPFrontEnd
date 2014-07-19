@@ -29,11 +29,13 @@ public class MyListView extends ListView {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
-	Boolean db=false;
+	Boolean db=true;
 @Override 
 protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-	if(db)
+	if(db){
+		
 	return super.drawChild(canvas, child, drawingTime);
+	}
 	  // get top left coordinates
     int left = child.getLeft();
     int top = child.getTop();

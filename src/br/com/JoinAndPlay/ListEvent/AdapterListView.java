@@ -37,7 +37,7 @@ public class AdapterListView extends BaseAdapter
 				e.printStackTrace();
 			}    
 		   amigos[j]=BitmapFactory.decodeStream(ims);
-		   amigos[j].setDensity(100);
+
 		   
 		}
 	}
@@ -69,7 +69,7 @@ public class AdapterListView extends BaseAdapter
 		item.ad=this;
 
 
-		view.post(item);// gerador.nextInt());
+	view.post(item);// gerador.nextInt());
 		//atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
 		//ao item e definimos as informações.
 		// ((TextView) view.findViewById(R.id.)).setText(item.getTexto());
