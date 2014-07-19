@@ -30,7 +30,7 @@ public void gerar(){
 	public ItemEvent(Parcel in){
 		gerador = new Random();
 
-		amigos=new int[4];
+		amigos=new int[7];
 		gerar();
 		
 	}
@@ -80,7 +80,11 @@ break;}
 		((ImageView) view.findViewById(R.id.imageView2)).setImageBitmap(ad.amigos[amigos[1]]);
 		((ImageView) view.findViewById(R.id.imageView3)).setImageBitmap(ad.amigos[amigos[2]]);
 		((ImageView) view.findViewById(R.id.imageView4)).setImageBitmap(ad.amigos[amigos[3]]);
-		view.postDelayed(this,gerador.nextInt(9)*1000 + 1000);// gerador.nextInt());
+		((ImageView) view.findViewById(R.id.imageView5)).setImageBitmap(ad.amigos[amigos[4]]);
+		((ImageView) view.findViewById(R.id.imageView6)).setImageBitmap(ad.amigos[amigos[5]]);
+		((ImageView) view.findViewById(R.id.imageView7)).setImageBitmap(ad.amigos[amigos[6]]);
+
+		//view.postDelayed(this,gerador.nextInt(9)*1000 + 1000);// gerador.nextInt());
 	//	ad.notifyDataSetChanged();
 	}
 	

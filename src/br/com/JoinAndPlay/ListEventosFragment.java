@@ -83,13 +83,19 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		listV.setOnItemClickListener(this);
 		//redundancia para versoes antigas do android
 		listV.setDivider(getResources().getDrawable(R.drawable.linha));
-
+        listV.setDividerHeight(20);
+        View v=new View(getActivity());
+        v.setMinimumHeight(15);
+       listV.addHeaderView(v);
 		Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setText("Criar Evento");
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
 		listV.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
+		lista.add(new ItemEvent(null));
+		adapter.notifyDataSetChanged();lista.add(new ItemEvent(null));
 		adapter.notifyDataSetChanged();
 
 
