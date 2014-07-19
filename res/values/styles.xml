@@ -2,22 +2,23 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-  <style name="MyTheme" parent="android:Theme.Light">
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowBackground">@color/cinzafundo</item>
-    <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
-    
-   <!--   <item name="android:listViewStyle">@style/MyListView</item>-->
-  </style>
-   <style name="CustomTabWidget" parent="@android:style/Widget.TabWidget">
+    <style name="MyTheme" parent="android:Theme.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/cinzafundo</item>
+        <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
+
+        <!-- <item name="android:listViewStyle">@style/MyListView</item> -->
     </style>
+
+    <style name="CustomTabWidget" parent="@android:style/Widget.TabWidget"></style>
+
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -25,6 +26,18 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
     <style name="OlaTheme">10</style>
+
+    <style name="Theme.Custom" parent="@android:Theme">
+        <item name="android:calendarViewStyle">@style/Widget.CalendarView.Custom</item>
+    </style>
+
+    <style name="Widget.CalendarView.Custom" parent="android:Widget.CalendarView">
+        <item name="android:focusedMonthDateColor">@color/black</item>
+        <item name="android:weekNumberColor">@color/red</item>
+        <item name="android:selectedWeekBackgroundColor">@color/black</item>
+        <item name="android:weekSeparatorLineColor">@color/black</item>
+    </style>
 
 </resources>

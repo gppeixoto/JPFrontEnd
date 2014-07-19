@@ -27,4 +27,8 @@
 	<string name="perfil_sim">Sim</string>
 	<string name="perfil_notificacoes">Notificações: </string>
     <string name="id_do_face" >697691156964434</string>
+    <string name="proximidades">Proximidades</string>
+    <string name="esportes">Esportes</string>
+    <string name="termino">Até</string>
+    <string name="escolha_data">Data</string>
 </resources>
