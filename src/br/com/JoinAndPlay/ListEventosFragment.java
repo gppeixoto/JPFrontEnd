@@ -125,6 +125,7 @@ PERMISSIONS.add("offline_access");
 							@Override
 							public void onCompleted(GraphUser user, Response response) {
 								// TODO Auto-generated method stub
+						    	Log.v("uuou","dasasd"+		user);
 								
 							}
 						}
@@ -132,7 +133,6 @@ PERMISSIONS.add("offline_access");
 					}
 				}
 			});
-	    	Log.v("token","dasasd"+		session);
 
 	    	Log.v("token","dasasd"+		session.getPermissions());
 	    	Log.v("token","dasasd"+session.isOpened());

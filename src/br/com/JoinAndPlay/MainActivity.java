@@ -1,6 +1,9 @@
 package br.com.JoinAndPlay;
 
+import com.facebook.Session;
+
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -26,6 +29,15 @@ public class MainActivity extends FragmentActivity {
 		tabs.addFragments(this,PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
 		tabs.addFragments(this,AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_cal);
 		tabs.addFragments(this,PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+	    Session.getActiveSession()
+	        .onActivityResult(this, requestCode, resultCode, data);
+    	Log.v("token"," "+ 	    Session.getActiveSession()
+.getAccessToken());
+
 	}
 
 	void mudarAba(int i){
