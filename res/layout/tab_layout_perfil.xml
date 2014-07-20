@@ -16,34 +16,43 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="left"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="297dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/perfil_fundo_branco"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="8dp" >
+                    android:layout_height="79dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/perfil_fundo_branco"
+                    android:gravity="left"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="12dp" >
 
                     <ImageView
                         android:id="@+id/perfil_avatar_usuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="left"
                         android:layout_marginLeft="8dp"
-                        android:src="@drawable/avatar" />
+                        android:maxHeight="55dp"
+                        android:maxWidth="55dp"
+                        android:scaleType="center"
+                        android:src="@drawable/grey_35" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left"
                         android:layout_marginLeft="10dp"
                         android:orientation="vertical" >
 
@@ -52,243 +61,199 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/perfil_nome_usuario"
-                            android:textSize="18sp" />
+                            android:textColor="#535353"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/perfil_idade_usuario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
-                            android:text="@string/perfil_idade_usario" />
+                            android:text="@string/perfil_idade_usario"
+                            android:textColor="#535353"
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical|end|fill_horizontal"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="5dp" >
-
-                    <Button
-                        android:id="@+id/perfil_button_quantidade_amigos"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:drawableBottom="@color/black"
-                        android:text="@string/perfil_quantidade_amigos"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/perfil_button_eventos_anteriores"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/perfil_eventos_anteriores"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-                </LinearLayout>
-<!-- Notificações comentadas
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="8dp" >
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_weight="0"
-                        android:text="@string/perfil_notificacoes"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="18sp" />
-
-                    <ToggleButton
-                        android:id="@+id/toggleButton1"
-                        android:layout_width="60dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="right"
-                        android:layout_weight="0"
-                        android:background="@drawable/perfil_toggle_btn"
-                        android:textOff="@string/perfil_nao"
-                        android:textOn="@string/perfil_sim" />
-
-                </LinearLayout>
- -->
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical" >
-
                 <ImageView
-                    android:id="@+id/perfil_imagem_barraesporte"
+                    android:id="@+id/imageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/basquete3" />
+                    android:layout_marginLeft="24dp"
+                    android:src="@drawable/pont" />
 
-            </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical|center_horizontal|clip_horizontal" >
 
-            <LinearLayout
-                android:layout_width="302dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:layout_marginTop="0.1dp"
-                android:paddingLeft="6dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp"
-                android:background="@drawable/perfil_fundo_branco2"
-                android:orientation="vertical" >
+                    <ImageView
+                        android:id="@+id/perfil_esforcado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="11dp"
+                        android:layout_toLeftOf="@+id/AbsoluteLayout01"
+                        android:src="@drawable/icon_esforcado" />
+
+                    <ImageView
+                        android:id="@+id/perfil_gente_boa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="24dp"
+                        android:src="@drawable/icon_gente_boa" />
+
+                    <AbsoluteLayout
+                        android:id="@+id/AbsoluteLayout01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="24dp" >
+
+                        <TextView
+                            android:id="@+id/perfil_votos_esforcado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="15dp"
+                            android:layout_y="8dp"
+                            android:text="20"
+                            android:textColor="#535353"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/perfil_text_esforcado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="1dp"
+                            android:layout_y="43dp"
+                            android:text="Esforçado" />
+                    </AbsoluteLayout>
+
+                    <AbsoluteLayout
+                        android:id="@+id/AbsoluteLayout1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/perfil_gente_boa" >
+
+                        <TextView
+                            android:id="@+id/perfil_votos_gente_boa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="15dp"
+                            android:layout_y="8dp"
+                            android:text="20"
+                            android:textColor="#535353"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/perfil_text_gente_boa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="1dp"
+                            android:layout_y="43dp"
+                            android:text="Gente Boa" />
+                    </AbsoluteLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical|center_horizontal|clip_horizontal" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="11dp"
+                        android:layout_toLeftOf="@+id/AbsoluteLayout03"
+                        android:src="@drawable/fairplay" />
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="24dp"
+                        android:src="@drawable/icon_jogaprotime" />
+
+                    <AbsoluteLayout
+                        android:id="@+id/AbsoluteLayout03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="24dp" >
+
+                        <TextView
+                            android:id="@+id/TextView03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="15dp"
+                            android:layout_y="8dp"
+                            android:text="20"
+                            android:textColor="#535353"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/TextView01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="1dp"
+                            android:layout_y="43dp"
+                            android:text="Fair Play" />
+                    </AbsoluteLayout>
+
+                    <AbsoluteLayout
+                        android:id="@+id/AbsoluteLayout02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/ImageView02" >
+
+                        <TextView
+                            android:id="@+id/TextView02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="1dp"
+                            android:layout_y="43dp"
+                            android:text="Joga pro time" />
+
+                        <TextView
+                            android:id="@+id/TextView04"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_x="25dp"
+                            android:layout_y="8dp"
+                            android:text="20"
+                            android:textColor="#535353"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </AbsoluteLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:id="@+id/perfil_nota_esporte"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/perfil_nota_usuario"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/star1" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_2"
-                        android:layout_width="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/star1" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_3"
-                        android:layout_width="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/star1" />
-
+                    android:layout_height="0dp"
+                    android:layout_weight="1" >
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/perfil_numero_partidas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/perfil_quantidade_partidas"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/perfil_imagem_barraesporte2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/futebol2" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="302dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0.1dp"
-                android:layout_weight="1"
-                android:background="@drawable/perfil_fundo_branco2"
-                android:orientation="vertical"
-                android:paddingBottom="6dp"
-                android:paddingLeft="6dp"
-                android:paddingTop="6dp" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/perfil_nota_esporte2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/perfil_nota_usuario"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/star1" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/star1" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/star1" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/star1" />
-
-                    <ImageView
-                        android:id="@+id/perfil_estrela_15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/star1" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/perfil_numero_partidas2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/perfil_quantidade_partidas"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </LinearLayout>
 
         </LinearLayout>
-
     </ScrollView>
 
 </RelativeLayout>
