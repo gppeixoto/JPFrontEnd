@@ -66,7 +66,7 @@ final OnClickListener isthis=this;
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-
+arg2--;
 		ItemEvent item = lista.get(arg2);
 		lista.remove(arg2);
 		AgendaEventosFragmentAntigos.lista.add(	item);

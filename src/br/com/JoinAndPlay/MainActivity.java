@@ -49,7 +49,7 @@ public class MainActivity extends FragmentActivity {
 		
 	}
 	void mudarAba(int id,Fragment fm){
-		tabs.tabChange(id,fm);
+		tabs.tabChange(id,fm,true);
 	}
 	
 	

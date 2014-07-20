@@ -5,17 +5,9 @@ import java.util.List;
 import java.util.Vector;
 
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.R.drawable;
-import android.R.integer;
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.hardware.Camera.Size;
 import android.os.Bundle;
-import android.os.TransactionTooLargeException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -33,37 +25,26 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private ViewPager mViewPager;
 	private PagerAdapter mPagerAdapter;
 	private List<Fragment> fragments;
-	private List<FragmentBase> visibleFragments;
 	private List<Integer> ids;
-	private long id;
 	private HorizontalScrollView scroll;
 	private View tamanho;
-    	
-    	
 
-	public void tabChange(int idtab,Fragment arg1){
-		if(visibleFragments.size()>idtab && idtab>=0){
-			FragmentTransaction tm = fragments.get(idtab).getFragmentManager().beginTransaction();
-			tm.replace(R.id.tela_aba_1, arg1);
-			tm.addToBackStack(null);
-			tm.commit();
-			mPagerAdapter.notifyDataSetChanged();
 
-		}
-		if(fragments.size()>idtab && idtab>=0){
-			
+
+	public void tabChange(int idtab,Fragment arg1, boolean pilha){
+		if(mPagerAdapter!=null)
+			((ViewPagerAdapter)mPagerAdapter).mudar(arg1, idtab,pilha);
+		if(fragments.size()>idtab){
 			fragments.remove(idtab);
-			fragments.add(idtab, arg1);
-			mPagerAdapter.notifyDataSetChanged();
+			fragments.add(idtab,arg1);
 
-		}
-
+					}
+	
 	}
 	public TabSpec addFragments(FragmentActivity context,Fragment a, int id){
 		if(fragments==null){
 			fragments= new ArrayList<Fragment>();
 			ids=new ArrayList<Integer>();
-			visibleFragments=new Vector<FragmentBase>();
 			FragmentBase.newFragment=fragments;
 		}
 
@@ -94,10 +75,9 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			fragments = new Vector<Fragment>();
 			ids = new Vector<Integer>();
 		}
-		visibleFragments=new Vector<FragmentBase>();
 
-		
-	
+
+
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,7 +93,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		if (savedInstanceState != null) {
 			// Define a Tab de acordo com o estado salvo
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
-			
+
 		}
 
 		return mTabHost;
@@ -142,15 +122,21 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			mTabHost.getTabWidget().getChildAt(mTabHost.getTabWidget().getChildCount()-1).setBackgroundResource(ids.get(i));//(getResources().getDrawable(R.drawable.seletc_tab));;
 
 
-			
+
 		}
 
 		mPagerAdapter = new ViewPagerAdapter(
-				getActivity().getSupportFragmentManager(), visibleFragments,fragments);
+				this);
 
 		mViewPager.setAdapter(this.mPagerAdapter);
 		mViewPager.setOnPageChangeListener(this);
-
+		//getFragmentManager().beginTransaction().replace(R.id.tela_aba_2, base).commit()
+		Log.v("lista", ""+fragments);
+		for (int i = 0; i < fragments.size(); i++) {
+			((ViewPagerAdapter)mPagerAdapter).mudar(fragments.get(i),i, false);
+			Log.v("lista",""+i);
+			if(i>=3) return;
+		}
 
 	}
 
@@ -165,9 +151,22 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	public void onTabChanged(String tag) {
 		// Avisa para o mViewPager qual a Tab que est� ativa
-		int pos = this.mTabHost.getCurrentTab();
-		scroll.scrollTo((tamanho.getWidth()*(pos-1))/fragments.size(),scroll.getScrollY());
+		final int pos = this.mTabHost.getCurrentTab();
+		scroll.scrollTo((tamanho.getWidth()*(pos-1))/4,scroll.getScrollY());
 		this.mViewPager.setCurrentItem(pos);
+		Log.v("tab", ""+pos);
+		getView().post(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(fragments.size()>pos)
+
+					tabChange(pos,fragments.get(pos),false);
+
+			}
+		});
+
 	}
 
 
@@ -180,8 +179,8 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	@Override
 	public void onPageSelected(int position) {
 		this.mTabHost.setCurrentTab(position);
-		scroll.scrollTo((tamanho.getWidth()*(position-1))/fragments.size(),scroll.getScrollY());
-
+		scroll.scrollTo((tamanho.getWidth()*(position-1))/4,scroll.getScrollY());
+	
 	}
 
 	@Override
