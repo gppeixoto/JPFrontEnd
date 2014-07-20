@@ -3,15 +3,15 @@
         <shape android:shape="line">
             <solid android:color="#ffffff" />
             <stroke
-                android:dashGap="50dp"
-                android:dashWidth="10dp"
+                android:dashGap="5dp"
+                android:dashWidth="5dp"
                 android:width="1dp"
                 android:color="@color/cinza_comentario" />
             <padding
-                android:bottom="5dp"
-                android:left="5dp"
-                android:right="5dp"
-                android:top="5dp" />
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="2dp"
+                android:top="2dp" />
         </shape>
     </item>
   

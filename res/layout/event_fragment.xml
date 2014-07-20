@@ -303,6 +303,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:background="@color/white"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -322,11 +323,12 @@
 			
 			<EditText
                 android:id="@+id/editText1"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Adicionar Comentário"
-                android:ems="7" >
+                android:ems="10"
+                android:textSize="15sp" >
 
              
             </EditText>
@@ -334,7 +336,7 @@
 			<View
 			    android:layout_width="fill_parent"
 			    android:layout_height="2dp"
-			 	android:background="@drawable/dotted" />
+			 	android:background="@drawable/dashed" />
                         
         </LinearLayout>
 
