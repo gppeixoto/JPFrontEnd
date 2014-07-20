@@ -9,7 +9,8 @@
     <color android:id="@+id/color1" name="black" android:layout_width="wrap_content" android:layout_height="wrap_content">#000000</color>
     <color android:id="@+id/color1" name="trasparent" android:layout_width="wrap_content" android:layout_height="wrap_content">#00000000</color>
     <color android:id="@+id/color1" name="red_tras" android:layout_width="wrap_content" android:layout_height="wrap_content">#00BD0D0D</color>
-    <color android:id="@+id/color1" name="cinzafundo" android:layout_width="wrap_content" android:layout_height="wrap_content">#363636</color>
+    <color android:id="@+id/color1" name="cinzafundo" android:layout_width="wrap_content" android:layout_height="wrap_content">#353535</color>
     <color android:id="@+id/color1" name="verde_futebol" android:layout_width="wrap_content" android:layout_height="wrap_content">#90c947</color>
+    <color android:id="@+id/color1" name="cinza_comentario" android:layout_width="wrap_content" android:layout_height="wrap_content">#767676</color>
 
 </resources>
