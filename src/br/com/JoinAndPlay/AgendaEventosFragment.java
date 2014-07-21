@@ -4,6 +4,7 @@ package br.com.JoinAndPlay;
 import java.util.ArrayList;
 
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class AgendaEventosFragment extends ListEventosFragment{
 			Bundle savedInstanceState) {
 		
 		View v=super.onCreateView(inflater, container, savedInstanceState);
-		Button_criar.setText("ja fui");
+		Button_criar.setText("notificações");
 		
 		return v;
 	}
@@ -45,28 +46,14 @@ public class AgendaEventosFragment extends ListEventosFragment{
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		Log.v("ola","mundo");
-final OnClickListener isthis=this;
-((Button)arg0).setText("vou jogar");
-
-		getFragmentManager().beginTransaction().add(R.id.lista,new AgendaEventosFragmentAntigos()).addToBackStack(this.getClass().getName()).commit();	Log.v("ola","mundo");
-((Button)arg0).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getFragmentManager().popBackStack();
-				((Button)v).setText("ja fui");
-
-				((Button)v).setOnClickListener(isthis);
-			}
-		});
+	 ((MainActivity) getActivity()).mudarAba(2,new EventFragment());
+		
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-
+arg2--;
 		ItemEvent item = lista.get(arg2);
 		lista.remove(arg2);
 		AgendaEventosFragmentAntigos.lista.add(	item);

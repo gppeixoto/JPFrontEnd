@@ -53,7 +53,7 @@ public class ViewPagerStaticAdapter extends PagerAdapter {
 			break;
 		}
 		return id;
-		
+
 	}
 	@Override
 	public Object instantiateItem(ViewGroup pager, int position) {
@@ -63,9 +63,10 @@ public class ViewPagerStaticAdapter extends PagerAdapter {
 		Log.v("view", ""+id+" "+((ViewPager) pager).getChildCount());
 		View v =pager.findViewById(getid(position));
 		Log.v("view", ""+v);
-		v.postInvalidate();
-v.bringToFront();
-return v;
+		///v.postInvalidate();
+				v.getParent().requestLayout();
+		((View) v.getParent()).invalidate();
+		return v;
 	}
 
 

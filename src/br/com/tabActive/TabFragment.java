@@ -39,7 +39,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			ft=ft.replace(((ViewPagerStaticAdapter)mPagerAdapter).getid(idtab),arg1);
 			if(voltar){
 				
-				ft.addToBackStack(null);
+				ft.addToBackStack("aba"+idtab);
 			}
 			
 			ft.commit();
@@ -51,24 +51,10 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			ids=new ArrayList<Integer>();
 		}
 
-		//getFragmentManager().beginTransaction().replace(R.id.tela_aba_2, base).commit();
 		fragments.add(a);
 		a.setRetainInstance(true);
-
 		ids.add(id);
-		//	final 
-		//new postTabpec(tabSpec, id).run();
-		if(mPagerAdapter!=null){
-			Log.v("lol", ""+fragments);
-
-			TabSpec tabSpec =mTabHost.newTabSpec("Tab"+id).setIndicator("").setContent(new TabFactory(context));
-			mTabHost.addTab(tabSpec);
-			tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
-			mTabHost.getTabWidget().getChildAt(mTabHost.getTabWidget().getChildCount()-1).setBackgroundResource(id);//(getResources().getDrawable(R.drawable.seletc_tab));;
-			mPagerAdapter.notifyDataSetChanged();
-
-			return tabSpec;
-		}
+		
 		return null;
 	}	
 	@Override
@@ -163,23 +149,18 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	}
 	public boolean onBackPressed() {
 		
-FragmentManager frgmtManager = getFragmentManager();
 
 	    
-	    Fragment fragment = frgmtManager.findFragmentById(((ViewPagerStaticAdapter)mPagerAdapter).getid(mTabHost.getCurrentTab()));
-	    // And thanks to the fragment container, we retrieve its child fragment manager
-	    // holding our fragment in the back stack
+	   
 	    FragmentManager childFragmentManager = getChildFragmentManager();
-Log.v("uhu", ""+fragment);
-	    // And here we go, if the back stack is empty, we let the back button doing its job
-	    // Otherwise, we show the last entry in the back stack (our FragmentToShow) 
-	    if(childFragmentManager.getBackStackEntryCount() == 0){
-return false;
+
+	    if( childFragmentManager.popBackStackImmediate("aba"+mTabHost.getCurrentTab(),1)){
+	    		return true;
 		
 	    } else {
-	        childFragmentManager.popBackStack();
+	       
 	    }
-		return true;
+		return false;
 	}
 
 	@Override
