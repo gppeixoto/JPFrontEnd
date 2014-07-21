@@ -3,12 +3,14 @@ package br.com.tabActive;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.zip.Inflater;
 
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.R.drawable;
 import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
@@ -42,6 +44,9 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
     	
 
 	public void tabChange(int idtab,Fragment arg1){
+		
+		
+		/*
 		if(visibleFragments.size()>idtab && idtab>=0){
 			FragmentTransaction tm = fragments.get(idtab).getFragmentManager().beginTransaction();
 			tm.replace(R.id.tela_aba_1, arg1);
@@ -56,7 +61,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			fragments.add(idtab, arg1);
 			mPagerAdapter.notifyDataSetChanged();
 
-		}
+		}*/
 
 	}
 	public TabSpec addFragments(FragmentActivity context,Fragment a, int id){
@@ -115,6 +120,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 			
 		}
+		mPagerAdapter=new ViewPagerStaticAdapter(inflater);
 
 		return mTabHost;
 
@@ -129,6 +135,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		tamanho=(View) mTabHost.findViewById(android.R.id.tabs);
 		mTabHost.getTabWidget().setBackgroundResource(R.drawable.seletc_wid_tab);
 		mViewPager = (ViewPager) mTabHost.findViewById(R.id.pager);
+		
 		for (int i = 0; i < ids.size(); i++) {
 			//	Fragment f=fragments.remove(0);
 
@@ -145,11 +152,18 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			
 		}
 
-		mPagerAdapter = new ViewPagerAdapter(
+	/*	mPagerAdapter = new ViewPagerAdapter(
 				getActivity().getSupportFragmentManager(), visibleFragments,fragments);
-
+*/
 		mViewPager.setAdapter(this.mPagerAdapter);
+
 		mViewPager.setOnPageChangeListener(this);
+for (int i = 0; i < fragments.size(); i++) {
+	FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+
+		ft.replace(((ViewPagerStaticAdapter)mPagerAdapter).getid(i), fragments.get(i)).commitAllowingStateLoss();
+
+	    }
 
 
 	}
@@ -166,8 +180,10 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	public void onTabChanged(String tag) {
 		// Avisa para o mViewPager qual a Tab que est� ativa
 		int pos = this.mTabHost.getCurrentTab();
-		scroll.scrollTo((tamanho.getWidth()*(pos-1))/fragments.size(),scroll.getScrollY());
+		scroll.scrollTo((tamanho.getWidth()*(pos-1))/4,scroll.getScrollY());
 		this.mViewPager.setCurrentItem(pos);
+	
+
 	}
 
 
@@ -180,7 +196,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	@Override
 	public void onPageSelected(int position) {
 		this.mTabHost.setCurrentTab(position);
-		scroll.scrollTo((tamanho.getWidth()*(position-1))/fragments.size(),scroll.getScrollY());
+		scroll.scrollTo((tamanho.getWidth()*(position-1))/4,scroll.getScrollY());
 
 	}
 
