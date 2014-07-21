@@ -1,4 +1,7 @@
 package br.com.JoinAndPlay;
+import java.util.Calendar;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -6,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 
 public class PesquisarEventosFragment extends Fragment {
 	@Override
@@ -20,7 +24,19 @@ public class PesquisarEventosFragment extends Fragment {
 		b2.setText("Início");
 		
 		Button b3 = (Button) v.findViewById(R.id.buttonDataFim);
-		b3.setText("Fim");
+		b3.setText("Término");
+		
+		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
+		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
+		
+		Calendar c = Calendar.getInstance();
+		// year, month, day, hourOfDay, minute
+		//c.set(1990, 7, 12, 9, 34);
+		long millis = c.getTimeInMillis();
+		
+		CalendarView cv = (CalendarView) v.findViewById(R.id.calendarView1);
+		//cv.setMinDate(millis-10000);
+		cv.setDate(millis,true,true);
 		
 		bg.setOnClickListener(new View.OnClickListener() {
 			@Override

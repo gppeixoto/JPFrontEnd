@@ -12,5 +12,5 @@
     <color android:id="@+id/color1" name="cinzafundo" android:layout_width="wrap_content" android:layout_height="wrap_content">#353535</color>
     <color android:id="@+id/color1" name="verde_futebol" android:layout_width="wrap_content" android:layout_height="wrap_content">#90c947</color>
     <color android:id="@+id/color1" name="cinza_comentario" android:layout_width="wrap_content" android:layout_height="wrap_content">#767676</color>
-
+	<color android:id="@+id/color1" name="red_pesquisa" android:layout_width="wrap_content" android:layout_height="wrap_content">#c60c0c</color>
 </resources>
