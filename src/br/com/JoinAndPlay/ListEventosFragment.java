@@ -86,7 +86,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
         listV.setDividerHeight(20);
         View v=new View(getActivity());
         v.setMinimumHeight(15);
-       listV.addHeaderView(v);
+        listV.addHeaderView(v);
 		Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setText("Criar Evento");
 		Button_criar.setOnClickListener(this);
@@ -197,6 +197,7 @@ public void onResume(){
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
+		arg2--;
 		((MainActivity)getActivity()).mudarAba(0,new EventFragment() );
 		ItemEvent item = lista.get(arg2);
 		lista.remove(arg2);

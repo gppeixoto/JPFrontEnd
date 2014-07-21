@@ -7,10 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TabHost.TabSpec;
-import br.com.tabActive.FragmentBase;
 import br.com.tabActive.TabFragment;
 
 
@@ -49,8 +45,15 @@ public class MainActivity extends FragmentActivity {
 		
 	}
 	void mudarAba(int id,Fragment fm){
-		tabs.tabChange(id,fm);
+		tabs.tabChange(id,fm,true);
 	}
 	
+	@Override
+	public void onBackPressed() {
+		if(!tabs.onBackPressed()){
+			
+			super.onBackPressed();
+		}
+	}
 	
 }
