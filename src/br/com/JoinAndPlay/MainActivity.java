@@ -18,6 +18,11 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
+		 for (int i = 0; i <4; i++) {
+	    	   Fragment fragment = getSupportFragmentManager().findFragmentByTag("tab"+(i+1));
+	   	    if (fragment != null)
+	   	    	getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+		}
 		tabs=(TabFragment) TabFragment.instantiate(this, TabFragment.class.getName());
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, tabs).commit();
 
@@ -44,6 +49,10 @@ public class MainActivity extends FragmentActivity {
 		// getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.tabmain)).add(R.id.tela, fm).commit();
 		
 	}
+	public void mudarAbaAtual(Fragment fm){
+		tabs.tabChange(fm,true);
+
+	}
 	void mudarAba(int id,Fragment fm){
 		tabs.tabChange(id,fm,true);
 	}
@@ -55,5 +64,7 @@ public class MainActivity extends FragmentActivity {
 			super.onBackPressed();
 		}
 	}
+
+	
 	
 }

@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,16 +33,20 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
 
-			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
-			ft=ft.replace(((ViewPagerStaticAdapter)mPagerAdapter).getid(idtab),arg1);
-			if(voltar){
-				
-				ft.addToBackStack("aba"+idtab);
-			}
-			
-			ft.commit();
+		ft=ft.replace(R.id.tela_aba,arg1);
+		if(voltar){
 
+			ft.addToBackStack(null);
+		}
+
+		ft.commit();
+
+	}
+	public void tabChange(Fragment arg1,boolean voltar){
+
+		tabChange(mTabHost.getCurrentTab(),arg1, voltar);
 	}
 	public TabSpec addFragments(FragmentActivity context,Fragment a, int id){
 		if(fragments==null){
@@ -54,7 +57,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		fragments.add(a);
 		a.setRetainInstance(true);
 		ids.add(id);
-		
+
 		return null;
 	}	
 	@Override
@@ -85,9 +88,6 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		mPagerAdapter=new ViewPagerStaticAdapter(inflater);
 
 		return mTabHost;
-
-
-
 	}
 
 	@Override
@@ -99,37 +99,25 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		mViewPager = (ViewPager) mTabHost.findViewById(R.id.pager);
 
 		for (int i = 0; i < ids.size(); i++) {
-			//	Fragment f=fragments.remove(0);
-
-			//	Log.v("lol", ""+fragments);
-
-
 			TabSpec tabSpec =mTabHost.newTabSpec("Tab"+ids.get(i)).setIndicator("").setContent(new TabFactory(getActivity()));
-
 			mTabHost.addTab(tabSpec);
 			tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
 			mTabHost.getTabWidget().getChildAt(mTabHost.getTabWidget().getChildCount()-1).setBackgroundResource(ids.get(i));//(getResources().getDrawable(R.drawable.seletc_tab));;
-
-
-
 		}
-
-		/*	mPagerAdapter = new ViewPagerAdapter(
-				getActivity().getSupportFragmentManager(), visibleFragments,fragments);
-		 */
 		mViewPager.setAdapter(this.mPagerAdapter);
-
 		mViewPager.setOnPageChangeListener(this);
 		for (int i = 0; i < fragments.size(); i++) {
-			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-
-			ft.replace(((ViewPagerStaticAdapter)mPagerAdapter).getid(i), fragments.get(i)).commit();
-
+			FragmentTransaction ft=getFragmentManagerAba(i).beginTransaction();
+			ft.replace(R.id.tela_aba, fragments.get(i)).commit();
 		}
 
 
 	}
 
+	public FragmentManager getFragmentManagerAba( int i){
+
+		return getFragmentManager().findFragmentByTag("tab"+(i+1)).getChildFragmentManager();
+	}
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
@@ -148,19 +136,13 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	}
 	public boolean onBackPressed() {
-		
+		FragmentManager childFragmentManager =getFragmentManagerAba(mTabHost.getCurrentTab());	if(childFragmentManager.getBackStackEntryCount()==0){
+			return false;
 
-	    
-	   
-	    FragmentManager childFragmentManager = getChildFragmentManager();
-
-	    if( childFragmentManager.popBackStackImmediate("aba"+mTabHost.getCurrentTab(),1)){
-	    		return true;
-		
-	    } else {
-	       
-	    }
-		return false;
+		} else {
+			childFragmentManager.popBackStack();
+		}
+		return true;
 	}
 
 	@Override

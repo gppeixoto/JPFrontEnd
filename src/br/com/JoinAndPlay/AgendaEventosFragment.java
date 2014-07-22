@@ -31,29 +31,29 @@ public class AgendaEventosFragment extends ListEventosFragment{
 
 		adapter = new AdapterListView(getActivity(),lista);
 
-		
+
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		View v=super.onCreateView(inflater, container, savedInstanceState);
 		Button_criar.setText("notificações");
-		
+
 		return v;
 	}
-	
+
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-	 ((MainActivity) getActivity()).mudarAba(2,new EventFragment());
-		
+		((MainActivity) getActivity()).mudarAba(2,new EventFragment());
+
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-arg2--;
+		arg2--;
 		ItemEvent item = lista.get(arg2);
 		lista.remove(arg2);
 		AgendaEventosFragmentAntigos.lista.add(	item);
@@ -76,7 +76,7 @@ class AgendaEventosFragmentAntigos extends AgendaEventosFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		ViewGroup v=(ViewGroup)super.onCreateView(inflater, container, savedInstanceState);
 		v.removeView(Button_criar);
 		return v;
