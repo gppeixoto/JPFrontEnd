@@ -2,93 +2,64 @@ package br.com.JoinAndPlay.ListEvent;
 
 import java.util.Random;
 
+import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
-import android.R.bool;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-public class ItemEvent implements Parcelable ,Runnable{
-int[] amigos;
+public class ItemEvent {
 
-Random gerador;
-public void gerar(){
-	for (int i = 0; i < amigos.length; i++) {
-		amigos[i]=gerador.nextInt(7);
-		for (int j = 0; j < i; j++) {
-			if(amigos[j]==amigos[i]){
-				
-				i--;
-				break;
-			}
-		}
-	}
+	private static Random	gerador = new Random();
+	public static final int  MAX_AMIGOS_QTD=7;
+	String esporte;
+	int[] amigos;
 
-}
-	public ItemEvent(Parcel in){
-		gerador = new Random();
-
-		amigos=new int[7];
+	public ItemEvent(){
+		amigos= new int[MAX_AMIGOS_QTD];
 		gerar();
-		
-	}
-	 public static final Parcelable.Creator<ItemEvent> CREATOR  = new Parcelable.Creator<ItemEvent>() {
- public ItemEvent createFromParcel(Parcel in) {
-     return new ItemEvent(in);
- }
 
- public ItemEvent[] newArray(int size) {
-     return new ItemEvent[size];
- }
-};
-	@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
-	@Override
-	public void writeToParcel(Parcel arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-	View view;
-	AdapterListView ad;
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-		int i = gerador.nextInt(amigos.length);
-		boolean saida= true;
-		
-		while(saida){
-			
+	public void gerar(){
+		for (int i = 0; i < amigos.length; i++) {
 			amigos[i]=gerador.nextInt(7);
-			for (int j = 0; j < amigos.length; j++) {
-				saida=false;
-				if((amigos[i]==amigos[j])&&(i!=j)){
-					
-saida=true;
-break;}
+			for (int j = 0; j < i; j++) {
+				if(amigos[j]==amigos[i]){
+					i--;
+					break;
+				}
 			}
 		}
-	//	Log.v("gerar","["+amigos[0]+","+amigos[1]+","+amigos[2]+","+amigos[3]+"]"+amigos);
 
-		((ImageView) view.findViewById(R.id.imageView1)).setImageBitmap(ad.amigos[amigos[0]]);
-		((ImageView) view.findViewById(R.id.imageView2)).setImageBitmap(ad.amigos[amigos[1]]);
-		((ImageView) view.findViewById(R.id.imageView3)).setImageBitmap(ad.amigos[amigos[2]]);
-		((ImageView) view.findViewById(R.id.imageView4)).setImageBitmap(ad.amigos[amigos[3]]);
-		((ImageView) view.findViewById(R.id.imageView5)).setImageBitmap(ad.amigos[amigos[4]]);
-		((ImageView) view.findViewById(R.id.imageView6)).setImageBitmap(ad.amigos[amigos[5]]);
-		((ImageView) view.findViewById(R.id.imageView7)).setImageBitmap(ad.amigos[amigos[6]]);
-
-		//view.postDelayed(this,gerador.nextInt(9)*1000 + 1000);// gerador.nextInt());
-	//	ad.notifyDataSetChanged();
 	}
+	public void drawerView(final View view,final Bitmap[] imagens) {
+		// TODO Auto-generated method stub
+		int idEsport=0;
+		if(esporte!= null){
+			idEsport=ConfigJP.getID(esporte);
+		}
+		ImageView imagem_bola=(ImageView) view.findViewById(R.id.item_list_icone);
+		imagem_bola.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsport]));
+
+		View barra=(View) view.findViewById(R.id.item_list_barra);
+		barra.setBackgroundResource(ConfigJP.ESPORTE_BARRA[idEsport]);
+		LinearLayout content_image=(LinearLayout) view.findViewById(R.id.item_list_content_image);
+		
 	
+		for (int i = 0; i < amigos.length; i++) {
+			if(content_image.getChildCount()>i){
+			ImageView imagem = (ImageView) content_image.getChildAt(i);
+
+			imagem.setImageBitmap(imagens[amigos[i]]);
+			}else break;
+		}		
+
+
+
+	}
+
 
 }
-//4003-0484
-//jackson

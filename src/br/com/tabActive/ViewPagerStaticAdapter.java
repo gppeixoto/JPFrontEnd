@@ -24,7 +24,7 @@ public class ViewPagerStaticAdapter extends PagerAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 4;
+		return TabFragment.SIZE;
 	}
 
 	@Override
@@ -47,6 +47,9 @@ public class ViewPagerStaticAdapter extends PagerAdapter {
 			break;
 		case 3:
 			id=R.id.page_4;
+			break;
+		case 4:
+			id=R.id.page_5;
 			break;
 
 		default:

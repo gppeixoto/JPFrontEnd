@@ -93,9 +93,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
 		listV.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
-		lista.add(new ItemEvent(null));
-		adapter.notifyDataSetChanged();lista.add(new ItemEvent(null));
+		lista.add(new ItemEvent());
+		lista.add(new ItemEvent());
 		adapter.notifyDataSetChanged();
 
 
@@ -106,7 +105,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		lista.add(new ItemEvent(null));
+		lista.add(new ItemEvent());
 		adapter.notifyDataSetChanged();
 List<String> PERMISSIONS = new ArrayList<String>();
 PERMISSIONS.add("user_friends");

@@ -18,18 +18,20 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
-		 for (int i = 0; i <4; i++) {
+		 for (int i = 0; i <TabFragment.SIZE; i++) {
 	    	   Fragment fragment = getSupportFragmentManager().findFragmentByTag("tab"+(i+1));
 	   	    if (fragment != null)
 	   	    	getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 		}
 		tabs=(TabFragment) TabFragment.instantiate(this, TabFragment.class.getName());
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, tabs).commit();
-
+		
+		tabs.addFragments(this,NotificacaoFragment.instantiate(this, NotificacaoFragment.class.getName(),savedInstanceState),R.drawable.tab_notif);
 		tabs.addFragments(this,ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_lista);
 		tabs.addFragments(this,PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
 		tabs.addFragments(this,AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_cal);
 		tabs.addFragments(this,PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
+
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

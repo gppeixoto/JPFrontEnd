@@ -28,6 +28,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private List<Integer> ids;
 	private HorizontalScrollView scroll;
 	private View tamanho;
+	public final static int SIZE=5;
 
 
 
@@ -130,7 +131,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	public void onTabChanged(String tag) {
 		// Avisa para o mViewPager qual a Tab que est� ativa
 		int pos = this.mTabHost.getCurrentTab();
-		scroll.scrollTo((tamanho.getWidth()*(pos-1))/4,scroll.getScrollY());
+		scroll.scrollTo((tamanho.getWidth()*(pos-1))/SIZE,scroll.getScrollY());
 		this.mViewPager.setCurrentItem(pos);
 
 
@@ -154,7 +155,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	@Override
 	public void onPageSelected(int position) {
 		this.mTabHost.setCurrentTab(position);
-		scroll.scrollTo((tamanho.getWidth()*(position-1))/4,scroll.getScrollY());
+		scroll.scrollTo((tamanho.getWidth()*(position-1))/SIZE,scroll.getScrollY());
 
 	}
 
