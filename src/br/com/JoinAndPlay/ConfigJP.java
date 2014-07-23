@@ -9,6 +9,7 @@ public final class ConfigJP {
 
 	private static Map<String,Integer> mapafutebol = new HashMap<String, Integer>();
 	private static boolean init=false;
+	public static String ip="172.22.67.244";
 	private static void init(){
 		if(!init){
 			mapafutebol.put("futebol",ESPORTE_FUTEBOL);

@@ -5,6 +5,8 @@ import br.com.tabActive.TabFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -16,6 +18,8 @@ import com.facebook.model.GraphUser;
 import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import br.com.JoinAndPlay.MainActivity.MyThread;
+import br.com.JoinAndPlay.Server.ServiceHandler;
 import android.Manifest.permission;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
@@ -111,7 +115,7 @@ List<String> PERMISSIONS = new ArrayList<String>();
 PERMISSIONS.add("user_friends");
 PERMISSIONS.add("public_profile");
 
-PERMISSIONS.add("offline_access");
+PERMISSIONS.add("email");
 
 		if(loguin){
 			Session session=			Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
@@ -127,6 +131,7 @@ PERMISSIONS.add("offline_access");
 
 							// callback after Graph API response with user object
 
+							
 							@Override
 							public void onCompleted(GraphUser user, Response response) {
 								// TODO Auto-generated method stub
@@ -151,8 +156,22 @@ PERMISSIONS.add("offline_access");
 		    }
 			
 			loguin=false;
+		}else{
+		MyThread t = new MyThread();
+    	t.start();
 		}
-
+    //	try {t.join();}catch(Exception _) {}
+	}
+	
+	class MyThread extends Thread {
+		public void run() {
+			ServiceHandler sh = new ServiceHandler();
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("access_token", Session.getActiveSession().getAccessToken());
+			} catch (Exception _) {}
+			sh.makePOST(ServiceHandler.URL_BASE + "login/", obj.toString());
+		}
 	}
 @Override
 public void onResume(){

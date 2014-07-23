@@ -1,12 +1,25 @@
 package br.com.JoinAndPlay;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.facebook.Session;
 
 import android.support.v4.app.Fragment;
+import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.util.Log;
+import br.com.JoinAndPlay.Server.ServiceHandler;
 import br.com.tabActive.TabFragment;
 
 
@@ -23,9 +36,11 @@ public class MainActivity extends FragmentActivity {
 	   	    if (fragment != null)
 	   	    	getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 		}
+		
+		 
 		tabs=(TabFragment) TabFragment.instantiate(this, TabFragment.class.getName());
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, tabs).commit();
-		
+
 		tabs.addFragments(this,NotificacaoFragment.instantiate(this, NotificacaoFragment.class.getName(),savedInstanceState),R.drawable.tab_notif);
 		tabs.addFragments(this,ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_lista);
 		tabs.addFragments(this,PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
@@ -33,6 +48,7 @@ public class MainActivity extends FragmentActivity {
 		tabs.addFragments(this,PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
 
 	}
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    super.onActivityResult(requestCode, resultCode, data);
@@ -40,7 +56,21 @@ public class MainActivity extends FragmentActivity {
 	        .onActivityResult(this, requestCode, resultCode, data);
     	Log.v("token"," "+ 	    Session.getActiveSession()
 .getAccessToken());
-
+    	
+    	MyThread t = new MyThread();
+    	t.start();
+    //	try {t.join();}catch(Exception _) {}
+	}
+	
+	class MyThread extends Thread {
+		public void run() {
+			ServiceHandler sh = new ServiceHandler();
+			JSONObject obj = new JSONObject();
+			try {
+				obj.put("access_token", Session.getActiveSession().getAccessToken());
+			} catch (Exception _) {}
+			sh.makePOST(ServiceHandler.URL_BASE + "login/", obj.toString());
+		}
 	}
 
 	void mudarAba(int i){
