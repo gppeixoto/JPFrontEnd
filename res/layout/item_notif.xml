@@ -36,7 +36,7 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/perfil_num_partidas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5h"
@@ -99,7 +99,7 @@
 
         <ImageButton
             android:id="@+id/imageButton1"
-            android:layout_width="0dp"
+            android:layout_width="0dp" 
             android:layout_height="wrap_content"
                         android:layout_weight="1"
             
