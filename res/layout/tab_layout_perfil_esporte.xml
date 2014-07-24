@@ -18,7 +18,7 @@
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
+                android:scaleType="matrix"
                 android:src="@drawable/futebol" />
 
             <TextView
@@ -82,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/star1" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -90,7 +89,7 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/perfil_num_partidas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
