@@ -5,6 +5,7 @@ import java.util.Random;
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
@@ -27,7 +28,8 @@ public class ItemEvent implements Parcelable {
 	int qtd_participantes;
 	int preco_centavos;
 	int distancia;
-	
+	boolean privado;
+
 	int[] amigos;
 
 	public ItemEvent(){
@@ -49,7 +51,8 @@ public class ItemEvent implements Parcelable {
 		distancia =in.readInt();
 		amigos = new int[in.readInt()];
 		in.readIntArray(amigos);   
-		
+		privado= in.readInt()==1;
+
 	}
 
 	public void gerar(){
@@ -113,7 +116,7 @@ public class ItemEvent implements Parcelable {
 		if(data!=null){
 			dataView.setText(data);
 		}
-		
+
 		TextView distanciaView = (TextView) view.findViewById(R.id.item_list_distancia);
 		if(distancia==0){
 			distanciaView.setText(distancia+"m");
@@ -131,7 +134,8 @@ public class ItemEvent implements Parcelable {
 			precoView.setText("R$ "+temp);
 
 		}
-
+		View privadoView = (View) view.findViewById(R.id.item_list_privado);
+		privadoView.setVisibility(privado?View.VISIBLE:View.INVISIBLE);
 
 
 		for (int i = 0; i < amigos.length; i++) {
@@ -168,6 +172,7 @@ public class ItemEvent implements Parcelable {
 		arg0.writeInt(distancia);
 		arg0.writeInt(amigos.length);
 		arg0.writeIntArray(amigos);
+		arg0.writeInt(privado?1:0);
 	}
 
 

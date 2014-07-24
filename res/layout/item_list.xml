@@ -68,96 +68,112 @@
         android:layout_weight="4"
         android:orientation="horizontal" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/item_list_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:text="Pelada na praia"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/item_list_quadra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="quadra"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/item_list_local"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Av boa viagem"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/item_list_cidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Boa Vieagem - Recife"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/item_list_participantes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="13 participantes"
-                android:textSize="14sp" />
+            
+             >
 
             <LinearLayout
-                android:id="@+id/item_list_content_image"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" >
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="1dp"
-                    android:src="@drawable/avatar_35x335" />
+                <TextView
+                    android:id="@+id/item_list_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Pelada na praia"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="1dp"
-                    android:src="@drawable/avatar_35x335" />
+                <TextView
+                    android:id="@+id/item_list_local"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Av boa viagem"
+                    android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="1dp"
-                    android:src="@drawable/avatar_35x335" />
+                <TextView
+                    android:id="@+id/item_list_quadra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="quadra"
+                    android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="1dp"
-                    android:src="@drawable/avatar_35x335" />
+                <TextView
+                    android:id="@+id/item_list_cidade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Boa Vieagem - Recife"
+                    android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="1dp"
-                    android:src="@drawable/avatar_35x335" />
+                <TextView
+                    android:id="@+id/item_list_participantes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13 participantes"
+                    android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="1dp"
-                    android:src="@drawable/avatar_35x335" />
+                <LinearLayout
+                    android:id="@+id/item_list_content_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp" >
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="1dp"
+                        android:src="@drawable/avatar_35x335" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="1dp"
+                        android:src="@drawable/avatar_35x335" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="1dp"
+                        android:src="@drawable/avatar_35x335" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="1dp"
+                        android:src="@drawable/avatar_35x335" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="1dp"
+                        android:src="@drawable/avatar_35x335" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="1dp"
+                        android:src="@drawable/avatar_35x335" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/item_list_privado"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/avatar_35x335" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -203,6 +219,7 @@
                 android:layout_marginTop="6dp"
                 android:src="@drawable/como_chegar" />
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
