@@ -2,6 +2,7 @@ package br.com.JoinAndPlay;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Vector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +20,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
+import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.ServiceHandler;
 import br.com.tabActive.TabFragment;
@@ -55,25 +58,18 @@ public class MainActivity extends FragmentActivity {
 	    super.onActivityResult(requestCode, resultCode, data);
 	    Session.getActiveSession()
 	        .onActivityResult(this, requestCode, resultCode, data);
-    	Log.v("token"," "+ 	    Session.getActiveSession()
+    	Log.v("tokenscc"," "+ 	    Session.getActiveSession()
 .getAccessToken());
     	
     	//MyThread t = new MyThread();
     	//t.start();
-    	Server.login(Session.getActiveSession().getAccessToken());
+    	Server.login(Session.getActiveSession().getAccessToken(),null);
+	
+		
+
     //	try {t.join();}catch(Exception _) {}
 	}
 	
-	class MyThread extends Thread {
-		public void run() {
-			ServiceHandler sh = new ServiceHandler();
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("access_token", Session.getActiveSession().getAccessToken());
-			} catch (Exception _) {}
-			sh.makePOST(ServiceHandler.URL_BASE + "login/", obj.toString());
-		}
-	}
 
 	void mudarAba(int i){
 		//apartir de uma aba chamar ((MainActivity)getActivity()).mudarAba(n)

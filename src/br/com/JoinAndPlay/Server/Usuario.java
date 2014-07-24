@@ -8,12 +8,12 @@ public class Usuario implements Serializable {
 	
 	private String id;
 	private String name;
-	private int rating;
+	private String rating;
 	private String photo;
 	private Vector<Evento> events;
 	private Vector<Usuario> friends;
 	
-	public Usuario(String id, String name, int rating, String photo, Vector<Evento> events, Vector<Usuario> friends) {
+	public Usuario(String id, String name, String rating, String photo, Vector<Evento> events, Vector<Usuario> friends) {
 		this.id = id;
 		this.name = name;
 		this.rating = rating;
@@ -35,7 +35,7 @@ public class Usuario implements Serializable {
 	/**
 	 * @return o rating do usuario.
 	 * */
-	public int getRating() { return this.rating; }
+	public String getRating() { return this.rating; }
 	
 	/**
 	 * @return URL que contem a foto do usuario.
