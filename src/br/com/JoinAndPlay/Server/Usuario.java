@@ -40,5 +40,5 @@ public class Usuario {
 	/**
 	 * @return amigos desse usuario.
 	 * */
-	public Vector<Usuario> getFriends() { return this.friends; }
+	public Vector<Usuario> getFriends() { return this.friends; } 
 }

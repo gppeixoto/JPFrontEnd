@@ -100,4 +100,4 @@ public class Evento {
 	* @return true se o evento for privado, false se for publico.
 	*/
 	public boolean getPrivacy() { return this.is_private; }
-}
+} 
