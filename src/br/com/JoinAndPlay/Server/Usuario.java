@@ -18,27 +18,27 @@ public class Usuario {
 	}
 	
 	/**
-	 * @return o nome do usuário.
+	 * @return o nome do usuario.
 	 * */
 	public String getName() { return this.name; }
 	
 	/**
-	 * @return o rating do usuário.
+	 * @return o rating do usuario.
 	 * */
 	public int getRating() { return this.rating; }
 	
 	/**
-	 * @return URL que contém a foto do usuário.
+	 * @return URL que contem a foto do usuario.
 	 */
 	public String getPhoto() { return this.photo; }
 	
 	/**
-	 * @return eventos que esse usuário participou ou irá participar.
+	 * @return eventos que esse usuario participou ou ira participar.
 	 * */
 	public Vector<Evento> getEvents() { return this.events; }
 	
 	/**
-	 * @return amigos desse usuário.
+	 * @return amigos desse usuario.
 	 * */
 	public Vector<Usuario> getFriends() { return this.friends; }
 }

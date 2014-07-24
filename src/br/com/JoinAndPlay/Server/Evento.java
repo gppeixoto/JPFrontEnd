@@ -47,12 +47,12 @@ public class Evento {
 	public Vector<Usuario> getUsers() { return this.users; }
 
 	/**
-	* @return o nome do local que será o evento.
+	* @return o nome do local que sera o evento.
 	*/
 	public String getLocalizationName() { return this.localization_name; }
 
 	/**
-	* @return o endereço que será o evento.
+	* @return o endereço que sera o evento.
 	*/
 	public String getLocalizationAddress() { return this.localization_address; }
 
@@ -82,12 +82,12 @@ public class Evento {
 	public String getEndTime() { return this.end_time; }
 
 	/**
-	* @return descrição desse evento.
+	* @return descricao desse evento.
 	*/
 	public String getDescription() { return this.description; }
 
 	/**
-	* @return comentários desse evento.
+	* @return comentarios desse evento.
 	*/
 	public Vector<String> getComments() { return this.comments; }
 
@@ -97,7 +97,7 @@ public class Evento {
 	public String getId() { return this.id; }
 
 	/**
-	* @return true se o evento for privado, false se for público.
+	* @return true se o evento for privado, false se for publico.
 	*/
 	public boolean getPrivacy() { return this.is_private; }
 }
