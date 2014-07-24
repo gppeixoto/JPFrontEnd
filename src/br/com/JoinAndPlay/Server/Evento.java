@@ -1,8 +1,11 @@
 package br.com.JoinAndPlay.Server;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Evento {
+public class Evento implements Serializable {
+	private static final long serialVersionUID = -1738172920493345010L;
+	
 	private String name;
 	private Vector<Usuario> users;
 	private String localization_name;
@@ -16,11 +19,12 @@ public class Evento {
 	private Vector<String> comments;
 	private String id;
 	private boolean is_private;
+	private int price;
 
 	public Evento(String name, Vector<Usuario> users, String localization_name,
 		String localization_address, String sport, int num_friends, String date,
 		String start_time, String end_time, String time, String description,
-		Vector<String> comments, String id, boolean is_private) {
+		Vector<String> comments, String id, boolean is_private, int price) {
 		this.name = name;
 		this.users = users;
 		this.localization_name = localization_name;
@@ -34,6 +38,7 @@ public class Evento {
 		this.comments = comments;
 		this.id = id;
 		this.is_private = is_private;
+		this.price = price;
 	}
 
 	/**
@@ -100,4 +105,9 @@ public class Evento {
 	* @return true se o evento for privado, false se for publico.
 	*/
 	public boolean getPrivacy() { return this.is_private; }
+	
+	/**
+	 * @return o preco desse evento em centavos.
+	 * */
+	public int getPrice() { return this.price; }
 } 

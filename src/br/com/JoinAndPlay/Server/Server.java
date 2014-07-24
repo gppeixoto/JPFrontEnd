@@ -1,8 +1,10 @@
 package br.com.JoinAndPlay.Server;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Server {
+public class Server implements Serializable {
+	private static final long serialVersionUID = 8092668778830657391L;
 
 	/**
 	 * @param access_token acess_token do usuario que se quer logar.

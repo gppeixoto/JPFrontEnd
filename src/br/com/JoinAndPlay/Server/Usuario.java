@@ -1,8 +1,11 @@
 package br.com.JoinAndPlay.Server;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Usuario {
+public class Usuario implements Serializable {
+	private static final long serialVersionUID = 8250002358792274323L;
+	
 	private String name;
 	private int rating;
 	private String photo;
