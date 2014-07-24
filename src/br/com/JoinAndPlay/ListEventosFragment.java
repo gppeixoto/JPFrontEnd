@@ -84,7 +84,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 		return tela;
 	}
-	boolean loguin = true;
+	boolean login = true;
 
 	@Override
 	public void onClick(View v) {
@@ -97,7 +97,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 		PERMISSIONS.add("email");
 
-		if(loguin){
+		if(login){
 			Session session=			Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
 
 				// callback when session changes state
@@ -135,7 +135,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 			}
 
-			loguin=false;
+			login=false;
 		}else{
 			MyThread t = new MyThread();
 			t.start();
