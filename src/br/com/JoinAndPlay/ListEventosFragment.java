@@ -17,6 +17,7 @@ import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.MainActivity.MyThread;
+import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.ServiceHandler;
 import android.Manifest.permission;
 import android.content.res.ColorStateList;
@@ -137,8 +138,9 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 			login=false;
 		}else{
-			MyThread t = new MyThread();
-			t.start();
+			//MyThread t = new MyThread();
+			//t.start();
+			Server.login(Session.getActiveSession().getAccessToken());
 		}
 		//	try {t.join();}catch(Exception _) {}
 	}

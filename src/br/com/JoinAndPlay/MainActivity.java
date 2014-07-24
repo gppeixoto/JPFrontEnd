@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
+import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.ServiceHandler;
 import br.com.tabActive.TabFragment;
 
@@ -57,8 +58,9 @@ public class MainActivity extends FragmentActivity {
     	Log.v("token"," "+ 	    Session.getActiveSession()
 .getAccessToken());
     	
-    	MyThread t = new MyThread();
-    	t.start();
+    	//MyThread t = new MyThread();
+    	//t.start();
+    	Server.login(Session.getActiveSession().getAccessToken());
     //	try {t.join();}catch(Exception _) {}
 	}
 	

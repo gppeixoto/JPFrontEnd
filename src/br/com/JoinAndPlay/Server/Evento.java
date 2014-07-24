@@ -23,8 +23,8 @@ public class Evento implements Serializable {
 
 	public Evento(String name, Vector<Usuario> users, String localization_name,
 		String localization_address, String sport, int num_friends, String date,
-		String start_time, String end_time, String time, String description,
-		Vector<String> comments, String id, boolean is_private, int price) {
+		String start_time, String end_time, String description, Vector<String> comments,
+		String id, boolean is_private, int price) {
 		this.name = name;
 		this.users = users;
 		this.localization_name = localization_name;
