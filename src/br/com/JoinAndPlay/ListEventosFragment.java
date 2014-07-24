@@ -1,6 +1,7 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -63,9 +64,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
 		listV.setAdapter(adapter);
-		lista.add(new ItemEvent());
-		lista.add(new ItemEvent());
-		adapter.notifyDataSetChanged();
+	
 
 
 		return tela;
@@ -75,8 +74,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		lista.add(new ItemEvent());
-		adapter.notifyDataSetChanged();
 		List<String> PERMISSIONS = new ArrayList<String>();
 		PERMISSIONS.add("user_friends");
 		PERMISSIONS.add("public_profile");
@@ -136,15 +133,42 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 				@Override
 				public void onTerminado(Object in) {
 					Vector<Evento> vector = (Vector<Evento>) in;
-					Server.enter_event(Session.getActiveSession().getAccessToken(), vector.get(0).getId(), new Connecter() {
-						
-						@Override
-						public void onTerminado(Object in) {
-							Evento a = (Evento) in;
-							for (int i = 0; i < a.getUsers().size(); ++i) Log.v("uhu", a.getUsers().get(i).getName());
-
+					Log.v("uhu", "oi"+in);
+					for (int i = 0; i <vector.size(); i++) {
+					final	ItemEvent item=new ItemEvent();
+						Log.v("uhu2", ""+vector.get(i).getName());
+						item.titulo=vector.get(i).getName();
+						item.quadra=vector.get(i).getLocalizationName();
+						item.local=vector.get(i).getLocalizationAddress();
+						item.qtd_participantes=vector.get(i).getUsers().size();
+						item.amigos_qtd=vector.get(i).getNumFriends();
+						item.esporte=vector.get(i).getSport();
+						//item.cidade=
+						item.hora=vector.get(i).getStartTime();
+						item.data=vector.get(i).getDate();
+					    item.preco_centavos=vector.get(i).getPrice();
+					    //item.distancia=
+						item.privado=vector.get(i).getPrivacy();
+						item.amigos= new String[vector.get(i).getUsers().size()];
+						for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
+							item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
+							Log.v("photo", ""+item.amigos[j]);
 						}
-					});
+						if(getView()!=null)
+							getView().post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									lista.add(item);
+									adapter.notifyDataSetChanged();
+
+								}
+							});
+
+					}
+					
+
 				}
 			});
 		}

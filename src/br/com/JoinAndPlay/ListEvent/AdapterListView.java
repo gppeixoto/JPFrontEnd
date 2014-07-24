@@ -8,6 +8,7 @@ import br.com.JoinAndPlay.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +67,8 @@ public class AdapterListView extends BaseAdapter
 		
 		item.drawerView(view,amigos);
 
-
-		;// gerador.nextInt());
-		//atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
+Log.v("uhu3",item+ " "+item.titulo);
+		;		//atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
 		//ao item e definimos as informações.
 		// ((TextView) view.findViewById(R.id.)).setText(item.getTexto());
 		//  ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(item.getIconeRid());
