@@ -1,5 +1,6 @@
 package br.com.JoinAndPlay.ListEvent;
 
+import br.com.JoinAndPlay.R;
 import android.content.Context;
 import android.graphics.AvoidXfermode.Mode;
 import android.graphics.Bitmap;
@@ -17,17 +18,31 @@ import android.widget.ListView;
 
 public class MyListView extends ListView {
 
+	private void config(Context context){
+		
+		//redundancia para versoes antigas do android
+		this.setDivider(getResources().getDrawable(R.drawable.linha));
+		this.setDividerHeight(20);
+		View v=new View(context);
+		v.setMinimumHeight(15);
+		this.addHeaderView(v);
+	}
 	public MyListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		// TODO Auto-generated constructor stub
+		config(context);
 	}
 	public MyListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
+		config(context);
+
 	}
 	public MyListView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		config(context);
+
 	}
 	Boolean db=true;
 @Override 

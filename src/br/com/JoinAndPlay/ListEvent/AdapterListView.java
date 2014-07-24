@@ -3,13 +3,11 @@ package br.com.JoinAndPlay.ListEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Random;
 
 import br.com.JoinAndPlay.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,11 +63,11 @@ public class AdapterListView extends BaseAdapter
 		ItemEvent item = itens.get(position);
 		//infla o layout para podermos preencher os dados
 		view = mInflater.inflate(R.layout.item_list, null);
-		item.view=view;
-		item.ad=this;
+		
+		item.drawerView(view,amigos);
 
 
-	view.post(item);// gerador.nextInt());
+		;// gerador.nextInt());
 		//atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
 		//ao item e definimos as informações.
 		// ((TextView) view.findViewById(R.id.)).setText(item.getTexto());

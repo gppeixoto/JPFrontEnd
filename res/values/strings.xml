@@ -6,6 +6,7 @@
     <string name="menu_settings">Settings</string>
     <string name="hint_pesq1">Escolha o esporte</string>
     <string name="hint_pesq2">Endereço do local</string>
+    <string name="hint_pesq3">Nome do local</string>
     <string name="local">Local</string>
     <string name="data">Data</string>
     <string name="inicio">A partir de</string>
@@ -27,8 +28,12 @@
 	<string name="perfil_sim">Sim</string>
 	<string name="perfil_notificacoes">Notificações: </string>
     <string name="id_do_face" >697691156964434</string>
+    <string name="id_do_maps">AIzaSyBODfARx4GaCbksQPHu4RJhaDTLWXsDeYA</string>
     <string name="proximidades">Proximidades</string>
     <string name="esportes">Esportes</string>
     <string name="termino">Até</string>
     <string name="escolha_data">Data</string>
+    
+    
+    
 </resources>

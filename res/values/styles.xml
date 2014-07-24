@@ -10,12 +10,21 @@
     <item name="android:windowBackground">@color/cinzafundo</item>
     <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
     <item name="android:textColor">#535353</item>
+    <item name="android:calendarViewStyle">@style/customCalendar</item>
     
     
    <!--   <item name="android:listViewStyle">@style/MyListView</item>-->
 
     </style>
 
+  <style name="customCalendar" parent="android:Widget.CalendarView">
+        <item name="android:unfocusedMonthDateColor">@color/cinza</item>
+        <item name="android:focusedMonthDateColor">@color/black</item>
+        <item name="android:showWeekNumber">false</item>
+        <item name="android:selectedWeekBackgroundColor">@color/cinza</item>
+        <item name="android:weekSeparatorLineColor">@color/cinza_escuro</item>
+    </style>
+    
     <style name="CustomTabWidget" parent="@android:style/Widget.TabWidget"></style>
 
     <style name="AppBaseTheme" parent="android:Theme.Light">
@@ -33,15 +42,6 @@
 
     <style name="OlaTheme">10</style>
 
-    <style name="Theme.Custom" parent="@android:Theme">
-        <item name="android:calendarViewStyle">@style/Widget.CalendarView.Custom</item>
-    </style>
-
-    <style name="Widget.CalendarView.Custom" parent="android:Widget.CalendarView">
-        <item name="android:focusedMonthDateColor">@color/black</item>
-        <item name="android:weekNumberColor">@color/red</item>
-        <item name="android:selectedWeekBackgroundColor">@color/black</item>
-        <item name="android:weekSeparatorLineColor">@color/black</item>
-    </style>
+    
 
 </resources>
