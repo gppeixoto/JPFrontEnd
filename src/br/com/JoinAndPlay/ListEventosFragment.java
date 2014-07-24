@@ -1,7 +1,5 @@
 package br.com.JoinAndPlay;
 
-import br.com.tabActive.TabFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,28 +67,10 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		if (container == null) {
 			return null;
 		}
-		//	setListAdapter(adapter);
-		/*
-			Button bt = new Button(getActivity());
-			bt.setText("+");
-			LinearLayout linear = new LinearLayout(getActivity() );
-			linear.setOrientation(LinearLayout.VERTICAL);
-
-            View v = super.onCreateView(inflater, container, savedInstanceState);
-           v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1));
-			v.setBackgroundResource(R.drawable.linha);
-           bt.setBackgroundResource(R.drawable.seletc_tab);
-           linear.addView(v);
-		 */
 		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
 		ListView listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
-		//redundancia para versoes antigas do android
-		listV.setDivider(getResources().getDrawable(R.drawable.linha));
-        listV.setDividerHeight(20);
-        View v=new View(getActivity());
-        v.setMinimumHeight(15);
-        listV.addHeaderView(v);
+
 		Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setText("Criar Evento");
 		Button_criar.setOnClickListener(this);
@@ -111,11 +91,11 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		// TODO Auto-generated method stub
 		lista.add(new ItemEvent());
 		adapter.notifyDataSetChanged();
-List<String> PERMISSIONS = new ArrayList<String>();
-PERMISSIONS.add("user_friends");
-PERMISSIONS.add("public_profile");
+		List<String> PERMISSIONS = new ArrayList<String>();
+		PERMISSIONS.add("user_friends");
+		PERMISSIONS.add("public_profile");
 
-PERMISSIONS.add("email");
+		PERMISSIONS.add("email");
 
 		if(loguin){
 			Session session=			Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
@@ -123,7 +103,7 @@ PERMISSIONS.add("email");
 				// callback when session changes state
 				@Override
 				public void call(Session session, SessionState state, Exception exception) {
-					
+
 					if (session.isOpened()) {
 
 						// make request to the /me API
@@ -131,12 +111,12 @@ PERMISSIONS.add("email");
 
 							// callback after Graph API response with user object
 
-							
+
 							@Override
 							public void onCompleted(GraphUser user, Response response) {
 								// TODO Auto-generated method stub
-						    	Log.v("uuou","dasasd"+		user);
-								
+								Log.v("uuou","dasasd"+		user);
+
 							}
 						}
 								).executeAsync();
@@ -144,25 +124,25 @@ PERMISSIONS.add("email");
 				}
 			});
 
-	    	Log.v("token","dasasd"+		session.getPermissions());
-	    	Log.v("token","dasasd"+session.isOpened());
+			Log.v("token","dasasd"+		session.getPermissions());
+			Log.v("token","dasasd"+session.isOpened());
 
-	    	Log.v("token"," "+ session.getAccessToken());
-	    	Log.v("token","dasasd");
+			Log.v("token"," "+ session.getAccessToken());
+			Log.v("token","dasasd");
 
-		    if (session != null && session.isOpened()) {
-		        Toast.makeText(getActivity(), session.getAccessToken(), Toast.LENGTH_LONG).show();
+			if (session != null && session.isOpened()) {
+				Toast.makeText(getActivity(), session.getAccessToken(), Toast.LENGTH_LONG).show();
 
-		    }
-			
+			}
+
 			loguin=false;
 		}else{
-		MyThread t = new MyThread();
-    	t.start();
+			MyThread t = new MyThread();
+			t.start();
 		}
-    //	try {t.join();}catch(Exception _) {}
+		//	try {t.join();}catch(Exception _) {}
 	}
-	
+
 	class MyThread extends Thread {
 		public void run() {
 			ServiceHandler sh = new ServiceHandler();
@@ -173,12 +153,12 @@ PERMISSIONS.add("email");
 			sh.makePOST(ServiceHandler.URL_BASE + "login/", obj.toString());
 		}
 	}
-@Override
-public void onResume(){
-	super.onResume();
-	
-	
-}
+	@Override
+	public void onResume(){
+		super.onResume();
+
+
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -216,12 +196,17 @@ public void onResume(){
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		arg2--;
-		((MainActivity)getActivity()).mudarAba(0,new EventFragment() );
 		ItemEvent item = lista.get(arg2);
-		lista.remove(arg2);
-		AgendaEventosFragment.lista.add(	item);
 
-		adapter.notifyDataSetChanged();
+		Bundle arg= new Bundle();
+  		arg.putParcelable("evento",item );
+  		Fragment fragment = new EventFragment();
+  		fragment.setArguments(arg);
+		((MainActivity)getActivity()).mudarAbaAtual(fragment);
+		AgendaEventosFragment.lista.add(item);
+		AgendaEventosFragment.adapter.notifyDataSetChanged();
+
+
 
 	}
 

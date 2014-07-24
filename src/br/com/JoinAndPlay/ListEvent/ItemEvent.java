@@ -5,22 +5,51 @@ import java.util.Random;
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class ItemEvent {
+public class ItemEvent implements Parcelable {
 
 	private static Random	gerador = new Random();
 	public static final int  MAX_AMIGOS_QTD=7;
 	String esporte;
+	String titulo;
+	String quadra;
+	String local;
+	String cidade;
+	String hora;
+	String data;
+	int amigos_qtd;
+	int qtd_participantes;
+	int preco_centavos;
+	int distancia;
+	
 	int[] amigos;
 
 	public ItemEvent(){
 		amigos= new int[MAX_AMIGOS_QTD];
 		gerar();
 
+	}
+	public ItemEvent(Parcel in){
+		esporte =in.readString();
+		titulo =in.readString();
+		quadra =in.readString();
+		local =in.readString();
+		cidade =in.readString();
+		hora=in.readString();
+		data =in.readString();
+		amigos_qtd =in.readInt();
+		qtd_participantes =in.readInt();
+		preco_centavos =in.readInt();
+		distancia =in.readInt();
+		amigos = new int[in.readInt()];
+		in.readIntArray(amigos);   
+		
 	}
 
 	public void gerar(){
@@ -35,7 +64,7 @@ public class ItemEvent {
 		}
 
 	}
-	public void drawerView(final View view,final Bitmap[] imagens) {
+	public void drawerView(View view,Bitmap[] imagens) {
 		// TODO Auto-generated method stub
 		int idEsport=0;
 		if(esporte!= null){
@@ -47,18 +76,98 @@ public class ItemEvent {
 		View barra=(View) view.findViewById(R.id.item_list_barra);
 		barra.setBackgroundResource(ConfigJP.ESPORTE_BARRA[idEsport]);
 		LinearLayout content_image=(LinearLayout) view.findViewById(R.id.item_list_content_image);
+
+		TextView esporteView = (TextView) view.findViewById(R.id.item_list_esporte);
+		if(esporte!=null){
+
+			esporteView.setText(esporte);
+		}
+		TextView amigosQtdView = (TextView) view.findViewById(R.id.item_list_qtd_amg);
+		amigosQtdView.setText(""+amigos_qtd);
+
+		TextView tituloView = (TextView) view.findViewById(R.id.item_list_titulo);
+		if(titulo!=null){
+			tituloView.setText(titulo);
+		}
+
+		TextView quadraView = (TextView) view.findViewById(R.id.item_list_quadra);
+		if(quadra!=null){
+			quadraView.setText(quadra);
+		}
+		TextView localView = (TextView) view.findViewById(R.id.item_list_local);
+		if(local!=null){
+			localView.setText(local);
+		}
+		TextView cidadeView = (TextView) view.findViewById(R.id.item_list_cidade);
+		if(cidade!=null){
+			cidadeView.setText(cidade);
+		}
+		TextView participantesView = (TextView) view.findViewById(R.id.item_list_participantes);
+		participantesView.setText(qtd_participantes+" participantes");
+
+		TextView horaView = (TextView) view.findViewById(R.id.item_list_hora);
+		if(hora!=null){
+			horaView.setText(hora);
+		}
+		TextView dataView = (TextView) view.findViewById(R.id.item_list_dia);
+		if(data!=null){
+			dataView.setText(data);
+		}
 		
-	
+		TextView distanciaView = (TextView) view.findViewById(R.id.item_list_distancia);
+		if(distancia==0){
+			distanciaView.setText(distancia+"m");
+		}
+		TextView precoView = (TextView) view.findViewById(R.id.item_list_preco);
+		if(preco_centavos==0){
+			precoView.setText("");
+		}else{
+			String temp=""+preco_centavos;
+			int qtd=temp.length();
+			for (; qtd <3; qtd++) {
+				temp=0+temp;
+			}
+			temp= temp.substring(0,qtd-2 )+","+temp.substring(qtd-2);
+			precoView.setText("R$ "+temp);
+
+		}
+
+
+
 		for (int i = 0; i < amigos.length; i++) {
 			if(content_image.getChildCount()>i){
-			ImageView imagem = (ImageView) content_image.getChildAt(i);
+				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
-			imagem.setImageBitmap(imagens[amigos[i]]);
+				imagem.setImageBitmap(imagens[amigos[i]]);
 			}else break;
 		}		
 
 
 
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel arg0, int arg1) {
+		// TODO Auto-generated method stub
+		arg0.writeString(esporte);
+		arg0.writeString(titulo);
+		arg0.writeString(quadra);
+		arg0.writeString(local);
+		arg0.writeString(cidade);
+		arg0.writeString(hora);
+		arg0.writeString(data);
+		arg0.writeInt(amigos_qtd);
+		arg0.writeInt(qtd_participantes);
+		arg0.writeInt(preco_centavos);
+		arg0.writeInt(distancia);
+		arg0.writeInt(amigos.length);
+		arg0.writeIntArray(amigos);
 	}
 
 

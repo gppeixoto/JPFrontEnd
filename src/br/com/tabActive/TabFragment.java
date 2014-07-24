@@ -99,7 +99,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		mTabHost.getTabWidget().setBackgroundResource(R.drawable.seletc_wid_tab);
 		mViewPager = (ViewPager) mTabHost.findViewById(R.id.pager);
 
-		for (int i = 0; i < ids.size(); i++) {
+		for (int i = 0; i < Math.min(ids.size(),SIZE); i++) {
 			TabSpec tabSpec =mTabHost.newTabSpec("Tab"+ids.get(i)).setIndicator("").setContent(new TabFactory(getActivity()));
 			mTabHost.addTab(tabSpec);
 			tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
@@ -110,6 +110,12 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		for (int i = 0; i < fragments.size(); i++) {
 			FragmentTransaction ft=getFragmentManagerAba(i).beginTransaction();
 			ft.replace(R.id.tela_aba, fragments.get(i)).commit();
+		}
+		if(savedInstanceState!=null){
+			mTabHost.setCurrentTab((savedInstanceState.getInt("tab")));
+		}else{
+			
+			mTabHost.setCurrentTab(1);
 		}
 
 
@@ -123,8 +129,9 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		super.onSaveInstanceState(outState);
 
 		// salva a Tab selecionada
-		if(outState!=null)
-			outState.putString("tab", mTabHost.getCurrentTabTag());
+		if(outState!=null){
+			outState.putInt("tab", mTabHost.getCurrentTab());
+		}
 	}
 
 
