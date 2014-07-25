@@ -35,7 +35,7 @@ public final class ConfigJP {
 	public static final int getID(String esporte){
 		init();
 		esporte=esporte.toLowerCase();
-		return mapafutebol.get(esporte);
+		return 0;// mapafutebol.get(esporte);
 	}
 
 

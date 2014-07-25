@@ -4,6 +4,7 @@ import java.util.Random;
 
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.opengl.Visibility;
@@ -55,9 +56,9 @@ public class ItemEvent implements Parcelable {
 
 	}
 
-	
 
-	
+
+
 	public void drawerView(View view,Bitmap[] imagens) {
 		// TODO Auto-generated method stub
 		int idEsport=0;
@@ -97,7 +98,21 @@ public class ItemEvent implements Parcelable {
 			cidadeView.setText(cidade);
 		}
 		TextView participantesView = (TextView) view.findViewById(R.id.item_list_participantes);
-		participantesView.setText(qtd_participantes+" participantes");
+		switch (qtd_participantes) {
+		case 0:
+			participantesView.setText("");
+
+			break;
+		case 1:
+			participantesView.setText(qtd_participantes+" participante");
+
+			break;
+
+		default:
+			participantesView.setText(qtd_participantes+" participantes");
+
+			break;
+		}
 
 		TextView horaView = (TextView) view.findViewById(R.id.item_list_hora);
 		if(hora!=null){
@@ -133,12 +148,18 @@ public class ItemEvent implements Parcelable {
 			if(content_image.getChildCount()>i){
 				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
-				Uri uri= Uri.parse(amigos[i]);
-				imagem.setImageURI(uri);
+				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(amigos[i]);
+				//imagem.invalidate();
 			}else break;
 		}		
 
+		for (int i = amigos.length; i <MAX_AMIGOS_QTD; i++) {
+			if(content_image.getChildCount()>i){
+				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
+				imagem.setVisibility(View.INVISIBLE);
+			}else break;
+		}
 
 	}
 

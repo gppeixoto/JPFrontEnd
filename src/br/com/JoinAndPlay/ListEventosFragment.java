@@ -152,6 +152,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 						item.amigos= new String[vector.get(i).getUsers().size()];
 						for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
 							item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
+							
+							//DownloadImagemAsyncTask
 							Log.v("photo", ""+item.amigos[j]);
 						}
 						if(getView()!=null)
