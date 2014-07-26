@@ -60,4 +60,24 @@ public class Usuario implements Serializable {
 	 * @return amigos desse usuario.
 	 * */
 	public int getNumFriends() { return this.num_friends; } 
+	
+	/**
+	 * @return rating de cada esporte.
+	 * */
+	public Vector<RatingSport> getRateSport() { return this.rating_sport; }
+	
+	/**
+	 * @return tags com as avaliacoes.
+	 * */
+	public Vector<Tag> getTags() { return this.tags; }
+	
+	/**
+	 * @return quantas vezes jogou cada esporte.
+	 * */
+	public Vector<Esporte> getTimesSport() { return this.times_sport; }
+	
+	/**
+	 * @return true se tiver notificacao, false se nao tiver.
+	 * */
+	public boolean getHasNotification() { return this.has_notification; }
 }
