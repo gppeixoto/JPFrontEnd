@@ -11,15 +11,24 @@ public class Usuario implements Serializable {
 	private String rating;
 	private String photo;
 	private Vector<Evento> events;
-	private Vector<Usuario> friends;
+	private int num_friends;
+	private Vector<RatingSport> rating_sport;
+	private Vector<Tag> tags;
+	private Vector<Esporte> times_sport;
+	private boolean has_notification;
 	
-	public Usuario(String id, String name, String rating, String photo, Vector<Evento> events, Vector<Usuario> friends) {
+	public Usuario(String id, String name, String rating, String photo, Vector<Evento> events, int num_friends,
+				   Vector<RatingSport> rating_sport, Vector<Tag> tags, Vector<Esporte> times_sport, boolean has_notification) {
 		this.id = id;
 		this.name = name;
 		this.rating = rating;
 		this.photo = photo;
 		this.events = events;
-		this.friends = friends;
+		this.num_friends = num_friends;
+		this.rating_sport = rating_sport;
+		this.tags = tags;
+		this.times_sport = times_sport;
+		this.has_notification = has_notification;
 	}
 	
 	/**
@@ -50,5 +59,5 @@ public class Usuario implements Serializable {
 	/**
 	 * @return amigos desse usuario.
 	 * */
-	public Vector<Usuario> getFriends() { return this.friends; } 
+	public int getNumFriends() { return this.num_friends; } 
 }

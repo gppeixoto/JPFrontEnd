@@ -16,29 +16,32 @@ public class DownloadImagemAsyncTask extends AsyncTask<String, Void, Bitmap>{
 	ProgressDialog dialog;
 	Context context;
 	ImageView img;
-	public DownloadImagemAsyncTask(
-			Context context,
-			ImageView img){
-this.context=context;
-this.img=img;
+
+	public DownloadImagemAsyncTask(Context context, ImageView img){
+		this.context = context;
+		this.img = img;
 
 	}
-	
+
 	@Override 
 	protected Bitmap doInBackground(String... params) {
 		String urlString = params[0];
-		try { URL url = new URL(urlString);
-		HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-		conexao.setRequestMethod("GET");
-		conexao.setDoInput(true);
-		conexao.connect();
-		InputStream is = conexao.getInputStream();
-		Bitmap imagem = BitmapFactory.decodeStream(is);
-		return imagem;
+		try {
+			URL url = new URL(urlString);
+			HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+			conexao.setRequestMethod("GET");
+			conexao.setDoInput(true);
+			conexao.connect();
+			InputStream is = conexao.getInputStream();
+			Bitmap imagem = BitmapFactory.decodeStream(is);
+			return imagem;
 		} catch (Exception e) { 
 			e.printStackTrace();
-		} return null;
-	} @Override 
+		}
+		return null;
+	}
+
+	@Override 
 	protected void onPostExecute(Bitmap result) {
 		super.onPostExecute(result);
 		if (result != null){

@@ -46,7 +46,7 @@ public class ServiceHandler {
 			this.targetURL = targetURL;
 			this.jsonData = jsonData;
 			this.method = method;
-			this.con=con;
+			this.con = con;
 			this.retorno = null;
 		}
 		
