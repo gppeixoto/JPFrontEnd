@@ -59,7 +59,7 @@ public class Usuario implements Serializable {
 	/**
 	 * @return amigos desse usuario.
 	 * */
-	public int getNumFriends() { return this.num_friends; } 
+	public int getNumFriends() { return this.num_friends; }
 	
 	/**
 	 * @return rating de cada esporte.

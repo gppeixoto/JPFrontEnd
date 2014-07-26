@@ -7,17 +7,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.android.gms.drive.internal.ac;
-import com.google.android.gms.drive.internal.ar;
-
-import android.util.Log;
-
 public class Server implements Serializable {
 	private static final long serialVersionUID = 8092668778830657391L;
 
 	/**
 	 * @param access_token acess_token do usuario que se quer logar.
-	 * @return true se conseguiu logar, false caso contrário.
+	 * @return true se conseguiu logar, false caso contrario.
 	 */
 	public static void login(String access_token, Connecter connecter) {
 		try {
