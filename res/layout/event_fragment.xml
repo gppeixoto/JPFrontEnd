@@ -45,8 +45,8 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_local" />
+                android:layout_marginTop="7dp"
+                android:src="@drawable/hora" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -69,7 +69,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ic_local" />
+                android:src="@drawable/local" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -96,6 +96,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical" >
 
@@ -103,7 +104,6 @@
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="12"
                         android:textSize="18sp" />
 
@@ -111,9 +111,15 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="Confirmaram" />
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/linha_pontilhada2" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -139,43 +145,30 @@
                         android:textColor="@color/red" />
                 </LinearLayout>
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/pontilhado0"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal" >
+                    android:src="@drawable/linha_pontilhada2" />
 
-                    <ImageView
-                        android:id="@+id/cartinha"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_local" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Convidar" />
-
-                        <TextView
-                            android:id="@+id/textView13"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Amigos" />
-                    </LinearLayout>
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/cartinha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/convidar_amigos" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/pontilhada0"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:src="@drawable/linha_pontilhada" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -250,22 +243,34 @@
 
                 <Button
                     android:id="@+id/como_chegar"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@color/trasparent"
                     android:drawableLeft="@drawable/ic_local"
-                    android:padding="6dp"
+                    android:padding="5dp"
                     android:text="Como chegar" />
 
-                <Button
-                    android:id="@+id/button9"
+                <ImageView
+                    android:id="@+id/pontilhado1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
+                    android:src="@drawable/linha_pontilhada2" />
+
+                <Button
+                    android:id="@+id/compartilhar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
                     android:background="@color/trasparent"
-                    android:drawableLeft="@drawable/ic_local"
-                    android:padding="6dp"
+                    android:drawableLeft="@drawable/compartilhar"
+                    android:padding="5dp"
                     android:text="Compartilhar" />
             </LinearLayout>
         </LinearLayout>
@@ -328,9 +333,9 @@
                         android:id="@+id/idbutton10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="72dp"
+                        android:layout_marginRight="70dp"
                         android:background="@drawable/campo_esporte"
-                        android:text="Editar evento"
+                        android:drawableStart="@drawable/editar_evento"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>
@@ -341,13 +346,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:background="@color/white"
             android:orientation="horizontal" >
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingBottom="6dp"
                 android:background="@color/white"
                 android:orientation="vertical" >
 
@@ -372,13 +377,12 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/link_start"
                 android:layout_width="73dp"
-                android:layout_height="match_parent"
-                android:paddingBottom="6dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/campo_cinza"
                 android:drawableTop="@drawable/quadrado_cinza"
-                android:text="Iniciar\nJogo"
+                android:text="Iniciar Jogo"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -409,7 +413,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:scaleType="matrix"
-                android:src="@drawable/futebol" />
+                android:src="@drawable/comentarios" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -434,11 +438,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/white"
-            android:orientation="vertical" >
+            android:orientation="horizontal" >
 
             <EditText
                 android:id="@+id/editText1"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
@@ -451,6 +455,19 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" >
             </EditText>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/cinza_adicionar_comentario"
+                android:gravity="center"
+                android:text="Enviar"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
