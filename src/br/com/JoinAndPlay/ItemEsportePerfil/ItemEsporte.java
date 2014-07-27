@@ -47,11 +47,12 @@ public class ItemEsporte implements Parcelable {
 		if(esporte!= null){
 			idEsport=ConfigJP.getID(esporte);
 		}
+		idEsport=0;
 		ImageView imagem_bola=(ImageView) view.findViewById(R.id.item_list_icone);
-		imagem_bola.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsport]));
+		//imagem_bola.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsport]));
 		
 		View barra=(View) view.findViewById(R.id.item_list_barra);
-		barra.setBackgroundResource(ConfigJP.ESPORTE_BARRA[idEsport]);
+		//barra.setBackgroundResource(ConfigJP.ESPORTE_BARRA[idEsport]);
 
 		TextView esporteView = (TextView) view.findViewById(R.id.item_list_esporte);
 		if(esporte!=null){

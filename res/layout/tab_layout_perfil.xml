@@ -244,11 +244,13 @@
                     </AbsoluteLayout>
                 </RelativeLayout>
 
-                <br.com.JoinAndPlay.ItemEsportePerfil.MyGridView
+                <GridView
                     android:id="@+id/myGridView1"
                     android:layout_width="match_parent"
+    android:numColumns="auto_fit"
+                    
                     android:layout_height="wrap_content" >
-                </br.com.JoinAndPlay.ItemEsportePerfil.MyGridView>
+                </GridView>
 
             </LinearLayout>
         </LinearLayout>
