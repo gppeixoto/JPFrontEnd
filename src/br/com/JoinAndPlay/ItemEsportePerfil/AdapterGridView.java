@@ -46,7 +46,7 @@ public class AdapterGridView extends BaseAdapter {
 		//Pega o item de acordo com a posção.
 		ItemEsporte item = itens.get(position);
 		//infla o layout para podermos preencher os dados
-		view = mInflater.inflate(R.layout.tab_layout_perfil_esporte, null);
+		view = mInflater.inflate(R.layout.tab_layout_perfil_esporte, parent, false);
 		item.drawerView(view);
 		return view;
 	}
