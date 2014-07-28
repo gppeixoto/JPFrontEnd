@@ -332,6 +332,7 @@ public class Server implements Serializable {
 
 	private static Usuario processUsuario(JSONObject user) {
 		try {
+			String id = user.getString("id");
 			String name = user.getString("name");
 			String photo = user.getString("url");
 			Vector<RatingSport> ratings = new Vector<RatingSport>();
@@ -355,7 +356,7 @@ public class Server implements Serializable {
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
 
-			return new Usuario("", name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
+			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
 		} catch (JSONException _) {}
 		return null;
 	}
