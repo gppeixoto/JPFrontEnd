@@ -33,7 +33,15 @@
     <string name="esportes">Esportes</string>
     <string name="termino">Até</string>
     <string name="escolha_data">Data</string>
-    
-    
+    <string name="confirmaram">Confirmaram</string>
+    <string name="no_local">no local</string>
+    <string name="participar">Participar</string>
+    <string name="como_chegar">Como chegar</string>
+    <string name="compartilhar">Compartilhar</string>
+    <string name="futebol">Futebol</string>
+    <string name="sobre">Sobre</string>
+    <string name="iniciar_jogo">Iniciar Jogo</string>
+    <string name="comentarios">Comentários</string>
+    <string name="adicionar_comentario">Adicionar Comentário</string>
     
 </resources>
