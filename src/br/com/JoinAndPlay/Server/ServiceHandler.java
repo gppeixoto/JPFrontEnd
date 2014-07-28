@@ -7,43 +7,46 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import android.util.Log;
 
 public class ServiceHandler {                                                                                            
                                                                                                                          
 	public final static String HOST = "192.168.0.110";                                                                     
 	public final static int PORT = 8000;                                                                                 
 	public final static String URL_BASE = "http://" + HOST + ":" + PORT;                                           
-	private final static int GET = 1, POST = 2;                                                                          
+	private final static int GET = 1, POST = 2;   
+    ExecutorService executor = Executors.newFixedThreadPool(1);
                                                                                                                          
 	public ServiceHandler() {                                                                                            
 		                                                                                                                 
 	}                                                                                                                    
 	                                                                                                                     
-	public String makeGET(String targetURL) {
-		MyThread t = new MyThread(targetURL, ServiceHandler.GET, null);
-		t.start();
-		try { t.join(); } catch (Exception _) {}
-		return t.retorno;                                                         
+	public void makeGET(String targetURL,Connecter con) {
+		MyThread t = new MyThread(targetURL, ServiceHandler.GET, null, con);
+        executor.execute(t);
 	}                                                                                           
 	
 	                                                                                                                     
-	public String makePOST(String targetURL, String jsonData) {                                                          
-		MyThread t = new MyThread(targetURL, ServiceHandler.POST, jsonData);
-		t.start();
-		try { t.join(); } catch (Exception _) {}
-		return t.retorno;                                                    
-	}
+	public void makePOST(String targetURL, String jsonData,Connecter con) {                                                          
+		MyThread t = new MyThread(targetURL, ServiceHandler.POST, jsonData, con);
+        executor.execute(t);
+ 	}
 	
 	private class MyThread extends Thread {
 		private String targetURL;
 		private String jsonData;
 		private int method;
 		private String retorno;
+		Connecter con;
 		
-		public MyThread(String targetURL, int method, String jsonData) {
+		public MyThread(String targetURL, int method, String jsonData,Connecter con) {
 			this.targetURL = targetURL;
 			this.jsonData = jsonData;
 			this.method = method;
+			this.con = con;
 			this.retorno = null;
 		}
 		
@@ -51,8 +54,12 @@ public class ServiceHandler {
 		public void run() {
 			if (this.method == ServiceHandler.GET) {
 				retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
+				Log.v("user...",this.targetURL+""+ retorno);
+				if (con != null) con.onTerminado(retorno);
 			} else {
 				retorno = makeRequest(this.targetURL, this.jsonData, ServiceHandler.POST);
+				Log.v("user..",this.targetURL+""+ retorno);
+				if (con != null) con.onTerminado(retorno);
 			}
 		}
 	}

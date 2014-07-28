@@ -244,6 +244,14 @@
                     </AbsoluteLayout>
                 </RelativeLayout>
 
+                <GridView
+                    android:id="@+id/myGridView1"
+                    android:layout_width="match_parent"
+    android:numColumns="auto_fit"
+                    
+                    android:layout_height="wrap_content" >
+                </GridView>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

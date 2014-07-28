@@ -16,15 +16,17 @@ public class Evento implements Serializable {
 	private String start_time;
 	private String end_time;
 	private String description;
-	private Vector<String> comments;
+	private Vector<Comentario> comments;
 	private String id;
 	private boolean is_private;
 	private int price;
+	private String city;
+	private String neighbourhood;
 
 	public Evento(String name, Vector<Usuario> users, String localization_name,
 		String localization_address, String sport, int num_friends, String date,
-		String start_time, String end_time, String description, Vector<String> comments,
-		String id, boolean is_private, int price) {
+		String start_time, String end_time, String description, Vector<Comentario> comments,
+		String id, boolean is_private, int price, String city, String neighbourhood) {
 		this.name = name;
 		this.users = users;
 		this.localization_name = localization_name;
@@ -39,6 +41,8 @@ public class Evento implements Serializable {
 		this.id = id;
 		this.is_private = is_private;
 		this.price = price;
+		this.city = city;
+		this.neighbourhood = neighbourhood;
 	}
 
 	/**
@@ -94,7 +98,7 @@ public class Evento implements Serializable {
 	/**
 	* @return comentarios desse evento.
 	*/
-	public Vector<String> getComments() { return this.comments; }
+	public Vector<Comentario> getComments() { return this.comments; }
 
 	/**
 	* @return id do evento.
@@ -110,4 +114,14 @@ public class Evento implements Serializable {
 	 * @return o preco desse evento em centavos.
 	 * */
 	public int getPrice() { return this.price; }
+	
+	/**
+	 * @return o nome da cidade;
+	 * */
+	public String getCity() { return this.city; }
+	
+	/**
+	 * @return o nome do bairro.
+	 * */
+	public String getNeighbourhood() { return this.neighbourhood; }
 } 

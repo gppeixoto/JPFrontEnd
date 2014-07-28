@@ -43,5 +43,14 @@
     <string name="iniciar_jogo">Iniciar Jogo</string>
     <string name="comentarios">Comentários</string>
     <string name="adicionar_comentario">Adicionar Comentário</string>
+    <string name="perfil_gente_boa">Gente Boa</string>
+    <string name="perfil_esforcado">Esforçado</string>
+    <string name="perfil_joga_pro_time">Joga pro Time</string>
+    <string name="perfil_fair_play">Fair Play</string>
+    <string name="perfil_nivel_do_jogador">Nível do jogador</string>
+    <string name="perfil_partidas_jogadas"> partidas jogadas </string>
+    <string name="perfil_nome_esporte">Futebol</string>
     
 </resources>
+
+

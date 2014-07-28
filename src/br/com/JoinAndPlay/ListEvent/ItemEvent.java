@@ -4,7 +4,9 @@ import java.util.Random;
 
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -17,24 +19,23 @@ public class ItemEvent implements Parcelable {
 
 	private static Random	gerador = new Random();
 	public static final int  MAX_AMIGOS_QTD=7;
-	String esporte;
-	String titulo;
-	String quadra;
-	String local;
-	String cidade;
-	String hora;
-	String data;
-	int amigos_qtd;
-	int qtd_participantes;
-	int preco_centavos;
-	int distancia;
-	boolean privado;
+	public String esporte;
+	public String titulo;
+	public String quadra;
+	public String local;
+	public String cidade;
+	public String hora;
+	public String data;
+	public int amigos_qtd;
+	public int qtd_participantes;
+	public int preco_centavos;
+	public int distancia;
+	public boolean privado;
 
-	int[] amigos;
+	public String[] amigos;
 
 	public ItemEvent(){
-		amigos= new int[MAX_AMIGOS_QTD];
-		gerar();
+		amigos= new String[MAX_AMIGOS_QTD];
 
 	}
 	public ItemEvent(Parcel in){
@@ -49,24 +50,15 @@ public class ItemEvent implements Parcelable {
 		qtd_participantes =in.readInt();
 		preco_centavos =in.readInt();
 		distancia =in.readInt();
-		amigos = new int[in.readInt()];
-		in.readIntArray(amigos);   
+		amigos = new String[in.readInt()];
+		in.readStringArray(amigos);   
 		privado= in.readInt()==1;
 
 	}
 
-	public void gerar(){
-		for (int i = 0; i < amigos.length; i++) {
-			amigos[i]=gerador.nextInt(7);
-			for (int j = 0; j < i; j++) {
-				if(amigos[j]==amigos[i]){
-					i--;
-					break;
-				}
-			}
-		}
 
-	}
+
+
 	public void drawerView(View view,Bitmap[] imagens) {
 		// TODO Auto-generated method stub
 		int idEsport=0;
@@ -106,7 +98,21 @@ public class ItemEvent implements Parcelable {
 			cidadeView.setText(cidade);
 		}
 		TextView participantesView = (TextView) view.findViewById(R.id.item_list_participantes);
-		participantesView.setText(qtd_participantes+" participantes");
+		switch (qtd_participantes) {
+		case 0:
+			participantesView.setText("");
+
+			break;
+		case 1:
+			participantesView.setText(qtd_participantes+" participante");
+
+			break;
+
+		default:
+			participantesView.setText(qtd_participantes+" participantes");
+
+			break;
+		}
 
 		TextView horaView = (TextView) view.findViewById(R.id.item_list_hora);
 		if(hora!=null){
@@ -138,15 +144,22 @@ public class ItemEvent implements Parcelable {
 		privadoView.setVisibility(privado?View.VISIBLE:View.INVISIBLE);
 
 
-		for (int i = 0; i < amigos.length; i++) {
+		for (int i = 0; i < Math.min(amigos.length,MAX_AMIGOS_QTD); i++) {
 			if(content_image.getChildCount()>i){
 				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
-				imagem.setImageBitmap(imagens[amigos[i]]);
+				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(amigos[i]);
+				//imagem.invalidate();
 			}else break;
 		}		
 
+		for (int i = amigos.length; i <MAX_AMIGOS_QTD; i++) {
+			if(content_image.getChildCount()>i){
+				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
+				imagem.setVisibility(View.INVISIBLE);
+			}else break;
+		}
 
 	}
 
@@ -171,7 +184,7 @@ public class ItemEvent implements Parcelable {
 		arg0.writeInt(preco_centavos);
 		arg0.writeInt(distancia);
 		arg0.writeInt(amigos.length);
-		arg0.writeIntArray(amigos);
+		arg0.writeStringArray(amigos);
 		arg0.writeInt(privado?1:0);
 	}
 
