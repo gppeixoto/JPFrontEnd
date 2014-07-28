@@ -12,7 +12,7 @@
         <FrameLayout
             android:id="@+id/mapa_frag"
             android:layout_width="match_parent"
-            android:layout_height="138dp"
+            android:layout_height="150dp"
             android:background="@color/cinza" >
         </FrameLayout>
 
@@ -42,19 +42,21 @@
                 android:id="@+id/perfil_imagem_relogio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/hora" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="14dp"
                 android:text="Sábado, 19 de Abril ás 13:00 horas"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,9 +67,8 @@
                 android:id="@+id/perfil_imagem_barraesporte2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/local" />
 
@@ -75,15 +76,18 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Iate club Olinda, Av. José Augusto Moreira, 312 Casa Caiada"
-                android:textColor="@color/white" />
+                android:layout_marginRight="9dp"
+                android:text="Iate club Olinda\nAv. José Augusto Moreira, 312 Casa Caiada"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="14dp"
             android:background="@drawable/campo_branco"
             android:orientation="vertical" >
 
@@ -95,7 +99,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical" >
@@ -104,14 +108,18 @@
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="12"
-                        android:textSize="18sp" />
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Confirmaram" />
+                        android:layout_gravity="center"
+                        android:text="Confirmaram"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <ImageView
@@ -134,7 +142,8 @@
                         android:layout_gravity="center"
                         android:text="6"
                         android:textColor="@color/red"
-                        android:textSize="18sp" />
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView11"
@@ -142,7 +151,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="no local"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/red"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <ImageView
@@ -173,6 +183,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 android:padding="0dp" >
 
@@ -229,9 +241,11 @@
                     android:id="@+id/textView6"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="50px"
-                    android:layout_marginTop="10dp"
-                    android:text="+ 3 amigos" />
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="12dp"
+                    android:text="+ 3 amigos"
+                    android:textColor="@color/cinza_cinza"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -244,14 +258,15 @@
                 <Button
                     android:id="@+id/como_chegar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@color/trasparent"
-                    android:drawableLeft="@drawable/ic_local"
+                    android:drawableLeft="@drawable/get_there"
                     android:padding="5dp"
-                    android:text="Como chegar" />
+                    android:text="Como chegar"
+                    android:textColor="@color/cinza_escuro" />
 
                 <ImageView
                     android:id="@+id/pontilhado1"
@@ -264,14 +279,15 @@
                 <Button
                     android:id="@+id/compartilhar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@color/trasparent"
                     android:drawableLeft="@drawable/compartilhar"
                     android:padding="5dp"
-                    android:text="Compartilhar" />
+                    android:text="Compartilhar"
+                    android:textColor="@color/cinza_escuro" />
             </LinearLayout>
         </LinearLayout>
 
@@ -279,9 +295,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -344,8 +360,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:background="@color/white"
             android:orientation="horizontal" >
 
@@ -361,25 +377,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="12dp"
                     android:text="Sobre"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/text3"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Partida pra relaxar depois do trabalho." />
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:text="Partida para relaxar depois do trabalho."
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/link_start"
                 android:layout_width="73dp"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:background="@drawable/campo_cinza"
                 android:drawableTop="@drawable/quadrado_cinza"
                 android:text="Iniciar Jogo"
@@ -390,7 +409,7 @@
             android:id="@+id/propaganda"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:background="@color/white"
             android:orientation="vertical" >
         </LinearLayout>
@@ -401,7 +420,7 @@
             android:layout_height="38dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/campo_comentario_texto"
             android:gravity="top"
             android:orientation="horizontal" >
@@ -435,8 +454,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:background="@color/white"
             android:orientation="horizontal" >
 
@@ -445,8 +464,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/cinza_adicionar_comentario"
                 android:ems="10"
@@ -473,9 +492,9 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:background="@color/white"
             android:orientation="vertical" >
 
