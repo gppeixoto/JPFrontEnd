@@ -42,7 +42,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
+lista.add(new ItemEvent());
 		adapter = new AdapterListView(getActivity(),lista);
 
 
@@ -149,6 +149,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 					    item.preco_centavos=vector.get(i).getPrice();
 					    //item.distancia=
 						item.privado=vector.get(i).getPrivacy();
+						item.evento=vector.get(i);
 						item.amigos= new String[vector.get(i).getUsers().size()];
 						for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
 							item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();

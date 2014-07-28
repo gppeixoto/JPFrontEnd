@@ -5,6 +5,7 @@ import java.util.Random;
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
+import br.com.JoinAndPlay.Server.Evento;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.opengl.Visibility;
@@ -31,6 +32,7 @@ public class ItemEvent implements Parcelable {
 	public int preco_centavos;
 	public int distancia;
 	public boolean privado;
+	public Evento evento;
 
 	public String[] amigos;
 
@@ -53,6 +55,7 @@ public class ItemEvent implements Parcelable {
 		amigos = new String[in.readInt()];
 		in.readStringArray(amigos);   
 		privado= in.readInt()==1;
+		evento=(Evento)in.readSerializable();
 
 	}
 
@@ -186,6 +189,7 @@ public class ItemEvent implements Parcelable {
 		arg0.writeInt(amigos.length);
 		arg0.writeStringArray(amigos);
 		arg0.writeInt(privado?1:0);
+		arg0.writeSerializable(evento);
 	}
 
 

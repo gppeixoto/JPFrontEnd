@@ -48,7 +48,7 @@ public class DownloadImagemAsyncTask extends AsyncTask<String, Void, Bitmap>{
 			img.setImageBitmap(result);
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(context). setTitle("Erro"). setMessage("Não foi possivel carregar imagem, tente novamente mais tarde!"). setPositiveButton("OK", null);
-			builder.create().show();
+			//builder.create().show();
 		} 
 	} 
 } 
