@@ -33,7 +33,11 @@
     <string name="esportes">Esportes</string>
     <string name="termino">Até</string>
     <string name="escolha_data">Data</string>
+    <string name="esporte">Esporte</string>
+    <string name="horario">Horário</string>
+    <string name="preco">Preço</string>
+    <string name="preco_nulo">00,00</string>
+    <string name="selecione_local">Selecione o local desejado</string>
     
-    
-    
+
 </resources>
