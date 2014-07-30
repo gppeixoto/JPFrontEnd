@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="6dp"
-    android:orientation="horizontal" >
-    
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp" >
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,16 +19,18 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="6dp"
             android:background="@color/verde_futebol"
-            android:src="@drawable/futebol" />
+            android:scaleType="matrix"
+            android:src="@drawable/bola_peq" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"        
         android:orientation="vertical" >
 
         <LinearLayout
@@ -40,71 +42,73 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5h"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carlos convidou voçê"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                android:text="Carlos convidou___voçê"
+                android:textSize="10sp"  />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            
+            >
 
             <TextView
                 android:id="@+id/TextView02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Partida na casa de Caio"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="Partidana casa de Caio"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/avatar_35x335" />
-
+                android:src="@drawable/cad" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/TextView01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Casa Caiada - Olinda"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Casa Caiada • Olinda"
+           android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14/05 - 12:00h"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
+            android:text="14/05 • 12:00h"
+            android:textSize="14sp" />
     </LinearLayout>
+ <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ImageButton01"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/avatar_35x335" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="29dp"
+            android:src="@drawable/v" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton1"
-            android:layout_width="0dp" 
-            android:layout_height="wrap_content"
-                        android:layout_weight="1"
-            
-            android:src="@drawable/avatar_35x335" />
-
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/x" />
     </LinearLayout>
 
 </LinearLayout>
