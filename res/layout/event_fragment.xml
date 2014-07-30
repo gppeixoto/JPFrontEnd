@@ -6,15 +6,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" 
-        android:background="@color/cinzafundo">
+        android:background="@color/cinzafundo"
+        android:orientation="vertical" >
 
         <FrameLayout
             android:id="@+id/mapa_frag"
             android:layout_width="match_parent"
-            android:layout_height="138dp"
+            android:layout_height="150dp"
             android:background="@color/cinza" >
-
         </FrameLayout>
 
         <LinearLayout
@@ -27,324 +26,446 @@
             <Button
                 android:id="@+id/button1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:text="Participar"
                 android:background="@color/red"
-            	android:textColor="@color/white"/>
+                android:text="@string/participar"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-        
-        	<view
-            android:id="@+id/view1"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            class="AbsoluteLayout" />
 
-        	<TextView
-        	    android:id="@+id/textView1"
-        	    android:layout_width="wrap_content"
-        	    android:layout_height="wrap_content"
-        	    android:text="Sábado, 19 de Abril ás 13:00 horas" 
-        	    android:textColor="@color/white"/>
-            
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/perfil_imagem_relogio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/hora" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        	
-                        <ImageView
-                  android:id="@+id/perfil_imagem_barraesporte2"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:src="@drawable/ic_local" />
-            
             <TextView
-        	    android:id="@+id/textView2"
-        	    android:layout_width="wrap_content"
-        	    android:layout_height="wrap_content"
-        	    android:text="Iate club Olinda\nAv. José Augusto Moreira, 312 Casa Caiada"
-        	    android:textColor="@color/white" />
-            
+                android:id="@+id/descricao_horario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="14dp"
+                android:text="Sábado, 19 de Abril ás 13:00 horas"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
         </LinearLayout>
 
-        <LinearLayout 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/local" />
+
+            <TextView
+                android:id="@+id/descricao_local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="9dp"
+                android:text="Iate club Olinda, Av. José Augusto Moreira, 312 Casa Caiada"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/campo_branco"
             android:orientation="vertical" >
-        	
-		            <LinearLayout
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:background="@color/white"
-		            android:orientation="horizontal"
-		            android:padding="0dp" >
 
-		                <LinearLayout
-		                    android:layout_width="0dp"
-		                    android:layout_height="match_parent"
-		                    android:layout_weight="1"
-		                    android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="0dp" >
 
-		                    <TextView
-		                        android:id="@+id/textView8"
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:layout_gravity="center"
-		                        android:text="12" />
-		                   
-         		            <TextView
-		                        android:id="@+id/textView9"
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:layout_gravity="center"
-		                        android:text="Confirmaram" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
 
-		                </LinearLayout>
-		
-		            	<LinearLayout
-		                    android:layout_width="0dp"
-		                    android:layout_height="match_parent"
-		                    android:layout_weight="1"
-		                    android:orientation="vertical" >
+                    <TextView
+                        android:id="@+id/qtd_confirmados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="12"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-		                    <TextView
-		                        android:id="@+id/textView10"
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-								android:textColor="@color/red"     
-		                        android:layout_gravity="center"
-		                        android:text="6" />
-		                   
-         		            <TextView
-		                        android:id="@+id/textView11"
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:textColor="@color/red"
-		                        android:layout_gravity="center"
-		                        android:text="no local" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/confirmaram"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
-		                </LinearLayout>	
-		            
-		            <LinearLayout
-		                    android:layout_width="0dp"
-		                    android:layout_height="match_parent"
-		                    android:layout_weight="1"
-		                    android:orientation="vertical" >
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linha_pontilhada2" />
 
-		                    <TextView
-		                        android:id="@+id/textView12"
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:layout_gravity="center"
-		                        android:text="Convidar" />
-		                   
-         		            <TextView
-		                        android:id="@+id/textView13"
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:layout_gravity="center"
-		                        android:text="Amigos" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
 
-		                </LinearLayout>
-			        </LinearLayout>
-			        
-		            <LinearLayout
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:background="@color/white"
-			            android:orientation="horizontal"
-			            android:padding="0dp" >
-			
-		    			<ImageView
-		                  android:id="@+id/perfil_imagem_perfil1"
-		                  android:layout_width="wrap_content"
-		                  android:layout_height="wrap_content"
-		                  android:layout_marginLeft="7dp"
-		                  android:layout_marginTop="7dp"
-		                  android:layout_marginBottom="7dp"
-		                  android:src="@drawable/ic_perfil" />
-		    			<ImageView
-		                  android:id="@+id/perfil_imagem_perfil2"
-		                  android:layout_width="wrap_content"
-		                  android:layout_height="wrap_content"
-		                  android:layout_marginTop="7dp"
-		                  android:layout_marginBottom="7dp"
-		                  android:src="@drawable/ic_perfil" />
-		    			<ImageView
-		                  android:id="@+id/perfil_imagem_perfil3"
-		                  android:layout_width="wrap_content"
-		                  android:layout_height="wrap_content"
-		                  android:layout_marginTop="7dp"
-		                  android:layout_marginBottom="7dp"
-		                  android:src="@drawable/ic_perfil" />
-		    			<ImageView
-		                  android:id="@+id/perfil_imagem_perfil4"
-		                  android:layout_width="wrap_content"
-		                  android:layout_height="wrap_content"
-		                  android:layout_marginTop="7dp"
-		                  android:layout_marginBottom="7dp"
-		                  android:src="@drawable/ic_perfil" />
-		    			<ImageView
-		                  android:id="@+id/perfil_imagem_perfil5"
-		                  android:layout_width="wrap_content"
-		                  android:layout_height="wrap_content"
-		                  android:layout_marginTop="7dp"
-		                  android:layout_marginBottom="7dp"
-		                  android:src="@drawable/ic_perfil" />
-		    			<ImageView
-		                  android:id="@+id/perfil_imagem_perfil6"
-		                  android:layout_width="wrap_content"
-		                  android:layout_height="wrap_content"
-		                  android:layout_marginTop="7dp"
-		                  android:layout_marginBottom="7dp"
-		                  android:src="@drawable/ic_perfil" />	
-		                  
-		    			<TextView
-						    android:id="@+id/textView6"
-						    android:layout_width="fill_parent"
-						    android:layout_height="fill_parent"
-						    android:layout_marginTop="10dp"
-						    android:layout_marginLeft="50px"
-						    android:text="+ 3 amigos" />			        
-		                
-			        </LinearLayout>
-        
-		            <LinearLayout
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:background="@color/cinza"
-		            android:orientation="horizontal"
-		            android:padding="0dp" >
-		
-		            <Button
-		                android:id="@+id/como_chegar"
-		                android:layout_width="0dp"
-		                android:layout_height="wrap_content"
-		                android:layout_weight="1"
-		                android:text="Como chegar"/>
-		            
-		            <Button
-		                android:id="@+id/button9"
-		                android:layout_width="0dp"
-		                android:layout_height="wrap_content"
-		                android:layout_weight="1"
-		                android:text="Compartilhar"/>
-		            
-			        </LinearLayout>
-        
+                    <TextView
+                        android:id="@+id/qtd_no_local"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="6"
+                        android:textColor="@color/red"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/no_local"
+                        android:textColor="@color/red"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linha_pontilhada2" />
+
+                <ImageView
+                    android:id="@+id/cartinha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/convidar_amigos" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/pontilhada0"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/linha_pontilhada" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:padding="0dp" >
+
+                <ImageView
+                    android:id="@+id/imagem_perfil1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="7dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <ImageView
+                    android:id="@+id/imagem_perfil2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <ImageView
+                    android:id="@+id/imagem_perfil3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <ImageView
+                    android:id="@+id/imagem_perfil4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <ImageView
+                    android:id="@+id/imagem_perfil5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <ImageView
+                    android:id="@+id/imagem_perfil6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <TextView
+                    android:id="@+id/qtd_amigos_amais"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="38dp"
+                    android:layout_marginTop="12dp"
+                    android:text="+ 3 amigos"
+                    android:textColor="@color/cinza_cinza"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cinza"
+                android:orientation="horizontal"
+                android:padding="0dp" >
+
+                <Button
+                    android:id="@+id/como_chegar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/trasparent"
+                    android:drawableLeft="@drawable/get_there"
+                    android:padding="5dp"
+                    android:text="@string/como_chegar"
+                    android:textColor="@color/cinza_escuro" />
+
+                <View
+                    android:id="@+id/pontilhado1"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linha_pontilhada2"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/compartilhar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/trasparent"
+                    android:drawableLeft="@drawable/compartilhar"
+                    android:padding="5dp"
+                    android:text="@string/compartilhar"
+                    android:textColor="@color/cinza_escuro" />
+            </LinearLayout>
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical" >
-            
-            <ImageView
-                  android:id="@+id/perfil_imagem_barraesporte3"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:src="@drawable/futebol2" />
-            
-        </LinearLayout>
-
-        
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal">
-	    	<LinearLayout
-	            android:layout_width="0dp"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:background="@color/white"
-	            android:orientation="vertical" >
-	
-	            <TextView
-	                android:id="@+id/textView3"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-               		android:textAppearance="?android:attr/textAppearanceMedium"
-	                android:text="Sobre" />
-
-				<TextView
-				    android:id="@+id/text3"
-				    android:layout_width="wrap_content"
-				    android:layout_height="32dp"
-				    android:text="Partida pra relaxar depois do trabalho" />
-	            
-	        </LinearLayout>
-        
-   	        <Button
-   	            android:id="@+id/button2"
-   	            android:layout_width="wrap_content"
-   	            android:layout_height="match_parent"
-   	            android:background="@drawable/campo_cinza"
-   	            android:text="Iniciar\nJogo" />
-            
-        </LinearLayout>
-
-      	<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/item_list_barra"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/cinza_comentario" >
+                android:layout_height="38dp"
+                android:background="@drawable/campo_esporte"
+                android:gravity="top"
+                android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Comentários"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-                
+                <ImageView
+                    android:id="@+id/imagem_da_partida"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/futebol" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/tipo_da_partida"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/futebol"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/editar_evento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="70dp"
+                        android:background="@drawable/campo_esporte"
+                        android:drawableStart="@drawable/editar_evento"
+                        android:textColor="@color/white" />
+                </LinearLayout>
             </LinearLayout>
-			
-			<EditText
-                android:id="@+id/editText1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Adicionar Comentário"
-                android:ems="10"
-                android:textSize="15sp" >
-
-             
-            </EditText>
-			
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="2dp"
-			 	android:background="@drawable/dashed" />
-                        
         </LinearLayout>
 
-       <LinearLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:background="@color/white"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/sobre"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/descricao_do_esporte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:text="Partida para relaxar depois do trabalho."
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/botao_play"
+                android:layout_width="73dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/campo_cinza"
+                android:drawableTop="@drawable/quadrado_cinza"
+                android:text="@string/iniciar_jogo"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/propaganda"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/campo_comentario_texto"
+            android:gravity="top"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@drawable/comentarios"
+                android:scaleType="matrix" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/comentarios"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:background="@color/white"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/inserir_comentario"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/cinza_adicionar_comentario"
+                android:ems="10"
+                android:gravity="center"
+                android:text="@string/adicionar_comentario"
+                android:textColor="@color/white"
+                android:textSize="18sp" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:background="@color/white"
             android:orientation="vertical" >
 
@@ -352,49 +473,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
-            
-              <ImageView
-	              android:id="@+id/perfil_imagem_usuario"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_marginLeft="7dp"
-	              android:layout_marginTop="7dp"
-	              android:layout_marginRight="7dp"
-	              android:layout_marginBottom="7dp"
-	              android:src="@drawable/ic_perfil" />
 
-              <LinearLayout
+                <ImageView
+                    android:id="@+id/perfil_imagem_usuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="7dp"
+                    android:src="@drawable/ic_perfil" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/nome_usuario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fulano"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tempo_decorrido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20 min"
+                        android:textColor="@color/cinza_escuro" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/comentario_texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-              
-	           	<TextView
-	       	    	android:id="@+id/text6"
-	        	    android:layout_width="wrap_content"
-	        	    android:layout_height="wrap_content"
-	        	    android:text="Fulano" 
-	        	    android:textColor="@color/black"/>    
-	              
-	           	<TextView
-	       	    	android:id="@+id/textView7"
-	        	    android:layout_width="wrap_content"
-	        	    android:layout_height="wrap_content"
-	        	    android:text="20 min" 
-	        	    android:textColor="@color/cinza_escuro"/>
-	           	
-	           	</LinearLayout>
-            </LinearLayout>
-			
-            
-           	<TextView
-       	    	android:id="@+id/textView5"
-        	    android:layout_width="wrap_content"
-        	    android:layout_height="wrap_content"
-        	    android:text="Chamem seus amigos, quanto mais gente melhor!" 
-        	    android:textColor="@color/black"/>
-                    	
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:text="Chamem seus amigos, quanto mais gente melhor!"
+                android:textColor="@color/black" />
         </LinearLayout>
-
     </LinearLayout>
 
 </ScrollView>

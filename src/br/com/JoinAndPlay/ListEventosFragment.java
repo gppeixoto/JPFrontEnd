@@ -1,50 +1,37 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
-import org.json.JSONObject;
-
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.Request.GraphUserCallback;
-import com.facebook.android.Facebook;
-import com.facebook.model.GraphUser;
-
-import br.com.JoinAndPlay.Event.EventFragment;
-import br.com.JoinAndPlay.ListEvent.AdapterListView;
-import br.com.JoinAndPlay.ListEvent.ItemEvent;
-import br.com.JoinAndPlay.MainActivity.MyThread;
-import br.com.JoinAndPlay.Server.ServiceHandler;
-import android.Manifest.permission;
-import android.content.res.ColorStateList;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.text.Editable.Factory;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.Toast;
+import br.com.JoinAndPlay.Event.EventFragment;
+import br.com.JoinAndPlay.ListEvent.AdapterListView;
+import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Evento;
+import br.com.JoinAndPlay.Server.Server;
+
+import com.facebook.Request;
+import com.facebook.Request.GraphUserCallback;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 
 
 public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener {
@@ -55,7 +42,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
+lista.add(new ItemEvent());
 		adapter = new AdapterListView(getActivity(),lista);
 
 
@@ -77,9 +64,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
 		listV.setAdapter(adapter);
-		lista.add(new ItemEvent());
-		lista.add(new ItemEvent());
-		adapter.notifyDataSetChanged();
+	
 
 
 		return tela;
@@ -89,8 +74,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		lista.add(new ItemEvent());
-		adapter.notifyDataSetChanged();
 		List<String> PERMISSIONS = new ArrayList<String>();
 		PERMISSIONS.add("user_friends");
 		PERMISSIONS.add("public_profile");
@@ -98,19 +81,17 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		PERMISSIONS.add("email");
 
 		if(login){
-			Session session=			Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
+			Session session = Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
 
 				// callback when session changes state
 				@Override
 				public void call(Session session, SessionState state, Exception exception) {
 
 					if (session.isOpened()) {
-
 						// make request to the /me API
 						Request.newMeRequest(session, new GraphUserCallback() {
 
 							// callback after Graph API response with user object
-
 
 							@Override
 							public void onCompleted(GraphUser user, Response response) {
@@ -137,22 +118,67 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 			login=false;
 		}else{
-			MyThread t = new MyThread();
-			t.start();
+			//MyThread t = new MyThread();
+			//t.start();
+			Server.login(Session.getActiveSession().getAccessToken(),new Connecter() {
+				
+				@Override
+				public void onTerminado(Object in) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			/**/
+			Server.get_matched_events(Session.getActiveSession().getAccessToken(), null, null, null, null, null,new Connecter() {			
+				@Override
+				public void onTerminado(Object in) {
+					Vector<Evento> vector = (Vector<Evento>) in;
+					Log.v("uhu", "oi"+in);
+					for (int i = 0; i <vector.size(); i++) {
+					final	ItemEvent item=new ItemEvent();
+						Log.v("uhu2", ""+vector.get(i).getName());
+						item.titulo=vector.get(i).getName();
+						item.quadra=vector.get(i).getLocalizationName();
+						item.local=vector.get(i).getLocalizationAddress();
+						item.qtd_participantes=vector.get(i).getUsers().size();
+						item.amigos_qtd=vector.get(i).getNumFriends();
+						item.esporte=vector.get(i).getSport();
+						//item.cidade=
+						item.hora=vector.get(i).getStartTime();
+						item.data=vector.get(i).getDate();
+					    item.preco_centavos=vector.get(i).getPrice();
+					    //item.distancia=
+						item.privado=vector.get(i).getPrivacy();
+						item.evento=vector.get(i);
+						item.amigos= new String[vector.get(i).getUsers().size()];
+						for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
+							item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
+							
+							//DownloadImagemAsyncTask
+							Log.v("photo", ""+item.amigos[j]);
+						}
+						if(getView()!=null)
+							getView().post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									lista.add(item);
+									adapter.notifyDataSetChanged();
+
+								}
+							});
+
+					}
+					
+
+				}
+			});
 		}
 		//	try {t.join();}catch(Exception _) {}
 	}
 
-	class MyThread extends Thread {
-		public void run() {
-			ServiceHandler sh = new ServiceHandler();
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("access_token", Session.getActiveSession().getAccessToken());
-			} catch (Exception _) {}
-			sh.makePOST(ServiceHandler.URL_BASE + "login/", obj.toString());
-		}
-	}
+	
 	@Override
 	public void onResume(){
 		super.onResume();

@@ -1,45 +1,68 @@
 package br.com.JoinAndPlay.Server;
 
                                                                                                                          
-import java.io.BufferedOutputStream;                                                                                     
-import java.io.BufferedReader;                                                                                           
-import java.io.IOException;                                                                                              
-import java.io.InputStreamReader;                                                                                        
-import java.io.OutputStream;                                                                                             
-import java.io.UnsupportedEncodingException;                                                                             
-import java.net.HttpURLConnection;                                                                                       
-import java.net.URL;                                                                                                     
-                                                                                                                         
-import org.apache.http.HttpEntity;                                                                                       
-import org.apache.http.HttpResponse;                                                                                     
-import org.apache.http.auth.AuthScope;                                                                                   
-import org.apache.http.auth.UsernamePasswordCredentials;                                                                 
-import org.apache.http.client.ClientProtocolException;                                                                   
-import org.apache.http.client.methods.HttpGet;                                                                           
-import org.apache.http.impl.auth.BasicScheme;                                                                            
-import org.apache.http.impl.client.DefaultHttpClient;                                                                    
-import org.apache.http.util.EntityUtils;                                                                                 
-                                                                                                                         
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import android.util.Log;
+
 public class ServiceHandler {                                                                                            
                                                                                                                          
-	public final static String HOST = "192.168.0.105";                                                                     
+	public final static String HOST = "192.168.0.110";                                                                     
 	public final static int PORT = 8000;                                                                                 
-	public final static String URL_BASE = "http://" + HOST + ":" + PORT + "/";                                           
-	private final static int GET = 1, POST = 2;                                                                          
+	public final static String URL_BASE = "http://" + HOST + ":" + PORT;                                           
+	private final static int GET = 1, POST = 2;   
+    ExecutorService executor = Executors.newFixedThreadPool(1);
                                                                                                                          
 	public ServiceHandler() {                                                                                            
 		                                                                                                                 
 	}                                                                                                                    
 	                                                                                                                     
-	public String makeGET(String targetURL
-			) {                                                                            
-		return makeRequest(targetURL, null, ServiceHandler.GET);                                                         
+	public void makeGET(String targetURL,Connecter con) {
+		MyThread t = new MyThread(targetURL, ServiceHandler.GET, null, con);
+        executor.execute(t);
 	}                                                                                           
 	
 	                                                                                                                     
-	public String makePOST(String targetURL, String jsonData) {                                                          
-		return makeRequest(targetURL, jsonData, ServiceHandler.POST);                                                    
-	}                                                                                                                    
+	public void makePOST(String targetURL, String jsonData,Connecter con) {                                                          
+		MyThread t = new MyThread(targetURL, ServiceHandler.POST, jsonData, con);
+        executor.execute(t);
+ 	}
+	
+	private class MyThread extends Thread {
+		private String targetURL;
+		private String jsonData;
+		private int method;
+		private String retorno;
+		Connecter con;
+		
+		public MyThread(String targetURL, int method, String jsonData,Connecter con) {
+			this.targetURL = targetURL;
+			this.jsonData = jsonData;
+			this.method = method;
+			this.con = con;
+			this.retorno = null;
+		}
+		
+		@Override
+		public void run() {
+			if (this.method == ServiceHandler.GET) {
+				retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
+				Log.v("user...",this.targetURL+""+ retorno);
+				if (con != null) con.onTerminado(retorno);
+			} else {
+				retorno = makeRequest(this.targetURL, this.jsonData, ServiceHandler.POST);
+				Log.v("user..",this.targetURL+""+ retorno);
+				if (con != null) con.onTerminado(retorno);
+			}
+		}
+	}
                                                                                                                          
 	private String makeRequest(String targetURL, String jsonData, int method) {                                          
 		try {                                                                                                            

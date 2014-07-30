@@ -14,4 +14,7 @@
     <color android:id="@+id/color1" name="cinza_comentario" android:layout_width="wrap_content" android:layout_height="wrap_content">#767676</color>
 	<color android:id="@+id/color1" name="red_pesquisa" android:layout_width="wrap_content" android:layout_height="wrap_content">#c60c0c</color>
 	<color android:id="@+id/color1" name="cinza_txt" android:layout_width="wrap_content" android:layout_height="wrap_content">#7f7f7f</color>
+	<color android:id="@+id/color1" name="cinza_adicionar_comentario" android:layout_width="wrap_content" android:layout_height="wrap_content">#BCBCBC</color>
+	<color android:id="@+id/color1" name="cinza_cinza" android:layout_width="wrap_content" android:layout_height="wrap_content">#535353</color>
+
 </resources>

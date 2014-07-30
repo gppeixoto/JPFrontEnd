@@ -13,6 +13,7 @@ import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import br.com.JoinAndPlay.Server.Evento;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class EventFragment extends Fragment implements OnClickListener{
 	private ItemEvent myEvent;
@@ -41,6 +44,7 @@ public class EventFragment extends Fragment implements OnClickListener{
 
 			myEvent= (ItemEvent)getArguments().getParcelable("evento");
 			myEvent= myEvent==null?new ItemEvent():myEvent;
+			setValuesEvent(v, myEvent);
 		}
 		suportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
@@ -68,6 +72,36 @@ public class EventFragment extends Fragment implements OnClickListener{
 
 			}
 		});
+	}
+	
+	public void setValuesEvent(View view,ItemEvent eventItem){
+		Evento evento = eventItem.evento;
+		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
+		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
+		
+		TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
+		TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
+		
+		ImageView pessoa1 = (ImageView)view.findViewById(R.id.imagem_perfil1);
+		ImageView pessoa2 = (ImageView)view.findViewById(R.id.imagem_perfil2);
+		ImageView pessoa3 = (ImageView)view.findViewById(R.id.imagem_perfil3);
+		ImageView pessoa4 = (ImageView)view.findViewById(R.id.imagem_perfil4);
+		ImageView pessoa5 = (ImageView)view.findViewById(R.id.imagem_perfil5);
+		ImageView pessoa6 = (ImageView)view.findViewById(R.id.imagem_perfil6);	
+		TextView qtd_amigos_amais = (TextView)view.findViewById(R.id.qtd_amigos_amais);
+
+		ImageView imagem_da_partida = (ImageView)view.findViewById(R.id.imagem_da_partida);
+		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
+		
+		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
+		
+		descricao_horario.setText(evento.getDate() + " as " + evento.getStartTime() + " horas");
+		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
+		
+	//	qtd_confirmados.setText(evento.);
+	//	qtd_no_local(evento.);
+		
+	//	pessoa1.
 	}
 
 	@Override

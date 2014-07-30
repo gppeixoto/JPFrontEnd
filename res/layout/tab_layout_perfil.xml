@@ -38,16 +38,13 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="12dp" >
 
-                    <ImageView
-                        android:id="@+id/perfil_avatar_usuario"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="8dp"
-                        android:maxHeight="55dp"
-                        android:maxWidth="55dp"
-                        android:scaleType="center"
-                        android:src="@drawable/grey_35" />
+                    <com.facebook.widget.ProfilePictureView
+                        android:id="@+id/profilePictureView1"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:paddingLeft="12dp" >
+
+                    </com.facebook.widget.ProfilePictureView>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -81,6 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="24dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/pont" />
 
                 <RelativeLayout
@@ -141,6 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="11dp"
                         android:layout_toRightOf="@+id/perfil_gente_boa" >
 
                         <TextView
@@ -245,14 +244,15 @@
                     </AbsoluteLayout>
                 </RelativeLayout>
 
-                <LinearLayout
+                <GridView
+                    android:id="@+id/myGridView1"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" >
-                </LinearLayout>
+    android:numColumns="auto_fit"
+                    
+                    android:layout_height="wrap_content" >
+                </GridView>
 
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
