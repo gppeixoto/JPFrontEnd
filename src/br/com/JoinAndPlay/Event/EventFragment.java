@@ -44,6 +44,7 @@ public class EventFragment extends Fragment implements OnClickListener{
 
 			myEvent= (ItemEvent)getArguments().getParcelable("evento");
 			myEvent= myEvent==null?new ItemEvent():myEvent;
+					if(myEvent!=null)
 			setValuesEvent(v, myEvent);
 		}
 		suportMap= new SupportMapFragment();
@@ -95,8 +96,8 @@ public class EventFragment extends Fragment implements OnClickListener{
 		
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
 		
-		descricao_horario.setText(evento.getDate() + " as " + evento.getStartTime() + " horas");
-		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
+	//	descricao_horario.setText(evento.getDate() + " as " + evento.getStartTime() + " horas");
+//		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
 		
 	//	qtd_confirmados.setText(evento.);
 	//	qtd_no_local(evento.);
