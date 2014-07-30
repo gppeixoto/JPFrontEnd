@@ -3,257 +3,299 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="20dp" >
+    android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="362dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="9dp"
+        android:paddingRight="9dp" >
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="left"
-            android:orientation="vertical" >
+            android:layout_height="fill_parent" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/perfil_fundo_branco"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="8dp"
+                android:gravity="left"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="79dp"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/perfil_fundo_branco"
-                    android:gravity="left"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="12dp" >
-
-                    <com.facebook.widget.ProfilePictureView
-                        android:id="@+id/profilePictureView1"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:paddingLeft="12dp" >
-
-                    </com.facebook.widget.ProfilePictureView>
+                    android:paddingBottom="15dp	"
+                    android:orientation="vertical" >
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="vertical" >
+                        android:layout_width="match_parent"
+                        android:layout_height="79dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/perfil_fundo_branco"
+                        android:gravity="left"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="12dp" >
 
-                        <TextView
-                            android:id="@+id/perfil_nome_usuario"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/perfil_nome_usuario"
-                            android:textColor="#535353"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        <com.facebook.widget.ProfilePictureView
+                            android:id="@+id/profilePictureView1"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:paddingLeft="12dp" >
+                        </com.facebook.widget.ProfilePictureView>
 
-                        <TextView
-                            android:id="@+id/perfil_idade_usuario"
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="1dp"
-                            android:text="@string/perfil_idade_usario"
-                            android:textColor="#535353"
-                            android:textSize="14sp" />
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/perfil_nome_usuario"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/perfil_nome_usuario"
+                                android:textColor="#535353"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/perfil_idade_usuario"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="@string/perfil_idade_usario"
+                                android:textColor="#535353"
+                                android:textSize="14sp" />
+                        </LinearLayout>
                     </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/pont" />
+
+                    <RelativeLayout
+                        android:id="@+id/RelativeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical|center_horizontal|clip_horizontal" >
+
+                        <ImageView
+                            android:id="@+id/perfil_esforcado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="11dp"
+                            android:layout_toLeftOf="@+id/AbsoluteLayout01"
+                            android:src="@drawable/icon_esforcado" />
+
+                        <ImageView
+                            android:id="@+id/perfil_gente_boa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="24dp"
+                            android:src="@drawable/icon_gente_boa" />
+
+                        <AbsoluteLayout
+                            android:id="@+id/AbsoluteLayout01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="24dp" >
+
+                            <TextView
+                                android:id="@+id/perfil_votos_esforcado"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="15dp"
+                                android:layout_y="8dp"
+                                android:text="20"
+                                android:textColor="#535353"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/perfil_text_esforcado"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="1dp"
+                                android:layout_y="43dp"
+                                android:text="Esforçado" />
+                        </AbsoluteLayout>
+
+                        <AbsoluteLayout
+                            android:id="@+id/AbsoluteLayout1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="11dp"
+                            android:layout_toRightOf="@+id/perfil_gente_boa" >
+
+                            <TextView
+                                android:id="@+id/perfil_votos_gente_boa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="15dp"
+                                android:layout_y="8dp"
+                                android:text="20"
+                                android:textColor="#535353"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/perfil_text_gente_boa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="1dp"
+                                android:layout_y="43dp"
+                                android:text="Gente Boa" />
+                        </AbsoluteLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/RelativeLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical|center_horizontal|clip_horizontal" >
+
+                        <ImageView
+                            android:id="@+id/ImageView01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="11dp"
+                            android:layout_toLeftOf="@+id/AbsoluteLayout03"
+                            android:src="@drawable/fairplay" />
+
+                        <ImageView
+                            android:id="@+id/ImageView02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="24dp"
+                            android:src="@drawable/icon_jogaprotime" />
+
+                        <AbsoluteLayout
+                            android:id="@+id/AbsoluteLayout03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="24dp" >
+
+                            <TextView
+                                android:id="@+id/TextView03"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="15dp"
+                                android:layout_y="8dp"
+                                android:text="20"
+                                android:textColor="#535353"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/TextView01"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="1dp"
+                                android:layout_y="43dp"
+                                android:text="Fair Play" />
+                        </AbsoluteLayout>
+
+                        <AbsoluteLayout
+                            android:id="@+id/AbsoluteLayout02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/ImageView02" >
+
+                            <TextView
+                                android:id="@+id/TextView02"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="1dp"
+                                android:layout_y="43dp"
+                                android:text="Joga pro time" />
+
+                            <TextView
+                                android:id="@+id/TextView04"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="25dp"
+                                android:layout_y="8dp"
+                                android:text="20"
+                                android:textColor="#535353"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+                        </AbsoluteLayout>
+                    </RelativeLayout>
+
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/pont" />
-
-                <RelativeLayout
-                    android:id="@+id/RelativeLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_vertical|center_horizontal|clip_horizontal" >
+                    android:layout_height="40dp" >
 
-                    <ImageView
-                        android:id="@+id/perfil_esforcado"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="11dp"
-                        android:layout_toLeftOf="@+id/AbsoluteLayout01"
-                        android:src="@drawable/icon_esforcado" />
-
-                    <ImageView
-                        android:id="@+id/perfil_gente_boa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="24dp"
-                        android:src="@drawable/icon_gente_boa" />
-
-                    <AbsoluteLayout
-                        android:id="@+id/AbsoluteLayout01"
+                    <Button
+                        android:id="@+id/button2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="24dp" >
-
-                        <TextView
-                            android:id="@+id/perfil_votos_esforcado"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="15dp"
-                            android:layout_y="8dp"
-                            android:text="20"
-                            android:textColor="#535353"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/perfil_text_esforcado"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="1dp"
-                            android:layout_y="43dp"
-                            android:text="Esforçado" />
-                    </AbsoluteLayout>
-
-                    <AbsoluteLayout
-                        android:id="@+id/AbsoluteLayout1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="11dp"
-                        android:layout_toRightOf="@+id/perfil_gente_boa" >
-
-                        <TextView
-                            android:id="@+id/perfil_votos_gente_boa"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="15dp"
-                            android:layout_y="8dp"
-                            android:text="20"
-                            android:textColor="#535353"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/perfil_text_gente_boa"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="1dp"
-                            android:layout_y="43dp"
-                            android:text="Gente Boa" />
-                    </AbsoluteLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/RelativeLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_vertical|center_horizontal|clip_horizontal" >
+                        android:layout_weight="15"
+                        android:background="@drawable/perfil_button_1"
+                        android:text="@string/perfil_button_num_amigos"
+                        android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/ImageView01"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="11dp"
-                        android:layout_toLeftOf="@+id/AbsoluteLayout03"
-                        android:src="@drawable/fairplay" />
+                        android:id="@+id/imageView2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/pont2" />
 
-                    <ImageView
-                        android:id="@+id/ImageView02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="24dp"
-                        android:src="@drawable/icon_jogaprotime" />
-
-                    <AbsoluteLayout
-                        android:id="@+id/AbsoluteLayout03"
+                    <Button
+                        android:id="@+id/button1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="24dp" >
+                        android:layout_weight="6"
+                        android:background="@drawable/perfil_button_1"
+                        android:text="@string/perfil_button_eventos_anteriores"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/TextView03"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="15dp"
-                            android:layout_y="8dp"
-                            android:text="20"
-                            android:textColor="#535353"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/TextView01"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="1dp"
-                            android:layout_y="43dp"
-                            android:text="Fair Play" />
-                    </AbsoluteLayout>
-
-                    <AbsoluteLayout
-                        android:id="@+id/AbsoluteLayout02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/ImageView02" >
-
-                        <TextView
-                            android:id="@+id/TextView02"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="1dp"
-                            android:layout_y="43dp"
-                            android:text="Joga pro time" />
-
-                        <TextView
-                            android:id="@+id/TextView04"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_x="25dp"
-                            android:layout_y="8dp"
-                            android:text="20"
-                            android:textColor="#535353"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-                    </AbsoluteLayout>
-                </RelativeLayout>
-
-                <GridView
-                    android:id="@+id/myGridView1"
-                    android:layout_width="match_parent"
-    android:numColumns="auto_fit"
-                    
-                    android:layout_height="wrap_content" >
-                </GridView>
+                </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <GridView
+            android:id="@+id/myGridView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:longClickable="false"
+            android:descendantFocusability="blocksDescendants"
+            android:numColumns="auto_fit" >
+        </GridView>
+    </LinearLayout>
 
 </RelativeLayout>
