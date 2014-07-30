@@ -109,6 +109,8 @@ public class TimePickerBuilder {
             fragment.setTargetFragment(targetFragment, 0);
         }
         fragment.setTimePickerDialogHandlers(mTimePickerDialogHandlers);
+        //Log.v("aqui","noshow");
         fragment.show(ft, "time_dialog");
+        //Log.v("aqui","noshow2");
     }
 }

@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,7 @@ public class TimePickerDialogFragment extends DialogFragment {
             Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.time_picker_dialog, null);
+        //Log.v("ois","infloso");
         mSet = (Button) v.findViewById(R.id.set_button);
         mCancel = (Button) v.findViewById(R.id.cancel_button);
         mCancel.setOnClickListener(new View.OnClickListener() {
