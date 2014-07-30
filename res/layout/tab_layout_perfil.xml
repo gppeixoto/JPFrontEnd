@@ -193,34 +193,6 @@
                             android:src="@drawable/icon_jogaprotime" />
 
                         <AbsoluteLayout
-                            android:id="@+id/AbsoluteLayout03"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="24dp" >
-
-                            <TextView
-                                android:id="@+id/TextView03"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_x="15dp"
-                                android:layout_y="8dp"
-                                android:text="20"
-                                android:textColor="#535353"
-                                android:textSize="30sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/TextView01"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_x="1dp"
-                                android:layout_y="43dp"
-                                android:text="Fair Play" />
-                        </AbsoluteLayout>
-
-                        <AbsoluteLayout
                             android:id="@+id/AbsoluteLayout02"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -246,6 +218,36 @@
                                 android:textSize="30sp"
                                 android:textStyle="bold" />
                         </AbsoluteLayout>
+
+                        <AbsoluteLayout
+                            android:id="@+id/AbsoluteLayout03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="26dp" >
+
+                            <TextView
+                                android:id="@+id/TextView01"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="1dp"
+                                android:layout_y="43dp"
+                                android:text="Fair Play" />
+
+                            <TextView
+                                android:id="@+id/TextView03"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_x="11dp"
+                                android:layout_y="6dp"
+                                android:text="20"
+                                android:textColor="#535353"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                        </AbsoluteLayout>
+
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -287,7 +289,7 @@
 
         <GridView
             android:id="@+id/myGridView1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusable="false"
             android:focusableInTouchMode="false"
