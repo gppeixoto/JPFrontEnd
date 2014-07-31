@@ -259,7 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="15"
-                        android:background="@drawable/perfil_button_1"
+                        android:background="@drawable/perfil_buttons"
                         android:text="@string/perfil_button_num_amigos"
                         android:textSize="14sp" />
 
@@ -276,7 +276,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="6"
-                        android:background="@drawable/perfil_button_1"
+                        android:background="@drawable/perfil_buttons"
                         android:text="@string/perfil_button_eventos_anteriores"
                         android:textSize="14sp" />
 

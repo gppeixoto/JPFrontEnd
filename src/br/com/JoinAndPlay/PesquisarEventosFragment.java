@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,15 +19,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 
+import org.joda.time.DateTime;
+
 public class PesquisarEventosFragment extends Fragment 
-//implements RadialTimePickerDialog.OnTimeSetListener {
-implements TimePickerDialogFragment.TimePickerDialogHandler {
-	
+implements RadialTimePickerDialog.OnTimeSetListener {
+	//implements TimePickerDialogFragment.TimePickerDialogHandler {
+
 	private Button bg;
 	private Button b2;
 	private Button b3;
 	private boolean mHasDialogFrame;
-	 
+	private static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -45,12 +49,9 @@ implements TimePickerDialogFragment.TimePickerDialogHandler {
 		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
 
 		Calendar c = Calendar.getInstance();
-		// year, month, day, hourOfDay, minute
-		//c.set(1990, 7, 12, 9, 34);
 		long millis = c.getTimeInMillis();
 
 		CalendarView cv = (CalendarView) v.findViewById(R.id.calendarView1);
-		//cv.setMinDate(millis-10000);
 		cv.setDate(millis,true,true);
 
 		bg.setOnClickListener(new View.OnClickListener() {
@@ -63,33 +64,25 @@ implements TimePickerDialogFragment.TimePickerDialogHandler {
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.v("log1","oi");
+
+				/** Standard timepicker **/
 				//showTimePickerDialog(v);
-				TimePickerBuilder tpb = new TimePickerBuilder();
+
+				/** Better Time Picker **/
+				/* TimePickerBuilder tpb = new TimePickerBuilder();
 				tpb.setFragmentManager(getChildFragmentManager());
 				tpb.setTargetFragment(PesquisarEventosFragment.this);
 				tpb.setStyleResId(R.style.BetterPickersDialogFragment);
-				Log.v("log1","oi2");
-				/*.addTimePickerDialogHandler(PesquisarEventosFragment.this)
-				.setFragmentManager(getFragmentManager())
-				.setStyleResId(R.style.BetterPickersDialogFragment);*/
-				
-				tpb.show();
-				Log.v("log1","oi3");
-				/*Time now = new Time();
-				now.setToNow();
-                RadialTimePickerDialog timePickerDialog = RadialTimePickerDialog
-                        .newInstance(PesquisarEventosFragment.this, now.getHourOfDay(), now.getMinuteOfHour(),
-                                DateFormat.is24HourFormat(SampleRadialTimeDefault.this));
-                if (mHasDialogFrame) {
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				tpb.show();*/
 
-                    ft.add(R.id.frame, timePickerDialog, FRAG_TAG_TIME_PICKER)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .commit();
-                } else {
-                    timePickerDialog.show(getSupportFragmentManager(), FRAG_TAG_TIME_PICKER);
-                }*/
+				/** Radial Time Picker **/
+				DateTime now = DateTime.now();
+				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
+						now.getHourOfDay(), now.getMinuteOfHour(), 
+						DateFormat.is24HourFormat(getActivity()));
+				
+				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+
 			}
 		});
 
@@ -110,13 +103,22 @@ implements TimePickerDialogFragment.TimePickerDialogHandler {
 
 	public void onTimeSet(RadialTimePickerDialog dialog, int hourOfDay,
 			int minute) {
-		// TODO Auto-generated method stub
-		
+		b2.setText("" + hourOfDay + ":" + minute);
+
+	}
+
+	public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+		b2.setText("" + hourOfDay + ":" + minute);
 	}
 
 	@Override
-	public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
-		b2.setText("" + hourOfDay + ":" + minute);
+	public void onResume() {
+		super.onResume();
+		RadialTimePickerDialog rtpd = (RadialTimePickerDialog) getFragmentManager().findFragmentByTag(
+				FRAG_TAG_TIME_PICKER);
+		if (rtpd != null) {
+			rtpd.setOnTimeSetListener(this);
+		}
 	}
 
 
