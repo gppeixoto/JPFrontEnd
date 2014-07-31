@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +27,7 @@ implements RadialTimePickerDialog.OnTimeSetListener {
 	private Button bg;
 	private Button b2;
 	private Button b3;
-	private boolean mHasDialogFrame;
-	private static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
+	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,9 +99,12 @@ implements RadialTimePickerDialog.OnTimeSetListener {
 		newFragment.show(getFragmentManager(), "timePicker");
 	}
 
-	public void onTimeSet(RadialTimePickerDialog dialog, int hourOfDay,
-			int minute) {
-		b2.setText("" + hourOfDay + ":" + minute);
+	public void onTimeSet(RadialTimePickerDialog dialog, int hourOfDay, int minute) {
+		String h,m;
+		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+		m = minute < 10 ? "0" + minute : "" + minute;
+		
+		b2.setText(h + ":" + m);
 
 	}
 
