@@ -217,8 +217,7 @@
                         android:paddingBottom="4dp"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text=" 31 de Fevereiro de 2013"/>
+                        android:textColor="@color/white"/>
                 </LinearLayout>
 
             </LinearLayout>

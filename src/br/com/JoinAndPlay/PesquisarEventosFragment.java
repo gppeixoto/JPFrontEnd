@@ -7,6 +7,7 @@ import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment.Tim
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.*;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
@@ -29,6 +32,15 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	private Button b2;
 	private Button b3;
 	private Button bd;
+	private TextView dv;
+	private TextView apv;
+	private TextView atv;
+	private TextView lv;
+	private TextView eev;
+	private EditText env;
+	private EditText eendv;
+	private EditText eesv;
+	
 	private boolean begin = false;
 	private boolean end = false;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
@@ -39,19 +51,43 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
 
+		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
+		
+		apv = (TextView) v.findViewById(R.id.aPartir);
+		dv = (TextView) v.findViewById(R.id.data_view);
+		atv = (TextView) v.findViewById(R.id.ateTextView);
+		lv = (TextView) v.findViewById(R.id.local);
+		eev = (TextView) v.findViewById(R.id.escolhaEsportes);
+		env = (EditText) v.findViewById(R.id.escolha_nome);
+		eendv = (EditText) v.findViewById(R.id.escolha_endereco);
+		eesv = (EditText) v.findViewById(R.id.escolha_esporte);
+		apv.setTypeface(fontBold);
+		dv.setTypeface(fontBold);
+		atv.setTypeface(fontBold);
+		lv.setTypeface(fontBold);
+		eev.setTypeface(fontBold);
+		env.setTypeface(font);
+		eendv.setTypeface(font);
+		eesv.setTypeface(font);
+		
 		bd = (Button) v.findViewById(R.id.buttonDia);
 		DateTime now = DateTime.now();
+		bd.setTypeface(fontBold);
 		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
+		b2.setTypeface(fontBold);
 		b2.setText("00:00");
 		//b2.setText("Início");
 
 		b3 = (Button) v.findViewById(R.id.buttonDataFim);
+		b3.setTypeface(fontBold);
 		b3.setText("23:59");
 		//b3.setText("Fim");
 
 		bg = (Button) v.findViewById(R.id.bigButton);
+		bg.setTypeface(fontBold);
 		bg.setText("Pesquisar");
 
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
