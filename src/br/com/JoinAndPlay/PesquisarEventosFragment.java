@@ -41,7 +41,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 		bd = (Button) v.findViewById(R.id.buttonDia);
 		DateTime now = DateTime.now();
-		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()));
+		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
 		//b2.setText("00:00");
@@ -68,12 +68,6 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 			@Override
 			public void onClick(View v) {
 				/** Radial Date Picker **/
-                /*DateTime now = DateTime.now();
-                CalendarDatePickerDialog calendar = CalendarDatePickerDialog
-                        .newInstance(SampleCalendarDateDefault.this, now.getYear(), now.getMonthOfYear() - 1,
-                                now.getDayOfMonth());
-                calendarDatePickerDialog.show(fm, FRAG_TAG_DATE_PICKER);*/
-                
 				DateTime now = DateTime.now();
 				CalendarDatePickerDialog calendar = CalendarDatePickerDialog.newInstance(PesquisarEventosFragment.this, 
 						now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
@@ -140,7 +134,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 	@Override
     public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear));
+        bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
     }
 	
 	public void onTimeSet(RadialTimePickerDialog dialog, int hourOfDay, int minute) {

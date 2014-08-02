@@ -208,15 +208,17 @@
 
                     <Button
                         android:id="@+id/buttonDia"
-                        android:layout_width="160dp"
+                        android:layout_width="180dp"
                         android:layout_height="32dp"
                         android:background="@drawable/pesq_button"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/white"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text=" 31 de Fevereiro de 2013"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -259,7 +261,7 @@
 
                     <Button
                         android:id="@+id/buttonDataInicio"
-                        android:layout_width="74dp"
+                        android:layout_width="84dp"
                         android:layout_height="32dp"
                         android:background="@drawable/pesq_button"
                         android:paddingBottom="4dp"
@@ -267,19 +269,21 @@
                         android:paddingRight="10dp"
                         android:paddingTop="4dp"
                         android:layout_marginRight="12dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
                         android:textColor="@color/white" />
 
                     <Button
                         android:id="@+id/buttonDataFim"
-                        android:layout_width="74dp"
+                        android:layout_width="84dp"
                         android:layout_height="32dp"
                         android:background="@drawable/pesq_button"
                         android:paddingBottom="4dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="4dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
                         android:textColor="@color/white" />
 
                 </LinearLayout>
