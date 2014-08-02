@@ -61,10 +61,8 @@ public class ItemEsporte implements Parcelable {
 		
 		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_num_partidas);
 		numPartidasView.setText(esporte);
-		
 		/**
 		 * Falta as estrelas
 		 */
-		
 	}
 }

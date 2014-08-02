@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape android:shape="rectangle" >
+            <gradient
+                android:angle="90"
+                android:centerColor="@color/cinza_escuro_trans"
+                android:centerY="90%"
+                android:endColor="@color/cinza_escuro_trans"
+                android:startColor="@color/cinza_escuro_trans" />
+        </shape>
+    </item>
+    <item>
+        <selector>
+            <item android:state_pressed="true">
+                <shape android:shape="rectangle" >
+                    <gradient
+                        android:centerColor="@color/black_almost"
+                        android:endColor="@color/black_almost"
+                        android:startColor="@color/black_almost" />
+                </shape>
+            </item>
+            <item>
+                <shape android:shape="rectangle" >
+                    <gradient
+                        android:centerColor="@color/cinza"
+                        android:endColor="@color/cinza"
+                        android:startColor="@color/cinza" />
+                </shape>
+            </item>
+        </selector>
+    </item>
+
+</layer-list>

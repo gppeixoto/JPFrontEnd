@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class ServiceHandler {                                                                                            
                                                                                                                          
-	public final static String HOST = "192.168.0.110";                                                                     
+	public final static String HOST = "192.168.0.100";                                                                     
 	public final static int PORT = 8000;                                                                                 
 	public final static String URL_BASE = "http://" + HOST + ":" + PORT;                                           
 	private final static int GET = 1, POST = 2;   

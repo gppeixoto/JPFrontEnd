@@ -16,7 +16,6 @@ public class NotificacaoFragment extends Fragment  {
 	LinearLayout.LayoutParams parans_max= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1);
 	LinearLayout.LayoutParams parans_min= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class NotificacaoFragment extends Fragment  {
 		
 		list.setAdapter(new NotificacaoAdapter(inflater));
 		list.setDivider(getResources().getDrawable(R.drawable.linha));
-		list.setDividerHeight(20);
+		list.setDividerHeight(1);
 		list.setVisibility(View.VISIBLE);
 	//	View v2=new View(getActivity());
 		//v2.setMinimumHeight(15);

@@ -55,8 +55,13 @@
     <string name="preco">Preço</string>
     <string name="preco_nulo">00,00</string>
     <string name="selecione_local">Selecione o local desejado</string>
+
     <string name="por_hora">por hora</string>
     <string name="unidade_preco">R$</string>
      <string name="nome_evento">Nome do evento</string>
+
+    <string name="perfil_button_num_amigos">Amigos</string>
+    <string name="perfil_button_eventos_anteriores">Eventos anteriores</string>
+
     
 </resources>

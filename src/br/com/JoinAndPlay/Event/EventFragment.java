@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.joda.time.DateTime;
-
 public class EventFragment extends Fragment implements OnClickListener{
 	private ItemEvent myEvent;
 	SupportMapFragment suportMap;
