@@ -44,12 +44,12 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
-		//b2.setText("00:00");
-		b2.setText("Início");
+		b2.setText("00:00");
+		//b2.setText("Início");
 
 		b3 = (Button) v.findViewById(R.id.buttonDataFim);
-		//b3.setText("23:59");
-		b3.setText("Fim");
+		b3.setText("23:59");
+		//b3.setText("Fim");
 
 		bg = (Button) v.findViewById(R.id.bigButton);
 		bg.setText("Pesquisar");
