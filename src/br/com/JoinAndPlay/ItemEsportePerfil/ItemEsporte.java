@@ -1,11 +1,16 @@
 package br.com.JoinAndPlay.ItemEsportePerfil;
 
+import java.util.ArrayList;
+
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
+import android.R.drawable;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 /*
 import android.widget.LinearLayout;
@@ -13,7 +18,8 @@ import android.widget.GridView;
 */
 
 public class ItemEsporte implements Parcelable {
-
+	public static int NUM_YELLOW_STARS = 5; /*debugging purposes*/
+	public static int NUM_WHITE_STARS = 0;  /*debugging purposes*/
 	String esporte;
 	int partidasJogadas;
 	int avaliacaoJogador; //numero de estrelas
@@ -61,8 +67,10 @@ public class ItemEsporte implements Parcelable {
 		
 		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_num_partidas);
 		numPartidasView.setText(esporte);
-		/**
-		 * Falta as estrelas
-		 */
+		LinearLayout layoutStars = (LinearLayout) view.findViewById(R.id.perfil_layout_stars);
+				
+		for (int i=0; i<NUM_YELLOW_STARS; ++i){
+			//ImageView star = (ImageView) star.setImageDrawable(Drawable.createFromPath("res/drawable/star1.png"));
+		}
 	}
 }

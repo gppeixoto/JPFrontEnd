@@ -291,13 +291,18 @@
             android:id="@+id/myGridView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="-6dp"
+            android:layout_marginTop="15dp"
+            android:clickable="false"
+            android:descendantFocusability="blocksDescendants"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:clickable="false"
             android:longClickable="false"
-            android:descendantFocusability="blocksDescendants"
-            android:numColumns="auto_fit" >
+            android:numColumns="auto_fit"
+            android:paddingLeft="0dp" >
+
         </GridView>
+
     </LinearLayout>
 
 </RelativeLayout>

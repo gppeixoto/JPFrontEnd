@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 public class PerfilUserFragment extends Fragment {
-	static final int NUM_SPORTS = 6; //debugging purposes, change once linked with the BD
+	static final int NUM_SPORTS = 2; //debugging purposes, change once linked with the BD
 	RelativeLayout ret;
 
 	@Override
@@ -28,7 +28,8 @@ public class PerfilUserFragment extends Fragment {
 		GridView gridView = ((GridView)ret.findViewById(R.id.myGridView1));
 		ArrayList<ItemEsporte> lista = new ArrayList<ItemEsporte>();
 		for (int i=0; i < NUM_SPORTS; ++i){
-			lista.add(new ItemEsporte());
+			ItemEsporte ie = new ItemEsporte();
+			lista.add(ie);
 		}
 		gridView.setAdapter(new AdapterGridView(getActivity(),lista));
 		return ret;
