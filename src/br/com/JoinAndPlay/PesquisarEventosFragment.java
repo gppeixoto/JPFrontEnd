@@ -4,6 +4,7 @@ import java.util.Calendar;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment.TimePickerDialogHandler;
+import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.*;
 
 import android.graphics.drawable.Drawable;
@@ -21,41 +22,64 @@ import android.widget.CalendarView;
 import org.joda.time.DateTime;
 
 public class PesquisarEventosFragment extends Fragment 
-implements RadialTimePickerDialog.OnTimeSetListener {
+implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener {
 	//implements TimePickerDialogFragment.TimePickerDialogHandler {
 
 	private Button bg;
 	private Button b2;
 	private Button b3;
+	private Button bd;
+	private boolean begin = false;
+	private boolean end = false;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
+	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
 
-		bg = (Button) v.findViewById(R.id.bigButton);
-		bg.setText("Pesquisar");
+		bd = (Button) v.findViewById(R.id.buttonDia);
+		DateTime now = DateTime.now();
+		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()));
 
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
+		//b2.setText("00:00");
 		b2.setText("Início");
 
 		b3 = (Button) v.findViewById(R.id.buttonDataFim);
-		b3.setText("Término");
+		//b3.setText("23:59");
+		b3.setText("Fim");
+
+		bg = (Button) v.findViewById(R.id.bigButton);
+		bg.setText("Pesquisar");
 
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
 		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
 
-		Calendar c = Calendar.getInstance();
+		/*Calendar c = Calendar.getInstance();
 		long millis = c.getTimeInMillis();
 
 		CalendarView cv = (CalendarView) v.findViewById(R.id.calendarView1);
-		cv.setDate(millis,true,true);
+		cv.setDate(millis,true,true);*/
 
-		bg.setOnClickListener(new View.OnClickListener() {
+
+		bd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MainActivity)getActivity()).mudarAba(0);
+				/** Radial Date Picker **/
+                /*DateTime now = DateTime.now();
+                CalendarDatePickerDialog calendar = CalendarDatePickerDialog
+                        .newInstance(SampleCalendarDateDefault.this, now.getYear(), now.getMonthOfYear() - 1,
+                                now.getDayOfMonth());
+                calendarDatePickerDialog.show(fm, FRAG_TAG_DATE_PICKER);*/
+                
+				DateTime now = DateTime.now();
+				CalendarDatePickerDialog calendar = CalendarDatePickerDialog.newInstance(PesquisarEventosFragment.this, 
+						now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
+
+				calendar.show(getFragmentManager(), FRAG_TAG_DATE_PICKER);
+				end = true;
 			}
 		});
 
@@ -78,8 +102,9 @@ implements RadialTimePickerDialog.OnTimeSetListener {
 				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
 						now.getHourOfDay(), now.getMinuteOfHour(), 
 						DateFormat.is24HourFormat(getActivity()));
-				
+
 				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+				begin = true;
 
 			}
 		});
@@ -87,7 +112,21 @@ implements RadialTimePickerDialog.OnTimeSetListener {
 		b3.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showTimePickerDialog(v);
+				/** Radial Time Picker **/
+				DateTime now = DateTime.now();
+				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
+						now.getHourOfDay(), now.getMinuteOfHour(), 
+						DateFormat.is24HourFormat(getActivity()));
+
+				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+				end = true;
+			}
+		});
+
+		bg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((MainActivity)getActivity()).mudarAba(0);
 			}
 		});
 
@@ -99,18 +138,29 @@ implements RadialTimePickerDialog.OnTimeSetListener {
 		newFragment.show(getFragmentManager(), "timePicker");
 	}
 
+	@Override
+    public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+        bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear));
+    }
+	
 	public void onTimeSet(RadialTimePickerDialog dialog, int hourOfDay, int minute) {
 		String h,m;
 		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
 		m = minute < 10 ? "0" + minute : "" + minute;
-		
-		b2.setText(h + ":" + m);
+
+		if(begin) {
+			b2.setText(h + ":" + m);
+			begin = false;
+		} else if (end){
+			b3.setText(h + ":" + m);
+			end = false;
+		}
 
 	}
 
-	public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+	/*public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
 		b2.setText("" + hourOfDay + ":" + minute);
-	}
+	}*/
 
 	@Override
 	public void onResume() {
@@ -122,5 +172,19 @@ implements RadialTimePickerDialog.OnTimeSetListener {
 		}
 	}
 
-
+	public String parseMonth(int n){
+		if(n == 1) return "Janeiro";
+		else if (n == 2) return "Fevereiro";
+		else if (n == 3) return "Março";
+		else if (n == 4) return "Abril";
+		else if (n == 5) return "Maio";
+		else if (n == 6) return "Junho";
+		else if (n == 7) return "Julho";
+		else if (n == 8) return "Agosto";
+		else if (n == 9) return "Setembro";
+		else if (n == 10) return "Outubro";
+		else if (n == 11) return "Novembro";
+		else if (n == 12) return "Dezembro";
+		else return "fail";
+	}
 }
