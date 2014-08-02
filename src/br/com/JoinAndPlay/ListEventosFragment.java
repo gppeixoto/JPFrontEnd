@@ -54,6 +54,7 @@ lista.add(new ItemEvent());
 		if (container == null) {
 			return null;
 		}
+		
 		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
 		ListView listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
@@ -63,8 +64,7 @@ lista.add(new ItemEvent());
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
-		listV.setAdapter(adapter);
-	
+		listV.setAdapter(adapter);	
 
 
 		return tela;
@@ -96,7 +96,7 @@ lista.add(new ItemEvent());
 							@Override
 							public void onCompleted(GraphUser user, Response response) {
 								// TODO Auto-generated method stub
-								Log.v("uuou","dasasd"+		user);
+								Log.v("uuou","dasasd"+	user);
 
 							}
 						}
@@ -175,6 +175,8 @@ lista.add(new ItemEvent());
 				}
 			});
 		}
+		CriarEventosFragment create = new CriarEventosFragment();
+		((MainActivity)getActivity()).mudarAbaAtual(create);
 		//	try {t.join();}catch(Exception _) {}
 	}
 

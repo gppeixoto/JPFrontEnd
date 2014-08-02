@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/campo_branco"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout_place_frag"
+        android:baselineAligned="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal" >
+        
+        <LinearLayout
+            android:id="@+id/layout_place_half1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+            
+           	<ImageView
+           	    android:id="@+id/local_icone"
+           	    android:layout_marginTop="15dp"
+           	    android:layout_height="wrap_content"
+           	    android:layout_width="wrap_content"
+           	    android:layout_marginLeft="9dp"
+           	    android:layout_marginRight="9dp"
+           	    android:src="@drawable/local_red" />
+            
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_place_half2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/layout_texto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical" >
+                
+                <TextView
+                    android:id="@+id/local_nome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Campos Bons FC"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/local_rua_complemento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rua X de Souza, numero 2"
+                    android:textSize="14sp" />
+                
+                <TextView
+                    android:id="@+id/local_bairro_cidade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bairro Kade - Cidade Anônima"
+                    android:textSize="14sp" />
+
+           
+                
+                <TextView
+                    android:id="@+id/local_telefone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tel: (81) 3111-2525"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_place_half3"
+            android:layout_width="73dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/campo_cinza"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/rs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unidade_preco"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/local_preco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10,00"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/hora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/por_hora"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

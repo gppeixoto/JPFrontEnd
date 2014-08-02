@@ -219,18 +219,25 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1.5"
+                    android:layout_marginBottom="6dp"
                     android:orientation="horizontal" >
 
                     <CheckBox
-                        android:id="@+id/precotext"
+                        android:id="@+id/preco_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    
+                    <TextView 
+                        android:id="@+id/preco_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dp"
                         android:layout_marginRight="12dp"
                         android:text="@string/preco"
                         android:textColor="@color/red_pesquisa"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -258,18 +265,38 @@
                         android:orientation="vertical" 
                         android:layout_weight="1.5">
                     
-                        <EditText
-		                    android:id="@+id/escolha_preco"
-		                    android:layout_width="75dp"
-                            android:layout_height="48dp"
-                            android:ems="10"
-                            android:gravity="center"
-		                    android:background="@color/cinza"
-		                    android:hint="@string/preco_nulo"
-		                    android:inputType="numberDecimal"
-		                    android:singleLine="true"
-		                    android:layout_marginBottom="6dp"
-		                    android:textSize="15sp" />
+                        
+                        <LinearLayout 
+                            android:id="@+id/layout_preco"
+                            android:layout_marginBottom="6dp"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="fill_parent" >
+                            
+                              <TextView
+                                  android:id="@+id/reais"
+                                  android:layout_height="wrap_content"
+                                  android:layout_width="wrap_content"
+                                  android:text="@string/unidade_preco"
+                                  android:textSize="15sp"
+                                  android:layout_marginRight="5dp"
+                                  android:textColor="@color/cinza_escuro" />
+                            
+                              <EditText
+			                    android:id="@+id/escolha_preco"
+			                    android:layout_width="70dp"
+	                            android:layout_height="48dp"
+	                            android:ems="10"
+	                            android:gravity="center"
+			                    android:background="@color/cinza"
+			                    android:hint="@string/preco_nulo"
+			                    android:inputType="numberDecimal"
+			                    android:singleLine="true"
+			                    android:textSize="15sp" />
+                            
+                            </LinearLayout>
+                    
+                      
 
                         <TextView
                             android:id="@+id/aPartir"
