@@ -53,13 +53,13 @@ lista.add(new ItemPlace());
 		supportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_fragPlaces, supportMap).commit();
 		
-		View ret = inflater.inflate(R.layout.choose_place, container,false);
+		View view = inflater.inflate(R.layout.choose_place, container,false);
 		
-		ListView listV=(ListView) ret.findViewById(R.id.views_place);
+		ListView listV=(ListView) view.findViewById(R.id.views_place);
 		listV.setOnItemClickListener(this);
 		listV.setAdapter(adapter);
 		
-		return ret;
+		return view;
 	}
 
 	@Override
