@@ -15,6 +15,8 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -28,8 +30,8 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private boolean end;
 	private boolean pago;
 	private boolean temEsporte;
-	private boolean nomeLugar;
-	private boolean endLugar;
+	private boolean temNomeLugar;
+	private boolean temEndereco;
 	
 	private CheckBox checkPago;
 	
@@ -38,6 +40,10 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private Button bDataInicio;
 	private Button bDataFim;
 	private Button bDia;
+	
+	private String esporte;
+	private String nomeLugar;
+	private String endereco;
 		
 	private EditText eEsporte;
 	private EditText eNomeLugar;
@@ -49,7 +55,6 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
 
 	}
 	
@@ -63,17 +68,75 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		begin = false;
 		end=false;
 		pago=false;
-		endLugar=false;
-		nomeLugar=false;
-		temEsporte=true; //controla se foi escrito o esporte, deve ser inicializado com falso apos integracao
+		temEndereco=false;
+		temNomeLugar=false;
+		temEsporte=false; //controla se foi escrito o esporte, deve ser inicializado com falso apos integracao
 		
 		ePreco = (EditText) view.findViewById(R.id.escolha_preco);	
 		ePreco.setVisibility(View.INVISIBLE);
 		
 		eEsporte = (EditText) view.findViewById(R.id.escolha_esporte);
+		eEsporte.addTextChangedListener(new TextWatcher() {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				if(s.toString().trim().equals("")){
+					temEsporte = false;
+				} else {
+					temEsporte = true;
+					esporte = (String) s.toString();
+				}
+			}
+			public void afterTextChanged(Editable s) {
+				if(s.toString().trim().equals("")){
+					temEsporte = false;
+				} else {
+					temEsporte = true;
+					esporte = (String) s.toString();
+				}
+			}
+		});
 		
 		eNomeLugar = (EditText) view.findViewById(R.id.escolha_nome);
+		eNomeLugar.addTextChangedListener(new TextWatcher() {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				if(s.toString().trim().equals("")){
+					temNomeLugar = false;
+				} else {
+					temNomeLugar = true;
+					nomeLugar = (String) s.toString();
+				}
+			}
+			public void afterTextChanged(Editable s) {
+				if(s.toString().trim().equals("")){
+					temEsporte = false;
+				} else {
+					temEsporte = true;
+					esporte = (String) s.toString();
+				}
+			}
+		});
+		
 		eEnderecoLugar = (EditText) view.findViewById(R.id.escolha_endereco);
+		eEnderecoLugar.addTextChangedListener(new TextWatcher() {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				if(s.toString().trim().equals("")){
+					temEndereco = false;
+				} else {
+					temEndereco = true;
+					endereco = (String) s.toString();
+				}
+			}
+			public void afterTextChanged(Editable s) {
+				if(s.toString().trim().equals("")){
+					temEsporte = false;
+				} else {
+					temEsporte = true;
+					endereco = (String) s.toString();
+				}
+			}
+		});
 		
 		checkPago = (CheckBox) view.findViewById(R.id.preco_box);
 			
@@ -98,7 +161,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(temEsporte){
+				if(temEsporte && temNomeLugar && temEndereco){
 					CriarEventosCompFragment nextPage = new CriarEventosCompFragment();
 					((MainActivity)getActivity()).mudarAbaAtual(nextPage);
 				} else {
@@ -106,8 +169,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Alerta Join&Play");
-					error.setIcon(0);
-					error.setMessage("Campo de esporte ainda não preenchido!");
+					error.setMessage("Algum dado faltou ser preenchido!");
 					error.setPositiveButton("OK", null);
 					error.show();
 				}
