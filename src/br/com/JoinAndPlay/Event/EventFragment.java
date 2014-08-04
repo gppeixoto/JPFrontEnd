@@ -77,6 +77,7 @@ public class EventFragment extends Fragment implements OnClickListener{
 	
 	public void setValuesEvent(View view,ItemEvent eventItem){
 		Evento evento = eventItem.evento;
+		if(evento == null) return;
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
 		
@@ -96,7 +97,7 @@ public class EventFragment extends Fragment implements OnClickListener{
 		
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
 		
-	//	descricao_horario.setText(evento.getDate() + " as " + evento.getStartTime() + " horas");
+		descricao_horario.setText(evento.getDate() + " as " + evento.getStartTime() + " horas");
 //		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
 		
 	//	qtd_confirmados.setText(evento.);
