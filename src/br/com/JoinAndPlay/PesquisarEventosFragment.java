@@ -1,11 +1,9 @@
 package br.com.JoinAndPlay;
-import java.util.Calendar;
 
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
-import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment.TimePickerDialogHandler;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.*;
 
@@ -13,7 +11,6 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -21,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -45,6 +41,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	private EditText eendv;
 	private EditText eesv;
 	private Configuration config;
+	private String[] data;
 
 	private boolean begin = false;
 	private boolean end = false;
@@ -58,7 +55,8 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
-
+		data = new String[3];
+		
 		apv = (TextView) v.findViewById(R.id.aPartir);
 		dv = (TextView) v.findViewById(R.id.data_view);
 		atv = (TextView) v.findViewById(R.id.ateTextView);
@@ -80,18 +78,19 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 		bd = (Button) v.findViewById(R.id.buttonDia);
 		DateTime now = DateTime.now();
+		this.data[0] = now.getDayOfMonth()+"";
+		this.data[1] = now.getMonthOfYear()+1+"";
+		this.data[2] = now.getYear()+"";
 		bd.setTypeface(fontBold);
 		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
 		b2.setTypeface(fontBold);
 		b2.setText("00:00");
-		//b2.setText("Início");
 
 		b3 = (Button) v.findViewById(R.id.buttonDataFim);
 		b3.setTypeface(fontBold);
 		b3.setText("23:59");
-		//b3.setText("Fim");
 
 		bg = (Button) v.findViewById(R.id.bigButton);
 		bg.setTypeface(fontBold);
@@ -100,6 +99,8 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
 		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
 
+		
+		
 		bd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -172,6 +173,42 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		bg.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				ListEventosFragment list = new ListEventosFragment();
+				
+				Bundle args = new Bundle();
+				
+				String[] esportes = new String[100];
+				String textoEsportes = eesv.getText().toString();
+				//String textoEsportes = "Basquete;Futebol;Futebol Americano;";
+				int i = 0;
+				while(!textoEsportes.equals("")){
+					esportes[i] = textoEsportes.substring(0, textoEsportes.indexOf(';'));
+					textoEsportes = textoEsportes.substring(textoEsportes.indexOf(';')+1);
+					textoEsportes.trim();
+					++i;
+				}
+
+				/*int j = 0;
+				while(esportes[j] != null){
+					Log.v("esporte", j + ": " + esportes[j]);
+					++j;
+				}*/
+
+				args.putStringArray("esportes", esportes);
+				args.putString("endereco", eendv.getText().toString());
+				//Log.v("endedeco", eendv.getText().toString());
+				args.putString("nome", env.getText().toString());
+				//Log.v("nome local", env.getText().toString());
+				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
+				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
+				
+				args.putString("horaInicio", b2.getText().toString());
+				//Log.v("hora inicio",b2.getText().toString());
+				args.putString("horaTermino", b3.getText().toString());
+				//Log.v("hora fim", b3.getText().toString());
+				
+				list.setArguments(args);
+				
 				((MainActivity)getActivity()).mudarAba(0);
 			}
 		});
@@ -181,11 +218,17 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 	@Override
 	public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+		this.data[0] = dayOfMonth+"";
+		this.data[1] = monthOfYear+1+"";
+		this.data[2] = year+"";
 		bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
 	}
 
 	@Override
 	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
+		this.data[0] = dayOfMonth+"";
+		this.data[1] = monthOfYear+1+"";
+		this.data[2] = year+"";
 		bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
 	}
 
