@@ -14,7 +14,7 @@ public class Server implements Serializable {
 	 * @param access_token acess_token do usuario que se quer logar.
 	 * @return true se conseguiu logar, false caso contrario.
 	 */
-	public static void login(String access_token, Connecter connecter) {
+	public static void login(String access_token, Connecter<String> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("access_token", access_token);
@@ -28,16 +28,16 @@ public class Server implements Serializable {
 	 * @param access_token acess_token do usuario que se quer o perfil.
 	 * @return o perfil do usuario que possui esse access_token.
 	 */
-	public static void user_profile(String access_token, final Connecter connecter) {
+	public static void user_profile(String access_token, final Connecter<Usuario> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("access_token", access_token);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/userprofile/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/userprofile/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						Usuario user = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(user);
@@ -51,16 +51,16 @@ public class Server implements Serializable {
 	 * @param id id do usuario que se quer o perfil.
 	 * @return o perfil do usuario que possui esse access_token.
 	 */
-	public static void user_profile_id(String id, final Connecter connecter) {
+	public static void user_profile_id(String id, final Connecter<Usuario> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("id", id);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/userprofileid/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/userprofileid/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						Usuario user = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(user);
@@ -88,7 +88,7 @@ public class Server implements Serializable {
 	 * */
 	public static void create_event(String access_token, String localization_name, String localization_address, String city,
 			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
-			String name, double price, boolean privacy, final Connecter connecter) {
+			String name, double price, boolean privacy, final Connecter<Evento> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("access_token", access_token);
@@ -106,10 +106,10 @@ public class Server implements Serializable {
 			obj.put("private", privacy);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/createevent/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/createevent/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						Evento evt = processEvent(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(evt);
@@ -140,7 +140,7 @@ public class Server implements Serializable {
 	 * */
 	public static void edit_event(String access_token, String localization_name, String localization_address, String city,
 			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
-			String name, double price, boolean privacy, String id, final Connecter connecter) {
+			String name, double price, boolean privacy, String id, final Connecter<Evento> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("access_token", access_token);
@@ -159,10 +159,10 @@ public class Server implements Serializable {
 			obj.put("id", id);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						Evento evt = processEvent(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(evt);
@@ -177,16 +177,16 @@ public class Server implements Serializable {
 	 * @param access_token access_token do usuario que se deseja saber a agenda.
 	 * @return eventos que esse usuario ja participou ou disse que ira participar. 
 	 */
-	public static void user_agenda(String access_token, final Connecter connecter) {
+	public static void user_agenda(String access_token, final Connecter<Vector<Evento>> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("access_token", access_token);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						JSONArray arr = new JSONArray((String) in);
 						Vector<Evento> ret = new Vector<Evento>();
@@ -206,7 +206,7 @@ public class Server implements Serializable {
 	 * @param rate_vaue valor da avaliacao.
 	 * @return o perfil do usuario avaliado. 
 	 * */
-	public static void rate_user(String id, String sport_name, String rate_value, final Connecter connecter) {
+	public static void rate_user(String id, String sport_name, String rate_value, final Connecter<Usuario> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("id", id);
@@ -214,10 +214,10 @@ public class Server implements Serializable {
 			obj.put("value", rate_value);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						Usuario ret = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(ret);
@@ -232,17 +232,17 @@ public class Server implements Serializable {
 	 * @param tag_name nome da tag que o usuario sera avaliado.
 	 * @return o perfil do usuario avaliado. 
 	 * */
-	public static void vote_in_tag_user(String id, String tag_name, final Connecter connecter) {
+	public static void vote_in_tag_user(String id, String tag_name, final Connecter<Usuario> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("id", id);
 			obj.put("tag", tag_name);
 
 			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/voteintaguser/", obj.toString(), new Connecter() {
+			sh.makePOST(ServiceHandler.URL_BASE + "/voteintaguser/", obj.toString(), new Connecter<String>() {
 
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(String in) {
 					try {
 						Usuario ret = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(ret);
@@ -263,7 +263,7 @@ public class Server implements Serializable {
 	 * @return todos os eventos que satisfazem os parametros da pesquisa.
 	 */
 	public static void get_matched_events(String access_token, String address, String date, String start_time,
-			String end_time, String[] sports, final Connecter connecter) {
+			String end_time, String[] sports, final Connecter<Vector<Evento>> connecter) {
 
 		JSONObject obj = new JSONObject();
 		JSONArray arr_sports = new JSONArray();
@@ -284,10 +284,10 @@ public class Server implements Serializable {
 		}
 
 		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/getmatchedevents/", obj.toString(), new Connecter() {
+		sh.makePOST(ServiceHandler.URL_BASE + "/getmatchedevents/", obj.toString(), new Connecter<String>() {
 
 			@Override    
-			public void onTerminado(Object in) {
+			public void onTerminado(String in) {
 				try {
 					Vector<Evento> ret = new Vector<Evento>();
 					JSONObject json_ret = new JSONObject((String) in);
@@ -309,7 +309,7 @@ public class Server implements Serializable {
 	 * @param id id do evento que o usuario ira entrar.
 	 * @return o evento que possui o id passado com o usuario dentro.
 	 */
-	public static void enter_event(final String access_token, final String id, final Connecter connecter) {
+	public static void enter_event(final String access_token, final String id, final Connecter<Evento> connecter) {
 		JSONObject obj = new JSONObject();
 
 		try {
@@ -318,10 +318,10 @@ public class Server implements Serializable {
 		} catch(JSONException _) {}
 
 		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/enterevent/", obj.toString(), new Connecter() {
+		sh.makePOST(ServiceHandler.URL_BASE + "/enterevent/", obj.toString(), new Connecter<String>() {
 
 			@Override    
-			public void onTerminado(Object in) {
+			public void onTerminado(String in) {
 				try {
 					Evento ret = processEvent(new JSONObject((String) in));
 					if (connecter != null) connecter.onTerminado(ret);

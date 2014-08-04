@@ -25,6 +25,7 @@ import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.Server.Usuario;
 
 import com.facebook.Request;
 import com.facebook.Request.GraphUserCallback;
@@ -120,20 +121,20 @@ lista.add(new ItemEvent());
 		}else{
 			//MyThread t = new MyThread();
 			//t.start();
-			Server.login(Session.getActiveSession().getAccessToken(),new Connecter() {
+			Server.user_profile(Session.getActiveSession().getAccessToken(),new Connecter<Usuario>() {
 				
 				@Override
-				public void onTerminado(Object in) {
+				public void onTerminado(Usuario in) {
 					// TODO Auto-generated method stub
 					
 				}
 			});
 			/**/
-			Server.get_matched_events(Session.getActiveSession().getAccessToken(), null, null, null, null, null,new Connecter() {			
+			Server.get_matched_events(Session.getActiveSession().getAccessToken(), null, null, null, null, null,new Connecter<Vector<Evento>>() {			
 				@Override
-				public void onTerminado(Object in) {
-					Vector<Evento> vector = (Vector<Evento>) in;
-					Log.v("uhu", "oi"+in);
+				public void onTerminado(Vector<Evento> vector) {
+					
+					Log.v("uhu", "oi"+vector);
 					for (int i = 0; i <vector.size(); i++) {
 					final	ItemEvent item=new ItemEvent();
 						Log.v("uhu2", ""+vector.get(i).getName());
