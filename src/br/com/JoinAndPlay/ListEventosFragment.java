@@ -224,22 +224,22 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		ItemEvent item = lista.get(arg2-1);
-		Server.get_detailed_event(Session.getActiveSession().getAccessToken(), item.evento.getId(), new Connecter() {
+		/*Server.get_detailed_event(Session.getActiveSession().getAccessToken(), item.evento.getId(), new Connecter() {
 
 			@Override
 			public void onTerminado(Object in) {
 				// TODO Auto-generated method stub
 				ItemEvent item = lista.get(arg2-1);
 				item.evento = (Evento) in;
-				Bundle arg= new Bundle();
+				*/Bundle arg= new Bundle();
 				arg.putParcelable("evento",item );
 				Fragment fragment = new EventFragment();
 				fragment.setArguments(arg);
 				((MainActivity)getActivity()).mudarAbaAtual(fragment);
 				AgendaEventosFragment.lista.add(item);
 				AgendaEventosFragment.adapter.notifyDataSetChanged();
-			}
-		});
+			//}
+		//});
 		
 
 
