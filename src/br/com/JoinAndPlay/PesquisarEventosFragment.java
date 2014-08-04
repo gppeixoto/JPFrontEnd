@@ -1,12 +1,15 @@
 package br.com.JoinAndPlay;
 import java.util.Calendar;
 
+import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
+import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment.TimePickerDialogHandler;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.*;
 
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,8 +28,9 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 
 public class PesquisarEventosFragment extends Fragment 
-implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener {
-	//implements TimePickerDialogFragment.TimePickerDialogHandler {
+implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener,
+			DatePickerDialogFragment.DatePickerDialogHandler,
+			TimePickerDialogFragment.TimePickerDialogHandler  {
 
 	private Button bg;
 	private Button b2;
@@ -40,7 +44,8 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	private EditText env;
 	private EditText eendv;
 	private EditText eesv;
-	
+	private Configuration config;
+
 	private boolean begin = false;
 	private boolean end = false;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
@@ -53,7 +58,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
-		
+
 		apv = (TextView) v.findViewById(R.id.aPartir);
 		dv = (TextView) v.findViewById(R.id.data_view);
 		atv = (TextView) v.findViewById(R.id.ateTextView);
@@ -70,7 +75,9 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		env.setTypeface(font);
 		eendv.setTypeface(font);
 		eesv.setTypeface(font);
-		
+
+		config = getActivity().getResources().getConfiguration();
+
 		bd = (Button) v.findViewById(R.id.buttonDia);
 		DateTime now = DateTime.now();
 		bd.setTypeface(fontBold);
@@ -93,62 +100,71 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
 		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
 
-		/*Calendar c = Calendar.getInstance();
-		long millis = c.getTimeInMillis();
-
-		CalendarView cv = (CalendarView) v.findViewById(R.id.calendarView1);
-		cv.setDate(millis,true,true);*/
-
-
 		bd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/** Radial Date Picker **/
-				DateTime now = DateTime.now();
-				CalendarDatePickerDialog calendar = CalendarDatePickerDialog.newInstance(PesquisarEventosFragment.this, 
-						now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
+				//Date Picker for mid to high-end smartphones
+				if((config.screenLayout&Configuration.SCREENLAYOUT_SIZE_MASK) > 1) {
+					/** Radial Date Picker **/
+					DateTime now = DateTime.now();
+					CalendarDatePickerDialog calendar = CalendarDatePickerDialog.newInstance(PesquisarEventosFragment.this, 
+							now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
 
-				calendar.show(getFragmentManager(), FRAG_TAG_DATE_PICKER);
-				end = true;
+					calendar.show(getFragmentManager(), FRAG_TAG_DATE_PICKER);
+				} else { //Date Picker for low-end smartphones
+					DatePickerBuilder dpb = new DatePickerBuilder()
+					.setFragmentManager(getChildFragmentManager())
+					.setTargetFragment(PesquisarEventosFragment.this)
+					.setStyleResId(R.style.BetterPickersDialogFragment);
+					dpb.show();
+				}
 			}
 		});
 
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//Time picker for mid to high-end smartphones
+				if((config.screenLayout&Configuration.SCREENLAYOUT_SIZE_MASK) > 1) {
+					/** Radial Time Picker **/
+					DateTime now = DateTime.now();
+					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
+							now.getHourOfDay(), now.getMinuteOfHour(), 
+							DateFormat.is24HourFormat(getActivity()));
 
-				/** Standard timepicker **/
-				//showTimePickerDialog(v);
-
-				/** Better Time Picker **/
-				/* TimePickerBuilder tpb = new TimePickerBuilder();
-				tpb.setFragmentManager(getChildFragmentManager());
-				tpb.setTargetFragment(PesquisarEventosFragment.this);
-				tpb.setStyleResId(R.style.BetterPickersDialogFragment);
-				tpb.show();*/
-
-				/** Radial Time Picker **/
-				DateTime now = DateTime.now();
-				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
-						now.getHourOfDay(), now.getMinuteOfHour(), 
-						DateFormat.is24HourFormat(getActivity()));
-
-				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+				} else { //Time picker for low end smartphones
+					/** Better Time Picker **/
+					TimePickerBuilder tpb = new TimePickerBuilder();
+					tpb.setFragmentManager(getChildFragmentManager());
+					tpb.setTargetFragment(PesquisarEventosFragment.this);
+					tpb.setStyleResId(R.style.BetterPickersDialogFragment);
+					tpb.show();
+				}
 				begin = true;
-
 			}
 		});
 
 		b3.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/** Radial Time Picker **/
-				DateTime now = DateTime.now();
-				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
-						now.getHourOfDay(), now.getMinuteOfHour(), 
-						DateFormat.is24HourFormat(getActivity()));
+				//Time picker for mid to high-end smartphones
+				if((config.screenLayout&Configuration.SCREENLAYOUT_SIZE_MASK) > 1) {
+					/** Radial Time Picker **/
+					DateTime now = DateTime.now();
+					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
+							now.getHourOfDay(), now.getMinuteOfHour(), 
+							DateFormat.is24HourFormat(getActivity()));
 
-				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+				} else { //Time picker for low-end smartphones
+					/** Better Time Picker **/
+					TimePickerBuilder tpb = new TimePickerBuilder();
+					tpb.setFragmentManager(getChildFragmentManager());
+					tpb.setTargetFragment(PesquisarEventosFragment.this);
+					tpb.setStyleResId(R.style.BetterPickersDialogFragment);
+					tpb.show();
+				}
 				end = true;
 			}
 		});
@@ -163,16 +179,17 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		return v;
 	}
 
-	public void showTimePickerDialog(View v) {
-		DialogFragment newFragment = new TimePickerFragment();
-		newFragment.show(getFragmentManager(), "timePicker");
+	@Override
+	public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+		bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
 	}
 
 	@Override
-    public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
-    }
-	
+	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
+		bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+	}
+
+	@Override
 	public void onTimeSet(RadialTimePickerDialog dialog, int hourOfDay, int minute) {
 		String h,m;
 		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
@@ -185,12 +202,22 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 			b3.setText(h + ":" + m);
 			end = false;
 		}
-
 	}
 
-	/*public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
-		b2.setText("" + hourOfDay + ":" + minute);
-	}*/
+	@Override
+	public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+		String h,m;
+		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+		m = minute < 10 ? "0" + minute : "" + minute;
+
+		if(begin) {
+			b2.setText(h + ":" + m);
+			begin = false;
+		} else if (end){
+			b3.setText(h + ":" + m);
+			end = false;
+		}
+	}
 
 	@Override
 	public void onResume() {
@@ -215,6 +242,6 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		else if (n == 10) return "Outubro";
 		else if (n == 11) return "Novembro";
 		else if (n == 12) return "Dezembro";
-		else return "fail";
+		else return "Janeiro";
 	}
 }

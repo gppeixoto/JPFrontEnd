@@ -208,7 +208,7 @@
 
                     <Button
                         android:id="@+id/buttonDia"
-                        android:layout_width="180dp"
+                        android:layout_width="190dp"
                         android:layout_height="32dp"
                         android:background="@drawable/pesq_button"
                         android:paddingLeft="10dp"
@@ -260,7 +260,7 @@
 
                     <Button
                         android:id="@+id/buttonDataInicio"
-                        android:layout_width="73dp"
+                        android:layout_width="78dp"
                         android:layout_height="32dp"
                         android:background="@drawable/pesq_button"
                         android:paddingBottom="4dp"
@@ -284,7 +284,7 @@
                    
                     <Button
                         android:id="@+id/buttonDataFim"
-                        android:layout_width="73dp"
+                        android:layout_width="78dp"
                         android:layout_height="32dp"
                         android:background="@drawable/pesq_button"
                         android:paddingBottom="4dp"
