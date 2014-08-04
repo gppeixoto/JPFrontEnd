@@ -164,16 +164,15 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 	}
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		ItemEvent item = lista.get(arg2-1);
-		Server.get_detailed_event(Session.getActiveSession().getAccessToken(), item.evento.getId(),null); /*
-
+		final ItemEvent item = lista.get(arg2-1);
+		Server.get_detailed_event(getActivity(), item.evento.getId(),new Connecter<Evento>() {
 			@Override
 			public void onTerminado(Evento in) {
 				// TODO Auto-generated method stub
-				ItemEvent item = lista.get(arg2-1);
-				item.evento = (Evento) in;
+				item.evento = (Evento) in;				Log.v("Tag legal","Entrou aqui " + item.evento);
+
 				Bundle arg= new Bundle();
 				arg.putParcelable("evento",item );
 				Fragment fragment = new EventFragment();
@@ -182,7 +181,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 				AgendaEventosFragment.lista.add(item);
 				AgendaEventosFragment.adapter.notifyDataSetChanged();
 			}
-		});*/
+		});
 
 
 

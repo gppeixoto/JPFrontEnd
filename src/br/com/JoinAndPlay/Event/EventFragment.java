@@ -187,7 +187,7 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 
 		qtd_amigos_amais.setText("+ " + (eventItem.amigos.length > 6 ? eventItem.amigos.length - 6 : 0) + " amigo" + (eventItem.amigos.length > 7 ? "s" : ""));
 		tipo_da_partida.setText(evento.getSport());
-		//descricao_do_esporte.setText(evento.getDescription());
+		descricao_do_esporte.setText(evento.getDescription());
 	}
 
 	@Override

@@ -231,7 +231,7 @@ public class Server implements Serializable {
 			});
 		} catch (JSONException _) {}
 	}
-	
+
 	/**
 	 * @param id id do usuario que sera avaliado.
 	 * @param tag_name nome da tag que o usuario sera avaliado.
@@ -269,84 +269,89 @@ public class Server implements Serializable {
 	 */
 	public static void get_matched_events(Activity act, final String address,final String date,final String start_time,
 			final String end_time,final String[] sports, final Connecter<Vector<Evento>> connecter) {
-ConfigJP.getToken(act, new Connecter<String>() {
-	
-	@Override
-	public void onTerminado(String access_token) {
-		// TODO Auto-generated method stub
-		JSONObject obj = new JSONObject();
-		JSONArray arr_sports = new JSONArray();
+		ConfigJP.getToken(act, new Connecter<String>() {
 
-		if (sports != null) {
-			for (int i = 0; i < sports.length; ++i) arr_sports.put(sports[i]);
-		}
+			@Override
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
+				JSONArray arr_sports = new JSONArray();
 
-		try {
-			obj.put("access_token", access_token);
-			obj.put("address", address == null ? "" : address);
-			obj.put("date", date == null ? "" : date);
-			obj.put("start_time", start_time == null ? "" : start_time);
-			obj.put("end_time", end_time == null ? "" : end_time);
-			obj.put("sports", arr_sports);
-		}catch(JSONException _) {
+				if (sports != null) {
+					for (int i = 0; i < sports.length; ++i) arr_sports.put(sports[i]);
+				}
 
-		}
-
-		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/getmatchedevents/", obj.toString(), new Connecter<String>() {
-
-			@Override    
-			public void onTerminado(String in) {
 				try {
-					Vector<Evento> ret = new Vector<Evento>();
-					JSONObject json_ret = new JSONObject((String) in);
+					obj.put("access_token", access_token);
+					obj.put("address", address == null ? "" : address);
+					obj.put("date", date == null ? "" : date);
+					obj.put("start_time", start_time == null ? "" : start_time);
+					obj.put("end_time", end_time == null ? "" : end_time);
+					obj.put("sports", arr_sports);
+				}catch(JSONException _) {
 
-					JSONArray json_array = json_ret.getJSONArray("events");
-					for (int i = 0; i < json_array.length(); ++i) {
-						ret.add(processEvent(json_array.getJSONObject(i)));
+				}
+
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/getmatchedevents/", obj.toString(), new Connecter<String>() {
+
+					@Override    
+					public void onTerminado(String in) {
+						try {
+							Vector<Evento> ret = new Vector<Evento>();
+							JSONObject json_ret = new JSONObject((String) in);
+
+							JSONArray json_array = json_ret.getJSONArray("events");
+							for (int i = 0; i < json_array.length(); ++i) {
+								ret.add(processEvent(json_array.getJSONObject(i)));
+							}
+
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
 					}
-
-					if (connecter != null) connecter.onTerminado(ret);
-				} catch (JSONException _) {}
+				});
 			}
 		});
-	}
-});
-		
+
 
 	}
-	
+
 	/**
 	 * @param access_token access_token do usuario que esta logado.
 	 * @param id id do evento.
 	 * @return o evento.
 	 */
-	public static void get_detailed_event(String access_token, String id, final Connecter<Evento> connecter) {
+	public static void get_detailed_event(Activity ac, final String id, final Connecter<Evento> connecter) {
 
-		JSONObject obj = new JSONObject();
+		ConfigJP.getToken(ac, new Connecter<String>() {
 
-		try {
-			obj.put("access_token", access_token);
-			obj.put("id", id);
-			Log.v("tesssste", id);
-		}catch(JSONException _) {
+			@Override
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
 
-		}
-
-		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/getevent/", obj.toString(), new Connecter<String>() {
-
-			@Override    
-			public void onTerminado(String in) {
 				try {
-					Evento ret = null;
-					JSONObject json_ret = new JSONObject((String) in);
+					obj.put("access_token", access_token);
+					obj.put("id", id);
+					Log.v("tesssste", id);
+				}catch(JSONException _) {
 
-					JSONArray json_array = json_ret.getJSONArray("events");
-					ret = processEvent(json_array.getJSONObject(0));
+				}
 
-					if (connecter != null) connecter.onTerminado(ret);
-				} catch (JSONException _) {}
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/getevent/", obj.toString(), new Connecter<String>() {
+
+					@Override    
+					public void onTerminado(String in) {
+						try {
+							Evento ret = null;
+							JSONObject json_ret = new JSONObject((String) in);
+							Log.v("retorno", json_ret.toString()); 
+							JSONObject json_evt = json_ret.getJSONObject("event");
+							ret = processEvent(json_evt);
+
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
+					}
+				});
 			}
 		});
 
@@ -441,11 +446,15 @@ ConfigJP.getToken(act, new Connecter<String>() {
 			String id = evt.getString("id");
 			int price = evt.getInt("price");
 			boolean is_private = evt.getBoolean("private");
-			String city = evt.getString("city");
-			String neighbourhood = evt.getString("neighbourhood");
+			String city = null; 
+			if (evt.has("city")) city = evt.getString("city");
+			String neighbourhood = null;
+			if (evt.has("neighbourhood")) neighbourhood = evt.getString("neighbourhood");
 
 			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood);
-		} catch (JSONException _) {}
+		} catch (JSONException _) {
+			Log.v("retorno2", "ferrou");
+		}
 		return null;
 	}
 }
