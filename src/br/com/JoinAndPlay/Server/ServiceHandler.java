@@ -24,13 +24,13 @@ public class ServiceHandler {
 		                                                                                                                 
 	}                                                                                                                    
 	                                                                                                                     
-	public void makeGET(String targetURL,Connecter con) {
+	public void makeGET(String targetURL,Connecter<String> con) {
 		MyThread t = new MyThread(targetURL, ServiceHandler.GET, null, con);
         executor.execute(t);
 	}                                                                                           
 	
 	                                                                                                                     
-	public void makePOST(String targetURL, String jsonData,Connecter con) {                                                          
+	public void makePOST(String targetURL, String jsonData,Connecter<String>  con) {                                                          
 		MyThread t = new MyThread(targetURL, ServiceHandler.POST, jsonData, con);
         executor.execute(t);
  	}
@@ -40,9 +40,9 @@ public class ServiceHandler {
 		private String jsonData;
 		private int method;
 		private String retorno;
-		Connecter con;
+		Connecter<String>  con;
 		
-		public MyThread(String targetURL, int method, String jsonData,Connecter con) {
+		public MyThread(String targetURL, int method, String jsonData,Connecter<String>  con) {
 			this.targetURL = targetURL;
 			this.jsonData = jsonData;
 			this.method = method;

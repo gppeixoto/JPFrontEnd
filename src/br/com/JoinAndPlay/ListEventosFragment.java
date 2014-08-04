@@ -1,7 +1,6 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -25,6 +24,7 @@ import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.Server.Usuario;
 
 import com.facebook.Request;
 import com.facebook.Request.GraphUserCallback;
@@ -34,16 +34,15 @@ import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 
 
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener {
+public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>>,Runnable {
 	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
-	protected AdapterListView adapter ;
+	ListView listV;
 	protected Button Button_criar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		lista.add(new ItemEvent());
-		adapter = new AdapterListView(getActivity(),lista);
+
 
 
 	}
@@ -54,18 +53,17 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		if (container == null) {
 			return null;
 		}
-
 		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
-		ListView listV=(ListView) tela.findViewById(R.id.listView1);
+		listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
+		listV.setAdapter(null);
 
 		Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setText("Criar Evento");
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
-		listV.setAdapter(adapter);	
-
+		tela.post(this);
 
 		return tela;
 	}
@@ -74,110 +72,9 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		List<String> PERMISSIONS = new ArrayList<String>();
-		PERMISSIONS.add("user_friends");
-		PERMISSIONS.add("public_profile");
-
-		PERMISSIONS.add("email");
-
-		if(login){
-			Session session = Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
-
-				// callback when session changes state
-				@Override
-				public void call(Session session, SessionState state, Exception exception) {
-
-					if (session.isOpened()) {
-						// make request to the /me API
-						Request.newMeRequest(session, new GraphUserCallback() {
-
-							// callback after Graph API response with user object
-
-							@Override
-							public void onCompleted(GraphUser user, Response response) {
-								// TODO Auto-generated method stub
-								Log.v("uuou","dasasd"+	user);
-
-							}
-						}
-								).executeAsync();
-					}
-				}
-			});
-
-			Log.v("token","dasasd"+		session.getPermissions());
-			Log.v("token","dasasd"+session.isOpened());
-
-			Log.v("token"," "+ session.getAccessToken());
-			Log.v("token","dasasd");
-
-			if (session != null && session.isOpened()) {
-				Toast.makeText(getActivity(), session.getAccessToken(), Toast.LENGTH_LONG).show();
-
-			}
-
+		
 			login=false;
-		}else{
-			//MyThread t = new MyThread();
-			//t.start();
-			Server.login(Session.getActiveSession().getAccessToken(),new Connecter() {
-
-				@Override
-				public void onTerminado(Object in) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-			/**/
-			Server.get_matched_events(Session.getActiveSession().getAccessToken(), null, null, null, null, null,new Connecter() {			
-				@Override
-				public void onTerminado(Object in) {
-					Vector<Evento> vector = (Vector<Evento>) in;
-					Log.v("uhu", "oi"+in);
-					for (int i = 0; i <vector.size(); i++) {
-						final	ItemEvent item=new ItemEvent();
-						Log.v("uhu2", ""+vector.get(i).getName());
-						item.titulo=vector.get(i).getName();
-						item.quadra=vector.get(i).getLocalizationName();
-						item.local=vector.get(i).getLocalizationAddress();
-						item.qtd_participantes=vector.get(i).getUsers().size();
-						item.amigos_qtd=vector.get(i).getNumFriends();
-						item.esporte=vector.get(i).getSport();
-						//item.cidade=
-						item.hora=vector.get(i).getStartTime();
-						item.data=vector.get(i).getDate();
-						item.preco_centavos=vector.get(i).getPrice();
-						//item.distancia=
-						item.privado=vector.get(i).getPrivacy();
-						item.evento=vector.get(i);
-						item.amigos= new String[vector.get(i).getUsers().size()];
-						for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
-							item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
-
-							//DownloadImagemAsyncTask
-							Log.v("photo", ""+item.amigos[j]);
-						}
-						if(getView()!=null)
-							getView().post(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									lista.add(item);
-									adapter.notifyDataSetChanged();
-
-								}
-							});
-
-					}
-
-
-				}
-			});
-		}
-		CriarEventosFragment create = new CriarEventosFragment();
-		((MainActivity)getActivity()).mudarAbaAtual(create);
-		//	try {t.join();}catch(Exception _) {}
+		
 	}
 
 
@@ -191,6 +88,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
 	}
 
 	@Override
@@ -220,14 +118,60 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 		return false;
 	}
+
+	@Override
+	public void onTerminado(Vector<Evento> vector) {
+		// TODO Auto-generated method stub
+		Log.v("uhu", "oi"+vector);
+		for (int i = 0; i <vector.size(); i++) {
+			final	ItemEvent item=new ItemEvent();
+			Log.v("uhu2", ""+vector.get(i).getName());
+			item.titulo=vector.get(i).getName();
+			item.quadra=vector.get(i).getLocalizationName();
+			item.local=vector.get(i).getLocalizationAddress();
+			item.qtd_participantes=vector.get(i).getUsers().size();
+			item.amigos_qtd=vector.get(i).getNumFriends();
+			item.esporte=vector.get(i).getSport();
+			//item.cidade=
+			item.hora=vector.get(i).getStartTime();
+			item.data=vector.get(i).getDate();
+			item.preco_centavos=vector.get(i).getPrice();
+			//item.distancia=
+			item.privado=vector.get(i).getPrivacy();
+			item.evento=vector.get(i);
+			item.amigos= new String[vector.get(i).getUsers().size()];
+			for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
+				item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
+
+				//DownloadImagemAsyncTask
+				Log.v("photo", ""+item.amigos[j]);
+			}
+
+			lista.add(item);
+
+
+
+		}
+		listV.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				listV.setAdapter(new AdapterListView(getActivity(), lista));
+
+			}
+		});
+
+
+	}
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		ItemEvent item = lista.get(arg2-1);
-		Server.get_detailed_event(Session.getActiveSession().getAccessToken(), item.evento.getId(), new Connecter() {
+		Server.get_detailed_event(Session.getActiveSession().getAccessToken(), item.evento.getId(),null); /*
 
 			@Override
-			public void onTerminado(Object in) {
+			public void onTerminado(Evento in) {
 				// TODO Auto-generated method stub
 				ItemEvent item = lista.get(arg2-1);
 				item.evento = (Evento) in;
@@ -239,10 +183,16 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 				AgendaEventosFragment.lista.add(item);
 				AgendaEventosFragment.adapter.notifyDataSetChanged();
 			}
-		});
-		
+		});*/
 
 
+
+
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Server.get_matched_events(ConfigJP.getToken(getActivity()), null, null, null, null, null,this);
 
 	}
 
