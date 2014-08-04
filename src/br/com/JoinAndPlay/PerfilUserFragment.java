@@ -33,6 +33,7 @@ public class PerfilUserFragment extends Fragment {
 			lista.add(new ItemEsporte());
 			lista.add(new ItemEsporte());
 			lista.add(new ItemEsporte());
+			lista.add(new ItemEsporte());
 
 		gridView.setAdapter(new AdapterGridView(getActivity(),lista));
 		

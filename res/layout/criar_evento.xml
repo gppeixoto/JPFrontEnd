@@ -170,13 +170,13 @@
             </LinearLayout>
             
             <LinearLayout
-                android:id="@+id/escolha_lugar"
+                android:id="@+id/escolha_lugar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/botao_escolha_lugar"                    
+                    android:id="@+id/escolha_lugar_button"                    
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
@@ -188,140 +188,183 @@
                     android:textColor="@color/cinza_txt"
                     android:textSize="14sp"/>
             </LinearLayout>
-
+            
             <LinearLayout
-                android:id="@+id/dataTextView"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-                
-                <LinearLayout
-                    android:id="@+id/halfdata1"
+                    android:id="@+id/escolha_preco_layout"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal" >
-                    
-                    <TextView
-                    android:id="@+id/data_view"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/data"
-                    android:textColor="@color/red_pesquisa"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                </LinearLayout>
-                
-                <LinearLayout
-                    android:id="@+id/halfdata2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1.5"
+                    android:layout_marginBottom="6dp"
                     android:orientation="horizontal" >
 
                     <CheckBox
-                        android:id="@+id/precotext"
+                        android:id="@+id/preco_box"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dp"
+                        android:layout_marginLeft="9dp" />
+                    
+                    <TextView 
+                        android:id="@+id/preco_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="12dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/preco"
                         android:textColor="@color/red_pesquisa"
                         android:textSize="18sp"
                         android:textStyle="bold" />
+                    
+                    <EditText 
+                        android:id="@+id/escolha_preco"
+                        android:hint="@string/preco_nulo_unidade"
+                        android:textSize="15sp"
+                        android:background="@drawable/my_bottom_line"
+                        android:textColor="@color/cinza_escuro"
+                        android:inputType="numberDecimal"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        />
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/datafields_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                
+            
+              <LinearLayout
+                android:id="@+id/dataTextView"
                 android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal" >
 
                 <LinearLayout
-                    android:id="@+id/half1"
+                         
+                    android:id="@+id/half1Data"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/data_view"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:paddingTop="5dp"
+                        android:text="@string/data"
+                        android:textColor="@color/red_pesquisa"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/half2v"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" 
-                        android:layout_weight="1.5">
-                    
-                        <EditText
-		                    android:id="@+id/escolha_preco"
-		                    android:layout_width="75dp"
-                            android:layout_height="48dp"
-                            android:ems="10"
-                            android:gravity="center"
-		                    android:background="@color/cinza"
-		                    android:hint="@string/preco_nulo"
-		                    android:inputType="numberDecimal"
-		                    android:singleLine="true"
-		                    android:layout_marginBottom="6dp"
-		                    android:textSize="15sp" />
+                <LinearLayout
+                    android:id="@+id/half2Data"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.25"
+                    android:orientation="horizontal" >
 
-                        <TextView
-                            android:id="@+id/aPartir"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="6dp"
-                            android:text="@string/inicio"
-                            android:textColor="@color/red_pesquisa"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/buttonDataInicio"
-                            android:layout_width="95dp"
-                            android:layout_height="27dp"
-                            android:layout_marginBottom="8dp"
-                            android:background="@drawable/pesq_button"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:id="@+id/ate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="6dp"
-                            android:text="@string/termino"
-                            android:textColor="@color/red_pesquisa"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/buttonDataFim"
-                            android:layout_width="95dp"
-                            android:layout_height="27dp"
-                            android:background="@drawable/pesq_button"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/white" />
+                    <Button
+                        android:id="@+id/buttonDia"
+                        android:layout_width="180dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/pesq_button"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bigButtonLayout"
+                android:id="@+id/datafields_layout"  
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal" >
+
+                <LinearLayout    
+                    android:id="@+id/half1Hour"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/aPartir"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                 		android:paddingTop="5dp"
+                        android:text="@string/hora"
+                        android:textColor="@color/red_pesquisa"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/half2Hour"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.25"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonDataInicio"
+                        android:layout_width="73dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/pesq_button"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="4dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                   <TextView android:id="@+id/ateTextView"
+                        android:layout_width="26dp"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="@string/termino"
+                        android:textColor="@color/red_pesquisa"
+                        android:layout_marginRight="3dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                   
+                    <Button
+                        android:id="@+id/buttonDataFim"
+                        android:layout_width="73dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/pesq_button"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="4dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>    
+
+            <LinearLayout
+                android:id="@+id/nextButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/bigButton"
+                    android:id="@+id/nextButton"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"

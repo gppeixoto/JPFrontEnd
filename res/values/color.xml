@@ -16,5 +16,6 @@
 	<color android:id="@+id/color1" name="cinza_txt" android:layout_width="wrap_content" android:layout_height="wrap_content">#7f7f7f</color>
 	<color android:id="@+id/color1" name="cinza_adicionar_comentario" android:layout_width="wrap_content" android:layout_height="wrap_content">#BCBCBC</color>
 	<color android:id="@+id/color1" name="cinza_cinza" android:layout_width="wrap_content" android:layout_height="wrap_content">#535353</color>
-
+	<color android:id="@+id/color1" name="black_almost" android:layout_width="wrap_content" android:layout_height="wrap_content">#dedede</color>
+	
 </resources>

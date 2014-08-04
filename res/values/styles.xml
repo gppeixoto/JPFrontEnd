@@ -17,6 +17,10 @@
 
     </style>
 
+  <style name="MyCustomBetterPickerTheme">
+    <item name="bpTextColor">@color/red_pesquisa</item>
+	</style>
+
   <style name="customCalendar" parent="android:Widget.CalendarView">
         <item name="android:unfocusedMonthDateColor">@color/cinza</item>
         <item name="android:focusedMonthDateColor">@color/black</item>
