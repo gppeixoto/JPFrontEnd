@@ -20,12 +20,17 @@ import br.com.JoinAndPlay.Server.Evento;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AbsoluteLayout;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,20 +38,42 @@ import android.widget.ScrollView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-
-public class EventFragment extends Fragment implements OnClickListener{
+public class EventFragment extends Fragment implements OnClickListener,OnKeyListener{
 	private ItemEvent myEvent;
 	SupportMapFragment suportMap;
 	public LinearLayout list;
 	public LayoutInflater inf;
-	
-	public void addComment(){
-		View novo = inf.inflate(R.layout.add_comentario, (ScrollView)getView(), false);
+
+	public void addComment(String novo_comentario){
+		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
 		TextView nome_usuario = (TextView)novo.findViewById(R.id.nome_usuario);
-		//nome_usuario.setText();
-		list.addView(novo);
+		TextView tempo_decorrido  = (TextView)novo.findViewById(R.id.tempo_decorrido);
+		TextView comentario_texto = (TextView)novo.findViewById(R.id.comentario_texto);
+		comentario_texto.setText(novo_comentario);
+		list.addView(novo,0);
 	}
-	
+
+	@Override
+	public boolean onKey(View view, int keyCode, KeyEvent event) {
+
+		//TextView responseText = (TextView) findViewById(R.id.responseText);
+		EditText myEditText = (EditText) view;
+
+		if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
+				keyCode == EditorInfo.IME_ACTION_DONE ||
+				event.getAction() == KeyEvent.ACTION_DOWN &&
+				event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+			if (!event.isShiftPressed()) {
+				addComment(myEditText.getText().toString());
+				myEditText.getText().clear();
+				myEditText.clearFocus();
+				return true;
+			}               
+		}
+		return false; 
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -60,13 +87,15 @@ public class EventFragment extends Fragment implements OnClickListener{
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
 		Button b = (Button)v.findViewById(R.id.como_chegar);
+		EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
 		b.setOnClickListener(this);
+		edit.setOnKeyListener(this);
 		if(getArguments()!=null){
 
 			myEvent= (ItemEvent)getArguments().getParcelable("evento");
 			myEvent= myEvent==null?new ItemEvent():myEvent;
-					if(myEvent!=null)
-			setValuesEvent(v, myEvent);
+			if(myEvent!=null)
+				setValuesEvent(v, myEvent);
 		}
 		suportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
@@ -95,7 +124,7 @@ public class EventFragment extends Fragment implements OnClickListener{
 			}
 		});
 	}
-	
+
 	public String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
@@ -111,35 +140,35 @@ public class EventFragment extends Fragment implements OnClickListener{
 		else if (n == 12) return "Dezembro";
 		else return "fail";
 	}
-	
+
 	public void setValuesEvent(View view,ItemEvent eventItem){
 		Evento evento = eventItem.evento;
 		if(evento == null) return;
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
-		
+
 		TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
 		TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
-		
+
 		LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.imagem_perfil_dad);
-		
+
 		TextView qtd_amigos_amais = (TextView)view.findViewById(R.id.qtd_amigos_amais);
 
 		ImageView imagem_da_partida = (ImageView)view.findViewById(R.id.imagem_da_partida);
 		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
-		
+
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
-		
+
 		String data = evento.getDate();
 		String dia = data.substring(0, 2);
 		data = parseMonth(((int)(data.charAt(3)-'0'))*10 + ((int)(data.charAt(4)-'0')));
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+"\n"+evento.getLocalizationAddress());
-		
-	//	qtd_confirmados.setText(evento.); FALTA NO SERVIDOR
-	//	qtd_no_local(evento.);
-		
-	//	pessoa1.
+
+		//	qtd_confirmados.setText(evento.); FALTA NO SERVIDOR
+		//	qtd_no_local(evento.);
+
+		//	pessoa1.
 		for (int i = 0; i < Math.min(eventItem.amigos.length,ItemEvent.MAX_AMIGOS_QTD); i++) {
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
@@ -155,10 +184,10 @@ public class EventFragment extends Fragment implements OnClickListener{
 				imagem.setVisibility(View.INVISIBLE);
 			}else break;
 		}
-		
+
 		qtd_amigos_amais.setText("+ " + (eventItem.amigos.length > 6 ? eventItem.amigos.length - 6 : 0) + " amigo" + (eventItem.amigos.length > 7 ? "s" : ""));
 		tipo_da_partida.setText(evento.getSport());
-		descricao_do_esporte.setText(evento.getDescription());
+		//descricao_do_esporte.setText(evento.getDescription());
 	}
 
 	@Override

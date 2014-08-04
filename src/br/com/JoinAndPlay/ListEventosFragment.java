@@ -34,7 +34,7 @@ import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 
 
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>>,Runnable {
+public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>> {
 	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
 	ListView listV;
 	protected Button Button_criar;
@@ -63,8 +63,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
-		tela.post(this);
-
+		Server.get_matched_events(getActivity(),null, null, null,null, null, this);
 		return tela;
 	}
 	boolean login = true;
@@ -189,12 +188,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 
 	}
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		Server.get_matched_events(ConfigJP.getToken(getActivity()), null, null, null, null, null,this);
-
-	}
+	
 
 
 }
+

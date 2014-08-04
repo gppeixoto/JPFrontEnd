@@ -450,7 +450,7 @@
                 android:orientation="vertical" >
 
                 <EditText
-                    android:id="@+id/escolha_nome"
+                    android:id="@+id/criar_comentario"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@color/white"

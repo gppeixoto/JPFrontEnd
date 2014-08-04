@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import br.com.JoinAndPlay.ConfigJP;
+
+import android.app.Activity;
 import android.util.Log;
 
 public class Server implements Serializable {
@@ -264,9 +267,13 @@ public class Server implements Serializable {
 	 * @param sports array de strings cada uma contendo o nome de um esporte.
 	 * @return todos os eventos que satisfazem os parametros da pesquisa.
 	 */
-	public static void get_matched_events(String access_token, String address, String date, String start_time,
-			String end_time, String[] sports, final Connecter<Vector<Evento>> connecter) {
-
+	public static void get_matched_events(Activity act, final String address,final String date,final String start_time,
+			final String end_time,final String[] sports, final Connecter<Vector<Evento>> connecter) {
+ConfigJP.getToken(act, new Connecter<String>() {
+	
+	@Override
+	public void onTerminado(String access_token) {
+		// TODO Auto-generated method stub
 		JSONObject obj = new JSONObject();
 		JSONArray arr_sports = new JSONArray();
 
@@ -303,6 +310,9 @@ public class Server implements Serializable {
 				} catch (JSONException _) {}
 			}
 		});
+	}
+});
+		
 
 	}
 	

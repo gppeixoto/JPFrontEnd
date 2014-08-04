@@ -8,6 +8,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
+import br.com.JoinAndPlay.Server.Connecter;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -51,7 +52,7 @@ public final class ConfigJP {
 		return 0;// mapafutebol.get(esporte);
 	}
 
-	public static void loguin(Activity act){
+	public static void loguin(final Activity act,final Connecter<String> get){
 
 		List<String> PERMISSIONS = new ArrayList<String>();
 		PERMISSIONS.add("user_friends");
@@ -74,6 +75,7 @@ public final class ConfigJP {
 						public void onCompleted(GraphUser user, Response response) {
 							// TODO Auto-generated method stub
 							Log.v("uuou","dasasd"+		user);
+							getToken(act, get);
 
 						}
 					}
@@ -94,20 +96,16 @@ public final class ConfigJP {
 		}
 
 	}
-	public static String getToken(Activity act){
-		while(true){
+	public static void getToken(Activity act,Connecter<String> get){
 			
 		if(Session.getActiveSession()!=null && Session.getActiveSession().isOpened() ){
-			return Session.getActiveSession().getAccessToken();
+			if(get!=null)
+			get.onTerminado(Session.getActiveSession().getAccessToken());
+			return;
+			
 		}
-		loguin(act);
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-	}
+		loguin(act,get);
+		
+ 	}
 
 }

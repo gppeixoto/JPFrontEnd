@@ -130,36 +130,7 @@ lista.add(new ItemPlace());
 				}
 			});
 			/**/
-			Server.get_matched_events(Session.getActiveSession().getAccessToken(), null, null, null, null, null,new Connecter() {			
-				@Override
-				public void onTerminado(Object in) {
-					Vector<Local> vector = (Vector<Local>) in;
-					Log.v("uhu", "oi"+in);
-					for (int i = 0; i <vector.size(); i++) {
-						final ItemPlace item=new ItemPlace();
-						Log.v("uhu2", ""+vector.get(i).getLocalization_name());
-						item.nomeLocal=vector.get(i).getLocalization_name();
-						item.rua=vector.get(i).getLocalization_address();
-						item.cidade=vector.get(i).getCity();
-						item.telefone=vector.get(i).getTelefone();
-						item.bairro=vector.get(i).getNeighbourhood();
-					    item.preco_centavos=vector.get(i).getPrice();
-						item.local=vector.get(i);
-						
-						if(getView()!=null)
-							getView().post(new Runnable() {
-								
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									lista.add(item);
-									adapter.notifyDataSetChanged();
-
-								}
-							});
-					}
-				}
-			});
+		
 		}	
 	}
 }
