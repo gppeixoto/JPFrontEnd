@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Server implements Serializable {
 	private static final long serialVersionUID = 8092668778830657391L;
 
@@ -296,6 +298,42 @@ public class Server implements Serializable {
 					for (int i = 0; i < json_array.length(); ++i) {
 						ret.add(processEvent(json_array.getJSONObject(i)));
 					}
+
+					if (connecter != null) connecter.onTerminado(ret);
+				} catch (JSONException _) {}
+			}
+		});
+
+	}
+	
+	/**
+	 * @param access_token access_token do usuario que esta logado.
+	 * @param id id do evento.
+	 * @return o evento.
+	 */
+	public static void get_detailed_event(String access_token, String id, final Connecter connecter) {
+
+		JSONObject obj = new JSONObject();
+
+		try {
+			obj.put("access_token", access_token);
+			obj.put("id", id);
+			Log.v("tesssste", id);
+		}catch(JSONException _) {
+
+		}
+
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/getevent/", obj.toString(), new Connecter() {
+
+			@Override    
+			public void onTerminado(Object in) {
+				try {
+					Evento ret = null;
+					JSONObject json_ret = new JSONObject((String) in);
+
+					JSONArray json_array = json_ret.getJSONArray("events");
+					ret = processEvent(json_array.getJSONObject(0));
 
 					if (connecter != null) connecter.onTerminado(ret);
 				} catch (JSONException _) {}

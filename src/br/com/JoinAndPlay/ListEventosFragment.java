@@ -42,7 +42,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-lista.add(new ItemEvent());
+		lista.add(new ItemEvent());
 		adapter = new AdapterListView(getActivity(),lista);
 
 
@@ -54,7 +54,7 @@ lista.add(new ItemEvent());
 		if (container == null) {
 			return null;
 		}
-		
+
 		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
 		ListView listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
@@ -121,11 +121,11 @@ lista.add(new ItemEvent());
 			//MyThread t = new MyThread();
 			//t.start();
 			Server.login(Session.getActiveSession().getAccessToken(),new Connecter() {
-				
+
 				@Override
 				public void onTerminado(Object in) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 			/**/
@@ -135,7 +135,7 @@ lista.add(new ItemEvent());
 					Vector<Evento> vector = (Vector<Evento>) in;
 					Log.v("uhu", "oi"+in);
 					for (int i = 0; i <vector.size(); i++) {
-					final	ItemEvent item=new ItemEvent();
+						final	ItemEvent item=new ItemEvent();
 						Log.v("uhu2", ""+vector.get(i).getName());
 						item.titulo=vector.get(i).getName();
 						item.quadra=vector.get(i).getLocalizationName();
@@ -146,20 +146,20 @@ lista.add(new ItemEvent());
 						//item.cidade=
 						item.hora=vector.get(i).getStartTime();
 						item.data=vector.get(i).getDate();
-					    item.preco_centavos=vector.get(i).getPrice();
-					    //item.distancia=
+						item.preco_centavos=vector.get(i).getPrice();
+						//item.distancia=
 						item.privado=vector.get(i).getPrivacy();
 						item.evento=vector.get(i);
 						item.amigos= new String[vector.get(i).getUsers().size()];
 						for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
 							item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
-							
+
 							//DownloadImagemAsyncTask
 							Log.v("photo", ""+item.amigos[j]);
 						}
 						if(getView()!=null)
 							getView().post(new Runnable() {
-								
+
 								@Override
 								public void run() {
 									// TODO Auto-generated method stub
@@ -170,7 +170,7 @@ lista.add(new ItemEvent());
 							});
 
 					}
-					
+
 
 				}
 			});
@@ -180,7 +180,7 @@ lista.add(new ItemEvent());
 		//	try {t.join();}catch(Exception _) {}
 	}
 
-	
+
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -221,18 +221,26 @@ lista.add(new ItemEvent());
 		return false;
 	}
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		arg2--;
-		ItemEvent item = lista.get(arg2);
+		ItemEvent item = lista.get(arg2-1);
+		Server.get_detailed_event(Session.getActiveSession().getAccessToken(), item.evento.getId(), new Connecter() {
 
-		Bundle arg= new Bundle();
-  		arg.putParcelable("evento",item );
-  		Fragment fragment = new EventFragment();
-  		fragment.setArguments(arg);
-		((MainActivity)getActivity()).mudarAbaAtual(fragment);
-		AgendaEventosFragment.lista.add(item);
-		AgendaEventosFragment.adapter.notifyDataSetChanged();
+			@Override
+			public void onTerminado(Object in) {
+				// TODO Auto-generated method stub
+				ItemEvent item = lista.get(arg2-1);
+				item.evento = (Evento) in;
+				Bundle arg= new Bundle();
+				arg.putParcelable("evento",item );
+				Fragment fragment = new EventFragment();
+				fragment.setArguments(arg);
+				((MainActivity)getActivity()).mudarAbaAtual(fragment);
+				AgendaEventosFragment.lista.add(item);
+				AgendaEventosFragment.adapter.notifyDataSetChanged();
+			}
+		});
+		
 
 
 

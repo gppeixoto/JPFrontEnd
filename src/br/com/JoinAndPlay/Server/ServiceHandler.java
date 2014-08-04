@@ -16,7 +16,7 @@ public class ServiceHandler {
                                                                                                                          
 	public final static String HOST = "192.168.0.100";                                                                     
 	public final static int PORT = 8000;                                                                                 
-	public final static String URL_BASE = "http://join-play.herokuapp.com/";                                           
+	public final static String URL_BASE = "http://join-play.herokuapp.com";                                           
 	private final static int GET = 1, POST = 2;   
     ExecutorService executor = Executors.newFixedThreadPool(1);
                                                                                                                          

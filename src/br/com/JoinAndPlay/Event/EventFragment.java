@@ -1,6 +1,8 @@
 package br.com.JoinAndPlay.Event;
 
 
+import java.util.zip.Inflater;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -15,19 +17,36 @@ import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
 import br.com.JoinAndPlay.Server.Evento;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TextView;
+
+
 public class EventFragment extends Fragment implements OnClickListener{
 	private ItemEvent myEvent;
 	SupportMapFragment suportMap;
+	public LinearLayout list;
+	public LayoutInflater inf;
+	
+	public void addComment(){
+		View novo = inf.inflate(R.layout.add_comentario, (ScrollView)getView(), false);
+		TextView nome_usuario = (TextView)novo.findViewById(R.id.nome_usuario);
+		//nome_usuario.setText();
+		list.addView(novo);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -37,7 +56,9 @@ public class EventFragment extends Fragment implements OnClickListener{
 		if (container == null) {
 			return null;
 		}
-		View v = inflater.inflate(R.layout.event_fragment, container, false);;
+		View v = inflater.inflate(R.layout.event_fragment, container, false);
+		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
+		inf = inflater;
 		Button b = (Button)v.findViewById(R.id.como_chegar);
 		b.setOnClickListener(this);
 		if(getArguments()!=null){
@@ -113,7 +134,7 @@ public class EventFragment extends Fragment implements OnClickListener{
 		String dia = data.substring(0, 2);
 		data = parseMonth(((int)(data.charAt(3)-'0'))*10 + ((int)(data.charAt(4)-'0')));
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
-		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
+		descricao_local.setText(evento.getLocalizationName()+"\n"+evento.getLocalizationAddress());
 		
 	//	qtd_confirmados.setText(evento.); FALTA NO SERVIDOR
 	//	qtd_no_local(evento.);
