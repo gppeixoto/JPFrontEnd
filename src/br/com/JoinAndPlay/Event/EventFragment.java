@@ -13,18 +13,18 @@ import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
 import br.com.JoinAndPlay.Server.Evento;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.joda.time.DateTime;
 public class EventFragment extends Fragment implements OnClickListener{
 	private ItemEvent myEvent;
 	SupportMapFragment suportMap;
@@ -75,6 +75,22 @@ public class EventFragment extends Fragment implements OnClickListener{
 		});
 	}
 	
+	public String parseMonth(int n){
+		if(n == 1) return "Janeiro";
+		else if (n == 2) return "Fevereiro";
+		else if (n == 3) return "Março";
+		else if (n == 4) return "Abril";
+		else if (n == 5) return "Maio";
+		else if (n == 6) return "Junho";
+		else if (n == 7) return "Julho";
+		else if (n == 8) return "Agosto";
+		else if (n == 9) return "Setembro";
+		else if (n == 10) return "Outubro";
+		else if (n == 11) return "Novembro";
+		else if (n == 12) return "Dezembro";
+		else return "fail";
+	}
+	
 	public void setValuesEvent(View view,ItemEvent eventItem){
 		Evento evento = eventItem.evento;
 		if(evento == null) return;
@@ -84,12 +100,8 @@ public class EventFragment extends Fragment implements OnClickListener{
 		TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
 		TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
 		
-		ImageView pessoa1 = (ImageView)view.findViewById(R.id.imagem_perfil1);
-		ImageView pessoa2 = (ImageView)view.findViewById(R.id.imagem_perfil2);
-		ImageView pessoa3 = (ImageView)view.findViewById(R.id.imagem_perfil3);
-		ImageView pessoa4 = (ImageView)view.findViewById(R.id.imagem_perfil4);
-		ImageView pessoa5 = (ImageView)view.findViewById(R.id.imagem_perfil5);
-		ImageView pessoa6 = (ImageView)view.findViewById(R.id.imagem_perfil6);	
+		LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.imagem_perfil_dad);
+		
 		TextView qtd_amigos_amais = (TextView)view.findViewById(R.id.qtd_amigos_amais);
 
 		ImageView imagem_da_partida = (ImageView)view.findViewById(R.id.imagem_da_partida);
@@ -97,13 +109,35 @@ public class EventFragment extends Fragment implements OnClickListener{
 		
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
 		
-		descricao_horario.setText(evento.getDate() + " as " + evento.getStartTime() + " horas");
-//		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
+		String data = evento.getDate();
+		String dia = data.substring(0, 2);
+		data = parseMonth(((int)(data.charAt(3)-'0'))*10 + ((int)(data.charAt(4)-'0')));
+		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
+		descricao_local.setText(evento.getLocalizationName()+", "+evento.getLocalizationAddress());
 		
-	//	qtd_confirmados.setText(evento.);
+	//	qtd_confirmados.setText(evento.); FALTA NO SERVIDOR
 	//	qtd_no_local(evento.);
 		
 	//	pessoa1.
+		for (int i = 0; i < Math.min(eventItem.amigos.length,ItemEvent.MAX_AMIGOS_QTD); i++) {
+			if(pessoas.getChildCount()-1>i){
+				ImageView imagem = (ImageView) pessoas.getChildAt(i);
+
+				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(eventItem.amigos[i]);
+			}else break;
+		}		
+
+		for (int i = eventItem.amigos.length; i <ItemEvent.MAX_AMIGOS_QTD; i++) {
+			if(pessoas.getChildCount()-1>i){
+				ImageView imagem = (ImageView) pessoas.getChildAt(i);
+
+				imagem.setVisibility(View.INVISIBLE);
+			}else break;
+		}
+		
+		qtd_amigos_amais.setText("+ " + (eventItem.amigos.length > 6 ? eventItem.amigos.length - 6 : 0) + " amigo" + (eventItem.amigos.length > 7 ? "s" : ""));
+		tipo_da_partida.setText(evento.getSport());
+		descricao_do_esporte.setText(evento.getDescription());
 	}
 
 	@Override
