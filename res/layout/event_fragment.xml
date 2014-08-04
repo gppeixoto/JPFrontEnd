@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/cinzafundo"
         android:orientation="vertical" >
 
@@ -457,7 +457,7 @@
                 <EditText
                     android:id="@+id/escolha_nome"
                     android:layout_width="fill_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:background="@color/white"
                     android:ems="10"
                     android:fillViewport="True"
@@ -469,8 +469,9 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.01"
                     android:background="@drawable/my_bottom_line" />
+
             </LinearLayout>
         </ScrollView>
 
