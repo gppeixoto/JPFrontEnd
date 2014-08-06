@@ -35,53 +35,39 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="79dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@drawable/perfil_fundo_branco"
                         android:gravity="left"
-                        android:paddingBottom="12dp"
-                        android:paddingLeft="15dp"
+                        android:paddingLeft="12dp"
                         android:paddingTop="12dp" >
-
-                        <com.facebook.widget.ProfilePictureView
+						
+                        
+						<com.facebook.widget.ProfilePictureView
                             android:id="@+id/profilePictureView1"
                             android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:paddingLeft="12dp" >
+                            android:layout_marginLeft="2dp"
+                            android:layout_height="70dp">
                         </com.facebook.widget.ProfilePictureView>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="10dp"
-                            android:orientation="vertical" >
+						<TextView
+						    android:id="@+id/perfil_nome_usuario"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_gravity="center"
+						    android:text="@string/perfil_nome_usuario"
+						    android:textColor="#535353"
+						    android:paddingLeft="12dp"
+						    android:textSize="20sp"
+						    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/perfil_nome_usuario"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/perfil_nome_usuario"
-                                android:textColor="#535353"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/perfil_idade_usuario"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:text="@string/perfil_idade_usario"
-                                android:textColor="#535353"
-                                android:textSize="14sp" />
-                        </LinearLayout>
                     </LinearLayout>
 
                     <ImageView
                         android:id="@+id/imageView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="24dp"
+                        android:layout_marginLeft="12dp"
                         android:layout_marginTop="12dp"
                         android:src="@drawable/pont" />
 
