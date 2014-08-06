@@ -65,14 +65,14 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		env = (EditText) v.findViewById(R.id.escolha_nome);
 		eendv = (EditText) v.findViewById(R.id.escolha_endereco);
 		eesv = (EditText) v.findViewById(R.id.escolha_esporte);
-		apv.setTypeface(fontBold);
+		/*apv.setTypeface(fontBold);
 		dv.setTypeface(fontBold);
 		atv.setTypeface(fontBold);
 		lv.setTypeface(fontBold);
 		eev.setTypeface(fontBold);
 		env.setTypeface(font);
 		eendv.setTypeface(font);
-		eesv.setTypeface(font);
+		eesv.setTypeface(font);*/
 
 		config = getActivity().getResources().getConfiguration();
 
@@ -81,19 +81,19 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		this.data[0] = now.getDayOfMonth()+"";
 		this.data[1] = now.getMonthOfYear()+1+"";
 		this.data[2] = now.getYear()+"";
-		bd.setTypeface(fontBold);
+		//bd.setTypeface(fontBold);
 		bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
-		b2.setTypeface(fontBold);
+		//b2.setTypeface(fontBold);
 		b2.setText("00:00");
 
 		b3 = (Button) v.findViewById(R.id.buttonDataFim);
-		b3.setTypeface(fontBold);
+		//b3.setTypeface(fontBold);
 		b3.setText("23:59");
 
 		bg = (Button) v.findViewById(R.id.bigButton);
-		bg.setTypeface(fontBold);
+		//bg.setTypeface(fontBold);
 		bg.setText("Pesquisar");
 
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
