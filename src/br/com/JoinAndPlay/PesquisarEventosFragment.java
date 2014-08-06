@@ -116,7 +116,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 					DatePickerBuilder dpb = new DatePickerBuilder()
 					.setFragmentManager(getChildFragmentManager())
 					.setTargetFragment(PesquisarEventosFragment.this)
-					.setStyleResId(R.style.BetterPickersDialogFragment);
+					.setStyleResId(R.style.BetterPickersLowEndTheme);
 					dpb.show();
 				}
 			}
@@ -139,7 +139,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 					TimePickerBuilder tpb = new TimePickerBuilder();
 					tpb.setFragmentManager(getChildFragmentManager());
 					tpb.setTargetFragment(PesquisarEventosFragment.this);
-					tpb.setStyleResId(R.style.BetterPickersDialogFragment);
+					tpb.setStyleResId(R.style.BetterPickersLowEndTheme);
 					tpb.show();
 				}
 				begin = true;
@@ -163,7 +163,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 					TimePickerBuilder tpb = new TimePickerBuilder();
 					tpb.setFragmentManager(getChildFragmentManager());
 					tpb.setTargetFragment(PesquisarEventosFragment.this);
-					tpb.setStyleResId(R.style.BetterPickersDialogFragment);
+					tpb.setStyleResId(R.style.BetterPickersLowEndTheme);
 					tpb.show();
 				}
 				end = true;
