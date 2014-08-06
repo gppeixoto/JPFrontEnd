@@ -27,5 +27,6 @@
         android:minHeight="48dp"
         android:text="@string/done_label"
         android:textSize="@dimen/done_label_size"
-        android:textColor="@color/done_text_color" />
+        android:textColor="@color/done_text_color"
+        android:background="@drawable/done_background_color" />
 </LinearLayout>

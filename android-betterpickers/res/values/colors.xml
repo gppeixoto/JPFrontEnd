@@ -12,7 +12,7 @@
     <color name="default_text_color_holo_light_disabled">#ffb2b2b2</color>
     <color name="default_divider_color_light">#28000000</color>
     <color name="default_button_background_light">#00000000</color>
-    <color name="default_button_background_pressed_light">#ff00ddff</color>
+    <color name="default_button_background_pressed_light">#EEEEEE</color>
     <color name="default_keyboard_indicator_color_light">#ff00ddff</color>
 
     <color name="white">#ffffff</color>
@@ -27,7 +27,7 @@
     <color name="blue">#33b5e5</color>
     <color name="blue_focused">#c1e8f7</color>
     <color name="neutral_pressed">#33999999</color>
-    <color name="darker_blue">#0099cc</color>
+    <color name="darker_blue">#a70f0f</color>
     <color name="date_picker_text_normal">#ff999999</color>
 
     <color name="calendar_header">#999999</color>
