@@ -421,7 +421,7 @@ public class Server implements Serializable {
 			Vector<Usuario> users = new Vector<Usuario>();
 			for (int j = 0; j < arr_users.length(); ++j) {
 				JSONArray act_user = arr_users.getJSONArray(j);
-				Usuario to_add = new Usuario(act_user.getString(0), act_user.getString(1), "", ServiceHandler.URL_BASE + "/" + act_user.getString(2), null, 0, null, null, null, false);
+				Usuario to_add = new Usuario(act_user.getString(0), act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
 				users.add(to_add);
 			}
 			String localization_name = evt.getString("localizationName");
