@@ -25,9 +25,9 @@
         <item name="bpCheckIcon">@drawable/ic_check_light</item>
         <item name="bpKeyBackground">@drawable/key_background_custom</item>
         <item name="bpButtonBackground">@drawable/button_background_custom</item>
-        <item name="bpTitleDividerColor">@color/default_keyboard_indicator_color_dark</item>
-        <item name="bpDividerColor">@color/default_divider_color_light</item>
-        <item name="bpKeyboardIndicatorColor">@color/default_keyboard_indicator_color_light</item>
+        <item name="bpTitleDividerColor">@color/cinza</item>
+        <item name="bpDividerColor">@color/cinza</item>
+        <item name="bpKeyboardIndicatorColor">@color/red_pesquisa</item>
    </style>
    
   <style name="MyCustomBetterPickerTheme">
