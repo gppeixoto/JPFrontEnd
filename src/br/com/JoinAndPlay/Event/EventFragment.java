@@ -21,8 +21,10 @@ import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.Server.Usuario;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,6 +35,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -73,14 +76,27 @@ Log.v("uhu","key ="+event.getKeyCode());
 				event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
 			if (!event.isShiftPressed()) {
-					addComment("vxvx","fsf",myEditText.getText().toString());
-			/*	if(myEvent!=null && myEvent.evento!=null){
-					Server.comment(getActivity(),myEvent.evento.getId(),myEditText.getText().toString(), null);
-				}*/
-					
+				if(myEvent!=null){
+					final Connecter<Evento> listener = this;
+					Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Usuario>() {
+						
+						@Override
+						public void onTerminado(Usuario in) {
+							// TODO Auto-generated method stub
+							Server.get_detailed_event(getActivity(),myEvent.getId(),listener);	
+
+						}
+					});
+				}				
 				myEditText.getText().clear();
 				myEditText.clearFocus();
-				getView().requestFocus();
+                if(getView() != null){
+					getView().setFocusable(true);
+		            getView().setFocusableInTouchMode(true);
+		            getView().requestFocus();
+				}
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
 				return true;
 			}               
 		}
