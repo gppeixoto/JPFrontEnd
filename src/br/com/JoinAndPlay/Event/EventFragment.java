@@ -1,6 +1,7 @@
 package br.com.JoinAndPlay.Event;
 
 
+import java.util.Iterator;
 import java.util.zip.Inflater;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,11 +16,16 @@ import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import br.com.JoinAndPlay.Server.Comentario;
+import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
 import br.com.JoinAndPlay.Server.Evento;
+import br.com.JoinAndPlay.Server.Server;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,24 +44,26 @@ import android.widget.ScrollView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-public class EventFragment extends Fragment implements OnClickListener,OnKeyListener{
-	private ItemEvent myEvent;
+public class EventFragment extends Fragment implements OnClickListener,OnKeyListener, Connecter<Evento>{
+	private Evento myEvent=null;
 	SupportMapFragment suportMap;
 	public LinearLayout list;
 	public LayoutInflater inf;
 
-	public void addComment(String novo_comentario){
+	public void addComment(String nome,String time,String novo_comentario){
 		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
 		TextView nome_usuario = (TextView)novo.findViewById(R.id.nome_usuario);
 		TextView tempo_decorrido  = (TextView)novo.findViewById(R.id.tempo_decorrido);
 		TextView comentario_texto = (TextView)novo.findViewById(R.id.comentario_texto);
 		comentario_texto.setText(novo_comentario);
-		list.addView(novo,0);
+		tempo_decorrido.setText(time);
+		nome_usuario.setText(nome);
+		list.addView(novo);
 	}
 
 	@Override
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
-
+Log.v("uhu","key ="+event.getKeyCode());
 		//TextView responseText = (TextView) findViewById(R.id.responseText);
 		EditText myEditText = (EditText) view;
 
@@ -65,9 +73,14 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 				event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
 			if (!event.isShiftPressed()) {
-				addComment(myEditText.getText().toString());
+					addComment("vxvx","fsf",myEditText.getText().toString());
+			/*	if(myEvent!=null && myEvent.evento!=null){
+					Server.comment(getActivity(),myEvent.evento.getId(),myEditText.getText().toString(), null);
+				}*/
+					
 				myEditText.getText().clear();
 				myEditText.clearFocus();
+				getView().requestFocus();
 				return true;
 			}               
 		}
@@ -86,22 +99,15 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 		View v = inflater.inflate(R.layout.event_fragment, container, false);
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
-		Button b = (Button)v.findViewById(R.id.como_chegar);
+		Button b = (Button)v.findViewById(R.id.button1);
 		EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
 		b.setOnClickListener(this);
 		edit.setOnKeyListener(this);
-		if(getArguments()!=null){
-
-			myEvent= (ItemEvent)getArguments().getParcelable("evento");
-			myEvent= myEvent==null?new ItemEvent():myEvent;
-			if(myEvent!=null)
-				setValuesEvent(v, myEvent);
-		}
 		suportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
-
-
-
+		if(getArguments()!=null){
+			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
+		}
 		return  v;
 	}
 	@Override
@@ -113,19 +119,19 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 			public void run() {
 				// TODO Auto-generated method stub
 				GoogleMap map = suportMap.getMap();
-
-				LatLng target= new LatLng( -7.9900227  , -34.83929520000004);
-				CameraPosition cameraPosition = new CameraPosition.Builder().target(target).zoom(12).build();
-				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-				MarkerOptions marker = new MarkerOptions();
-				marker.position(target).title("Iateclub");
-				map.addMarker(marker);
-
+				if(map!=null){
+					LatLng target= new LatLng( -7.9900227  , -34.83929520000004);
+					CameraPosition cameraPosition = new CameraPosition.Builder().target(target).zoom(12).build();
+					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+					MarkerOptions marker = new MarkerOptions();
+					marker.position(target).title("Iateclub");
+					map.addMarker(marker);
+				}
 			}
 		});
 	}
 
-	public String parseMonth(int n){
+	public static String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
 		else if (n == 3) return "Março";
@@ -141,9 +147,8 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 		else return "fail";
 	}
 
-	public void setValuesEvent(View view,ItemEvent eventItem){
-		Evento evento = eventItem.evento;
-		if(evento == null) return;
+	public void setValuesEvent(View view,Evento evento){
+		if(evento == null || view==null) return;
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
 
@@ -165,35 +170,63 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+"\n"+evento.getLocalizationAddress());
 
-		//	qtd_confirmados.setText(evento.); FALTA NO SERVIDOR
+		qtd_confirmados.setText(""+evento.getUsers().size());
 		//	qtd_no_local(evento.);
 
-		//	pessoa1.
-		for (int i = 0; i < Math.min(eventItem.amigos.length,ItemEvent.MAX_AMIGOS_QTD); i++) {
+		
+		
+		for (int i = 0; i < Math.min(evento.getUsers().size(),ItemEvent.MAX_AMIGOS_QTD); i++) {
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
 
-				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(eventItem.amigos[i]);
+				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(evento.getUsers().get(i).getPhoto());
 			}else break;
 		}		
 
-		for (int i = eventItem.amigos.length; i <ItemEvent.MAX_AMIGOS_QTD; i++) {
+		for (int i = evento.getUsers().size(); i <ItemEvent.MAX_AMIGOS_QTD; i++) {
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
-
 				imagem.setVisibility(View.INVISIBLE);
 			}else break;
 		}
+		if(evento.getComments()!=null)
+			for (Iterator<Comentario> iterator = evento.getComments().iterator(); iterator.hasNext();) {
+				Comentario coment = (Comentario) iterator.next();
+				addComment(coment.getUserName(),"0m",coment.getText());
 
-		qtd_amigos_amais.setText("+ " + (eventItem.amigos.length > 6 ? eventItem.amigos.length - 6 : 0) + " amigo" + (eventItem.amigos.length > 7 ? "s" : ""));
+			}
+
+		qtd_amigos_amais.setText("+ " + (evento.getNumFriends() > 6 ? evento.getUsers().size() - 6 : 0) + " amigo" + (evento.getNumFriends() > 7 ? "s" : ""));
 		tipo_da_partida.setText(evento.getSport());
 		descricao_do_esporte.setText(evento.getDescription());
+		view.requestLayout();
+		view.postInvalidate();
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		((MainActivity)getActivity()).mudarAbaAtual(new ListEventosFragment());
+		//((MainActivity)getActivity()).mudarAbaAtual(new ListEventosFragment());
+		if(myEvent!=null)
+			Server.enter_event(getActivity(), myEvent.getId(),this );
+	}
+
+	@Override
+	public void onTerminado(Evento in) {
+		// TODO Auto-generated method stub
+		if(in!=null ){
+			myEvent=in;
+			if(getView()!=null){
+				getView().post(new Runnable() {
+					public void run() {
+						setValuesEvent(getView(), myEvent);
+						getView().requestLayout();
+						getView().invalidate();
+
+					}
+				});
+			}
+		}
 	}
 
 }

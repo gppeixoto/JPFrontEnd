@@ -33,23 +33,32 @@ public class Server implements Serializable {
 	 * @param access_token acess_token do usuario que se quer o perfil.
 	 * @return o perfil do usuario que possui esse access_token.
 	 */
-	public static void user_profile(String access_token, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("access_token", access_token);
+	public static void user_profile(Activity act, final Connecter<Usuario> connecter) {
+		
+		ConfigJP.getToken(act, new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String access_token) {
+				// TODO Auto-generated method stub
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("access_token", access_token);
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/userprofile/", obj.toString(), new Connecter<String>() {
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/userprofile/", obj.toString(), new Connecter<String>() {
 
-				@Override
-				public void onTerminado(String in) {
-					try {
-						Usuario user = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(user);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario user = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(user);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
+		
 	}
 
 	/**
@@ -362,23 +371,31 @@ public class Server implements Serializable {
 	 * @param id id do evento que o usuario ira entrar.
 	 * @return o evento que possui o id passado com o usuario dentro.
 	 */
-	public static void enter_event(final String access_token, final String id, final Connecter<Evento> connecter) {
-		JSONObject obj = new JSONObject();
+	public static void enter_event(final Activity ac, final String id, final Connecter<Evento> connecter) {
 
-		try {
-			obj.put("access_token", access_token);
-			obj.put("id", id);
-		} catch(JSONException _) {}
 
-		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/enterevent/", obj.toString(), new Connecter<String>() {
+		ConfigJP.getToken(ac, new Connecter<String>() {
 
-			@Override    
-			public void onTerminado(String in) {
+			@Override
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
+
 				try {
-					Evento ret = processEvent(new JSONObject((String) in));
-					if (connecter != null) connecter.onTerminado(ret);
-				} catch (JSONException _) {}
+					obj.put("access_token", access_token);
+					obj.put("id", id);
+				} catch(JSONException _) {}
+
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/enterevent/", obj.toString(), new Connecter<String>() {
+
+					@Override    
+					public void onTerminado(String in) {
+						try {
+							Evento ret = processEvent(new JSONObject((String) in));
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
+					}
+				});
 			}
 		});
 	}
@@ -389,29 +406,34 @@ public class Server implements Serializable {
 	 * @param comment texto do comentario.
 	 * @return A foto e o nome do usuario.
 	 * */
-	public static void comment(String user_id, String event_id, String comment, final Connecter<Usuario> connecter) {
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("user_id", user_id);
-			obj.put("event_id", event_id);
-			obj.put("comment", comment);
-		} catch (JSONException _) {}
-		
-		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/comment/", obj.toString(), new Connecter<String>() {
+	public static void comment(Activity ac,final String event_id,final String comment, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(ac, new Connecter<String>() {
 			@Override
-			public void onTerminado(String in) {
+			public void onTerminado(String user_id) {
+				JSONObject obj = new JSONObject();
 				try {
-					JSONObject obj = new JSONObject(in);
-					String name = obj.getString("name");
-					String photo = obj.getString("photo");
-					Usuario user = new Usuario(null, name, null, photo, null, 0, null, null, null, false);
-					if (connecter != null) connecter.onTerminado(user);
+					obj.put("user_id", user_id);
+					obj.put("event_id", event_id);
+					obj.put("comment", comment);
 				} catch (JSONException _) {}
+
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/comment/", obj.toString(), new Connecter<String>() {
+					@Override
+					public void onTerminado(String in) {
+						try {
+							JSONObject obj = new JSONObject(in);
+							String name = obj.getString("name");
+							String photo = obj.getString("photo");
+							Usuario user = new Usuario(null, name, null, photo, null, 0, null, null, null, false);
+							if (connecter != null) connecter.onTerminado(user);
+						} catch (JSONException _) {}
+					}
+				});
 			}
 		});
 	}
-	
+
 	/**
 	 * @param user_id id de quem ta convidando.
 	 * @param event_id id do evento.
@@ -427,10 +449,10 @@ public class Server implements Serializable {
 			for (int i = 0; i < invite_ids.size(); ++i) arr.put(invite_ids.get(i));
 			obj.put("user_id_list", arr);
 		} catch (JSONException _) {}
-		
+
 		ServiceHandler sh = new ServiceHandler();
 		sh.makePOST(ServiceHandler.URL_BASE + "/invite/", obj.toString(), new Connecter<String>() {
-			
+
 			@Override
 			public void onTerminado(String in) {
 				try {
@@ -443,9 +465,9 @@ public class Server implements Serializable {
 			}
 		});
 	}
-	
+
 	private static Usuario processUsuario(JSONObject user) {
-		
+
 		try {
 			String id = user.getString("id");
 			String name = user.getString("name");

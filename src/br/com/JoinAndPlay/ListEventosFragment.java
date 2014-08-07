@@ -35,7 +35,7 @@ import com.facebook.model.GraphUser;
 
 
 public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>> {
-	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
+	static ArrayList<ItemEvent> lista;
 	ListView listV;
 	protected Button Button_criar;
 
@@ -125,6 +125,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
 		Log.v("uhu", "oi"+vector);
+		lista=new ArrayList<ItemEvent>();
 		for (int i = 0; i <vector.size(); i++) {
 			final	ItemEvent item=new ItemEvent();
 			Log.v("uhu2", ""+vector.get(i).getName());
@@ -134,7 +135,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			item.qtd_participantes=vector.get(i).getUsers().size();
 			item.amigos_qtd=vector.get(i).getNumFriends();
 			item.esporte=vector.get(i).getSport();
-			//item.cidade=
+			item.cidade=vector.get(i).getNeighbourhood()+"-"+vector.get(i).getCity();
 			item.hora=vector.get(i).getStartTime();
 			item.data=vector.get(i).getDate();
 			item.preco_centavos=vector.get(i).getPrice();
@@ -169,26 +170,16 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		final ItemEvent item = lista.get(arg2-1);
-		Server.get_detailed_event(getActivity(), item.evento.getId(),new Connecter<Evento>() {
-			@Override
-			public void onTerminado(Evento in) {
-				// TODO Auto-generated method stub
-				item.evento = (Evento) in;				Log.v("Tag legal","Entrou aqui " + item.evento);
-
-				Bundle arg= new Bundle();
-				arg.putParcelable("evento",item );
-				Fragment fragment = new EventFragment();
-				fragment.setArguments(arg);
-				((MainActivity)getActivity()).mudarAbaAtual(fragment);
-				AgendaEventosFragment.lista.add(item);
-				AgendaEventosFragment.adapter.notifyDataSetChanged();
-			}
-		});
-
-
-
-
+		
+		if(lista!=null && lista.size()>(arg2-1) && lista.get(arg2-1).evento !=null){
+			
+			Bundle arg= new Bundle();
+			arg.putString("evento",lista.get(arg2-1).evento.getId() );
+			Fragment fragment = new EventFragment();
+			fragment.setArguments(arg);
+			((MainActivity)getActivity()).mudarAbaAtual(fragment);
+		}
+			
 	}
 	
 

@@ -210,6 +210,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				if(!textoEsportes.contains(",") && !textoEsportes.equals("")){
 					esportes[0] = textoEsportes;
 				} else {
+					
 					/*while(!textoEsportes.equals("")){
 						esportes[i] = textoEsportes.substring(0, textoEsportes.indexOf(','));
 						textoEsportes = textoEsportes.substring(textoEsportes.indexOf(',')+1);
@@ -220,7 +221,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				}
 
 				int j = 0;
-				while(j <3){
+				while(j <3 && esportes!=null && j< esportes.length ){
 					Log.v("esporte", j + ": " + esportes[j]);
 					++j;
 				}

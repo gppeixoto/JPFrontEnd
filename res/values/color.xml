@@ -4,6 +4,8 @@
     <color android:id="@+id/color1" name="red" android:layout_width="wrap_content" android:layout_height="wrap_content">#BD0D0D</color>
     <color android:id="@+id/color1" name="white" android:layout_width="wrap_content" android:layout_height="wrap_content">#FFFFFF</color>
     <color android:id="@+id/color1" name="cinza_escuro" android:layout_width="wrap_content" android:layout_height="wrap_content">#696969</color>
+        <color android:id="@+id/color1" name="cinza_escuro_med" android:layout_width="wrap_content" android:layout_height="wrap_content">#66696969</color>
+    
     <color android:id="@+id/color1" name="cinza_escuro_trans" android:layout_width="wrap_content" android:layout_height="wrap_content">#00696969</color>
     <color android:id="@+id/color1" name="cinza" android:layout_width="wrap_content" android:layout_height="wrap_content">#EEEEEE</color>
     <color android:id="@+id/color1" name="black" android:layout_width="wrap_content" android:layout_height="wrap_content">#000000</color>

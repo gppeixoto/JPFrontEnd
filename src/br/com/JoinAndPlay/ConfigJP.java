@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.Server.Usuario;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -24,6 +26,7 @@ public final class ConfigJP {
 	private static Map<String,Integer> mapafutebol = new HashMap<String, Integer>();
 	private static boolean init=false;
 	public static String ip="172.22.67.244";
+	public static String UserId=null;
 	private static void init(){
 		if(!init){
 			mapafutebol.put("futebol",ESPORTE_FUTEBOL);
@@ -52,7 +55,7 @@ public final class ConfigJP {
 		return 0;// mapafutebol.get(esporte);
 	}
 
-	public static void loguin(final Activity act,final Connecter<String> get){
+	public static void login(final Activity act,final Connecter<String> get){
 
 		List<String> PERMISSIONS = new ArrayList<String>();
 		PERMISSIONS.add("user_friends");
@@ -75,6 +78,7 @@ public final class ConfigJP {
 						public void onCompleted(GraphUser user, Response response) {
 							// TODO Auto-generated method stub
 							Log.v("uuou","dasasd"+		user);
+							UserId =user.getId();
 							getToken(act, get);
 
 						}
@@ -104,8 +108,27 @@ public final class ConfigJP {
 			return;
 			
 		}
-		loguin(act,get);
+		login(act,get);
 		
  	}
+
+	public static void getUserID(final Activity act,final Connecter<String> connecter) {
+		// TODO Auto-generated method stub
+		if(UserId!=null){
+			connecter.onTerminado(UserId);
+		}else{
+			
+			getToken(act, new Connecter<String>() {
+				
+				@Override
+				public void onTerminado(String in) {
+					// TODO Auto-generated method stub
+					getUserID(act, connecter);
+				}
+			});
+		}
+		
+		
+	}
 
 }
