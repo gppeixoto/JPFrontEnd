@@ -20,6 +20,7 @@
         <Button
                 android:id="@+id/cancel_button"
                 android:text="@string/picker_cancel"
+                android:textStyle="bold"
                 android:layout_width="0dip"
                 android:layout_weight="1"
                 style="@style/dialog_button"
@@ -35,6 +36,7 @@
         <Button
                 android:id="@+id/set_button"
                 android:text="@string/picker_set"
+                android:textStyle="bold"
                 android:layout_width="0dip"
                 android:layout_weight="1"
                 style="@style/dialog_button"

@@ -383,6 +383,35 @@ public class Server implements Serializable {
 		});
 	}
 
+	/**
+	 * @param user_id id do usuario.
+	 * @param event_id id do evento.
+	 * @param comment texto do comentario.
+	 * @return A foto e o nome do usuario.
+	 * */
+	public static void comment(String user_id, String event_id, String comment, final Connecter<Usuario> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("user_id", user_id);
+			obj.put("event_id", event_id);
+			obj.put("comment", comment);
+		} catch (JSONException _) {}
+		
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/comment/", obj.toString(), new Connecter<String>() {
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					String name = obj.getString("name");
+					String photo = obj.getString("photo");
+					Usuario user = new Usuario(null, name, null, photo, null, 0, null, null, null, false);
+					if (connecter != null) connecter.onTerminado(user);
+				} catch (JSONException _) {}
+			}
+		});
+	}
+	
 	private static Usuario processUsuario(JSONObject user) {
 		try {
 			String id = user.getString("id");
@@ -421,7 +450,7 @@ public class Server implements Serializable {
 			Vector<Usuario> users = new Vector<Usuario>();
 			for (int j = 0; j < arr_users.length(); ++j) {
 				JSONArray act_user = arr_users.getJSONArray(j);
-				Usuario to_add = new Usuario(act_user.getString(0), act_user.getString(1), "", ServiceHandler.URL_BASE + "/" + act_user.getString(2), null, 0, null, null, null, false);
+				Usuario to_add = new Usuario(act_user.getString(0), act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
 				users.add(to_add);
 			}
 			String localization_name = evt.getString("localizationName");
