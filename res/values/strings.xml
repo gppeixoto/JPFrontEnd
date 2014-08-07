@@ -59,10 +59,10 @@
 	<string name="hora">Hora</string>
     <string name="por_hora">por hora</string>
     <string name="unidade_preco">R$</string>
-     <string name="nome_evento">Nome do evento</string>
+    <string name="nome_evento">Nome do evento</string>
     <string name="perfil_button_num_amigos">Amigos</string>
     <string name="perfil_button_eventos_anteriores">Eventos anteriores</string>
-     <string name="preco_nulo_unidade">R$ 0,00</string>
-
+    <string name="preco_nulo_unidade">R$ 0,00</string>
+	<string name="ok">OK</string>
     
 </resources>

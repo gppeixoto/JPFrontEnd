@@ -1,5 +1,7 @@
 package br.com.JoinAndPlay;
 
+import java.util.StringTokenizer;
+
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
@@ -7,6 +9,8 @@ import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.*;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -17,8 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -26,7 +34,7 @@ import org.joda.time.DateTime;
 public class PesquisarEventosFragment extends Fragment 
 implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener,
 			DatePickerDialogFragment.DatePickerDialogHandler,
-			TimePickerDialogFragment.TimePickerDialogHandler  {
+			TimePickerDialogFragment.TimePickerDialogHandler {
 
 	private Button bg;
 	private Button b2;
@@ -39,9 +47,10 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	private TextView eev;
 	private EditText env;
 	private EditText eendv;
-	private EditText eesv;
+	private MultiAutoCompleteTextView eesv;
 	private Configuration config;
 	private String[] data;
+	private int[] dataNOW;
 
 	private boolean begin = false;
 	private boolean end = false;
@@ -52,10 +61,11 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
-
+		
 		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
 		data = new String[3];
+		dataNOW = new int[3];
 		
 		apv = (TextView) v.findViewById(R.id.aPartir);
 		dv = (TextView) v.findViewById(R.id.data_view);
@@ -64,7 +74,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		eev = (TextView) v.findViewById(R.id.escolhaEsportes);
 		env = (EditText) v.findViewById(R.id.escolha_nome);
 		eendv = (EditText) v.findViewById(R.id.escolha_endereco);
-		eesv = (EditText) v.findViewById(R.id.escolha_esporte);
+		eesv = (MultiAutoCompleteTextView) v.findViewById(R.id.escolha_esporte);
 		/*apv.setTypeface(fontBold);
 		dv.setTypeface(fontBold);
 		atv.setTypeface(fontBold);
@@ -75,9 +85,26 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		eesv.setTypeface(font);*/
 
 		config = getActivity().getResources().getConfiguration();
-
+        
+		String[] str={"Baseball","Basquete","Boliche","Boxe","Cartas","Ciclismo","Corrida",
+				      "Dominó","Futebol","Futebol Americano","Golfe","Patinação","Sinuca",
+	                  "Skate", "Tênis", "Tênis de Mesa", "Video-Game", "Vôlei", "Vôlei de Praia", 
+	                  "Xadrez"};
+        
+        eesv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        
+        ArrayAdapter<String> adp=new ArrayAdapter<String>(this.getActivity(),
+        		android.R.layout.simple_dropdown_item_1line,str);
+        
+        eesv.setThreshold(1);
+        eesv.setAdapter(adp);
+        
+        DateTime now = DateTime.now();
+    	this.dataNOW[0] = now.getDayOfMonth();
+		this.dataNOW[1] = now.getMonthOfYear()+1;
+		this.dataNOW[2] = now.getYear();
+				
 		bd = (Button) v.findViewById(R.id.buttonDia);
-		DateTime now = DateTime.now();
 		this.data[0] = now.getDayOfMonth()+"";
 		this.data[1] = now.getMonthOfYear()+1+"";
 		this.data[2] = now.getYear()+"";
@@ -98,8 +125,6 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
 		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
-
-		
 		
 		bd.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -181,18 +206,24 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				String textoEsportes = eesv.getText().toString();
 				//String textoEsportes = "Basquete;Futebol;Futebol Americano;";
 				int i = 0;
-				while(!textoEsportes.equals("")){
-					esportes[i] = textoEsportes.substring(0, textoEsportes.indexOf(';'));
-					textoEsportes = textoEsportes.substring(textoEsportes.indexOf(';')+1);
-					textoEsportes.trim();
-					++i;
+				
+				if(!textoEsportes.contains(",") && !textoEsportes.equals("")){
+					esportes[0] = textoEsportes;
+				} else {
+					/*while(!textoEsportes.equals("")){
+						esportes[i] = textoEsportes.substring(0, textoEsportes.indexOf(','));
+						textoEsportes = textoEsportes.substring(textoEsportes.indexOf(',')+1);
+						textoEsportes.trim();
+						++i;
+					}*/
+					esportes = textoEsportes.split(",");
 				}
 
-				/*int j = 0;
-				while(esportes[j] != null){
+				int j = 0;
+				while(j <3){
 					Log.v("esporte", j + ": " + esportes[j]);
 					++j;
-				}*/
+				}
 
 				args.putStringArray("esportes", esportes);
 				args.putString("endereco", eendv.getText().toString());
@@ -218,18 +249,44 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 	@Override
 	public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-		this.data[0] = dayOfMonth+"";
-		this.data[1] = monthOfYear+1+"";
-		this.data[2] = year+"";
-		bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		if(dayOfMonth < this.dataNOW[0] && monthOfYear < this.dataNOW[1] && year < this.dataNOW[2]){
+		    AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+            builder1.setMessage("Pesquise por eventos futuros.");
+            builder1.setTitle("Ops");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+            }});
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+		} else {
+			this.data[0] = dayOfMonth+"";
+			this.data[1] = monthOfYear+1+"";
+			this.data[2] = year+"";
+			bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		}
 	}
 
 	@Override
 	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
-		this.data[0] = dayOfMonth+"";
-		this.data[1] = monthOfYear+1+"";
-		this.data[2] = year+"";
-		bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		if(dayOfMonth < this.dataNOW[0] && monthOfYear < this.dataNOW[1] && year < this.dataNOW[2]){
+			 AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("Pesquise por eventos futuros.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+		} else {
+			this.data[0] = dayOfMonth+"";
+			this.data[1] = monthOfYear+1+"";
+			this.data[2] = year+"";
+			bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		}
 	}
 
 	@Override
@@ -239,11 +296,38 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		m = minute < 10 ? "0" + minute : "" + minute;
 
 		if(begin) {
-			b2.setText(h + ":" + m);
-			begin = false;
+			if((h + ":" + m).compareTo(b3.getText().toString()) < 0){
+				b2.setText(h + ":" + m);
+				begin = false;
+			} else {
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("O término deve ser após o início.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+			}
+	
 		} else if (end){
-			b3.setText(h + ":" + m);
-			end = false;
+			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("O término deve ser após o início.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+			} else {
+				b3.setText(h + ":" + m);
+				end = false;
+			}
 		}
 	}
 
@@ -254,11 +338,38 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		m = minute < 10 ? "0" + minute : "" + minute;
 
 		if(begin) {
-			b2.setText(h + ":" + m);
-			begin = false;
+			if((h + ":" + m).compareTo(b3.getText().toString()) < 0){
+				b2.setText(h + ":" + m);
+				begin = false;
+			} else {
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("O término deve ser após o início.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+			}
+	
 		} else if (end){
-			b3.setText(h + ":" + m);
-			end = false;
+			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("O término deve ser após o início.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+			} else {
+				b3.setText(h + ":" + m);
+				end = false;
+			}
 		}
 	}
 
@@ -271,7 +382,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 			rtpd.setOnTimeSetListener(this);
 		}
 	}
-
+    
 	public String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";

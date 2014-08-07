@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sports_array">
+        <item>Mais Esportes...</item>
+        <item>Badminton</item>
+        <item>Baseball</item>
+        <item>Basquete</item>
+        <item>Boliche</item>
+        <item>Boxe</item>
+        <item>Cartas</item>
+        <item>Ciclismo</item>
+        <item>Corrida</item>
+        <item>Dominó</item>
+        <item>Futebol</item>
+        <item>Futebol Americano</item>
+        <item>Golfe</item>
+        <item>Patinação</item>
+        <item>Sinuca</item>
+        <item>Skate</item>
+        <item>Tênis</item>  
+        <item>Tênis de Mesa</item>
+        <item>Video-Game</item>     
+        <item>Vôlei</item>
+        <item>Vôlei de Praia</item>   
+        <item>Xadrez</item>
+    </string-array>
+
+</resources>
