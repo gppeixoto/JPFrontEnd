@@ -412,7 +412,40 @@ public class Server implements Serializable {
 		});
 	}
 	
+	/**
+	 * @param user_id id de quem ta convidando.
+	 * @param event_id id do evento.
+	 * @param invite_ids vector de ids de quem esta sendo convidado.
+	 * @return true se tiver dado certo, false se quem convidou nao for o criador do evento.
+	 * */	
+	public static void invite(String user_id, String event_id, Vector<String> invite_ids, final Connecter<Boolean> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("id", user_id);
+			obj.put("event_id", event_id);
+			JSONArray arr = new JSONArray();
+			for (int i = 0; i < invite_ids.size(); ++i) arr.put(invite_ids.get(i));
+			obj.put("user_id_list", arr);
+		} catch (JSONException _) {}
+		
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/invite/", obj.toString(), new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					if (connecter != null) {
+						if (obj.has("error")) connecter.onTerminado(false);
+						else connecter.onTerminado(true);
+					}
+				} catch (JSONException _) {}
+			}
+		});
+	}
+	
 	private static Usuario processUsuario(JSONObject user) {
+		
 		try {
 			String id = user.getString("id");
 			String name = user.getString("name");
