@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import org.joda.time.chrono.BuddhistChronology;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,6 +24,7 @@ import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -63,7 +66,20 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
-		Server.get_matched_events(getActivity(),null, null, null,null, null, this);
+		
+	if(getArguments()!=null){
+		Bundle args= getArguments();
+		String[] esportes=null ;
+				
+		if(args.getInt("esportes_qtd")>0){
+			esportes=new String[args.getInt("esportes_qtd")];
+			args.getStringArray("esportes");
+		}
+		Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, this);
+	}else{
+		Server.get_matched_events(getActivity(),null,null,null,null,null,this);	
+	}
+	
 		return tela;
 	}
 	boolean login = true;

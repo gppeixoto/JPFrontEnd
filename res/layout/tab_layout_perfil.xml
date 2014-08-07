@@ -43,12 +43,12 @@
                         android:paddingLeft="15dp"
                         android:paddingTop="12dp" >
 
-                        <com.facebook.widget.ProfilePictureView
+                        <ImageView
                             android:id="@+id/profilePictureView1"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:paddingLeft="12dp" >
-                        </com.facebook.widget.ProfilePictureView>
+                            android:layout_marginLeft="12dp" >
+                        </ImageView>
 
                         <LinearLayout
                             android:layout_width="wrap_content"

@@ -33,8 +33,8 @@ import org.joda.time.DateTime;
 
 public class PesquisarEventosFragment extends Fragment 
 implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener,
-			DatePickerDialogFragment.DatePickerDialogHandler,
-			TimePickerDialogFragment.TimePickerDialogHandler {
+DatePickerDialogFragment.DatePickerDialogHandler,
+TimePickerDialogFragment.TimePickerDialogHandler {
 
 	private Button bg;
 	private Button b2;
@@ -61,12 +61,12 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
-		
+
 		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
 		data = new String[3];
 		dataNOW = new int[3];
-		
+
 		apv = (TextView) v.findViewById(R.id.aPartir);
 		dv = (TextView) v.findViewById(R.id.data_view);
 		atv = (TextView) v.findViewById(R.id.ateTextView);
@@ -85,25 +85,25 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 		eesv.setTypeface(font);*/
 
 		config = getActivity().getResources().getConfiguration();
-        
+
 		String[] str={"Baseball","Basquete","Boliche","Boxe","Cartas","Ciclismo","Corrida",
-				      "Dominó","Futebol","Futebol Americano","Golfe","Patinação","Sinuca",
-	                  "Skate", "Tênis", "Tênis de Mesa", "Video-Game", "Vôlei", "Vôlei de Praia", 
-	                  "Xadrez"};
-        
-        eesv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        
-        ArrayAdapter<String> adp=new ArrayAdapter<String>(this.getActivity(),
-        		android.R.layout.simple_dropdown_item_1line,str);
-        
-        eesv.setThreshold(1);
-        eesv.setAdapter(adp);
-        
-        DateTime now = DateTime.now();
-    	this.dataNOW[0] = now.getDayOfMonth();
+				"Dominó","Futebol","Futebol Americano","Golfe","Patinação","Sinuca",
+				"Skate", "Tênis", "Tênis de Mesa", "Video-Game", "Vôlei", "Vôlei de Praia", 
+		"Xadrez"};
+
+		eesv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+		ArrayAdapter<String> adp=new ArrayAdapter<String>(this.getActivity(),
+				android.R.layout.simple_dropdown_item_1line,str);
+
+		eesv.setThreshold(1);
+		eesv.setAdapter(adp);
+
+		DateTime now = DateTime.now();
+		this.dataNOW[0] = now.getDayOfMonth();
 		this.dataNOW[1] = now.getMonthOfYear()+1;
 		this.dataNOW[2] = now.getYear();
-				
+
 		bd = (Button) v.findViewById(R.id.buttonDia);
 		this.data[0] = now.getDayOfMonth()+"";
 		this.data[1] = now.getMonthOfYear()+1+"";
@@ -125,7 +125,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 
 		Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
 		bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
-		
+
 		bd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -199,18 +199,21 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 			@Override
 			public void onClick(View v) {
 				ListEventosFragment list = new ListEventosFragment();
-				
+
 				Bundle args = new Bundle();
-				
-				String[] esportes = new String[100];
+
+				String[] esportes;
 				String textoEsportes = eesv.getText().toString();
 				//String textoEsportes = "Basquete;Futebol;Futebol Americano;";
 				int i = 0;
-				
-				if(!textoEsportes.contains(",") && !textoEsportes.equals("")){
+				if(textoEsportes==null ||textoEsportes.equals("") ){
+					esportes=null;
+				}else
+				if(!textoEsportes.contains(",")){
+					esportes = new String[1];
 					esportes[0] = textoEsportes;
 				} else {
-					
+
 					/*while(!textoEsportes.equals("")){
 						esportes[i] = textoEsportes.substring(0, textoEsportes.indexOf(','));
 						textoEsportes = textoEsportes.substring(textoEsportes.indexOf(',')+1);
@@ -221,11 +224,12 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				}
 
 				int j = 0;
-				while(j <3 && esportes!=null && j< esportes.length ){
-					Log.v("esporte", j + ": " + esportes[j]);
+				if(esportes!=null ){
+					Log.v("esporte", j + ": " + esportes[j]+" + "+textoEsportes+ "  "+esportes.length);
 					++j;
 				}
 
+				args.putInt("esportes_qtd",esportes==null?0 : esportes.length);
 				args.putStringArray("esportes", esportes);
 				args.putString("endereco", eendv.getText().toString());
 				//Log.v("endedeco", eendv.getText().toString());
@@ -233,15 +237,15 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				//Log.v("nome local", env.getText().toString());
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
 				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
-				
+
 				args.putString("horaInicio", b2.getText().toString());
 				//Log.v("hora inicio",b2.getText().toString());
 				args.putString("horaTermino", b3.getText().toString());
 				//Log.v("hora fim", b3.getText().toString());
-				
+
 				list.setArguments(args);
-				
-				((MainActivity)getActivity()).mudarAba(0);
+				((MainActivity)getActivity()).mudarAba(1, list);
+				((MainActivity)getActivity()).mudarAba(1);
 			}
 		});
 
@@ -251,16 +255,16 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	@Override
 	public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
 		if(dayOfMonth < this.dataNOW[0] && monthOfYear < this.dataNOW[1] && year < this.dataNOW[2]){
-		    AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-            builder1.setMessage("Pesquise por eventos futuros.");
-            builder1.setTitle("Ops");
-            builder1.setCancelable(true);
-            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-            }});
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+			builder1.setMessage("Pesquise por eventos futuros.");
+			builder1.setTitle("Ops");
+			builder1.setCancelable(true);
+			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}});
+			AlertDialog alert11 = builder1.create();
+			alert11.show();
 		} else {
 			this.data[0] = dayOfMonth+"";
 			this.data[1] = monthOfYear+1+"";
@@ -272,16 +276,16 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 	@Override
 	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
 		if(dayOfMonth < this.dataNOW[0] && monthOfYear < this.dataNOW[1] && year < this.dataNOW[2]){
-			 AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-	            builder1.setMessage("Pesquise por eventos futuros.");
-	            builder1.setTitle("Ops");
-	            builder1.setCancelable(true);
-	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-	                public void onClick(DialogInterface dialog, int id) {
-	                    dialog.cancel();
-	            }});
-	            AlertDialog alert11 = builder1.create();
-	            alert11.show();
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+			builder1.setMessage("Pesquise por eventos futuros.");
+			builder1.setTitle("Ops");
+			builder1.setCancelable(true);
+			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}});
+			AlertDialog alert11 = builder1.create();
+			alert11.show();
 		} else {
 			this.data[0] = dayOfMonth+"";
 			this.data[1] = monthOfYear+1+"";
@@ -302,29 +306,29 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				begin = false;
 			} else {
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-	            builder1.setMessage("O término deve ser após o início.");
-	            builder1.setTitle("Ops");
-	            builder1.setCancelable(true);
-	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-	                public void onClick(DialogInterface dialog, int id) {
-	                    dialog.cancel();
-	            }});
-	            AlertDialog alert11 = builder1.create();
-	            alert11.show();
+				builder1.setMessage("O término deve ser após o início.");
+				builder1.setTitle("Ops");
+				builder1.setCancelable(true);
+				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}});
+				AlertDialog alert11 = builder1.create();
+				alert11.show();
 			}
-	
+
 		} else if (end){
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-	            builder1.setMessage("O término deve ser após o início.");
-	            builder1.setTitle("Ops");
-	            builder1.setCancelable(true);
-	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-	                public void onClick(DialogInterface dialog, int id) {
-	                    dialog.cancel();
-	            }});
-	            AlertDialog alert11 = builder1.create();
-	            alert11.show();
+				builder1.setMessage("O término deve ser após o início.");
+				builder1.setTitle("Ops");
+				builder1.setCancelable(true);
+				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}});
+				AlertDialog alert11 = builder1.create();
+				alert11.show();
 			} else {
 				b3.setText(h + ":" + m);
 				end = false;
@@ -344,29 +348,29 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 				begin = false;
 			} else {
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-	            builder1.setMessage("O término deve ser após o início.");
-	            builder1.setTitle("Ops");
-	            builder1.setCancelable(true);
-	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-	                public void onClick(DialogInterface dialog, int id) {
-	                    dialog.cancel();
-	            }});
-	            AlertDialog alert11 = builder1.create();
-	            alert11.show();
+				builder1.setMessage("O término deve ser após o início.");
+				builder1.setTitle("Ops");
+				builder1.setCancelable(true);
+				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}});
+				AlertDialog alert11 = builder1.create();
+				alert11.show();
 			}
-	
+
 		} else if (end){
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-	            builder1.setMessage("O término deve ser após o início.");
-	            builder1.setTitle("Ops");
-	            builder1.setCancelable(true);
-	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-	                public void onClick(DialogInterface dialog, int id) {
-	                    dialog.cancel();
-	            }});
-	            AlertDialog alert11 = builder1.create();
-	            alert11.show();
+				builder1.setMessage("O término deve ser após o início.");
+				builder1.setTitle("Ops");
+				builder1.setCancelable(true);
+				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}});
+				AlertDialog alert11 = builder1.create();
+				alert11.show();
 			} else {
 				b3.setText(h + ":" + m);
 				end = false;
@@ -383,7 +387,7 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 			rtpd.setOnTimeSetListener(this);
 		}
 	}
-    
+
 	public String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";

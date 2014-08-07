@@ -14,9 +14,9 @@ import android.widget.GridView;
 
 public class ItemEsporte implements Parcelable {
 
-	String esporte;
-	int partidasJogadas;
-	int avaliacaoJogador; //numero de estrelas
+	public String esporte;
+	public int partidasJogadas;
+	public int avaliacaoJogador; //numero de estrelas
 	
 	public ItemEsporte(){
 
