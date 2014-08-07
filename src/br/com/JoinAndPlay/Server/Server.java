@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
-
 import android.app.Activity;
 import android.util.Log;
 
@@ -125,6 +124,33 @@ public class Server implements Serializable {
 		} catch (JSONException _) {}
 	}
 
+	/**
+	 * @param user_id id do usuario.
+	 * @param event_id id do evento a ser removido.
+	 * @return true caso tenha removido, false caso o usuario nao seja o criador do evento.
+	 * */
+	public static void delete_event(String user_id, String event_id, final Connecter<Boolean> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("user_id", user_id);
+			obj.put("event_id", event_id);
+		} catch (JSONException _) {}
+		
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/deleteevent/", obj.toString(), new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					if (connecter != null) {
+						if (obj.has("error")) connecter.onTerminado(false);
+						else connecter.onTerminado(true);
+					}
+				} catch (JSONException _) {}
+			}
+		});
+	}
 
 	/**
 	 * @param access_token acess_token do criador do evento.
@@ -379,6 +405,30 @@ public class Server implements Serializable {
 					Evento ret = processEvent(new JSONObject((String) in));
 					if (connecter != null) connecter.onTerminado(ret);
 				} catch (JSONException _) {}
+			}
+		});
+	}
+	
+	/**
+	 * @param access_token o access_token do usuario que esta saindo.
+	 * @param id o id do evento.
+	 * @return o evento.
+	 * */
+	public static void leave_event(String access_token, String id, final Connecter<Evento> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("access_token", access_token);
+			obj.put("id", id);
+		} catch (JSONException _) {}
+		
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/leaveevent/", obj.toString(), new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String in) {
+				try {
+					if (connecter != null) connecter.onTerminado(processEvent(new JSONObject(in)));
+				} catch (JSONException _) {}				
 			}
 		});
 	}
