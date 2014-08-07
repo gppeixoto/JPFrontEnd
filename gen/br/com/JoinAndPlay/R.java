@@ -54,6 +54,7 @@ public final class R {
         /**  Repeat a monthly event on the same nth day of every Wednesday. [CHAR LIMIT=30] 
          */
         public static final int repeat_by_nth_wed=0x7f040004;
+        public static final int sports_array=0x7f04000c;
         /** 
         Timezone IDs for the time zones that we want to override the display strings.
         ALWAYS ADD NEW ENTRIES AT THE END. Othewise the entries after the insertion point will
@@ -1857,6 +1858,7 @@ containing a value of this type.
         public static final int numbers_radius_multiplier_inner=0x7f070005;
         public static final int numbers_radius_multiplier_normal=0x7f070004;
         public static final int numbers_radius_multiplier_outer=0x7f070006;
+        public static final int ok=0x7f0700c1;
         public static final int pago=0x7f070090;
         /**  Name to be displayed for "Palestine". This will be used when searching for a country to
          select a timezone. [CHAR LIMIT=NONE]

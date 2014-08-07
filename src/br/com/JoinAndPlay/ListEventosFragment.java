@@ -73,6 +73,9 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		// TODO Auto-generated method stub
 		
 			login=false;
+			
+			CriarEventosFragment criar = new CriarEventosFragment();
+			((MainActivity)getActivity()).mudarAbaAtual(criar);
 		
 	}
 

@@ -8,6 +8,7 @@ int array repeat_by_nth_sun 0x7f040001
 int array repeat_by_nth_thurs 0x7f040005
 int array repeat_by_nth_tues 0x7f040003
 int array repeat_by_nth_wed 0x7f040004
+int array sports_array 0x7f04000c
 int array timezone_rename_ids 0x7f040008
 int array timezone_rename_labels 0x7f040009
 int attr adSize 0x7f010014
@@ -973,6 +974,7 @@ int string number_picker_seperator 0x7f070018
 int string numbers_radius_multiplier_inner 0x7f070005
 int string numbers_radius_multiplier_normal 0x7f070004
 int string numbers_radius_multiplier_outer 0x7f070006
+int string ok 0x7f0700c1
 int string pago 0x7f070090
 int string palestine_display_name 0x7f070045
 int string participar 0x7f0700a6

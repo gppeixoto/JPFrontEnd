@@ -45,7 +45,7 @@
                 android:paddingBottom="0dp"
                 android:paddingTop="0dp" >
 
-                <EditText
+                <AutoCompleteTextView  
                     android:id="@+id/escolha_esporte"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -57,7 +57,8 @@
                     android:hint="@string/hint_pesq1"
                     android:inputType="text"
                     android:singleLine="true"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"    
+ 					android:completionThreshold="1" />
             </LinearLayout>
 
             <LinearLayout

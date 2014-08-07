@@ -7,6 +7,8 @@ import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,21 +42,19 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private Button bDataFim;
 	private Button bDia;
 		
-	private EditText eEsporte;
+	private AutoCompleteTextView eEsporte;
+	
 	private EditText eNomeLugar;
 	private EditText eEnderecoLugar;
 	private EditText ePreco;
 	
 	private Configuration config;
 	private String[] data;
+	private int[] dataNOW;
 	
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
 	
-	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-
-	}
 	
 	@Override
 	public void onResume() {
@@ -74,6 +74,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		View view = inflater.inflate(R.layout.criar_evento, container,false);
 		
 		data = new String[3];
+		dataNOW = new int[3];
 		
 		config = getActivity().getResources().getConfiguration();
 		
@@ -81,10 +82,20 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		end=false;
 		pago=false;
 		
+		String[] str={"Baseball","Basquete","Boliche","Boxe","Cartas","Ciclismo","Corrida",
+			      "Dominó","Futebol","Futebol Americano","Golfe","Patinação","Sinuca",
+                "Skate", "Tênis", "Tênis de Mesa", "Video-Game", "Vôlei", "Vôlei de Praia", 
+                "Xadrez"};
+		
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getActivity(),
+                 android.R.layout.simple_dropdown_item_1line, str);
+		
 		ePreco = (EditText) view.findViewById(R.id.escolha_preco);	
 		ePreco.setVisibility(View.INVISIBLE);
 		
-		eEsporte = (EditText) view.findViewById(R.id.escolha_esporte);
+		eEsporte = (AutoCompleteTextView) view.findViewById(R.id.escolha_esporte);
+		eEsporte.setAdapter(adp);
+		eEsporte.setThreshold(1);
 		
 		eNomeLugar = (EditText) view.findViewById(R.id.escolha_nome);
 		
@@ -101,9 +112,15 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		bDataFim = (Button) view.findViewById(R.id.buttonDataFim);
 		bDataFim.setText("23:59");
 		
-		bDia = (Button) view.findViewById(R.id.buttonDia);
 		DateTime now = DateTime.now();
+		
+		bDia = (Button) view.findViewById(R.id.buttonDia);
 		bDia.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
+		
+		
+	    this.dataNOW[0] = now.getDayOfMonth();
+		this.dataNOW[1] = now.getMonthOfYear()+1;
+		this.dataNOW[2] = now.getYear();
 		
 		this.data[0] = now.getDayOfMonth()+"";
 		this.data[1] = now.getMonthOfYear()+1+"";
@@ -122,10 +139,10 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				String end = eEnderecoLugar.getText().toString();
 				String lugar = eNomeLugar.getText().toString();
 				
-				/*if(esporte.trim().equals("")){
+				if(esporte.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
-					error.setTitle("Alerta Join&Play");
+					error.setTitle("Ops");
 					error.setMessage("Escolha um esporte!");
 					error.setPositiveButton("OK", null);
 					error.show();
@@ -133,7 +150,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				} else if(end.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
-					error.setTitle("Alerta Join&Play");
+					error.setTitle("Ops");
 					error.setMessage("Escolha um local!");
 					error.setPositiveButton("OK", null);
 					error.show();
@@ -141,7 +158,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				} else if(lugar.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
-					error.setTitle("Alerta Join&Play");
+					error.setTitle("Ops");
 					error.setMessage("Dê um nome ao local!");
 					error.setPositiveButton("OK", null);
 					error.show();
@@ -155,7 +172,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				//Log.v("nome local", env.getText().toString());
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
 				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
-				 */
+				 
 				
 				
 				args.putString("horaInicio", bDataInicio.getText().toString());
@@ -283,19 +300,45 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	public void onDateSet(CalendarDatePickerDialog dialog, int year,
 			int monthOfYear, int dayOfMonth) {
 		// TODO Auto-generated method stub
-		this.data[0] = dayOfMonth+"";
-		this.data[1] = monthOfYear+1+"";
-		this.data[2] = year+"";
-		bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		if(dayOfMonth < this.dataNOW[0] && monthOfYear < this.dataNOW[1] && year < this.dataNOW[2]){
+		    AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+            builder1.setMessage("Pesquise por eventos futuros.");
+            builder1.setTitle("Ops");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+            }});
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+		} else {
+			this.data[0] = dayOfMonth+"";
+			this.data[1] = monthOfYear+1+"";
+			this.data[2] = year+"";
+			bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		}
         
 	}
 	
 	
 	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
-		this.data[0] = dayOfMonth+"";
-		this.data[1] = monthOfYear+1+"";
-		this.data[2] = year+"";
-		bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		if(dayOfMonth < this.dataNOW[0] && monthOfYear < this.dataNOW[1] && year < this.dataNOW[2]){
+			 AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("Pesquise por eventos futuros.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+		} else {
+			this.data[0] = dayOfMonth+"";
+			this.data[1] = monthOfYear+1+"";
+			this.data[2] = year+"";
+			bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		}
 	}
 	
 	public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
@@ -321,11 +364,38 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		m = minute < 10 ? "0" + minute : "" + minute;
 
 		if(begin) {
-			bDataInicio.setText(h + ":" + m);
-			begin = false;
+			if((h + ":" + m).compareTo(bDataFim.getText().toString()) < 0){
+				bDataInicio.setText(h + ":" + m);
+				begin = false;
+			} else {
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("O término deve ser após o início.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+			}
+	
 		} else if (end){
-			bDataFim.setText(h + ":" + m);
-			end = false;
+			if((h + ":" + m).compareTo(bDataInicio.getText().toString()) <= 0){
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
+	            builder1.setMessage("O término deve ser após o início.");
+	            builder1.setTitle("Ops");
+	            builder1.setCancelable(true);
+	            builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                    dialog.cancel();
+	            }});
+	            AlertDialog alert11 = builder1.create();
+	            alert11.show();
+			} else {
+				bDataFim.setText(h + ":" + m);
+				end = false;
+			}
 		}
 	}
 }
