@@ -74,63 +74,6 @@ lista.add(new ItemPlace());
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		List<String> PERMISSIONS = new ArrayList<String>();
-		PERMISSIONS.add("user_friends");
-		PERMISSIONS.add("public_profile");
-
-		PERMISSIONS.add("email");
 		
-
-		if(login){
-			Session session = Session.openActiveSession(getActivity(), true,PERMISSIONS, new Session.StatusCallback() {
-
-				// callback when session changes state
-				@Override
-				public void call(Session session, SessionState state, Exception exception) {
-
-					if (session.isOpened()) {
-						// make request to the /me API
-						Request.newMeRequest(session, new GraphUserCallback() {
-
-							// callback after Graph API response with user object
-
-							@Override
-							public void onCompleted(GraphUser user, Response response) {
-								// TODO Auto-generated method stub
-								Log.v("uuou","dasasd"+		user);
-
-							}
-						}
-								).executeAsync();
-					}
-				}
-			});
-
-			Log.v("token","dasasd"+		session.getPermissions());
-			Log.v("token","dasasd"+session.isOpened());
-
-			Log.v("token"," "+ session.getAccessToken());
-			Log.v("token","dasasd");
-
-			if (session != null && session.isOpened()) {
-				Toast.makeText(getActivity(), session.getAccessToken(), Toast.LENGTH_LONG).show();
-
-			}
-
-			login=false;
-		}else{
-			//MyThread t = new MyThread();
-			//t.start();
-			Server.login(Session.getActiveSession().getAccessToken(),new Connecter() {
-				
-				@Override
-				public void onTerminado(Object in) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			/**/
-		
-		}	
 	}
 }

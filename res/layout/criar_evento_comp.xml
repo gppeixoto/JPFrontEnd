@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -29,12 +29,12 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="14dp"
                 android:text="@string/nome_evento"
-                android:textColor="@color/red_pesquisa"
+                android:textColor="@color/red"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/escolha_esporte_layout"
+                android:id="@+id/escolha_nome_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="15dp"
@@ -59,6 +59,58 @@
                     android:singleLine="true"
                     android:textSize="15sp" />
             </LinearLayout>
+            
+            <LinearLayout 
+                android:id="@+id/layout_privacidade"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" >
+                
+                <TextView
+                    android:id="@+id/text_privacidade"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:text="@string/privacidade" />
+                
+                <LinearLayout 
+                    android:id="@+id/buttons_priv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:gravity="right"
+                    >      
+                
+	                <Button
+	                    android:id="@+id/particular"
+	                    android:textColor="@color/white"
+	                    android:textSize="14sp"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="35dp"
+	                    android:background="@drawable/red_button"
+	                    android:text="@string/particular"
+	                    android:padding="10dp"
+	                    android:textStyle="bold" />
+	                
+	                
+	                <Button
+	                    android:id="@+id/publico"
+	                    android:layout_marginLeft="10dp"
+	                    android:background="@drawable/gray_button"
+	                    android:padding="10dp"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="35dp"
+	                    android:textColor="@color/white"
+	                    android:textSize="14sp"
+	                    android:text="@string/publico"
+	                    android:textStyle="bold" />
+                </LinearLayout>
+                
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/criar_evento_button_layout"
@@ -77,11 +129,10 @@
                     android:padding="10dp"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:background="@drawable/next_button"
-                    />
+                    android:background="@drawable/next_button" />
 
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

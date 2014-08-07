@@ -169,25 +169,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
             
-            <LinearLayout
-                android:id="@+id/escolha_lugar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/escolha_lugar_button"                    
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:background="@drawable/findplace_button"
-                    android:padding="10dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/cinza_txt"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+          
             
             <LinearLayout
                     android:id="@+id/escolha_preco_layout"

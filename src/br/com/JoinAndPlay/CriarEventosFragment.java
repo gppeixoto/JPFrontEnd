@@ -3,7 +3,9 @@ package br.com.JoinAndPlay;
 import org.joda.time.DateTime;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
+import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -29,26 +32,21 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private boolean begin;
 	private boolean end;
 	private boolean pago;
-	private boolean temEsporte;
-	private boolean temNomeLugar;
-	private boolean temEndereco;
 	
 	private CheckBox checkPago;
 	
 	private Button bProximo;
-	private Button bOndeJogar;
 	private Button bDataInicio;
 	private Button bDataFim;
 	private Button bDia;
-	
-	private String esporte;
-	private String nomeLugar;
-	private String endereco;
 		
 	private EditText eEsporte;
 	private EditText eNomeLugar;
 	private EditText eEnderecoLugar;
 	private EditText ePreco;
+	
+	private Configuration config;
+	private String[] data;
 	
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
@@ -58,6 +56,16 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		RadialTimePickerDialog rtpd = (RadialTimePickerDialog) getFragmentManager().findFragmentByTag(
+				FRAG_TAG_TIME_PICKER);
+		if (rtpd != null) {
+			rtpd.setOnTimeSetListener(this);
+		}
+	}
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
@@ -65,86 +73,27 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		
 		View view = inflater.inflate(R.layout.criar_evento, container,false);
 		
+		data = new String[3];
+		
+		config = getActivity().getResources().getConfiguration();
+		
 		begin = false;
 		end=false;
 		pago=false;
-		temEndereco=false;
-		temNomeLugar=false;
-		temEsporte=false; //controla se foi escrito o esporte, deve ser inicializado com falso apos integracao
 		
 		ePreco = (EditText) view.findViewById(R.id.escolha_preco);	
 		ePreco.setVisibility(View.INVISIBLE);
 		
 		eEsporte = (EditText) view.findViewById(R.id.escolha_esporte);
-		eEsporte.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {}
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				if(s.toString().trim().equals("")){
-					temEsporte = false;
-				} else {
-					temEsporte = true;
-					esporte = (String) s.toString();
-				}
-			}
-			public void afterTextChanged(Editable s) {
-				if(s.toString().trim().equals("")){
-					temEsporte = false;
-				} else {
-					temEsporte = true;
-					esporte = (String) s.toString();
-				}
-			}
-		});
 		
 		eNomeLugar = (EditText) view.findViewById(R.id.escolha_nome);
-		eNomeLugar.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {}
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				if(s.toString().trim().equals("")){
-					temNomeLugar = false;
-				} else {
-					temNomeLugar = true;
-					nomeLugar = (String) s.toString();
-				}
-			}
-			public void afterTextChanged(Editable s) {
-				if(s.toString().trim().equals("")){
-					temEsporte = false;
-				} else {
-					temEsporte = true;
-					esporte = (String) s.toString();
-				}
-			}
-		});
 		
 		eEnderecoLugar = (EditText) view.findViewById(R.id.escolha_endereco);
-		eEnderecoLugar.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {}
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				if(s.toString().trim().equals("")){
-					temEndereco = false;
-				} else {
-					temEndereco = true;
-					endereco = (String) s.toString();
-				}
-			}
-			public void afterTextChanged(Editable s) {
-				if(s.toString().trim().equals("")){
-					temEsporte = false;
-				} else {
-					temEsporte = true;
-					endereco = (String) s.toString();
-				}
-			}
-		});
 		
 		checkPago = (CheckBox) view.findViewById(R.id.preco_box);
 			
 		bProximo = (Button) view.findViewById(R.id.nextButton);
 		bProximo.setText("Próximo");
-		
-		bOndeJogar = (Button) view.findViewById(R.id.escolha_lugar_button);
-		bOndeJogar.setText("Não sabe onde jogar?\nClique aqui e pesquise locais próximos");
 		
 		bDataInicio = (Button) view.findViewById(R.id.buttonDataInicio);
 		bDataInicio.setText("00:00");
@@ -156,47 +105,95 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		DateTime now = DateTime.now();
 		bDia.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 		
+		this.data[0] = now.getDayOfMonth()+"";
+		this.data[1] = now.getMonthOfYear()+1+"";
+		this.data[2] = now.getYear()+"";
+		
 		bProximo.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(temEsporte && temNomeLugar && temEndereco){
-					CriarEventosCompFragment nextPage = new CriarEventosCompFragment();
-					((MainActivity)getActivity()).mudarAbaAtual(nextPage);
-				} else {
-					//exemplo de excecao
+				CriarEventosCompFragment next = new CriarEventosCompFragment();
+				
+				Bundle args = new Bundle();				
+				
+				String esporte = eEsporte.getText().toString();
+				String end = eEnderecoLugar.getText().toString();
+				String lugar = eNomeLugar.getText().toString();
+				
+				/*if(esporte.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Alerta Join&Play");
-					error.setMessage("Algum dado faltou ser preenchido!");
+					error.setMessage("Escolha um esporte!");
 					error.setPositiveButton("OK", null);
 					error.show();
+					return;
+				} else if(end.trim().equals("")){
+					Builder error = new AlertDialog.Builder(getActivity());
+					error.setCancelable(true);
+					error.setTitle("Alerta Join&Play");
+					error.setMessage("Escolha um local!");
+					error.setPositiveButton("OK", null);
+					error.show();
+					return;
+				} else if(lugar.trim().equals("")){
+					Builder error = new AlertDialog.Builder(getActivity());
+					error.setCancelable(true);
+					error.setTitle("Alerta Join&Play");
+					error.setMessage("Dê um nome ao local!");
+					error.setPositiveButton("OK", null);
+					error.show();
+					return;
 				}
-
+				
+				args.putString("esporte", esporte);
+				args.putString("endereco", end);
+				//Log.v("endedeco", eendv.getText().toString());
+				args.putString("nomeLocal", lugar);
+				//Log.v("nome local", env.getText().toString());
+				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
+				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
+				 */
+				
+				
+				args.putString("horaInicio", bDataInicio.getText().toString());
+				//Log.v("hora inicio",b2.getText().toString());
+				args.putString("horaTermino", bDataFim.getText().toString());
+				//Log.v("hora fim", b3.getText().toString());
+				
+				if(pago){
+					args.putString("preco", ePreco.getText().toString());
+				} else {
+					args.putString("preco", "0,00");
+				}
+				
+				next.setArguments(args);
+				
+				((MainActivity)getActivity()).mudarAbaAtual(next);
+				
 			}
 		});
 		
-		bOndeJogar.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				ChoosePlaceFragment choose = new ChoosePlaceFragment();
-				((MainActivity)getActivity()).mudarAbaAtual(choose);	
-			}
-		});
-		
+	
 		bDia.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/** Radial Date Picker **/
-				DateTime now = DateTime.now();
-				CalendarDatePickerDialog calendar = CalendarDatePickerDialog.newInstance(CriarEventosFragment.this, 
-						now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
+				if((config.screenLayout&Configuration.SCREENLAYOUT_SIZE_MASK) > 1) {
+					/** Radial Date Picker **/
+					DateTime now = DateTime.now();
+					CalendarDatePickerDialog calendar = CalendarDatePickerDialog.newInstance(CriarEventosFragment.this, 
+							now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
 
-				calendar.show(getFragmentManager(), FRAG_TAG_DATE_PICKER);
-				end = true;
+					calendar.show(getFragmentManager(), FRAG_TAG_DATE_PICKER);
+				} else { //Date Picker for low-end smartphones
+					DatePickerBuilder dpb = new DatePickerBuilder()
+					.setFragmentManager(getChildFragmentManager())
+					.setTargetFragment(CriarEventosFragment.this)
+					.setStyleResId(R.style.BetterPickersLowEndTheme);
+					dpb.show();
+				}
 			}
 		});
 		
@@ -204,20 +201,22 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 			@Override
 			public void onClick(View v) {
 
-				/** Better Time Picker **/
-				/* TimePickerBuilder tpb = new TimePickerBuilder();
-				tpb.setFragmentManager(getChildFragmentManager());
-				tpb.setTargetFragment(PesquisarEventosFragment.this);
-				tpb.setStyleResId(R.style.BetterPickersDialogFragment);
-				tpb.show();*/
+				if((config.screenLayout&Configuration.SCREENLAYOUT_SIZE_MASK) > 1) {
+					/** Radial Time Picker **/
+					DateTime now = DateTime.now();
+					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(CriarEventosFragment.this, 
+							now.getHourOfDay(), now.getMinuteOfHour(), 
+							DateFormat.is24HourFormat(getActivity()));
 
-				/** Radial Time Picker **/
-				DateTime now = DateTime.now();
-				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(CriarEventosFragment.this, 
-						now.getHourOfDay(), now.getMinuteOfHour(), 
-						DateFormat.is24HourFormat(getActivity()));
-
-				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+				} else { //Time picker for low end smartphones
+					/** Better Time Picker **/
+					TimePickerBuilder tpb = new TimePickerBuilder();
+					tpb.setFragmentManager(getChildFragmentManager());
+					tpb.setTargetFragment(CriarEventosFragment.this);
+					tpb.setStyleResId(R.style.BetterPickersLowEndTheme);
+					tpb.show();
+				}
 				begin = true;
 
 			}
@@ -227,12 +226,22 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 			@Override
 			public void onClick(View v) {
 				/** Radial Time Picker **/
-				DateTime now = DateTime.now();
-				RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(CriarEventosFragment.this, 
-						now.getHourOfDay(), now.getMinuteOfHour(), 
-						DateFormat.is24HourFormat(getActivity()));
+				if((config.screenLayout&Configuration.SCREENLAYOUT_SIZE_MASK) > 1) {
+					/** Radial Time Picker **/
+					DateTime now = DateTime.now();
+					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(CriarEventosFragment.this, 
+							now.getHourOfDay(), now.getMinuteOfHour(), 
+							DateFormat.is24HourFormat(getActivity()));
 
-				radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
+				} else { //Time picker for low-end smartphones
+					/** Better Time Picker **/
+					TimePickerBuilder tpb = new TimePickerBuilder();
+					tpb.setFragmentManager(getChildFragmentManager());
+					tpb.setTargetFragment(CriarEventosFragment.this);
+					tpb.setStyleResId(R.style.BetterPickersLowEndTheme);
+					tpb.show();
+				}
 				end = true;
 			}
 		});
@@ -267,15 +276,40 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		else if (n == 10) return "Outubro";
 		else if (n == 11) return "Novembro";
 		else if (n == 12) return "Dezembro";
-		else return "fail";
+		else return "Janeiro";
 	}
 
 	@Override
 	public void onDateSet(CalendarDatePickerDialog dialog, int year,
 			int monthOfYear, int dayOfMonth) {
 		// TODO Auto-generated method stub
-        bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+		this.data[0] = dayOfMonth+"";
+		this.data[1] = monthOfYear+1+"";
+		this.data[2] = year+"";
+		bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
         
+	}
+	
+	
+	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
+		this.data[0] = dayOfMonth+"";
+		this.data[1] = monthOfYear+1+"";
+		this.data[2] = year+"";
+		bDia.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
+	}
+	
+	public void onDialogTimeSet(int reference, int hourOfDay, int minute) {
+		String h,m;
+		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+		m = minute < 10 ? "0" + minute : "" + minute;
+
+		if(begin) {
+			bDataInicio.setText(h + ":" + m);
+			begin = false;
+		} else if (end){
+			bDataFim.setText(h + ":" + m);
+			end = false;
+		}
 	}
 
 	@Override

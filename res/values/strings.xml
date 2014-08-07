@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Join &amp; Play</string>
+    <string name="particular">Particular</string>
+    <string name="publico">Público</string>
+    <string name="privacidade">Privacidade</string>
     <string name="escolha_nomeEvento">Escolha um nome para o evento</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
