@@ -520,7 +520,7 @@ public class Server implements Serializable {
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {
-			String id = "0";//user.getString("id");
+			String id = user.getString("id");
 			String name = user.getString("name");
 			String photo = user.getString("url");
 			Vector<RatingSport> ratings = new Vector<RatingSport>();
