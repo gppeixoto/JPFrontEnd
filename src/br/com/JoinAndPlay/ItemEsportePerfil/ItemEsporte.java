@@ -48,23 +48,21 @@ public class ItemEsporte implements Parcelable {
 		if(esporte!= null){
 			idEsporte=ConfigJP.getID(esporte);
 		}
-		idEsporte=0;
-		ImageView imagem_esporte=(ImageView) view.findViewById(R.id.item_list_icone);
-		//imagem_bola.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsport]));
+		ImageView imagem_esporte=(ImageView) view.findViewById(R.id.imageView1);
+		imagem_esporte.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsporte]));
 		
-		View barra=(View) view.findViewById(R.id.item_list_barra);
-		//barra.setBackgroundResource(ConfigJP.ESPORTE_BARRA[idEsport]);
-
-		TextView esporteView = (TextView) view.findViewById(R.id.item_list_esporte);
+		View barra=(View) view.findViewById(R.id.barra_esporte);
+		barra.setBackgroundResource(ConfigJP.ESPORTE_BARRA[idEsporte]);
+		TextView esporteView = (TextView) view.findViewById(R.id.textView2);
 		
 		if(esporte!=null){
 			//esporteView.setText(idEsporte+"");
-			//esporteView.setText(esporte);
-			esporteView.setText("Teste estatico");
+			esporteView.setText(esporte);
+			//esporteView.setText("Teste estatico");
 		}
 		
-		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_num_partidas);
-		numPartidasView.setText(esporte);
+		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_qtd_partidas);
+		numPartidasView.setText(""+partidasJogadas);
 		/**
 		 * Falta as estrelas
 		 */
