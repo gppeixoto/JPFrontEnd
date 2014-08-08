@@ -13,7 +13,7 @@
     <string name="hint_pesq2">Endereço do local</string>
     <string name="hint_pesq3">Nome do local</string>
     <string name="local">Local</string>
-    <string name="data">Data</string>
+    <string name="data">A partir de</string>
     <string name="inicio">A partir de</string>
     <string name="data_default">12 a 15</string>
     <string name="time_default">12:00</string>
