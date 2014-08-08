@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Join &amp; Play</string>
+    <string name="convidados">Convidados</string>
     <string name="particular">Particular</string>
     <string name="publico">Público</string>
     <string name="privacidade">Privacidade</string>

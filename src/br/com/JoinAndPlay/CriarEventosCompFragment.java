@@ -1,5 +1,6 @@
 package br.com.JoinAndPlay;
 
+import br.com.tabActive.TabFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,15 +12,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TabHost.TabSpec;
 
-public class CriarEventosCompFragment extends Fragment implements OnItemClickListener {
+public class CriarEventosCompFragment extends Fragment implements OnItemClickListener, OnTabChangeListener {
 	
 	private Button bCriarEvento;
 	private Button bParticular;
 	private Button bPublico;
 	
-	private Drawable red;
-	private Drawable gray;
+	private TabHost tabhost;
 	
 	private EditText eNomeEvento;
 	
@@ -34,8 +37,9 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		View view = inflater.inflate(R.layout.criar_evento_comp, container,false);
 		
-		gray = getResources().getDrawable(R.drawable.gray_button);
-		red = getResources().getDrawable(R.drawable.red_button);
+		tabhost = (TabHost) view.findViewById(R.id.tabhost);
+		tabhost.setup();
+		tabhost.setOnTabChangedListener(this);
 		
 		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
 		
@@ -49,6 +53,10 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				bParticular.setBackgroundResource(R.drawable.red_button);
+				bParticular.setPadding(10, 10, 10, 10);
+				bPublico.setBackgroundResource(R.drawable.gray_button);
+				bPublico.setPadding(10, 10, 10, 10);
 				privado = true;	
 			}
 		});
@@ -60,6 +68,10 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				bPublico.setBackgroundResource(R.drawable.red_button);
+				bPublico.setPadding(10, 10, 10, 10);
+				bParticular.setBackgroundResource(R.drawable.gray_button);
+				bParticular.setPadding(10, 10, 10, 10);
 				privado = false;	
 			}
 		});
@@ -72,7 +84,13 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				// criar evento com esses dados
 			}
 		});
-		
+	
+		for (int i = 0; i < 3; i++) {
+			TabSpec tabSpec = tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(getActivity()));
+			tabhost.addTab(tabSpec);
+			//tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
+			//tabhost.getTabWidget().getChildAt(tabhost.getTabWidget().getChildCount()-1).setBackgroundResource(i);//(getResources().getDrawable(R.drawable.seletc_tab));;
+		}
 		return view;	
 	}
 
@@ -80,6 +98,13 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabChanged(String tabId) {
+		// TODO Auto-generated method stub
+		
 		
 	}
 }
