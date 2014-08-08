@@ -138,7 +138,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				String esporte = eEsporte.getText().toString();
 				String end = eEnderecoLugar.getText().toString();
 				String lugar = eNomeLugar.getText().toString();
-				
+				/**
 				if(esporte.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
@@ -172,7 +172,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				//Log.v("nome local", env.getText().toString());
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
 				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
-				 
+				 */
 				
 				
 				args.putString("horaInicio", bDataInicio.getText().toString());
