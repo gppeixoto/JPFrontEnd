@@ -8,6 +8,7 @@ import br.com.JoinAndPlay.ItemEsportePerfil.ItemEsporte;
 import br.com.JoinAndPlay.ItemEsportePerfil.MyGridView;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
+import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.RatingSport;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 	RelativeLayout ret;
 
-	//ola
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -37,55 +37,55 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 		if (container == null) {
 			return null;
 		}
-		ret=(RelativeLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);
-		
-		
-
+		ret=(RelativeLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
+		/*Requisita o perfil do usuário do servidor*/
 		Server.user_profile(getActivity(), this);
-
-		// Inflamos o layout tab_layout_a
 		return ret;
 	}
+	
 	@Override
 	public void onTerminado(Usuario in) {
 		// TODO Auto-generated method stub
 		View ret=getView();
-		ImageView imag;
-		TextView nome;
-		TextView idade;
+		ImageView perfil_Foto;
+		TextView perfil_Nome;
+		TextView perfil_Idade;
 		TextView votos_esforcado;
-		GridView gridView;
+		GridView perfil_gridEsportes;
 
-		
-		
-	
 		if(in!=null && ret !=null){
-			ArrayList<ItemEsporte> lista = new ArrayList<ItemEsporte>();
+			ArrayList<ItemEsporte> gridEsportes = new ArrayList<ItemEsporte>();
 
-			imag=(ImageView)ret.findViewById(R.id.profilePictureView1);
-			nome=(TextView)ret.findViewById(R.id.perfil_idade_usuario);
-			idade=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
-			gridView=((GridView)ret.findViewById(R.id.myGridView1));
-
-			nome.setText(in.getName());
-			idade.setText("");
+			perfil_Foto=(ImageView)ret.findViewById(R.id.profilePictureView1);
+			perfil_Nome=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
+			//perfil_Idade=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
+			//perfil_gridEsportes=((GridView)ret.findViewById(R.id.myGridView1));
 			
-			new DownloadImagemAsyncTask(getActivity(),imag).execute(in.getPhoto());
+			/*Pega o nome do perfil do servidor*/
+			perfil_Nome.setText(in.getName());
+			/*Pega a foto do perfil do servidor*/
+			new DownloadImagemAsyncTask(getActivity(),perfil_Foto).execute(in.getPhoto());
 			
-			for (Iterator<RatingSport> iterator = in.getRateSport().iterator(); iterator.hasNext();) {
+			/*Pegar as informações relativas a cada esporte do usuário*/
+			/*for (Iterator<RatingSport> iterator = in.getRateSport().iterator(); iterator.hasNext();) {
 				RatingSport rating = (RatingSport) iterator.next();
 				ItemEsporte itemEsport = new ItemEsporte();
-				//itemEsport.avaliacaoJogador=rating.getRating();
-				itemEsport.esporte=rating.getSportName();
-			//	itemEsport.partidasJogadas=rating.
-				lista.add(itemEsport);
+				//Pega o numero de estrelas do esporte
+				itemEsport.avaliacaoJogador = Double.parseDouble(rating.getRating());
+				//Pega o nome do esporte
+				itemEsport.esporte = rating.getSportName();
+				int partidasJogadas = 0;
+				//Pega o numero de partidas do esporte (em O(n²), mas pega)
+				for (Iterator<Esporte> it = in.getTimesSport().iterator(); it.hasNext(); ){
+					Esporte num = (Esporte) it.next();
+					if (num.getName().equals(itemEsport.esporte)){partidasJogadas = num.getNumTimes(); break;}
+				}
+				itemEsport.partidasJogadas = partidasJogadas;
+				gridEsportes.add(itemEsport);
 				
 			}
-			gridView.setAdapter(new AdapterGridView(getActivity(),lista));
-
+			perfil_gridEsportes.setAdapter(new AdapterGridView(getActivity(),gridEsportes));
+			*/
 		}
-
 	}
-
-
 }
