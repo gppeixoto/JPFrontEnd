@@ -68,5 +68,7 @@
     <string name="perfil_button_eventos_anteriores">Eventos anteriores</string>
     <string name="preco_nulo_unidade">R$ 0,00</string>
 	<string name="ok">OK</string>
+	<string name="futuros">Pesquise por eventos futuros</string>
+	<string name="inicio_termino">O término deve ser após o início</string>
     
 </resources>
