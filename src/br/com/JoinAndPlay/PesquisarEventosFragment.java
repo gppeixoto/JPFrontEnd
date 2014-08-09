@@ -358,6 +358,9 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		String h,m;
 		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
 		m = minute < 10 ? "0" + minute : "" + minute;
+		
+		if (h.length() > 2) h = "" + hourOfDay;
+		if (m.length() > 2) m = "" + minute;
 
 		if(begin) {
 			if((h + ":" + m).compareTo(b3.getText().toString()) < 0){
