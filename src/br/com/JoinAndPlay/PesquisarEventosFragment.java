@@ -10,7 +10,9 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 import com.doomonafireball.betterpickers.radialtimepicker.*;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -24,10 +26,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,28 +52,29 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 	private TextView atv;
 	private TextView lv;
 	private TextView eev;
+	private TextView tal;
 	private EditText env;
 	private EditText eendv;
 	private MultiAutoCompleteTextView eesv;
 	private Configuration config;
 	private String[] data;
 	private int[] dataNOW;
-
 	private boolean begin = false;
 	private boolean end = false;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
+	public Dialog err;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
-
+	
 		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
 		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
 		data = new String[3];
 		dataNOW = new int[3];
-
+		
 		apv = (TextView) v.findViewById(R.id.aPartir);
 		dv = (TextView) v.findViewById(R.id.data_view);
 		atv = (TextView) v.findViewById(R.id.ateTextView);
@@ -78,6 +83,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		env = (EditText) v.findViewById(R.id.escolha_nome);
 		eendv = (EditText) v.findViewById(R.id.escolha_endereco);
 		eesv = (MultiAutoCompleteTextView) v.findViewById(R.id.escolha_esporte);
+		tal = (TextView) v.findViewById(R.id.textoAlerta);
 		/*apv.setTypeface(fontBold);
 		dv.setTypeface(fontBold);
 		atv.setTypeface(fontBold);
@@ -102,14 +108,15 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		eesv.setThreshold(1);
 		eesv.setAdapter(adp);
 
+
 		DateTime now = DateTime.now();
 		this.dataNOW[0] = now.getDayOfMonth();
-		this.dataNOW[1] = now.getMonthOfYear()+1;
+		this.dataNOW[1] = now.getMonthOfYear();
 		this.dataNOW[2] = now.getYear();
-
+		
 		bd = (Button) v.findViewById(R.id.buttonDia);
 		this.data[0] = now.getDayOfMonth()+"";
-		this.data[1] = now.getMonthOfYear()+1+"";
+		this.data[1] = now.getMonthOfYear()+"";
 		this.data[2] = now.getYear()+"";
 		//bd.setTypeface(fontBold);
 		//bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
@@ -128,9 +135,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		bg = (Button) v.findViewById(R.id.bigButton);
 		//bg.setTypeface(fontBold);
 		//bg.setText("Pesquisar");
-
-		//Drawable icon= getResources().getDrawable( R.drawable.ib_pesq);
-		//bg.setCompoundDrawablesWithIntrinsicBounds( icon, null, null, null );
 
 		Spannable buttonLabel = new SpannableString("   Pesquisar");
 		buttonLabel.setSpan(new ImageSpan(this.getActivity(), R.drawable.lupa_pesq,      
@@ -216,7 +220,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				String[] esportes;
 				String textoEsportes = eesv.getText().toString();
 				//String textoEsportes = "Basquete;Futebol;Futebol Americano;";
-				int i = 0;
 				if(textoEsportes==null ||textoEsportes.equals("") ){
 					esportes=null;
 				}else
@@ -268,15 +271,32 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		if((dayOfMonth < this.dataNOW[0] && monthOfYear <= this.dataNOW[1] && year <= this.dataNOW[2])
 			|| (monthOfYear < this.dataNOW[1] && year < this.dataNOW[2])
 			|| (year < this.dataNOW[2])){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-			builder1.setMessage("Pesquise por eventos futuros");
-			//builder1.setTitle("Ops");
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
-				}});
+			}});
+			
+			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
 			AlertDialog alert11 = builder1.create();
+			
+			OnShowListener onshow = new OnShowListener() {
+				@Override
+				@SuppressWarnings( "deprecation" )
+				public void onShow(DialogInterface dialog) {
+					Button positiveButton = ((AlertDialog) dialog)
+	                        .getButton(AlertDialog.BUTTON_POSITIVE);
+					
+	                positiveButton.setBackgroundDrawable(getResources()
+	                        .getDrawable(R.drawable.alert_button));
+	                
+	                positiveButton.setText("OK");
+	                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					
+				}
+			};
+			alert11.setOnShowListener(onshow);
 			alert11.show();
 		} else {
 			this.data[0] = dayOfMonth+"";
@@ -296,15 +316,31 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		if(dayOfMonth < this.dataNOW[0] && monthOfYear <= this.dataNOW[1] && year <= this.dataNOW[2]
 			|| (monthOfYear < this.dataNOW[1] && year < this.dataNOW[2])
 			|| (year < this.dataNOW[2])){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-			builder1.setMessage("Pesquise por eventos futuros");
-			//builder1.setTitle("Ops");
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
-				}});
+			}});	
+			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
 			AlertDialog alert11 = builder1.create();
+			
+			OnShowListener onshow = new OnShowListener() {
+				@Override
+				@SuppressWarnings( "deprecation" )
+				public void onShow(DialogInterface dialog) {
+					Button positiveButton = ((AlertDialog) dialog)
+	                        .getButton(AlertDialog.BUTTON_POSITIVE);
+					
+	                positiveButton.setBackgroundDrawable(getResources()
+	                        .getDrawable(R.drawable.alert_button));
+	                
+	                positiveButton.setText("OK");
+	                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					
+				}
+			};
+			alert11.setOnShowListener(onshow);
 			alert11.show();
 		} else {
 			this.data[0] = dayOfMonth+"";
@@ -314,7 +350,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			String month;
 			day = dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth;
 			month = (monthOfYear+1) < 10 ? "0" + (monthOfYear+1) : "" + (monthOfYear+1);
-			//bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
 			bd.setText(day + "/" + month + "/" + year);
 		}
 	}
@@ -331,14 +366,31 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				begin = false;
 			} else {
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
-				builder1.setMessage("O término deve ser após o início");
-				//builder1.setTitle("Ops");
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-					}});
+				}});
+				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
 				AlertDialog alert11 = builder1.create();
+				this.tal.setText("O término deve ser após o início");
+				
+				OnShowListener onshow = new OnShowListener() {
+					@Override
+					@SuppressWarnings( "deprecation" )
+					public void onShow(DialogInterface dialog) {						
+						Button positiveButton = ((AlertDialog) dialog)
+		                        .getButton(AlertDialog.BUTTON_POSITIVE);
+						
+		                positiveButton.setBackgroundDrawable(getResources()
+		                        .getDrawable(R.drawable.alert_button));
+		                
+		                positiveButton.setText("OK");
+		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						
+					}
+				};
+				alert11.setOnShowListener(onshow);
 				alert11.show();
 			}
 
@@ -346,13 +398,31 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
 				builder1.setMessage("O término deve ser após o início");
-				//builder1.setTitle("Ops");
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-					}});
+				}});
+				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
 				AlertDialog alert11 = builder1.create();
+				this.tal.setText("O término deve ser após o início");
+				
+				OnShowListener onshow = new OnShowListener() {
+					@Override
+					@SuppressWarnings( "deprecation" )
+					public void onShow(DialogInterface dialog) {						
+						Button positiveButton = ((AlertDialog) dialog)
+		                        .getButton(AlertDialog.BUTTON_POSITIVE);
+						
+		                positiveButton.setBackgroundDrawable(getResources()
+		                        .getDrawable(R.drawable.alert_button));
+		                
+		                positiveButton.setText("OK");
+		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						
+					}
+				};
+				alert11.setOnShowListener(onshow);
 				alert11.show();
 			} else {
 				b3.setText(h + ":" + m);
@@ -374,13 +444,31 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			} else {
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
 				builder1.setMessage("O término deve ser após o início.");
-				//builder1.setTitle("Ops");
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}});
+				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
 				AlertDialog alert11 = builder1.create();
+				this.tal.setText("O término deve ser após o início");
+				
+				OnShowListener onshow = new OnShowListener() {
+					@Override
+					@SuppressWarnings( "deprecation" )
+					public void onShow(DialogInterface dialog) {						
+						Button positiveButton = ((AlertDialog) dialog)
+		                        .getButton(AlertDialog.BUTTON_POSITIVE);
+						
+		                positiveButton.setBackgroundDrawable(getResources()
+		                        .getDrawable(R.drawable.alert_button));
+		                
+		                positiveButton.setText("OK");
+		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						
+					}
+				};
+				alert11.setOnShowListener(onshow);
 				alert11.show();
 			}
 
@@ -388,13 +476,31 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity());
 				builder1.setMessage("O término deve ser após o início.");
-				//builder1.setTitle("Ops");
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}});
+				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
 				AlertDialog alert11 = builder1.create();
+				this.tal.setText("O término deve ser após o início");
+				
+				OnShowListener onshow = new OnShowListener() {
+					@Override
+					@SuppressWarnings( "deprecation" )
+					public void onShow(DialogInterface dialog) {						
+						Button positiveButton = ((AlertDialog) dialog)
+		                        .getButton(AlertDialog.BUTTON_POSITIVE);
+						
+		                positiveButton.setBackgroundDrawable(getResources()
+		                        .getDrawable(R.drawable.alert_button));
+		                
+		                positiveButton.setText("OK");
+		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						
+					}
+				};
+				alert11.setOnShowListener(onshow);
 				alert11.show();
 			} else {
 				b3.setText(h + ":" + m);
