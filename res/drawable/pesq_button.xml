@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item>
-        <shape android:shape="rectangle" >
-            <gradient
-                android:angle="90"
-                android:centerColor="@color/cinza_escuro"
-                android:centerY="90%"
-                android:endColor="@color/cinza_escuro_trans"
-                android:startColor="@color/cinza_escuro_trans" />
-
-            <corners android:radius="10dp" />
-        </shape>
-    </item>
-    <item android:top="2dp">
+	<item android:drawable="@drawable/shadow" />
+	
+    <item android:bottom="1dp">
         <selector>
             <item android:state_pressed="true">
                 <shape android:shape="rectangle" >
@@ -21,6 +11,12 @@
                         android:centerColor="@color/vermelho_escuro"
                         android:endColor="@color/vermelho_escuro"
                         android:startColor="@color/vermelho_escuro" />
+                    
+                    <stroke
+                     	android:angle="140"
+                     	android:width="1dp" 
+                     	android:color="@color/shadowPressed"  
+                     />
 
                     <corners android:radius="5dp" />
                 </shape>
@@ -28,14 +24,21 @@
             <item>
                 <shape android:shape="rectangle" >
                     <gradient
-                        android:centerColor="@color/red_pesquisa"
+                     
                         android:endColor="@color/red_pesquisa"
-                        android:startColor="@color/red_pesquisa" />
-
+                        android:startColor="@color/endDegrade"
+                        android:angle="90" />
+                    
+                    <stroke  
+                        android:width="1dp"
+                        android:angle="120"
+                    />
+                    
                     <corners android:radius="5dp" />
                 </shape>
             </item>
         </selector>
+        
     </item>
-
+	
 </layer-list>
