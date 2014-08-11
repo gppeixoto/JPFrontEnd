@@ -79,7 +79,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 			perfil_Foto=(ImageView)ret.findViewById(R.id.profilePictureView1);
 			perfil_Nome=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
 			//perfil_Idade=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
-			//perfil_gridEsportes=((GridView)ret.findViewById(R.id.myGridView1));
+			perfil_gridEsportes=((GridView)ret.findViewById(R.id.perfil_gridview_esportes));
 			
 			/*Pega o nome do perfil do servidor*/
 			perfil_Nome.setText(in.getName());
