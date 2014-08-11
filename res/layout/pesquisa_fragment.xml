@@ -8,7 +8,7 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dip"
         android:layout_weight="1"
         android:clipChildren="false"
         android:fillViewport="true"
@@ -132,7 +132,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/enderecoLayout"
+                android:id="@+id/enderecoLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -165,10 +165,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/enderecoLayout2"
+                android:id="@+id/enderecoLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:baselineAligned="false" >
 
                 <LinearLayout
                     android:id="@+id/half1Address"
@@ -187,7 +188,7 @@
                         android:orientation="horizontal" >
 
                         <EditText
-                            android:id="@+id/escolha_endereco"
+                            android:id="@+id/escolha_enderecoBairro"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -224,7 +225,7 @@
                         android:orientation="horizontal" >
 
                         <EditText
-                            android:id="@+id/escolha_enderecoBairro"
+                            android:id="@+id/escolha_enderecoCidade"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -247,7 +248,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/enderecoLayout3"
+                android:id="@+id/enderecoLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -286,7 +287,8 @@
                 android:layout_marginBottom="18dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="12dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:baselineAligned="false" >
 
                 <LinearLayout
                          
@@ -339,7 +341,8 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="12dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:baselineAligned="false" >
 
                 <LinearLayout    
                     android:id="@+id/half1Hour"

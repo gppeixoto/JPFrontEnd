@@ -53,7 +53,9 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 	private TextView lv;
 	private TextView eev;
 	private EditText env;
-	private EditText eendv;
+	private EditText editBairro;
+	private EditText editCidade;
+	private EditText editRua;
 	private MultiAutoCompleteTextView eesv;
 	private Configuration config;
 	private String[] data;
@@ -80,7 +82,9 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		lv = (TextView) v.findViewById(R.id.local);
 		eev = (TextView) v.findViewById(R.id.escolhaEsportes);
 		env = (EditText) v.findViewById(R.id.escolha_nome);
-		eendv = (EditText) v.findViewById(R.id.escolha_endereco);
+		editBairro = (EditText) v.findViewById(R.id.escolha_enderecoBairro);
+		editCidade = (EditText) v.findViewById(R.id.escolha_enderecoCidade);
+		editRua = (EditText) v.findViewById(R.id.escolha_enderecoRua);
 		eesv = (MultiAutoCompleteTextView) v.findViewById(R.id.escolha_esporte);
 	
 		/*apv.setTypeface(fontBold);
@@ -107,7 +111,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		eesv.setThreshold(1);
 		eesv.setAdapter(adp);
 
-
 		DateTime now = DateTime.now();
 		this.dataNOW[0] = now.getDayOfMonth();
 		this.dataNOW[1] = now.getMonthOfYear();
@@ -117,23 +120,17 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		this.data[0] = now.getDayOfMonth()+"";
 		this.data[1] = now.getMonthOfYear()+"";
 		this.data[2] = now.getYear()+"";
-		//bd.setTypeface(fontBold);
-		//bd.setText(now.getDayOfMonth() + " de " + this.parseMonth(now.getMonthOfYear()) + " de " + now.getYear());
 		String day = now.getDayOfMonth() < 10 ? "0" + now.getDayOfMonth() : "" + now.getDayOfMonth();
 		String month = (now.getMonthOfYear()) < 10 ? "0" + (now.getMonthOfYear()) : "" + (now.getMonthOfYear());
 		bd.setText(day + "/" + month + "/" + now.getYear());
 		
 		b2 = (Button) v.findViewById(R.id.buttonDataInicio);
-		//b2.setTypeface(fontBold);
 		b2.setText("00:00");
 
 		b3 = (Button) v.findViewById(R.id.buttonDataFim);
-		//b3.setTypeface(fontBold);
 		b3.setText("23:59");
 
 		bg = (Button) v.findViewById(R.id.bigButton);
-		//bg.setTypeface(fontBold);
-		//bg.setText("Pesquisar");
 
 		Spannable buttonLabel = new SpannableString("   Pesquisar");
 		buttonLabel.setSpan(new ImageSpan(this.getActivity(), R.drawable.lupa_pesq,      
@@ -221,8 +218,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				//String textoEsportes = "Basquete;Futebol;Futebol Americano;";
 				if(textoEsportes==null ||textoEsportes.equals("") ){
 					esportes=null;
-				}else
-				if(!textoEsportes.contains(",")){
+				}else if(!textoEsportes.contains(",")){
 					esportes = new String[1];
 					esportes[0] = textoEsportes;
 				} else {
@@ -243,18 +239,23 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				}
 
 				args.putInt("esportes_qtd",esportes==null?0 : esportes.length);
+				
 				args.putStringArray("esportes", esportes);
-				args.putString("endereco", eendv.getText().toString());
-				//Log.v("endedeco", eendv.getText().toString());
+				
 				args.putString("nome", env.getText().toString());
-				//Log.v("nome local", env.getText().toString());
+				
+				args.putString("bairro", editBairro.getText().toString());
+				
+				args.putString("cidade", editCidade.getText().toString());
+				
+				args.putString("rua", editRua.getText().toString());
+				
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
-				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
 
 				args.putString("horaInicio", b2.getText().toString());
-				//Log.v("hora inicio",b2.getText().toString());
+				
 				args.putString("horaTermino", b3.getText().toString());
-				//Log.v("hora fim", b3.getText().toString());
+				
 
 				list.setArguments(args);
 				((MainActivity)getActivity()).mudarAba(1, list);
@@ -305,7 +306,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			String month;
 			day = dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth;
 			month = (monthOfYear+1) < 10 ? "0" + (monthOfYear+1) : "" + (monthOfYear+1);
-			//bd.setText(dayOfMonth + " de " + this.parseMonth(monthOfYear+1) + " de " + year);
 			bd.setText(day + "/" + month + "/" + year);
 		}
 	}
@@ -473,8 +473,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			}
 
 		} else if (end){
-			Log.v("aaaaaa",(h + ":" + m));
-			Log.v("bbbbbb", b2.getText().toString());
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
