@@ -517,6 +517,72 @@ public class Server implements Serializable {
 		});
 	}
 
+	private static String preprocess(String s) {
+		if (s == null) return null;
+		return s.trim().replaceAll(" ", "+");
+	}
+
+	private static boolean ok(String s) {
+		return s != null && s.length() > 0;
+	}
+
+	/**
+	 * Caso nao seja passado, passar null ou string vazia.
+	 * @param localName nome do local.
+	 * @param streetName nome da rua.
+	 * @param neighborhood nome do bairro.
+	 * @param city nome da cidade.
+	 * @return um Vector de Vector< String > que o primeiro elemento eh o nome do local e o segundo eh o endereco.
+	 * */
+	public static void getAddresses(String localName, String streetName, String neighborhood, String city, final Connecter<Vector<Vector<String>>> connecter) {
+		localName = preprocess(localName);
+		streetName = preprocess(streetName);
+		neighborhood = preprocess(neighborhood);
+		city = preprocess(city);
+		StringBuffer sb = new StringBuffer("https://maps.googleapis.com/maps/api/place/textsearch/json?query=");
+		boolean first = true;
+		if (ok(localName)) {
+			sb.append(localName);
+			first = false;
+		}
+		if (ok(streetName)) {
+			if (!first) sb.append("+");
+			sb.append(streetName);
+			first = false;
+		}
+		if (ok(neighborhood)) {
+			if (!first) sb.append("+");
+			sb.append(neighborhood);
+			first = false;
+		}
+		if (ok(city)) {
+			if (!first) sb.append("+");
+			sb.append(city);
+		}
+		sb.append("&sensor=true&key=AIzaSyDL-BaFaZBo_evgT2pXRJ1avAb8sWZ3KGE");
+		String s = sb.toString();
+		
+		(new ServiceHandler()).makeGET(s, new Connecter<String>() {
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					JSONArray arr = obj.getJSONArray("results");
+					Vector<Vector<String>> addresses = new Vector<Vector<String>>();
+					for (int i = 0; i < arr.length(); ++i) {
+						JSONObject aux = arr.getJSONObject(i);
+						String name = aux.getString("name");
+						String address = aux.getString("formatted_address");
+						Vector<String> v = new Vector<String>();
+						v.add(name); v.add(address);
+						addresses.add(v);
+					}
+					if (connecter != null) connecter.onTerminado(addresses);
+				} catch (JSONException _) {}
+			}
+		});
+	}
+	
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {
