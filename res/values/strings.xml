@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Join &amp; Play</string>
+    <string name="hint_cria3">Nome do local</string>
+    <string name="hint_cria2">Endereço do local</string>
+    <string name="hint_cria1">Escolha um esporte</string>
     <string name="convide">Convide um amigo!</string>
     <string name="data_evento">Data do evento</string>
     <string name="convidados">Convidados</string>
