@@ -187,10 +187,19 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
                     
+                    <TextView 
+                        android:id="@+id/tv_reais"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unidade_preco"
+                        android:textColor="@color/cinza_escuro"
+                        android:textSize="15sp" />
+                    
                     <EditText 
                         android:id="@+id/escolha_preco"
-                        android:hint="@string/preco_nulo_unidade"
+                        android:hint="@string/preco_nulo"
                         android:textSize="15sp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/my_bottom_line"
                         android:textColor="@color/cinza_escuro"
                         android:inputType="numberDecimal"

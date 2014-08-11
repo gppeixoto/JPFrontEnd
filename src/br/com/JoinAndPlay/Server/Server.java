@@ -544,7 +544,7 @@ public class Server implements Serializable {
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
 
-			return new Usuario("", name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
+			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
 		} catch (JSONException a) { a.printStackTrace();}
 		return null;
 	}

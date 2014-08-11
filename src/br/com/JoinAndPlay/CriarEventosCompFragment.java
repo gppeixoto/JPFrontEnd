@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.AlertDialog.Builder;
@@ -114,19 +115,25 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					Double preco = (Double) args.get("preco");
 					String end = (String) args.get("endereco");
 					String localNome = (String) args.get("nomeLocal");
-					Server.create_event(Session.getActiveSession().getAccessToken(), localNome, end, 
-							"cidade re", "bairro a", esporte, dia, inicio, termino, 
-							"eh bisho eh", nomeDoEvento, preco, privado, new Connecter<Evento>(){
+					
+					
+					Server.create_event(Session.getActiveSession().getAccessToken(), "local mesmo", "endereco", 
+							"cidade re", "bairro a", "Basquete", "24-05-2014", "12:52", "23:59", 
+							"eh bisho eh", "a", 0.00, privado, new Connecter<Evento>(){
 
 							
 								@Override
 								public void onTerminado(Evento in) {
 									// TODO Auto-generated method stub
 									Evento e = (Evento) in;
-									((MainActivity)getActivity()).mudarAba(0);
+									Log.v("retorno evento", ""+e);
+									
 								}
 						
 					});
+					ListEventosFragment list = new ListEventosFragment();
+					((MainActivity)getActivity()).mudarAbaAtual(list);
+					
 				} else {
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);

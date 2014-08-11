@@ -33,6 +33,16 @@
         android:layout_width="fill_parent"
         android:layout_weight="1"
         android:layout_height="0dp" >
+        
+        <GridView
+            android:id="@+id/gridView1"
+            android:fastScrollAlwaysVisible="false"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:clickable="false"
+		    android:fastScrollEnabled="true"
+		    android:numColumns="2"  >
+            </GridView>
              
     </ScrollView>
 </LinearLayout>
