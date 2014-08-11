@@ -1,16 +1,24 @@
 package br.com.JoinAndPlay;
 
+import com.facebook.Session;
+
 import br.com.tabActive.TabFactory;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.app.AlertDialog.Builder;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Evento;
+import br.com.JoinAndPlay.Server.Server;
 import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -82,15 +90,79 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			public void onClick(View v) {
 				// verificar se dados estao completos
 				// criar evento com esses dados
+				
+				String nomeDoEvento = (String) eNomeEvento.getText().toString();
+				
+				/**
+				if(nomeDoEvento.trim().equals("")){
+					Builder error = new AlertDialog.Builder(getActivity());
+					error.setCancelable(true);
+					error.setTitle("Ops");
+					error.setMessage("Escolha um nome para o evento!");
+					error.setPositiveButton("OK", null);
+					error.show();
+					return;
+				}*/
+				
+				if(getArguments()!=null){
+					Bundle args = getArguments();
+					
+					String esporte = (String) args.get("esporte");
+					String dia = (String) args.get("data");
+					String termino = (String) args.get("horaTermino");
+					String inicio = (String) args.get("horaInicio");
+					Double preco = (Double) args.get("preco");
+					String end = (String) args.get("endereco");
+					String localNome = (String) args.get("nomeLocal");
+					Server.create_event(Session.getActiveSession().getAccessToken(), localNome, end, 
+							"cidade re", "bairro a", esporte, dia, inicio, termino, 
+							"eh bisho eh", nomeDoEvento, preco, privado, new Connecter<Evento>(){
+
+							
+								@Override
+								public void onTerminado(Evento in) {
+									// TODO Auto-generated method stub
+									Evento e = (Evento) in;
+									((MainActivity)getActivity()).mudarAba(0);
+								}
+						
+					});
+				} else {
+					Builder error = new AlertDialog.Builder(getActivity());
+					error.setCancelable(true);
+					error.setTitle("Ops");
+					error.setMessage("Erro na criação do evento!");
+					error.setPositiveButton("OK", null);
+					error.show();
+					return;
+				}				
 			}
 		});
-	
+		/**
+		TabHost.TabSpec spec;
+		
+		Intent intent = new Intent().setClass(this.getActivity(), tabConvite.class);
+        spec = tabhost.newTabSpec("First").setIndicator("")
+                      .setContent(intent);
+        
+        intent = new Intent().setClass(this.getActivity(), tabConvite.class);
+        spec = tabhost.newTabSpec("Second").setIndicator("")
+                      .setContent(intent);
+        
+        intent = new Intent().setClass(this.getActivity(), tabConvite.class);
+        spec = tabhost.newTabSpec("Third").setIndicator("")
+                      .setContent(intent);
+        
+        tabhost.getTabWidget().setCurrentTab(0);
+        */
+		
 		for (int i = 0; i < 3; i++) {
-			TabSpec tabSpec = tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(getActivity()));
+			TabSpec tabSpec =tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(getActivity()));
 			tabhost.addTab(tabSpec);
-			//tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
-			//tabhost.getTabWidget().getChildAt(tabhost.getTabWidget().getChildCount()-1).setBackgroundResource(i);//(getResources().getDrawable(R.drawable.seletc_tab));;
+			
+			
 		}
+		tabhost.setCurrentTab(0);
 		return view;	
 	}
 
@@ -105,6 +177,23 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	public void onTabChanged(String tabId) {
 		// TODO Auto-generated method stub
 		
+		/**
+		for(in i=0;i<tabhost.getTabWidget().getChildCount();i++)
+        {
+            if(i==0)
+                tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_convite);
+            else if(i==1)
+                tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_convite);
+            else if(i==2)
+                tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_convite);
+        }
 		
+		if(tabhost.getCurrentTab()==0)
+	        tabhost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.tab_convite);
+	    else if(tabhost.getCurrentTab()==1)
+	        tabhost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.tab_convite);
+	    else if(tabhost.getCurrentTab()==2)
+	        tabhost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.tab_convite);	
+	        */
 	}
 }
