@@ -93,7 +93,7 @@
                         android:gravity="center_vertical|center_horizontal|clip_horizontal" >
 
                         <ImageView
-                            android:id="@+id/perfil_esforcado"
+                            android:id="@+id/perfil_imageview_esforcado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -102,7 +102,7 @@
                             android:src="@drawable/icon_esforcado" />
 
                         <ImageView
-                            android:id="@+id/perfil_gente_boa"
+                            android:id="@+id/perfil_imageview_genteboa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -144,7 +144,7 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="11dp"
-                            android:layout_toRightOf="@+id/perfil_gente_boa" >
+                            android:layout_toRightOf="@+id/perfil_imageview_genteboa" >
 
                             <TextView
                                 android:id="@+id/perfil_votos_gente_boa"
@@ -175,7 +175,7 @@
                         android:gravity="center_vertical|center_horizontal|clip_horizontal" >
 
                         <ImageView
-                            android:id="@+id/ImageView01"
+                            android:id="@+id/perfil_imageview_fairplay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -184,7 +184,7 @@
                             android:src="@drawable/fairplay" />
 
                         <ImageView
-                            android:id="@+id/ImageView02"
+                            android:id="@+id/perfil_imageview_jogatime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -225,7 +225,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/ImageView02" >
+                            android:layout_toRightOf="@+id/perfil_imageview_jogatime" >
 
                             <TextView
                                 android:id="@+id/TextView02"

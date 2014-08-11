@@ -12,6 +12,7 @@ import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.RatingSport;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
+import android.content.res.Configuration;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,19 +29,38 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
-	RelativeLayout ret;
+	private RelativeLayout v;
+	private ImageView img_genteBoa;
+	private ImageView img_fairPlay;
+	private ImageView img_jogaTime;
+	private ImageView img_esforcado;
+	private Configuration config;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
 		if (container == null) {
 			return null;
 		}
-		ret=(RelativeLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
+		v = (RelativeLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
 		/*Requisita o perfil do usuário do servidor*/
 		Server.user_profile(getActivity(), this);
-		return ret;
+		config = getActivity().getResources().getConfiguration();
+		
+		/*Celular com resoluções mais baixas
+		 * muda a resolução para mdpi*/
+		if (!((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) > 1)){
+			Log.v("LOW RESOLUTION PHONE", "If low");
+			img_genteBoa = (ImageView) v.findViewById(R.id.perfil_imageview_genteboa);
+			img_fairPlay = (ImageView) v.findViewById(R.id.perfil_imageview_fairplay);
+			img_jogaTime = (ImageView) v.findViewById(R.id.perfil_imageview_jogatime);
+			img_esforcado = (ImageView) v.findViewById(R.id.perfil_imageview_esforcado);
+			img_genteBoa.setImageResource(R.drawable.perfil_imageview_genteboa_mdpi);
+			img_esforcado.setImageResource(R.drawable.perfil_imageview_esforcado_mdpi);
+			img_jogaTime.setImageResource(R.drawable.perfil_imageview_jogatime_mdpi);
+			img_fairPlay.setImageResource(R.drawable.perfil_imageview_fairplay_mdpi);
+		}
+		return v;
 	}
 	
 	@Override
