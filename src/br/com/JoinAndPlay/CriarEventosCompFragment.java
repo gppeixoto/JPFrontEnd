@@ -44,6 +44,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	
 	private TabHost tabhost;
 	private Vector<Usuario> amigos;
+	private Vector<String> convidados;
 	
 	private EditText eNomeEvento;
 	
@@ -53,6 +54,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			Bundle savedInstanceState){
 		
 		if(container==null) return null;
+		
+		convidados = new Vector<String>();
 		
 		Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
 
@@ -172,9 +175,26 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 									// TODO Auto-generated method stub
 									Evento e = (Evento) in;
 									Log.v("retorno evento", ""+e);
-																
+									
+									if(!convidados.isEmpty()){
+										Server.invite(Session.getActiveSession().getAccessToken(),
+												e.getId(), convidados, new Connecter<Boolean>(){
+
+													@Override
+													public void onTerminado(
+															Boolean in) {
+														// TODO Auto-generated method stub
+														boolean a = (boolean) in;
+														if(!a){
+															
+														}
+													}
+										});
+									}		
+														
 								}
 					});
+					
 					ListEventosFragment list = new ListEventosFragment();
 					((MainActivity)getActivity()).mudarAbaAtual(list);
 					
