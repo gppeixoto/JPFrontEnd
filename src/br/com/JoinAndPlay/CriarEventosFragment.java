@@ -47,8 +47,10 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private AutoCompleteTextView eEsporte;
 	
 	private EditText eNomeLugar;
-	private EditText eEnderecoLugar;
 	private EditText ePreco;
+	private EditText eBairro;
+	private EditText eCidade;
+	private EditText eRua;
 	
 	private TextView tUnidade;
 	
@@ -101,8 +103,10 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		eEsporte.setThreshold(1);
 		
 		eNomeLugar = (EditText) view.findViewById(R.id.escolha_nome);
-		
-		eEnderecoLugar = (EditText) view.findViewById(R.id.escolha_endereco);
+				
+		eBairro = (EditText) view.findViewById(R.id.escolha_enderecoBairro);
+		eCidade = (EditText) view.findViewById(R.id.escolha_enderecoCidade);
+		eRua = (EditText) view.findViewById(R.id.escolha_enderecoRua);
 		
 		checkPago = (CheckBox) view.findViewById(R.id.preco_box);
 			
@@ -140,8 +144,11 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				Bundle args = new Bundle();				
 				
 				String esporte = eEsporte.getText().toString();
-				String end = eEnderecoLugar.getText().toString();
+				String rua = eRua.getText().toString();
 				String lugar = eNomeLugar.getText().toString();
+				String cidade = eCidade.getText().toString();
+				String bairro = eBairro.getText().toString();
+				
 				/**
 				if(esporte==null||esporte.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
@@ -151,7 +158,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					error.setPositiveButton("OK", null);
 					error.show();
 					return;
-				} else if(end==null||end.trim().equals("")){
+				} else if(rua==null||rua.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
@@ -170,7 +177,9 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				}*/
 				
 				args.putString("esporte", esporte);
-				args.putString("endereco", end);
+				args.putString("rua", rua);
+				args.putString("cidade", cidade);
+				args.putString("bairro", bairro);
 				args.putString("nomeLocal", lugar);
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));				
 				
