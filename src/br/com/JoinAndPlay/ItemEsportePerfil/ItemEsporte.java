@@ -43,7 +43,6 @@ public class ItemEsporte implements Parcelable {
 	}
 	
 	public void drawerView(View view) {
-		// TODO Auto-generated method stub
 		int idEsporte = 0;
 		if(esporte!= null){
 			idEsporte=ConfigJP.getID(esporte);
@@ -61,10 +60,32 @@ public class ItemEsporte implements Parcelable {
 			//esporteView.setText("Teste estatico");
 		}
 		
+		Log.v("PARTIDAS JOGADAS", partidasJogadas+"");
+		
 		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_qtd_partidas);
-		numPartidasView.setText(""+partidasJogadas);
-		/**
-		 * Falta as estrelas
-		 */
+		TextView qtdPartidas = (TextView) view.findViewById(R.id.perfil_partidas_jogadas);
+		if (partidasJogadas == 1) numPartidasView.setText("1 partida jogada"); else {
+			qtdPartidas.setText(partidasJogadas);
+			numPartidasView.setText(" partidas jogadas");
+		}
+		
+		
+		ImageView star1 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star1);
+		ImageView star2 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star2);
+		ImageView star3 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star3);
+		ImageView star4 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star4);
+		ImageView star5 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star5);
+		
+		if (partidasJogadas >= 1){
+			star1.setImageResource(R.drawable.star1);
+		} else if (partidasJogadas >= 2){
+			star2.setImageResource(R.drawable.star1);
+		} else if (partidasJogadas >= 3){
+			star3.setImageResource(R.drawable.star1);
+		} else if (partidasJogadas >= 4) {
+			star4.setImageResource(R.drawable.star1);
+		} else if (partidasJogadas >= 5){
+			star5.setImageResource(R.drawable.star1);
+		}
 	}
 }

@@ -62,35 +62,35 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp" >
 
-            <br.com.JoinAndPlay.ItemEsportePerfil.Estrela
-                android:id="@+id/imageView2"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                />
+            <ImageView
+                android:id="@+id/perfil_imageview_esporte_star1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/star2" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/perfil_imageview_esporte_star2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star1" />
+                android:src="@drawable/star2" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/perfil_imageview_esporte_star3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star1" />
+                android:src="@drawable/star2" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/perfil_imageview_esporte_star4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star1" />
+                android:src="@drawable/star2" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/perfil_imageview_esporte_star5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star1" />
+                android:src="@drawable/star2" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,14 +102,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="10" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/perfil_partidas_jogadas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="@string/perfil_partidas_jogadas" />
+                android:text="" />
 
         </LinearLayout>
 
