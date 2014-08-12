@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/perfil_relativelayout_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/perfil_linearlayout_parent"
     android:layout_width="362dp"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
@@ -10,15 +10,14 @@
     <ScrollView
         android:id="@+id/perfil_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal" >
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="9dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
             android:gravity="left"
             android:orientation="vertical" >
 
@@ -32,18 +31,18 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="79dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/perfil_fundo_branco"
                     android:gravity="left"
-                    android:paddingBottom="12dp"
                     android:paddingTop="12dp" >
 
                     <ImageView
                         android:id="@+id/profilePictureView1"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_marginLeft="12dp" />
+                        android:layout_marginLeft="12dp"
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/perfil_nome_usuario"
@@ -107,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="20"
+                            android:text="@string/perfil_votos_default"
                             android:textColor="#535353"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -116,7 +115,7 @@
                             android:id="@+id/perfil_text_esforcado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Esforçado" />
+                            android:text="@string/perfil_esforcado" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -130,10 +129,10 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            android:id="@+id/perfil_votos_gente_boa"
+                            android:id="@+id/perfil_textview_votos_gente_boa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"
+                            android:text="@string/perfil_votos_default"
                             android:textColor="#535353"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -142,7 +141,7 @@
                             android:id="@+id/perfil_text_gente_boa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Gente Boa" />
+                            android:text="@string/perfil_gente_boa" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -185,7 +184,7 @@
                             android:id="@+id/perfil_textview_votos_fairplay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"
+                            android:text="@string/perfil_votos_default"
                             android:textColor="#535353"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -194,7 +193,7 @@
                             android:id="@+id/perfil_textview_fairplay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fair Play" />
+                            android:text="@string/perfil_fair_play" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -202,15 +201,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
-                        android:gravity="center_horizontal"
                         android:layout_toRightOf="@+id/perfil_imageview_jogatime"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/perfil_textview_votos_jogatime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"
+                            android:text="@string/perfil_votos_default"
                             android:textColor="#535353"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -219,7 +218,7 @@
                             android:id="@+id/perfil_textview_jogatime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Joga pro time" />
+                            android:text="@string/perfil_joga_pro_time" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -229,7 +228,7 @@
                 android:layout_height="40dp" >
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/perfil_button_amigos"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="15"
@@ -238,7 +237,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/perfil_imageview_separadorButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
@@ -246,7 +245,7 @@
                     android:src="@drawable/pont2" />
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/perfil_button_eventosAnteriores"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
@@ -261,8 +260,6 @@
         android:id="@+id/perfil_gridview_esportes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/perfil_scrollview"
         android:clickable="false"
         android:descendantFocusability="blocksDescendants"
         android:focusable="false"
@@ -271,4 +268,4 @@
         android:numColumns="auto_fit" >
     </GridView>
 
-</RelativeLayout>
+</LinearLayout>

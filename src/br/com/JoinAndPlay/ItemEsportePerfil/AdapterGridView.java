@@ -9,6 +9,7 @@ import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +43,10 @@ public class AdapterGridView extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View view, ViewGroup parent) {
-		if(view!=null) return view;
-		//Pega o item de acordo com a posção.
+		if (view == null){
+			view = mInflater.inflate(R.layout.tab_layout_perfil_esporte, parent, false);
+		}
 		ItemEsporte item = itens.get(position);
-		//infla o layout para podermos preencher os dados
-		view = mInflater.inflate(R.layout.tab_layout_perfil_esporte, parent, false);
 		item.drawerView(view);
 		return view;
 	}
