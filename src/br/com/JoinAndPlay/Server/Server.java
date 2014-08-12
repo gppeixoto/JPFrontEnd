@@ -611,6 +611,39 @@ public class Server implements Serializable {
 		});
 	}
 	
+
+    public static void get_future_events(Activity activity, final Connecter<Vector<Evento>> connecter) {
+            ConfigJP.getToken(activity, new Connecter<String>() {
+                   
+                    @Override
+                    public void onTerminado(String access_token) {
+                            JSONObject obj = new JSONObject();
+                            try {
+                                    obj.put("access_token", access_token);
+                            } catch (JSONException _) {}
+                           
+                            (new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
+                                   
+                                    @Override
+                                    public void onTerminado(String in) {
+                                            try {
+                                                    Vector<Evento> ret = new Vector<Evento>();
+                                                    JSONObject json_ret = new JSONObject((String) in);
+     
+                                                    JSONArray json_array = json_ret.getJSONArray("events");
+                                                    for (int i = 0; i < json_array.length(); ++i) {
+                                                            ret.add(processEvent(json_array.getJSONObject(i)));
+                                                    }
+                                                   
+                                                    if (connecter != null) connecter.onTerminado(ret);
+                                            } catch (JSONException _) {}
+                                    }
+                            });
+                    }
+            });
+    }
+
+
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {

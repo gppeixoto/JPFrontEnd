@@ -46,7 +46,7 @@ public class ItemEsporte implements Parcelable {
 		// TODO Auto-generated method stub
 		int idEsporte = 0;
 		if(esporte!= null){
-			idEsporte=ConfigJP.getID(esporte);
+	//		idEsporte=ConfigJP.getID(esporte);
 		}
 		ImageView imagem_esporte=(ImageView) view.findViewById(R.id.perfil_imageview_barraseparar);
 		imagem_esporte.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsporte]));

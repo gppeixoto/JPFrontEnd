@@ -77,7 +77,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		}
 		Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, this);
 	}else{
-		Server.get_matched_events(getActivity(),null,null,null,null,null,this);	
+		Server.get_future_events(getActivity(),this);	
 	}
 	
 		return tela;
