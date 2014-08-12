@@ -68,6 +68,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 	@Override
 	public void onTerminado(final Usuario in) {
 		final View ret=getView();
+		if (ret == null ) return;
 		ret.post(new Runnable() {
 			
 			@Override

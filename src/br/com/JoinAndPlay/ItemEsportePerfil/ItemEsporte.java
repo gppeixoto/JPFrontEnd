@@ -45,7 +45,7 @@ public class ItemEsporte implements Parcelable {
 	public void drawerView(View view) {
 		int idEsporte = 0;
 		if(esporte!= null){
-	//		idEsporte=ConfigJP.getID(esporte);
+			idEsporte=ConfigJP.getEsporteID(esporte);
 		}
 		ImageView imagem_esporte=(ImageView) view.findViewById(R.id.perfil_imageview_barraseparar);
 		imagem_esporte.setImageDrawable(view.getContext().getResources().getDrawable(ConfigJP.ESPORTE_BITMAP[idEsporte]));
