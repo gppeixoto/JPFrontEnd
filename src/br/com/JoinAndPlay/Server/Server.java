@@ -1,6 +1,9 @@
 package br.com.JoinAndPlay.Server;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 import org.json.JSONArray;
@@ -611,7 +614,9 @@ public class Server implements Serializable {
 		});
 	}
 	
-
+	/**
+	 * @return todos os eventos futuros.
+	 * */
     public static void get_future_events(Activity activity, final Connecter<Vector<Evento>> connecter) {
             ConfigJP.getToken(activity, new Connecter<String>() {
                    
@@ -641,6 +646,59 @@ public class Server implements Serializable {
                             });
                     }
             });
+    }
+    
+    /**
+     * @return um map em que cada chave eh o nome de um esporte, e o valor eh um vector com todos os 'invites' desse esporte.
+     * */
+    public static void get_invites(String user_id, final Connecter<Map<String, Vector<Notificacao>>> connecter) {
+    	JSONObject obj = new JSONObject();
+    	try {
+    		obj.put("id", user_id);
+    	} catch (JSONException _) {}
+    	
+    	(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getinvites/", obj.toString(), new Connecter<String>() {
+    		
+    		@Override
+    		public void onTerminado(String in) {
+    			try {
+    				JSONObject obj = new JSONObject(in);
+    				Map<String, Vector<Notificacao>> map = new HashMap<String, Vector<Notificacao>>();
+    				if (!obj.has("no invites for you")) {
+    					obj = obj.getJSONObject("inviteList");
+    					Iterator<String> it = obj.keys();
+    					while (it.hasNext()) {
+    						String key = it.next();
+    						Vector<Notificacao> vec;
+    						if (map.containsKey(key)) {
+    							vec = map.get(key);
+    						} else {
+    							vec = new Vector<Notificacao>();
+    						}
+    						JSONArray arr = obj.getJSONArray(key);
+    						for (int i = 0; i < arr.length(); ++i) {
+    							vec.add(processNotification(arr.getJSONObject(i)));
+    						}
+    						map.put(key, vec);
+    					}
+    				}
+    				if (connecter != null) connecter.onTerminado(map);
+    			} catch (JSONException _) {}
+    		}
+    	});
+    }
+
+    private static Notificacao processNotification(JSONObject notification) {
+    	try {
+    		String creator = notification.getString("creator");
+    		String event_name = notification.getString("eventName");
+    		String event_id = notification.get("id")+"";
+    		String begin = notification.getString("timeBegin");
+    		String date = notification.getString("date");
+    		boolean privado = notification.getBoolean("private");
+    		return new Notificacao(creator, event_name, event_id, begin, date, privado);
+    	} catch (JSONException _) {}
+    	return null;
     }
 
 

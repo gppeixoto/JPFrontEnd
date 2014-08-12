@@ -1,5 +1,7 @@
 package br.com.JoinAndPlay.ListEvent;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import br.com.JoinAndPlay.ConfigJP;
@@ -61,9 +63,12 @@ public class ItemEvent implements Parcelable {
 
 
 
-
-	public void drawerView(View view,Bitmap[] imagens) {
+int i=0;
+	public void drawerView(final View view,Bitmap[] imagens) {
 		// TODO Auto-generated method stub
+		if(view ==null) return;
+		
+		
 		int idEsport=0;
 		if(esporte!= null){
 			idEsport=ConfigJP.getEsporteID(esporte);

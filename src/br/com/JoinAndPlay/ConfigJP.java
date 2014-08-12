@@ -63,27 +63,30 @@ public final class ConfigJP {
 	public static final int ESPORTE_FUTEBOL=1;
 	public static final int ESPORTE_CORRIDA=2;
 	public static final int ESPORTE_BOLICHE=3;
-	public static final int ESPORTE_BASQUETE=4;
-	public static final int ESPORTE_CICLISMO=5;
-	public static final int ESPORTE_PING_PONG=6;
-	public static final int ESPORTE_TENIS=7;
+	public static final int ESPORTE_VOLEI=4;
+	public static final int ESPORTE_BASQUETE=5;
+	public static final int ESPORTE_CICLISMO=6;
+	public static final int ESPORTE_PING_PONG=7;
+	public static final int ESPORTE_TENIS=8;
+	public static final int ESPORTE_VIDEO_GAME=9;
+	public static final int ESPORTE_SINUCA=10;
+	public static final int ESPORTE_FUTEBOL_AMERICANO=11;
+
+	
+	/*repetidos*/
+	public static final int ESPORTE_CAMINHADA=2;
+	public static final int ESPORTE_TENIS_DE_MESA=6;
+	public static final int ESPORTE_VOLEI_DE_PRAIA=4;
 
 	
 	/*faltam icones*/
-	public static final int ESPORTE_CAMINHADA=2;
 	public static final int ESPORTE_BASEBALL=0;
 	public static final int ESPORTE_BOXE=0;
 	public static final int ESPORTE_CARTAS=0;
 	public static final int ESPORTE_DOMINO=0;
-	public static final int ESPORTE_FUTEBOL_AMERICANO=0;
 	public static final int ESPORTE_GOLFE=0;
 	public static final int ESPORTE_PATINACAO=0;
-	public static final int ESPORTE_SINUCA=0;
 	public static final int ESPORTE_SKATE=0;
-	public static final int ESPORTE_TENIS_DE_MESA=0;
-	public static final int ESPORTE_VIDEO_GAME=0;
-	public static final int ESPORTE_VOLEI=0;
-	public static final int ESPORTE_VOLEI_DE_PRAIA=0;
 	public static final int ESPORTE_XADREZ=0;
 	public static final int ESPORTE_JOGOS_DE_TABULEIRO=0;
 
@@ -93,10 +96,15 @@ public final class ConfigJP {
 		R.drawable.listfutebol,
 		R.drawable.listcaminhar,
 		R.drawable.listboliche,
+		R.drawable.listvolei,
 		R.drawable.listbasq,
 		R.drawable.listbike,
 		R.drawable.listpingpong,
-		R.drawable.listtennis
+		R.drawable.listtennis,
+		R.drawable.listgame,
+		R.drawable.listbilhar,
+		R.drawable.listfuame
+	
 		};
 	public static final int[] ESPORTE_COR ={
 		R.color.futebol_verde,
@@ -107,7 +115,11 @@ public final class ConfigJP {
 		R.color.basquete_laranja,
 		R.color.ciclismo_marrom,
 		R.color.ping_pong_azul,
-		R.color.tennis_amarelo
+		R.color.tennis_amarelo,
+		R.color.Game_lilas,
+		R.color.bilhar_preto,
+		R.color.futebol_americano_laranja
+		
 	};
 	public static final int[] ESPORTE_BARRA ={
 		R.drawable.campo_esporte_futebol,
@@ -115,9 +127,14 @@ public final class ConfigJP {
 		R.drawable.campo_esporte_caminhada,
 		R.drawable.campo_esporte_boliche,
 		R.drawable.campo_esporte_volei,
+		R.drawable.campo_esporte_basquete,
 		R.drawable.campo_esporte_ciclismo,
 		R.drawable.campo_esporte_ping_pong,
-		R.drawable.campo_esporte_tennis
+		R.drawable.campo_esporte_tennis,
+		R.drawable.campo_esporte_game,
+		R.drawable.campo_esporte_bilhar,
+		R.drawable.campo_esporte_futebol_americano
+		
 		
 	};
 
@@ -129,7 +146,7 @@ public final class ConfigJP {
 
 			return mapafutebol.get(esporte);
 		}
-		return 0;// ;
+		return 1;
 	}
 
 	public static void login(final Activity act,final Connecter<String> get){

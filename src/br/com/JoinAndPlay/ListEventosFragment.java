@@ -1,8 +1,10 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Map.Entry;
 
 import org.joda.time.chrono.BuddhistChronology;
 
@@ -171,6 +173,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 
 		}
+		
+		
 		listV.post(new Runnable() {
 			
 			@Override
