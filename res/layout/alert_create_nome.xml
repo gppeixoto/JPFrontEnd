@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="18dp"
                 android:gravity="center"
-                android:text="@string/inicio_termino"
+                android:text="@string/alerta_bairro"
                 android:textColor="@color/cinza_cinza"
                 android:textSize="18sp"
                 android:textStyle="bold" />

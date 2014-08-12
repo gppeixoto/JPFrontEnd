@@ -6,7 +6,9 @@ import com.facebook.Session;
 
 import br.com.tabActive.TabFactory;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnShowListener;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -37,7 +40,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	private Button bParticular;
 	private Button bPublico;
 	
-	private GridView grid;
+	private ExpandableHeightGridView grid;
 	
 	private TabHost tabhost;
 	private Vector<Usuario> amigos;
@@ -70,8 +73,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
 		
-		grid = (GridView) view.findViewById(R.id.gridView1);
-		
+		grid = (ExpandableHeightGridView) view.findViewById(R.id.gridView1);
+		grid.setExpanded(true);
 		grid.setOnItemClickListener(this);
 		
 		bCriarEvento = (Button) view.findViewById(R.id.criar_evento_button);
@@ -116,16 +119,36 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				
 				String nomeDoEvento = (String) eNomeEvento.getText().toString();
 				
-				/**
 				if(nomeDoEvento == null || nomeDoEvento.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Escolha um nome para o evento!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_nome, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
-				}*/
+				}
 				
 				if(getArguments()!=null){
 					Bundle args = getArguments();
@@ -156,12 +179,33 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					((MainActivity)getActivity()).mudarAbaAtual(list);
 					
 				} else {
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Erro na criação do evento!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_erro, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
 				}				
 			}

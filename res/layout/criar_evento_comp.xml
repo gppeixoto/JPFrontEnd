@@ -153,15 +153,22 @@
 		            android:textSize="15sp"
 		            />
 		    </LinearLayout>
+		    
+            <RelativeLayout 
+                android:id="@+id/rel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+		        
+                <br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView
+			         android:id="@+id/gridView1"
+			         android:fastScrollAlwaysVisible="false"
+			         android:numColumns="2"
+			         android:layout_width="fill_parent"
+			         android:layout_height="150dp" >
+		        </br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView>
+		        
+             </RelativeLayout>
 		          
-		    <GridView 
-		         android:id="@+id/gridView1"
-		         android:fastScrollAlwaysVisible="false"
-		         android:numColumns="2"
-		         android:layout_width="fill_parent"
-		         android:layout_height="150dp"
-		        ></GridView>
-
             <LinearLayout
                 android:id="@+id/criar_evento_button_layout"
                 android:layout_width="match_parent"

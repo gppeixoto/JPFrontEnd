@@ -189,48 +189,154 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				String cidade = eCidade.getText().toString();
 				String bairro = eBairro.getText().toString();
 				
-				/**
+				
 				if(esporte==null||esporte.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Escolha um esporte!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_esporte, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
 				} else if(rua==null||rua.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Diga a rua ou avenida do local!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_rua, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
 				} else if(lugar==null||lugar.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Diga o nome do local!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_lugar, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
 				}else if(bairro==null||bairro.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Diga o bairro do local!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_bairro, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
-				}else if(cidade==null||cidade.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Diga a cidade do local!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					
+				} else if(cidade==null||cidade.trim().equals("")){
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_cidade, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
-				}*/
+				}
 				
 				args.putString("esporte", esporte);
 				args.putString("rua", rua);
