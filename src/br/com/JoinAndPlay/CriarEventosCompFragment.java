@@ -24,7 +24,10 @@ import br.com.JoinAndPlay.Server.Usuario;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 
@@ -33,6 +36,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	private Button bCriarEvento;
 	private Button bParticular;
 	private Button bPublico;
+	
+	private GridView grid;
 	
 	private TabHost tabhost;
 	private Vector<Usuario> amigos;
@@ -59,11 +64,15 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		View view = inflater.inflate(R.layout.criar_evento_comp, container,false);
 		
-		tabhost = (TabHost) view.findViewById(R.id.tabhost);
-		tabhost.setup();
-		tabhost.setOnTabChangedListener(this);
+		//tabhost = (TabHost) view.findViewById(R.id.tabhost);
+		//tabhost.setup();
+		//tabhost.setOnTabChangedListener(this);
 		
 		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
+		
+		grid = (GridView) view.findViewById(R.id.gridView1);
+		
+		grid.setOnItemClickListener(this);
 		
 		bCriarEvento = (Button) view.findViewById(R.id.criar_evento_button);
 		bCriarEvento.setText("Criar Evento");
@@ -121,15 +130,15 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				if(getArguments()!=null){
 					Bundle args = getArguments();
 					
-					String esporte = (String) args.get("esporte");
-					String dia = (String) args.get("data");
-					String termino = (String) args.get("horaTermino");
-					String inicio = (String) args.get("horaInicio");
-					Double preco = (Double) args.get("preco");
-					String end = (String) args.get("endereco");
-					String localNome = (String) args.get("nomeLocal");
-					String bairro = (String) args.get("bairro");
-					String cidade = (String) args.get("cidade");
+					String esporte = (String) args.getString("esporte");
+					String dia = (String) args.getString("data");
+					String termino = (String) args.getString("horaTermino");
+					String inicio = (String) args.getString("horaInicio");
+					Double preco = (Double) args.getDouble("preco");
+					String end = (String) args.getString("rua");
+					String localNome = (String) args.getString("nomeLocal");
+					String bairro = (String) args.getString("bairro");
+					String cidade = (String) args.getString("cidade");
 					
 					Server.create_event(Session.getActiveSession().getAccessToken(), localNome, end, 
 							cidade, bairro, esporte, dia, inicio, termino, 
@@ -173,7 +182,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
                       .setContent(intent);
         
         tabhost.getTabWidget().setCurrentTab(0);
-        */
+        
 		
 		for (int i = 0; i < 3; i++) {
 			TabSpec tabSpec =tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(getActivity()));
@@ -181,7 +190,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			
 			
 		}
-		tabhost.setCurrentTab(0);
+		tabhost.setCurrentTab(0);*/
 		return view;	
 	}
 

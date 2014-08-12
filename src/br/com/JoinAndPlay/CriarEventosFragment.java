@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
@@ -36,6 +37,12 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private boolean begin = false;
 	private boolean end = false;
 	private boolean pago = false;
+	
+
+	private ImageButton e1Button;
+	private ImageButton e2Button;
+	private ImageButton e3Button;
+	private ImageButton e4Button;
 	
 	private CheckBox checkPago;
 	
@@ -91,6 +98,39 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		
 		ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getActivity(),
                  android.R.layout.simple_dropdown_item_1line, str);
+		
+		e1Button = (ImageButton) view.findViewById(R.id.esporte1);
+		e2Button = (ImageButton) view.findViewById(R.id.esporte2);
+		e3Button = (ImageButton) view.findViewById(R.id.esporte3);
+		e4Button = (ImageButton) view.findViewById(R.id.esporte4);
+		
+		e1Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eEsporte.setText("Futebol");
+			}
+		});
+		
+		e2Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eEsporte.setText("Basquete");
+			}
+		});
+		
+		e3Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eEsporte.setText("Vôlei");
+			}
+		});
+		
+		e4Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eEsporte.setText("Ciclismo");
+			}
+		});
 		
 		tUnidade = (TextView) view.findViewById(R.id.tv_reais);
 		tUnidade.setVisibility(View.INVISIBLE);
@@ -162,7 +202,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
-					error.setMessage("Escolha um local!");
+					error.setMessage("Diga a rua ou avenida do local!");
 					error.setPositiveButton("OK", null);
 					error.show();
 					return;
@@ -170,7 +210,23 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
-					error.setMessage("Dê um nome ao local!");
+					error.setMessage("Diga o nome do local!");
+					error.setPositiveButton("OK", null);
+					error.show();
+					return;
+				}else if(bairro==null||bairro.trim().equals("")){
+					Builder error = new AlertDialog.Builder(getActivity());
+					error.setCancelable(true);
+					error.setTitle("Ops");
+					error.setMessage("Diga o bairro do local!");
+					error.setPositiveButton("OK", null);
+					error.show();
+					return;
+				}else if(cidade==null||cidade.trim().equals("")){
+					Builder error = new AlertDialog.Builder(getActivity());
+					error.setCancelable(true);
+					error.setTitle("Ops");
+					error.setMessage("Diga a cidade do local!");
 					error.setPositiveButton("OK", null);
 					error.show();
 					return;
@@ -204,7 +260,6 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				}
 				
 				next.setArguments(args);
-				
 				((MainActivity)getActivity()).mudarAbaAtual(next);	
 			}
 		});

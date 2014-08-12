@@ -36,7 +36,7 @@
             <LinearLayout
                 android:id="@+id/escolha_nome_layout"
                 android:layout_width="fill_parent"
-                android:layout_height="48dp"
+                android:layout_height="36dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
@@ -114,7 +114,6 @@
                 android:id="@+id/layout_text_conv"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:orientation="horizontal" >
@@ -128,35 +127,40 @@
                     android:textColor="@color/red"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
                
             </LinearLayout>
-
-            <TabHost
-                android:id="@+id/tabhost"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent" >
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <TabWidget
-                        android:id="@android:id/tabs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-
-                    <FrameLayout
-                        android:id="@android:id/tabcontent"
-                        android:layout_width="fill_parent"
-                        android:layout_height="220dp"
-                        android:layout_weight="0" >
-                     </FrameLayout>      
-                         
-                </LinearLayout>
-            </TabHost>
+            
+            <LinearLayout 
+		        android:id="@+id/layout_text_amigo"
+		        android:layout_width="fill_parent"
+		        android:layout_height="36dp"
+		        android:layout_marginLeft="12dp"
+		        android:layout_marginRight="12dp"
+		        android:layout_marginBottom="15dp"
+		        android:orientation="horizontal" >
+		        
+		        <EditText 
+		            android:id="@+id/text_search"
+		            android:layout_width="fill_parent"
+		            android:layout_gravity="bottom"
+		            android:height="2dp"
+		            android:ems="10"
+		            android:layout_height="wrap_content"
+		            android:hint="@string/convide"
+		            android:inputType="text"
+		            android:background="@drawable/my_bottom_line"
+		            android:singleLine="true"
+		            android:textSize="15sp"
+		            />
+		    </LinearLayout>
+		          
+		    <GridView 
+		         android:id="@+id/gridView1"
+		         android:fastScrollAlwaysVisible="false"
+		         android:numColumns="2"
+		         android:layout_width="fill_parent"
+		         android:layout_height="150dp"
+		        ></GridView>
 
             <LinearLayout
                 android:id="@+id/criar_evento_button_layout"
