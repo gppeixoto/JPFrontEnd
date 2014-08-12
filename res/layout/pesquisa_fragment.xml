@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:background="@color/white"
-                    android:src="@drawable/quadrado_cinza" />
+                    android:src="@drawable/icfutebol" />
 
                 <ImageButton
                     android:id="@+id/esporte2"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:background="@color/white"
-                    android:src="@drawable/quadrado_cinza" />
+                    android:src="@drawable/icbasq" />
 
                 <ImageButton
                     android:id="@+id/esporte3"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:background="@color/white"
-                    android:src="@drawable/quadrado_cinza" />
+                    android:src="@drawable/icvolei" />
 
                 <ImageButton
                     android:id="@+id/esporte4"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:background="@color/white"
-                    android:src="@drawable/quadrado_cinza" />
+                    android:src="@drawable/icbike" />
 
             </LinearLayout>
 
