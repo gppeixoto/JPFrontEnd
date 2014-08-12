@@ -1,13 +1,18 @@
 package br.com.JoinAndPlay;
 
+import java.util.Vector;
+
 import com.facebook.Session;
 
 import br.com.tabActive.TabFactory;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnShowListener;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.AlertDialog.Builder;
@@ -17,10 +22,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Usuario;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 
@@ -30,7 +40,11 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	private Button bParticular;
 	private Button bPublico;
 	
+	private ExpandableHeightGridView grid;
+	
 	private TabHost tabhost;
+	private Vector<Usuario> amigos;
+	private Vector<String> convidados;
 	
 	private EditText eNomeEvento;
 	
@@ -41,15 +55,30 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		if(container==null) return null;
 		
+		convidados = new Vector<String>();
+		
+		Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
+
+			@Override
+			public void onTerminado(Vector<Usuario> in) {
+				// TODO Auto-generated method stub
+				amigos = (Vector<Usuario>) in;
+			}
+		});	
+		
 		privado = true;
 		
 		View view = inflater.inflate(R.layout.criar_evento_comp, container,false);
 		
-		tabhost = (TabHost) view.findViewById(R.id.tabhost);
-		tabhost.setup();
-		tabhost.setOnTabChangedListener(this);
+		//tabhost = (TabHost) view.findViewById(R.id.tabhost);
+		//tabhost.setup();
+		//tabhost.setOnTabChangedListener(this);
 		
 		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
+		
+		grid = (ExpandableHeightGridView) view.findViewById(R.id.gridView1);
+		grid.setExpanded(true);
+		grid.setOnItemClickListener(this);
 		
 		bCriarEvento = (Button) view.findViewById(R.id.criar_evento_button);
 		bCriarEvento.setText("Criar Evento");
@@ -93,47 +122,110 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				
 				String nomeDoEvento = (String) eNomeEvento.getText().toString();
 				
-				/**
-				if(nomeDoEvento.trim().equals("")){
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Escolha um nome para o evento!");
-					error.setPositiveButton("OK", null);
-					error.show();
+				if(nomeDoEvento == null || nomeDoEvento.trim().equals("")){
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_nome, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
-				}*/
+				}
 				
 				if(getArguments()!=null){
 					Bundle args = getArguments();
 					
-					String esporte = (String) args.get("esporte");
-					String dia = (String) args.get("data");
-					String termino = (String) args.get("horaTermino");
-					String inicio = (String) args.get("horaInicio");
-					Double preco = (Double) args.get("preco");
-					String end = (String) args.get("endereco");
-					String localNome = (String) args.get("nomeLocal");
+					String esporte = (String) args.getString("esporte");
+					String dia = (String) args.getString("data");
+					String termino = (String) args.getString("horaTermino");
+					String inicio = (String) args.getString("horaInicio");
+					Double preco = (Double) args.getDouble("preco");
+					String end = (String) args.getString("rua");
+					String localNome = (String) args.getString("nomeLocal");
+					String bairro = (String) args.getString("bairro");
+					String cidade = (String) args.getString("cidade");
+					
 					Server.create_event(Session.getActiveSession().getAccessToken(), localNome, end, 
-							"cidade re", "bairro a", esporte, dia, inicio, termino, 
-							"eh bisho eh", nomeDoEvento, preco, privado, new Connecter<Evento>(){
+							cidade, bairro, esporte, dia, inicio, termino, 
+							"", nomeDoEvento, preco, privado, new Connecter<Evento>(){
 
-							
 								@Override
 								public void onTerminado(Evento in) {
 									// TODO Auto-generated method stub
 									Evento e = (Evento) in;
-									((MainActivity)getActivity()).mudarAba(0);
+									Log.v("retorno evento", ""+e);
+									
+									if(!convidados.isEmpty()){
+										Server.invite(Session.getActiveSession().getAccessToken(),
+												e.getId(), convidados, new Connecter<Boolean>(){
+
+													@Override
+													public void onTerminado(
+															Boolean in) {
+														// TODO Auto-generated method stub
+														boolean a = (boolean) in;
+														if(!a){
+															
+														}
+													}
+										});
+									}		
+														
 								}
-						
 					});
+					
+					ListEventosFragment list = new ListEventosFragment();
+					((MainActivity)getActivity()).mudarAbaAtual(list);
+					
 				} else {
-					Builder error = new AlertDialog.Builder(getActivity());
-					error.setCancelable(true);
-					error.setTitle("Ops");
-					error.setMessage("Erro na criação do evento!");
-					error.setPositiveButton("OK", null);
-					error.show();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_erro, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
 					return;
 				}				
 			}
@@ -154,7 +246,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
                       .setContent(intent);
         
         tabhost.getTabWidget().setCurrentTab(0);
-        */
+        
 		
 		for (int i = 0; i < 3; i++) {
 			TabSpec tabSpec =tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(getActivity()));
@@ -162,7 +254,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			
 			
 		}
-		tabhost.setCurrentTab(0);
+		tabhost.setCurrentTab(0);*/
 		return view;	
 	}
 

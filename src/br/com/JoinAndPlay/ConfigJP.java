@@ -29,30 +29,107 @@ public final class ConfigJP {
 	public static String UserId=null;
 	private static void init(){
 		if(!init){
+			mapafutebol.put("",ESPORTE_DEFAULT);
 			mapafutebol.put("futebol",ESPORTE_FUTEBOL);
+			mapafutebol.put("corrida",ESPORTE_CORRIDA);
+			mapafutebol.put("caminhada",ESPORTE_CAMINHADA);
+			mapafutebol.put("boliche",ESPORTE_BOLICHE);
+			mapafutebol.put("basquete",ESPORTE_BASQUETE);
+			mapafutebol.put("ciclismo",ESPORTE_CICLISMO);
+			mapafutebol.put("ping pong",ESPORTE_PING_PONG);
+			mapafutebol.put("tênis",ESPORTE_TENIS);
+			mapafutebol.put("baseball",ESPORTE_BASEBALL);
+			mapafutebol.put("boxe",ESPORTE_BOXE);
+			mapafutebol.put("cartas",ESPORTE_CARTAS);
+			mapafutebol.put("dominó",ESPORTE_DOMINO);
+			mapafutebol.put("futebol americano",ESPORTE_FUTEBOL_AMERICANO);
+			mapafutebol.put("golfe",ESPORTE_GOLFE);
+			mapafutebol.put("patinação",ESPORTE_PATINACAO);
+			mapafutebol.put("sinuca",ESPORTE_SINUCA);
+			mapafutebol.put("skate",ESPORTE_SKATE);
+			mapafutebol.put("tênis de mesa",ESPORTE_TENIS_DE_MESA);
+			mapafutebol.put("video-game",ESPORTE_VIDEO_GAME);
+			mapafutebol.put("vôlei",ESPORTE_VOLEI);
+			mapafutebol.put("vôlei de praia",ESPORTE_VOLEI_DE_PRAIA);
+			mapafutebol.put("xadrez",ESPORTE_XADREZ);
+			mapafutebol.put("jogos de tabuleiro",ESPORTE_JOGOS_DE_TABULEIRO);
+
 
 		}
 		init=true;
 	}
-	public static final int ESPORTE_FUTEBOL=0;
+	/*cadastrados*/
+	public static final int ESPORTE_DEFAULT=0;
+	public static final int ESPORTE_FUTEBOL=1;
+	public static final int ESPORTE_CORRIDA=2;
+	public static final int ESPORTE_BOLICHE=3;
+	public static final int ESPORTE_BASQUETE=4;
+	public static final int ESPORTE_CICLISMO=5;
+	public static final int ESPORTE_PING_PONG=6;
+	public static final int ESPORTE_TENIS=7;
+
+	
+	/*faltam icones*/
+	public static final int ESPORTE_CAMINHADA=2;
+	public static final int ESPORTE_BASEBALL=0;
+	public static final int ESPORTE_BOXE=0;
+	public static final int ESPORTE_CARTAS=0;
+	public static final int ESPORTE_DOMINO=0;
+	public static final int ESPORTE_FUTEBOL_AMERICANO=0;
+	public static final int ESPORTE_GOLFE=0;
+	public static final int ESPORTE_PATINACAO=0;
+	public static final int ESPORTE_SINUCA=0;
+	public static final int ESPORTE_SKATE=0;
+	public static final int ESPORTE_TENIS_DE_MESA=0;
+	public static final int ESPORTE_VIDEO_GAME=0;
+	public static final int ESPORTE_VOLEI=0;
+	public static final int ESPORTE_VOLEI_DE_PRAIA=0;
+	public static final int ESPORTE_XADREZ=0;
+	public static final int ESPORTE_JOGOS_DE_TABULEIRO=0;
+
 
 	public static final int[] ESPORTE_BITMAP ={
-		R.drawable.futebol
-	};
+		R.drawable.listfutebol,
+		R.drawable.listfutebol,
+		R.drawable.listcaminhar,
+		R.drawable.listboliche,
+		R.drawable.listbasq,
+		R.drawable.listbike,
+		R.drawable.listpingpong,
+		R.drawable.listtennis
+		};
 	public static final int[] ESPORTE_COR ={
-		R.color.verde_futebol
-
+		R.color.futebol_verde,
+		R.color.futebol_verde,
+		R.color.Caminhada_verde,
+		R.color.Boliche_lilas,
+		R.color.volei_verde,
+		R.color.basquete_laranja,
+		R.color.ciclismo_marrom,
+		R.color.ping_pong_azul,
+		R.color.tennis_amarelo
 	};
 	public static final int[] ESPORTE_BARRA ={
-		R.drawable.campo_esporte_futebol
-
+		R.drawable.campo_esporte_futebol,
+		R.drawable.campo_esporte_futebol,
+		R.drawable.campo_esporte_caminhada,
+		R.drawable.campo_esporte_boliche,
+		R.drawable.campo_esporte_volei,
+		R.drawable.campo_esporte_ciclismo,
+		R.drawable.campo_esporte_ping_pong,
+		R.drawable.campo_esporte_tennis
+		
 	};
 
 
-	public static final int getID(String esporte){
+	public static final int getEsporteID(String esporte){
 		init();
 		esporte=esporte.toLowerCase();
-		return 0;// mapafutebol.get(esporte);
+		if(mapafutebol.containsKey(esporte)){
+
+			return mapafutebol.get(esporte);
+		}
+		return 0;// ;
 	}
 
 	public static void login(final Activity act,final Connecter<String> get){
@@ -101,25 +178,25 @@ public final class ConfigJP {
 
 	}
 	public static void getToken(Activity act,Connecter<String> get){
-			
+
 		if(Session.getActiveSession()!=null && Session.getActiveSession().isOpened() ){
 			if(get!=null)
-			get.onTerminado(Session.getActiveSession().getAccessToken());
+				get.onTerminado(Session.getActiveSession().getAccessToken());
 			return;
-			
+
 		}
 		login(act,get);
-		
- 	}
+
+	}
 
 	public static void getUserID(final Activity act,final Connecter<String> connecter) {
 		// TODO Auto-generated method stub
 		if(UserId!=null){
 			connecter.onTerminado(UserId);
 		}else{
-			
+
 			getToken(act, new Connecter<String>() {
-				
+
 				@Override
 				public void onTerminado(String in) {
 					// TODO Auto-generated method stub
@@ -127,8 +204,8 @@ public final class ConfigJP {
 				}
 			});
 		}
-		
-		
+
+
 	}
 
 }

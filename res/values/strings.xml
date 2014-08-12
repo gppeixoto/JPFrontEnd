@@ -2,6 +2,13 @@
 <resources>
 
     <string name="app_name">Join &amp; Play</string>
+    <string name="alerta_cidade">Escolha uma cidade</string>
+    <string name="alerta_nome">Dê um nome ao evento</string>
+    <string name="alerta_bairro">Escolha um bairro</string>
+    <string name="alerta_rua">Escolha uma avenida/rua</string>
+    <string name="alerta_esporte">Escolha o esporte</string>
+    <string name="alerta_lugar">Diga o nome do local</string>
+    <string name="alerta_erro">Erro na criação do evento!</string>
     <string name="hint_cria3">Nome do local</string>
     <string name="hint_cria2">Endereço do local</string>
     <string name="hint_cria1">Escolha um esporte</string>
@@ -27,7 +34,7 @@
     <string name="mes_default">Maio</string>
     <string name="pago">Eventos pagos</string>
     <string name="sim">Sim</string>
-    <string name = "nao">Não</string>
+    <string name ="nao">Não</string>
     <string name="teste">Teste</string>
     <string name="perfil_nome_usuario"> </string>
     <string name="perfil_mensagens">Mensagens</string>
@@ -76,6 +83,7 @@
     <string name="preco_nulo_unidade">R$ 0,00</string>
 	<string name="ok">OK</string>
 	<string name="futuros">Pesquise por eventos futuros</string>
+	<string name="futuros_create">Crie o evento a partir de hoje</string>
 	<string name="inicio_termino">O término deve ser após o início</string>
 	<string name="opcional">(Opcional)</string>
     <string name="perfil_votos_default">0</string>

@@ -583,6 +583,67 @@ public class Server implements Serializable {
 		});
 	}
 	
+	/**
+	 * @param access_token access_token da pessoa que se deseja os amigos.
+	 * @return os amigos.
+	 * */
+	public static void get_friends(String access_token, final Connecter<Vector<Usuario>> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("access_token", access_token);
+		} catch (JSONException _) {}
+		
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/getfriends/", obj.toString(), new Connecter<String>() {
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					JSONArray arr = obj.getJSONArray("friends");
+					Vector<Usuario> ret = new Vector<Usuario>();
+					for (int i = 0; i < arr.length(); ++i) {
+						JSONArray a = arr.getJSONArray(i);
+						ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false));
+					}
+					if (connecter != null) connecter.onTerminado(ret);
+				} catch (JSONException _) {}
+			}
+		});
+	}
+	
+
+    public static void get_future_events(Activity activity, final Connecter<Vector<Evento>> connecter) {
+            ConfigJP.getToken(activity, new Connecter<String>() {
+                   
+                    @Override
+                    public void onTerminado(String access_token) {
+                            JSONObject obj = new JSONObject();
+                            try {
+                                    obj.put("access_token", access_token);
+                            } catch (JSONException _) {}
+                           
+                            (new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
+                                   
+                                    @Override
+                                    public void onTerminado(String in) {
+                                            try {
+                                                    Vector<Evento> ret = new Vector<Evento>();
+                                                    JSONObject json_ret = new JSONObject((String) in);
+     
+                                                    JSONArray json_array = json_ret.getJSONArray("events");
+                                                    for (int i = 0; i < json_array.length(); ++i) {
+                                                            ret.add(processEvent(json_array.getJSONObject(i)));
+                                                    }
+                                                   
+                                                    if (connecter != null) connecter.onTerminado(ret);
+                                            } catch (JSONException _) {}
+                                    }
+                            });
+                    }
+            });
+    }
+
+
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {
@@ -610,7 +671,7 @@ public class Server implements Serializable {
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
 
-			return new Usuario("", name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
+			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
 		} catch (JSONException a) { a.printStackTrace();}
 		return null;
 	}
