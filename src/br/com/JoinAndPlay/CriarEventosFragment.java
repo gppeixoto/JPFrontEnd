@@ -143,7 +143,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				String end = eEnderecoLugar.getText().toString();
 				String lugar = eNomeLugar.getText().toString();
 				/**
-				if(esporte.trim().equals("")){
+				if(esporte==null||esporte.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
@@ -151,7 +151,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					error.setPositiveButton("OK", null);
 					error.show();
 					return;
-				} else if(end.trim().equals("")){
+				} else if(end==null||end.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
@@ -159,7 +159,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					error.setPositiveButton("OK", null);
 					error.show();
 					return;
-				} else if(lugar.trim().equals("")){
+				} else if(lugar==null||lugar.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
@@ -171,18 +171,11 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				
 				args.putString("esporte", esporte);
 				args.putString("endereco", end);
-				//Log.v("endedeco", eendv.getText().toString());
 				args.putString("nomeLocal", lugar);
-				//Log.v("nome local", env.getText().toString());
-				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
-				//Log.v("data", (data[2]+"-"+data[1]+"-"+data[0]));
-				 
-				
+				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));				
 				
 				args.putString("horaInicio", bDataInicio.getText().toString());
-				//Log.v("hora inicio",b2.getText().toString());
 				args.putString("horaTermino", bDataFim.getText().toString());
-				//Log.v("hora fim", b3.getText().toString());
 				
 				if(pago){
 					String aux = ePreco.getText().toString();
@@ -203,8 +196,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				
 				next.setArguments(args);
 				
-				((MainActivity)getActivity()).mudarAbaAtual(next);
-				
+				((MainActivity)getActivity()).mudarAbaAtual(next);	
 			}
 		});
 		
@@ -423,7 +415,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 				}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert2_xml, null));
+				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_hora, null));
 				AlertDialog alert11 = builder1.create();
 				
 				OnShowListener onshow = new OnShowListener() {
@@ -504,7 +496,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 				}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert2_xml, null));
+				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_hora, null));
 				AlertDialog alert11 = builder1.create();
 				
 				OnShowListener onshow = new OnShowListener() {

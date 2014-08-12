@@ -1,5 +1,7 @@
 package br.com.JoinAndPlay;
 
+import java.util.Vector;
+
 import com.facebook.Session;
 
 import br.com.tabActive.TabFactory;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Usuario;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import android.widget.EditText;
@@ -32,6 +35,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	private Button bPublico;
 	
 	private TabHost tabhost;
+	private Vector<Usuario> amigos;
 	
 	private EditText eNomeEvento;
 	
@@ -41,6 +45,15 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			Bundle savedInstanceState){
 		
 		if(container==null) return null;
+		
+		Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
+
+			@Override
+			public void onTerminado(Vector<Usuario> in) {
+				// TODO Auto-generated method stub
+				amigos = (Vector<Usuario>) in;
+			}
+		});	
 		
 		privado = true;
 		
@@ -95,7 +108,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				String nomeDoEvento = (String) eNomeEvento.getText().toString();
 				
 				/**
-				if(nomeDoEvento.trim().equals("")){
+				if(nomeDoEvento == null || nomeDoEvento.trim().equals("")){
 					Builder error = new AlertDialog.Builder(getActivity());
 					error.setCancelable(true);
 					error.setTitle("Ops");
@@ -115,21 +128,20 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					Double preco = (Double) args.get("preco");
 					String end = (String) args.get("endereco");
 					String localNome = (String) args.get("nomeLocal");
+					String bairro = (String) args.get("bairro");
+					String cidade = (String) args.get("cidade");
 					
-					
-					Server.create_event(Session.getActiveSession().getAccessToken(), "local mesmo", "endereco", 
-							"cidade re", "bairro a", "Basquete", "24-05-2014", "12:52", "23:59", 
-							"eh bisho eh", "a", 0.00, privado, new Connecter<Evento>(){
+					Server.create_event(Session.getActiveSession().getAccessToken(), localNome, end, 
+							cidade, bairro, esporte, dia, inicio, termino, 
+							"", nomeDoEvento, preco, privado, new Connecter<Evento>(){
 
-							
 								@Override
 								public void onTerminado(Evento in) {
 									// TODO Auto-generated method stub
 									Evento e = (Evento) in;
 									Log.v("retorno evento", ""+e);
-									
+																
 								}
-						
 					});
 					ListEventosFragment list = new ListEventosFragment();
 					((MainActivity)getActivity()).mudarAbaAtual(list);

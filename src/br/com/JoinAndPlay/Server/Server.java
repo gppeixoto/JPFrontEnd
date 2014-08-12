@@ -583,6 +583,34 @@ public class Server implements Serializable {
 		});
 	}
 	
+	/**
+	 * @param access_token access_token da pessoa que se deseja os amigos.
+	 * @return os amigos.
+	 * */
+	public static void get_friends(String access_token, final Connecter<Vector<Usuario>> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("access_token", access_token);
+		} catch (JSONException _) {}
+		
+		ServiceHandler sh = new ServiceHandler();
+		sh.makePOST(ServiceHandler.URL_BASE + "/getfriends/", obj.toString(), new Connecter<String>() {
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					JSONArray arr = obj.getJSONArray("friends");
+					Vector<Usuario> ret = new Vector<Usuario>();
+					for (int i = 0; i < arr.length(); ++i) {
+						JSONArray a = arr.getJSONArray(i);
+						ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false));
+					}
+					if (connecter != null) connecter.onTerminado(ret);
+				} catch (JSONException _) {}
+			}
+		});
+	}
+	
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {
