@@ -1,7 +1,5 @@
 package br.com.JoinAndPlay;
 
-import java.util.StringTokenizer;
-
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
@@ -14,8 +12,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Spannable;
@@ -26,15 +22,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
@@ -43,15 +35,14 @@ implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.On
 DatePickerDialogFragment.DatePickerDialogHandler,
 TimePickerDialogFragment.TimePickerDialogHandler {
 
+	private ImageButton e1Button;
+	private ImageButton e2Button;
+	private ImageButton e3Button;
+	private ImageButton e4Button;
 	private Button bg;
 	private Button b2;
 	private Button b3;
 	private Button bd;
-	private TextView dv;
-	private TextView apv;
-	private TextView atv;
-	private TextView lv;
-	private TextView eev;
 	private EditText env;
 	private EditText editBairro;
 	private EditText editCidade;
@@ -71,16 +62,16 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
 	
-		Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
-		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
+		//Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
+		//Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
 		data = new String[3];
 		dataNOW = new int[3];
 		
-		apv = (TextView) v.findViewById(R.id.aPartir);
-		dv = (TextView) v.findViewById(R.id.data_view);
-		atv = (TextView) v.findViewById(R.id.ateTextView);
-		lv = (TextView) v.findViewById(R.id.local);
-		eev = (TextView) v.findViewById(R.id.escolhaEsportes);
+		e1Button = (ImageButton) v.findViewById(R.id.esporte1);
+		e2Button = (ImageButton) v.findViewById(R.id.esporte2);
+		e3Button = (ImageButton) v.findViewById(R.id.esporte3);
+		e4Button = (ImageButton) v.findViewById(R.id.esporte4);
+		
 		env = (EditText) v.findViewById(R.id.escolha_nome);
 		editBairro = (EditText) v.findViewById(R.id.escolha_enderecoBairro);
 		editCidade = (EditText) v.findViewById(R.id.escolha_enderecoCidade);
@@ -99,7 +90,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		config = getActivity().getResources().getConfiguration();
 
 		String[] str={"Baseball","Basquete","Boliche","Boxe","Cartas","Ciclismo","Corrida",
-				"Dominó","Futebol","Futebol Americano","Golfe","Patinação","Sinuca",
+				"Dominó","Futebol","Futebol Americano","Golfe","Jogos de Tabuleiro", "Patinação","Sinuca",
 				"Skate", "Tênis", "Tênis de Mesa", "Video-Game", "Vôlei", "Vôlei de Praia", 
 		"Xadrez"};
 
@@ -136,6 +127,34 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		buttonLabel.setSpan(new ImageSpan(this.getActivity(), R.drawable.lupa_pesq,      
 		    ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		bg.setText(buttonLabel);
+		
+		e1Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eesv.setText(eesv.getText().toString() + "Futebol, ");
+			}
+		});
+		
+		e2Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eesv.setText(eesv.getText().toString() + "Basquete, ");
+			}
+		});
+		
+		e3Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eesv.setText(eesv.getText().toString() + "Vôlei, ");
+			}
+		});
+		
+		e4Button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				eesv.setText(eesv.getText().toString() + "Ciclismo, ");
+			}
+		});
 		
 		bd.setOnClickListener(new View.OnClickListener() {
 			@Override
