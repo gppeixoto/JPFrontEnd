@@ -89,4 +89,6 @@
 	<string name="opcional">(Opcional)</string>
     <string name="perfil_votos_default">0</string>
     <string name="descricao_evento">Descrição do Evento</string>
+    <string name="foraPesquisaTxt">Nenhum evento foi encontrado pela sua pesquisa.</string>
+    <string name="foraColisaoTxt">Mais de um endereço foi encontrado pela sua pesquisa. Escolha um dos endereços abaixo.</string>
 </resources>

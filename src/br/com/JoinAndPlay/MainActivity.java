@@ -93,6 +93,10 @@ public class MainActivity extends FragmentActivity {
 			super.onBackPressed();
 		}
 	}
+	
+	public void replaceTab(Fragment fm) {
+		tabs.tabChange(fm,false);
+	}
 
 	
 	

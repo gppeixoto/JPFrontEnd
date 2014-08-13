@@ -257,10 +257,12 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 					++j;
 				}*/
 				
-				for(int i = 0; i < esportes.length ; ++i){
-					Log.v("ahuabahbhabhabha", esportes[i]);
-					esportes[i] = esportes[i].trim();
-					Log.v("ahuabahbhabhabha", esportes[i]);
+				if(esportes != null){
+					for(int i = 0; i < esportes.length ; ++i){
+						Log.v("ahuabahbhabhabha", esportes[i]);
+						esportes[i] = esportes[i].trim();
+						Log.v("ahuabahbhabhabha", esportes[i]);
+					}
 				}
 
 				args.putInt("esportes_qtd",esportes==null?0 : esportes.length);
@@ -306,7 +308,6 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				
 				args.putString("horaTermino", b3.getText().toString());
 				
-
 				list.setArguments(args);
 				((MainActivity)getActivity()).mudarAba(1, list);
 				((MainActivity)getActivity()).mudarAba(1);

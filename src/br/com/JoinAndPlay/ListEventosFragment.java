@@ -30,6 +30,7 @@ import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
+import br.com.JoinAndPlay.Server.Endereco;
 
 import com.facebook.Request;
 import com.facebook.Request.GraphUserCallback;
@@ -70,17 +71,32 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setOnTouchListener(this);
 		
 	if(getArguments()!=null){
-		Bundle args= getArguments();
-		String[] esportes=null ;
-				
-		if(args.getInt("esportes_qtd")>0){
-			esportes = new String[args.getInt("esportes_qtd")];
-			esportes = args.getStringArray("esportes");
-		}
+	final	Bundle args= getArguments();
+	final ListEventosFragment self=this;
+	
+	final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
+	
+		
+	
+		Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
+			@Override
+			public void onTerminado(Vector<Endereco> in) {
+				if(in.size()==1){
+					Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
+				} else {
+					Bundle args = new Bundle();
+					Endereco arr[] = new Endereco[in.size()];
+					in.toArray(arr);
+					args.putParcelableArray("enderecos", arr);
+					BolaForaFragment bfm = new BolaForaFragment();
+					bfm.setArguments(args);
+					((MainActivity) self.getActivity()).replaceTab(bfm);
+				}
+			}
+		});
 		//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
 		//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
-		Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, this);
-	}else{
+			}else{
 		Server.get_future_events(getActivity(),this);	
 	}
 	
