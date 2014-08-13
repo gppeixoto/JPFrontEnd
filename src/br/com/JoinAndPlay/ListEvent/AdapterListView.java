@@ -59,11 +59,13 @@ public class AdapterListView extends BaseAdapter
 
 	public View getView(int position, View view, ViewGroup parent)
 	{
-		if(view!=null) return view;
+		if(view==null){
+			
+			view = mInflater.inflate(R.layout.item_list, parent,false);
+		}
 		//Pega o item de acordo com a posção.
 		ItemEvent item = itens.get(position);
 		//infla o layout para podermos preencher os dados
-		view = mInflater.inflate(R.layout.item_list, null);
 		
 		item.drawerView(view,amigos);
 

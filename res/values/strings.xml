@@ -37,7 +37,7 @@
     <string name="sim">Sim</string>
     <string name ="nao">Não</string>
     <string name="teste">Teste</string>
-    <string name="perfil_nome_usuario">Artur Alves</string>
+    <string name="perfil_nome_usuario"> </string>
     <string name="perfil_mensagens">Mensagens</string>
     <string name="perfil_quantidade_amigos">10 amigos</string>
     <string name="perfil_eventos_anteriores">Eventos anteriores</string>
@@ -87,5 +87,5 @@
 	<string name="futuros_create">Crie o evento a partir de hoje</string>
 	<string name="inicio_termino">O término deve ser após o início</string>
 	<string name="opcional">(Opcional)</string>
-    
+    <string name="perfil_votos_default">0</string>
 </resources>
