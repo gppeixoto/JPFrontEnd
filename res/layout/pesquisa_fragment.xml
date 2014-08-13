@@ -36,30 +36,33 @@
             <LinearLayout
                 android:id="@+id/escolha_esporte_layout"
                 android:layout_width="fill_parent"
-                android:layout_height="36dp"
-                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:gravity="bottom"
-                android:orientation="horizontal"
-                android:paddingBottom="0dp"
-                android:paddingTop="0dp" >
+                android:orientation="vertical">
 
                 <MultiAutoCompleteTextView  
                     android:id="@+id/escolha_esporte"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:background="@drawable/my_bottom_line"
                     android:ems="10"
                     android:gravity="bottom"
                     android:height="2dp"
                     android:hint="@string/hint_pesq1"
+                    android:background="@color/white"
                     android:inputType="text"
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:textColor="@color/cinza_txt"
- 					android:completionThreshold="1" />
+ 					android:completionThreshold="1"/>
+                
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.01"
+                    android:background="@drawable/my_bottom_line" />
             </LinearLayout>
 
             <LinearLayout
@@ -140,26 +143,31 @@
                 <LinearLayout
                     android:id="@+id/escolha_nome_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:gravity="bottom"
-                    android:orientation="horizontal" >
+                	android:gravity="bottom"
+                	android:orientation="vertical" >
 
                     <EditText
                         android:id="@+id/escolha_nome"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/my_bottom_line"
-                        android:ems="10"
-                        android:height="3dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
                         android:hint="@string/hint_pesq5"
+                        android:background="@color/white"
                         android:inputType="text"
+                        android:ems="10"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textSize="14sp"
-                        android:textColor="@color/cinza_txt" />
+                        android:textColor="@color/cinza_txt"
+                        android:gravity="bottom" />
+                    
+                   <View
+                    	android:layout_width="fill_parent"
+                    	android:layout_height="0dp"
+                    	android:layout_weight="0.01"
+                    	android:background="@drawable/my_bottom_line" />   
                 </LinearLayout>
 
             </LinearLayout>
@@ -181,29 +189,32 @@
                     <LinearLayout
                         android:id="@+id/escolha_endereco_layout"
                         android:layout_width="fill_parent"
-                        android:layout_height="36dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:gravity="bottom"
-                        android:orientation="horizontal" >
-
+                        android:orientation="vertical" >
+ 
                         <EditText
                             android:id="@+id/escolha_enderecoBairro"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/my_bottom_line"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
                             android:ems="10"
-                            android:height="3dp"
                             android:hint="@string/hint_pesq2"
                             android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:textSize="14sp"
-                            android:textColor="@color/cinza_txt" >
-
-                       
+                            android:background="@color/white"
+                            android:textColor="@color/cinza_txt"
+                        	android:gravity="bottom" >      
                         </EditText>
+                        
+                        <View
+                    		android:layout_width="fill_parent"
+                    		android:layout_height="0dp"
+                    		android:layout_weight="0.01"
+                    		android:background="@drawable/my_bottom_line" />
 
                     </LinearLayout>
 
@@ -215,31 +226,36 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.5"
                     android:orientation="horizontal" >
-                    
+                        
                      <LinearLayout
                         android:id="@+id/escolha_endereco_layout3"
                         android:layout_width="fill_parent"
-                        android:layout_height="36dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="12dp"
                         android:gravity="bottom"
-                        android:orientation="horizontal" >
-
+                        android:orientation="vertical" >
+                        	
                         <EditText
                             android:id="@+id/escolha_enderecoCidade"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/my_bottom_line"
+                            android:layout_width="fill_parent"
+                            android:layout_height="40dp"
+                            android:background="@color/white"
                             android:ems="10"
-                            android:height="3dp"
                             android:hint="@string/hint_pesq3"
                             android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:textSize="14sp"
-                            android:textColor="@color/cinza_txt" >
+                            android:textColor="@color/cinza_txt"
+                            android:gravity="bottom" >
 
                         </EditText>
+                        
+                        <View
+                    		android:layout_width="fill_parent"
+                    		android:layout_height="0dp"
+                    		android:layout_weight="0.01"
+                    		android:background="@drawable/my_bottom_line" />
 
                     </LinearLayout>
 
@@ -252,31 +268,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
-                
+                        
                 <LinearLayout
                     android:id="@+id/escolha_rua_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="15dp"
                     android:gravity="bottom"
-                    android:orientation="horizontal" >
-
+                    android:orientation="vertical" >
+              
                     <EditText
                         android:id="@+id/escolha_enderecoRua"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/my_bottom_line"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/white"
                         android:ems="10"
-                        android:height="3dp"
                         android:hint="@string/hint_pesq4"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textSize="14sp"
-                        android:textColor="@color/cinza_txt" />
+                        android:textColor="@color/cinza_txt"
+                       	android:gravity="bottom" />
+                    
+                    <View
+                    	android:layout_width="fill_parent"
+                    	android:layout_height="0dp"
+                    	android:layout_weight="0.01"
+                    	android:background="@drawable/my_bottom_line" /> 
                 </LinearLayout>
             </LinearLayout>
 

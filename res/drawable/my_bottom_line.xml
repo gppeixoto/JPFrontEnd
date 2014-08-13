@@ -9,10 +9,10 @@
         </shape>
     </item>
     <!-- This is the line -->
-    <item android:top="20sp">
+    <item android:bottom="20sp">
         <shape>
-            <size android:height="1dp" />
-
+            <size android:height="2dp" />
+			
             <solid android:color="@color/cinza" />
         </shape>
     </item>
