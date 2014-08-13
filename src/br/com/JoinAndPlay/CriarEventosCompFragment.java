@@ -1,5 +1,6 @@
 package br.com.JoinAndPlay;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.facebook.Session;
@@ -43,7 +44,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	private ExpandableHeightGridView grid;
 	
 	private TabHost tabhost;
-	private Vector<Usuario> amigos;
+	private Vector<Usuario> aux;
+	private ArrayList<Usuario> amigos;
 	private Vector<String> convidados;
 	
 	private EditText eNomeEvento;
@@ -55,16 +57,17 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		if(container==null) return null;
 		
-		convidados = new Vector<String>();
-		
 		Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
 
 			@Override
 			public void onTerminado(Vector<Usuario> in) {
 				// TODO Auto-generated method stub
-				amigos = (Vector<Usuario>) in;
+				aux = (Vector<Usuario>) in;
 			}
 		});	
+		
+		convidados = new Vector<String>();
+		amigos = new ArrayList<Usuario>(aux);
 		
 		privado = true;
 		
@@ -186,7 +189,33 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 														// TODO Auto-generated method stub
 														boolean a = (boolean) in;
 														if(!a){
+															AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+															builder1.setCancelable(true);
+															builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+																public void onClick(DialogInterface dialog, int id) {
+																	dialog.cancel();
+															}});
 															
+															builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_convite, null));
+															AlertDialog alert11 = builder1.create();
+															
+															OnShowListener onshow = new OnShowListener() {
+																@Override
+																@SuppressWarnings( "deprecation" )
+																public void onShow(DialogInterface dialog) {
+																	Button positiveButton = ((AlertDialog) dialog)
+													                        .getButton(AlertDialog.BUTTON_POSITIVE);
+																	
+													                positiveButton.setBackgroundDrawable(getResources()
+													                        .getDrawable(R.drawable.alert_button));
+													                
+													                positiveButton.setText("OK");
+													                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+																	
+																}
+															};
+															alert11.setOnShowListener(onshow);
+															alert11.show();
 														}
 													}
 										});
@@ -230,6 +259,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				}				
 			}
 		});
+		
 		/**
 		TabHost.TabSpec spec;
 		
