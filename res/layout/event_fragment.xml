@@ -103,26 +103,28 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="2dp" >
 
                     <TextView
                         android:id="@+id/qtd_confirmados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="6dp"
                         android:text="12"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="6dp"
                         android:text="@string/confirmaram"
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <View
+                <!--View
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/linha_pontilhada2" />
@@ -131,13 +133,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="2dp" >
 
                     <TextView
                         android:id="@+id/qtd_no_local"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="6dp"
                         android:text="6"
                         android:textColor="@color/red"
                         android:textSize="24sp"
@@ -146,8 +150,8 @@
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="6dp"
                         android:text="@string/no_local"
                         android:textColor="@color/red"
                         android:textSize="12sp" />
@@ -160,11 +164,13 @@
 
                 <ImageView
                     android:id="@+id/cartinha"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
                     android:layout_weight="1"
-                    android:src="@drawable/convidar_amigos" />
+                    android:scaleType="matrix"
+                    android:src="@drawable/convidar_amigos" /-->
             </LinearLayout>
 
             <View
@@ -307,8 +313,7 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
-                    android:scaleType="matrix"
-                    />
+                    android:scaleType="matrix" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -334,7 +339,7 @@
                         android:id="@+id/editar_evento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="70dp"
+                        android:layout_marginRight="9dp"
                         android:background="@drawable/campo_esporte"
                         android:drawableStart="@drawable/editar_evento"
                         android:textColor="@color/white" />
@@ -371,7 +376,7 @@
                 <TextView
                     android:id="@+id/descricao_do_esporte"
                     android:layout_width="wrap_content"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
@@ -379,24 +384,24 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/botao_play"
                 android:layout_width="73dp"
                 android:layout_height="fill_parent"
                 android:background="@drawable/campo_cinza"
-                android:drawableTop="@drawable/quadrado_cinza"
+                android:gravity="center"
                 android:text="@string/iniciar_jogo"
                 android:textSize="15sp" />
         </LinearLayout>
 
-        <LinearLayout
+        <!--LinearLayout
             android:id="@+id/propaganda"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:background="@color/white"
             android:orientation="vertical" >
-        </LinearLayout>
+        </LinearLayout-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -429,6 +434,21 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/enviar_comentario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="75dp"
+                    android:background="@drawable/campo_comentario_texto"
+                    android:drawableStart="@drawable/enviar"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -447,9 +467,9 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
                 android:orientation="vertical" >
 
                 <EditText

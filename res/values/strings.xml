@@ -91,4 +91,6 @@
     <string name="descricao_evento">Descrição do Evento</string>
     <string name="foraPesquisaTxt">Nenhum evento foi encontrado pela sua pesquisa.</string>
     <string name="foraColisaoTxt">Mais de um endereço foi encontrado pela sua pesquisa. Escolha um dos endereços abaixo.</string>
+    <string name="sobre_evento">Descreva sobre o evento</string>
+    <string name="enviar">Enviar</string>
 </resources>

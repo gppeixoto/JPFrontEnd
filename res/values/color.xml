@@ -33,5 +33,6 @@
     <color android:id="@+id/color1" name="ping_pong_azul" android:layout_width="wrap_content" android:layout_height="wrap_content">#3d4785</color>
     <color android:id="@+id/color1" name="tennis_amarelo" android:layout_width="wrap_content" android:layout_height="wrap_content">#fcdb00</color>
     <color android:id="@+id/color1" name="bilhar_preto" android:layout_width="wrap_content" android:layout_height="wrap_content">#181818</color>
-
+    <color android:id="@+id/color1" name="facebook_blue" android:layout_width="wrap_content" android:layout_height="wrap_content">#3B589E</color>
+    
 </resources>
