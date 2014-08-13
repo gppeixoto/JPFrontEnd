@@ -37,20 +37,20 @@ public final class ConfigJP {
 			mapafutebol.put("basquete",ESPORTE_BASQUETE);
 			mapafutebol.put("ciclismo",ESPORTE_CICLISMO);
 			mapafutebol.put("ping pong",ESPORTE_PING_PONG);
-			mapafutebol.put("tênis",ESPORTE_TENIS);
+			mapafutebol.put("tï¿½nis",ESPORTE_TENIS);
 			mapafutebol.put("baseball",ESPORTE_BASEBALL);
 			mapafutebol.put("boxe",ESPORTE_BOXE);
 			mapafutebol.put("cartas",ESPORTE_CARTAS);
-			mapafutebol.put("dominó",ESPORTE_DOMINO);
+			mapafutebol.put("dominï¿½",ESPORTE_DOMINO);
 			mapafutebol.put("futebol americano",ESPORTE_FUTEBOL_AMERICANO);
 			mapafutebol.put("golfe",ESPORTE_GOLFE);
-			mapafutebol.put("patinação",ESPORTE_PATINACAO);
+			mapafutebol.put("patinaï¿½ï¿½o",ESPORTE_PATINACAO);
 			mapafutebol.put("sinuca",ESPORTE_SINUCA);
 			mapafutebol.put("skate",ESPORTE_SKATE);
-			mapafutebol.put("tênis de mesa",ESPORTE_TENIS_DE_MESA);
+			mapafutebol.put("tï¿½nis de mesa",ESPORTE_TENIS_DE_MESA);
 			mapafutebol.put("video-game",ESPORTE_VIDEO_GAME);
-			mapafutebol.put("vôlei",ESPORTE_VOLEI);
-			mapafutebol.put("vôlei de praia",ESPORTE_VOLEI_DE_PRAIA);
+			mapafutebol.put("vï¿½lei",ESPORTE_VOLEI);
+			mapafutebol.put("vï¿½lei de praia",ESPORTE_VOLEI_DE_PRAIA);
 			mapafutebol.put("xadrez",ESPORTE_XADREZ);
 			mapafutebol.put("jogos de tabuleiro",ESPORTE_JOGOS_DE_TABULEIRO);
 
@@ -72,13 +72,13 @@ public final class ConfigJP {
 	public static final int ESPORTE_SINUCA=10;
 	public static final int ESPORTE_FUTEBOL_AMERICANO=11;
 
-	
+
 	/*repetidos*/
 	public static final int ESPORTE_CAMINHADA=2;
-	public static final int ESPORTE_TENIS_DE_MESA=6;
+	public static final int ESPORTE_TENIS_DE_MESA=8;
 	public static final int ESPORTE_VOLEI_DE_PRAIA=4;
 
-	
+
 	/*faltam icones*/
 	public static final int ESPORTE_BASEBALL=0;
 	public static final int ESPORTE_BOXE=0;
@@ -104,8 +104,8 @@ public final class ConfigJP {
 		R.drawable.listgame,
 		R.drawable.listbilhar,
 		R.drawable.listfuame
-	
-		};
+
+	};
 	public static final int[] ESPORTE_COR ={
 		R.color.futebol_verde,
 		R.color.futebol_verde,
@@ -119,7 +119,7 @@ public final class ConfigJP {
 		R.color.Game_lilas,
 		R.color.bilhar_preto,
 		R.color.futebol_americano_laranja
-		
+
 	};
 	public static final int[] ESPORTE_BARRA ={
 		R.drawable.campo_esporte_futebol,
@@ -134,8 +134,8 @@ public final class ConfigJP {
 		R.drawable.campo_esporte_game,
 		R.drawable.campo_esporte_bilhar,
 		R.drawable.campo_esporte_futebol_americano
-		
-		
+
+
 	};
 
 
@@ -171,22 +171,21 @@ public final class ConfigJP {
 						@Override
 						public void onCompleted(GraphUser user, Response response) {
 							// TODO Auto-generated method stub
-							Log.v("uuou","dasasd"+		user);
-							UserId =user.getId();
-							getToken(act, get);
+							if(user!=null){
 
+								TelaInicialFragment tela = new TelaInicialFragment();
+								//act.getFragmentManager().beginTransaction().replace(R.id.tela, tela).commit();
+
+								UserId =user.getId();
+								getToken(act, get);
+
+							}
 						}
 					}
 							).executeAsync();
 				}
 			}
 		});
-
-		Log.v("token","dasasd"+		session.getPermissions());
-		Log.v("token","dasasd"+session.isOpened());
-
-		Log.v("token"," "+ session.getAccessToken());
-		Log.v("token","dasasd");
 
 		if (session != null && session.isOpened()) {
 			Toast.makeText(act, session.getAccessToken(), Toast.LENGTH_LONG).show();

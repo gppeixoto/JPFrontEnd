@@ -26,7 +26,7 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 	
 	@Override
 	public void onTerminado(Usuario in) {
-		
+		((MainActivity)getActivity()).login();
 	}
 
 	@Override

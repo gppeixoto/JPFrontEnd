@@ -6,11 +6,13 @@ import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Endereco;
 import br.com.JoinAndPlay.Server.Server;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -21,11 +23,13 @@ import android.widget.TextView;
 class Botao extends BaseAdapter {
 
 	private Endereco[] list;
+	 OnClickListener eu;
 	Context cont;
 
-	public Botao(Endereco[] arg1, Context c){
+	public Botao(Endereco[] arg1, Context c,OnClickListener eu){
 		this.list = arg1;
 		this.cont = c;
+		this.eu=eu;
 	}
 	
 	@Override
@@ -50,11 +54,14 @@ class Botao extends BaseAdapter {
 		String txt_end = list[arg0].getAddress();
 		bt.setBackgroundResource(R.drawable.fora_button);
 		bt.setText(txt_nome + "\n" + txt_end);
+		bt.setOnClickListener(eu);
 		return bt;
 	}
+
+
 	
 }
-public class BolaForaFragment extends Fragment {
+public class BolaForaFragment extends Fragment implements OnClickListener {
 
 	private TextView texto;
 	private ListView lv;
@@ -77,11 +84,16 @@ public class BolaForaFragment extends Fragment {
 			} else {
 				lv = (ListView) v.findViewById(R.id.bolaForaListView);
 				lv.setDividerHeight(22);
-				lv.setAdapter(new Botao((Endereco[]) args.getParcelableArray("enderecos"), getActivity()));
+				lv.setAdapter(new Botao((Endereco[]) args.getParcelableArray("enderecos"), getActivity(),this));
 			}
 		}
 
 		return v;
 	}
-
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		ListEventosFragment frag=new ListEventosFragment();
+		((MainActivity)getActivity()).replaceTab(frag);
+	}
 }
