@@ -47,7 +47,7 @@ import android.widget.ScrollView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-public class EventFragment extends Fragment implements OnClickListener,OnKeyListener, Connecter<Evento>{
+public class EventFragment extends Fragment implements OnClickListener, Connecter<Evento>{
 	private Evento myEvent=null;
 	SupportMapFragment suportMap;
 	public LinearLayout list;
@@ -64,9 +64,9 @@ public class EventFragment extends Fragment implements OnClickListener,OnKeyList
 		list.addView(novo);
 	}
 
-	@Override
+	/*@Override
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
-Log.v("uhu","key ="+event.getKeyCode());
+Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		//TextView responseText = (TextView) findViewById(R.id.responseText);
 		EditText myEditText = (EditText) view;
 
@@ -78,8 +78,8 @@ Log.v("uhu","key ="+event.getKeyCode());
 			if (!event.isShiftPressed()) {
 				if(myEvent!=null){
 					final Connecter<Evento> listener = this;
+					Log.v("COMEN", myEditText.getText().toString());
 					Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Usuario>() {
-						
 						@Override
 						public void onTerminado(Usuario in) {
 							// TODO Auto-generated method stub
@@ -101,7 +101,7 @@ Log.v("uhu","key ="+event.getKeyCode());
 			}               
 		}
 		return false; 
-	}
+	}*/
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,9 +116,9 @@ Log.v("uhu","key ="+event.getKeyCode());
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
 		Button b = (Button)v.findViewById(R.id.button1);
-		EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
+		//EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
 		b.setOnClickListener(this);
-		edit.setOnKeyListener(this);
+		//edit.setOnKeyListener(this);
 		suportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
 		if(getArguments()!=null){
@@ -163,13 +163,13 @@ Log.v("uhu","key ="+event.getKeyCode());
 		else return "fail";
 	}
 
-	public void setValuesEvent(View view,Evento evento){
+	public void setValuesEvent(final View view,Evento evento){
 		if(evento == null || view==null) return;
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
 
 		TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
-		TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
+		//TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
 
 		LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.imagem_perfil_dad);
 
@@ -188,6 +188,34 @@ Log.v("uhu","key ="+event.getKeyCode());
 
 		qtd_confirmados.setText(""+evento.getUsers().size());
 		//	qtd_no_local(evento.);
+		
+		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
+		final Connecter<Evento> listener = this;
+		butao_enviar.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EditText myEditText = (EditText) view.findViewById(R.id.criar_comentario);
+				//Log.v("COMEN", myEditText.getText().toString());
+				Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Usuario>() {
+					@Override
+					public void onTerminado(Usuario in) {
+						// TODO Auto-generated method stub
+						Server.get_detailed_event(getActivity(),myEvent.getId(),listener);	
+
+					}
+				});
+				myEditText.getText().clear();
+				myEditText.clearFocus();
+                if(getView() != null){
+					getView().setFocusable(true);
+		            getView().setFocusableInTouchMode(true);
+		            getView().requestFocus();
+				}
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+			}
+		});
 
 		
 		
