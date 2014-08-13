@@ -537,7 +537,7 @@ public class Server implements Serializable {
 	 * @param city nome da cidade.
 	 * @return um Vector de Vector< String > que o primeiro elemento eh o nome do local e o segundo eh o endereco.
 	 * */
-	public static void getAddresses(String localName, String streetName, String neighborhood, String city, final Connecter<Vector<Vector<String>>> connecter) {
+	public static void getAddresses(String localName, String streetName, String neighborhood, String city, final Connecter<Vector<Endereco>> connecter) {
 		localName = preprocess(localName);
 		streetName = preprocess(streetName);
 		neighborhood = preprocess(neighborhood);
@@ -564,21 +564,19 @@ public class Server implements Serializable {
 		}
 		sb.append("&sensor=true&key=AIzaSyDL-BaFaZBo_evgT2pXRJ1avAb8sWZ3KGE");
 		String s = sb.toString();
-		
+		System.out.println(s);
 		(new ServiceHandler()).makeGET(s, new Connecter<String>() {
 			@Override
 			public void onTerminado(String in) {
 				try {
 					JSONObject obj = new JSONObject(in);
 					JSONArray arr = obj.getJSONArray("results");
-					Vector<Vector<String>> addresses = new Vector<Vector<String>>();
+					Vector<Endereco> addresses = new Vector<Endereco>();
 					for (int i = 0; i < arr.length(); ++i) {
 						JSONObject aux = arr.getJSONObject(i);
 						String name = aux.getString("name");
 						String address = aux.getString("formatted_address");
-						Vector<String> v = new Vector<String>();
-						v.add(name); v.add(address);
-						addresses.add(v);
+						addresses.add(new Endereco(name, address));
 					}
 					if (connecter != null) connecter.onTerminado(addresses);
 				} catch (JSONException _) {}
