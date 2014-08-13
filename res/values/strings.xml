@@ -87,4 +87,5 @@
 	<string name="inicio_termino">O término deve ser após o início</string>
 	<string name="opcional">(Opcional)</string>
     <string name="perfil_votos_default">0</string>
+    <string name="descricao_evento">Descrição do Evento</string>
 </resources>

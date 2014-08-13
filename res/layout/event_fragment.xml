@@ -235,7 +235,7 @@
                     android:id="@+id/qtd_amigos_amais"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginTop="12dp"
                     android:text="+ 3 amigos"
                     android:textColor="@color/cinza_cinza"
