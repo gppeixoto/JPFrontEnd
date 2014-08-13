@@ -13,8 +13,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/avatar" />
+        android:src="@drawable/imbolafora" />
 
     <TextView
         android:id="@+id/bolaForaTxt"
@@ -23,13 +22,13 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="15dp"
+        android:textColor="@color/white"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec commodo nisl libero, sed lobortis sem cursus a. Nunc ut nisl nibh. Integer consequat vestibulum arcu vitae tristique. Sed a massa vel sem convallis dictum. Phasellus mattis urna at ornare rutrum. Nulla facilisi. Nulla tempus, metus non condimentum interdum" />
 
     <ScrollView
         android:id="@+id/bolaForaScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp" >

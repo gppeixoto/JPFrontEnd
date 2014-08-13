@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/inicial_relativelayout"
+    android:layout_width="362dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:background="@drawable/inicial_background"
+    android:padding="10dp"
+    android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/inicial_imageview_joinplaylogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/joinplaylogo" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/inicial_imageview_joinplaylogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/inicial_facebook_login_button"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fb_logo" />
+
+</RelativeLayout>

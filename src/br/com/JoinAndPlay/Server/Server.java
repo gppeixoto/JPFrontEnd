@@ -315,7 +315,7 @@ public class Server implements Serializable {
 				JSONArray arr_sports = new JSONArray();
 
 				if (sports != null) {
-					for (int i = 0; i < sports.length; ++i) arr_sports.put(sports[i]);
+					for (int i = 0; i < sports.length && sports[i] != null; ++i) arr_sports.put(sports[i]);
 				}
 
 				try {

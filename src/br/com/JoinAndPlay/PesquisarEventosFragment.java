@@ -251,23 +251,54 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 					esportes = textoEsportes.split(",");
 				}
 
-				int j = 0;
+				/*int j = 0;
 				if(esportes!=null ){
 					Log.v("esporte", j + ": " + esportes[j]+" + "+textoEsportes+ "  "+esportes.length);
 					++j;
+				}*/
+				
+				for(int i = 0; i < esportes.length ; ++i){
+					Log.v("ahuabahbhabhabha", esportes[i]);
+					esportes[i] = esportes[i].trim();
+					Log.v("ahuabahbhabhabha", esportes[i]);
 				}
 
 				args.putInt("esportes_qtd",esportes==null?0 : esportes.length);
 				
 				args.putStringArray("esportes", esportes);
 				
-				args.putString("nome", env.getText().toString());
+				String endereco = "";
+				boolean first = true;
+				String nome = env.getText().toString();
+				if (nome.trim().length() > 0) {
+					endereco = nome.trim();
+					first = false;
+				}
+				String rua = editRua.getText().toString();
+				if (rua.trim().length() > 0) {
+					if (!first) endereco += "+"; first = false;
+					endereco += rua.trim();
+				}
+				String bairro = editBairro.getText().toString();
+				if (bairro.trim().length() > 0) {
+					if (!first) endereco += "+"; first = false;
+					endereco += bairro.trim();
+				}
+				String cidade = editCidade.getText().toString();
+				if (cidade.trim().length() > 0) {
+					if (!first) endereco += "+"; first = false;
+					endereco += cidade.trim();
+				}
+
+				args.putString("endereco",  endereco);
+				
+				/*args.putString("nome", env.getText().toString());
 				
 				args.putString("bairro", editBairro.getText().toString());
 				
 				args.putString("cidade", editCidade.getText().toString());
 				
-				args.putString("rua", editRua.getText().toString());
+				args.putString("rua", editRua.getText().toString());*/
 				
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
 

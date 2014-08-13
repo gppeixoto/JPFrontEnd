@@ -78,14 +78,21 @@ public class ItemEsporte implements Parcelable {
 		
 		if (partidasJogadas >= 1){
 			star1.setImageResource(R.drawable.star1);
-		} else if (partidasJogadas >= 2){
+		} if (partidasJogadas >= 2){
 			star2.setImageResource(R.drawable.star1);
-		} else if (partidasJogadas >= 3){
+		} if (partidasJogadas >= 3){
 			star3.setImageResource(R.drawable.star1);
-		} else if (partidasJogadas >= 4) {
+		} if (partidasJogadas >= 4) {
 			star4.setImageResource(R.drawable.star1);
-		} else if (partidasJogadas >= 5){
+		} if (partidasJogadas >= 5){
 			star5.setImageResource(R.drawable.star1);
 		}
+		/*if (partidasJogadas >= 1){
+			star1.setImageResource(R.drawable.star1);
+		} if (partidasJogadas >= 1.5){
+			star2.setImageResource(R.drawable.halfstar);
+		} if (partidasJogadas >= 2){
+			star2.setImageResource(R.drawable.star1);
+		}*/
 	}
 }
