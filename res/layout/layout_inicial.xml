@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/inicial_relativelayout"
-    android:layout_width="362dp"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:gravity="center_horizontal"
     android:background="@drawable/inicial_background"
-    android:padding="10dp"
-    android:orientation="vertical" >
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
         <ImageView
             android:id="@+id/inicial_imageview_joinplaylogo"
@@ -18,15 +18,19 @@
             android:layout_marginTop="15dp"
             android:src="@drawable/joinplaylogo" />
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+        <Button
+            android:id="@+id/inicial_button_facebook_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/inicial_imageview_joinplaylogo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/inicial_facebook_login_button"
+            android:layout_marginTop="28dp"
             android:scaleType="centerCrop"
+            android:text="      Facebook Login     "
+            android:drawableLeft="@drawable/fb_logo"
+            android:textColor="@color/white"
+            android:background="@drawable/inicial_facebook_login_button"
+            android:padding="12dp"
             android:src="@drawable/fb_logo" />
 
 </RelativeLayout>

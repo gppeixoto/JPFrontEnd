@@ -8,9 +8,9 @@
             <item android:state_pressed="true">
                 <shape android:shape="rectangle" >
                     <gradient
-                        android:centerColor="@color/blue_focused"
-                        android:endColor="@color/blue"
-                        android:startColor="@color/blue" />
+                        android:centerColor="@color/facebook_blue"
+                        android:endColor="@color/facebook_blue"
+                        android:startColor="@color/facebook_blue" />
                     
                     <stroke
                      	android:angle="140"
@@ -25,8 +25,8 @@
                 <shape android:shape="rectangle" >
                     <gradient
                      
-                        android:endColor="@color/blue"
-                        android:startColor="@color/blue"
+                        android:endColor="@color/facebook_blue"
+                        android:startColor="@color/facebook_blue"
                         android:angle="90" />
                     
                     <stroke  
