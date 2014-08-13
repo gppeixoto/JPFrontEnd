@@ -197,9 +197,9 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 				// TODO Auto-generated method stub
 				EditText myEditText = (EditText) view.findViewById(R.id.criar_comentario);
 				//Log.v("COMEN", myEditText.getText().toString());
-				Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Usuario>() {
+				Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Comentario>() {
 					@Override
-					public void onTerminado(Usuario in) {
+					public void onTerminado(Comentario in) {
 						// TODO Auto-generated method stub
 						Server.get_detailed_event(getActivity(),myEvent.getId(),listener);	
 

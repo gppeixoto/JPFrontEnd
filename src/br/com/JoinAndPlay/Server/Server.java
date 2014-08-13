@@ -460,10 +460,10 @@ public class Server implements Serializable {
 	 * @param comment texto do comentario.
 	 * @return A foto e o nome do usuario.
 	 * */
-	public static void comment(Activity ac,final String event_id,final String comment, final Connecter<Usuario> connecter) {
+	public static void comment(Activity ac,final String event_id,final String comment, final Connecter<Comentario> connecter) {
 		ConfigJP.getUserID(ac, new Connecter<String>() {
 			@Override
-			public void onTerminado(String user_id) {
+			public void onTerminado(final String user_id) {
 				JSONObject obj = new JSONObject();
 				try {
 					obj.put("user_id", user_id);
@@ -476,12 +476,14 @@ public class Server implements Serializable {
 					@Override
 					public void onTerminado(String in) {
 						try {
-							JSONObject obj = new JSONObject(in);
-							String name = obj.getString("name");
-							String photo = obj.getString("photo");
-							Usuario user = new Usuario(null, name, null, photo, null, 0, null, null, null, false);
-							if (connecter != null) connecter.onTerminado(user);
-						} catch (JSONException _) {}
+                            JSONObject obj = new JSONObject(in);
+                            String name = obj.getString("name");
+                            String photo = obj.getString("photo");
+                            String hour = obj.getString("time");
+                            String date = obj.getString("day");
+                            Comentario c = new Comentario(comment, name, user_id, photo, hour, date);
+                            if (connecter != null) connecter.onTerminado(c);
+                    } catch (JSONException _) {}
 					}
 				});
 			}
@@ -760,7 +762,7 @@ public class Server implements Serializable {
 				JSONArray arr_comments = evt.getJSONArray("comments");
 				for (int i = 0; i < arr_comments.length(); ++i) {
 					JSONArray aux = arr_comments.getJSONArray(i);
-					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.getString(2)));
+					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.getString(2), aux.getString(3), aux.getString(4), aux.getString(5)));
 				}
 			}
 			String id = evt.getString("id");
