@@ -3,6 +3,7 @@
 
     <string name="app_name">Join &amp; Play</string>
     <string name="alerta_cidade">Escolha uma cidade</string>
+    <string name="alerta_convite">Não foi possível convidar seus amigos :(</string>
     <string name="alerta_nome">Dê um nome ao evento</string>
     <string name="alerta_bairro">Escolha um bairro</string>
     <string name="alerta_rua">Escolha uma avenida/rua</string>
