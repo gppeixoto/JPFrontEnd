@@ -309,8 +309,8 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				args.putString("horaTermino", b3.getText().toString());
 				
 				list.setArguments(args);
-				((MainActivity)getActivity()).mudarAba(1, list);
-				((MainActivity)getActivity()).mudarAba(1);
+				((MainActivity)getActivity()).mudarAba(0, list);
+				((MainActivity)getActivity()).mudarAba(0);
 			}
 		});
 

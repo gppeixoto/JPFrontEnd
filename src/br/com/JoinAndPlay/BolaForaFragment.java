@@ -14,22 +14,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 class Botao extends BaseAdapter {
 
 	private Endereco[] list;
-	 OnClickListener eu;
+	OnClickListener eu;
 	Context cont;
 
-	public Botao(Endereco[] arg1, Context c,OnClickListener eu){
+	public Botao(Endereco[] arg1, Context c){
 		this.list = arg1;
 		this.cont = c;
-		this.eu=eu;
+		//this.eu=eu;
 	}
 	
 	@Override
@@ -54,17 +56,15 @@ class Botao extends BaseAdapter {
 		String txt_end = list[arg0].getAddress();
 		bt.setBackgroundResource(R.drawable.fora_button);
 		bt.setText(txt_nome + "\n" + txt_end);
-		bt.setOnClickListener(eu);
 		return bt;
 	}
-
-
-	
 }
-public class BolaForaFragment extends Fragment implements OnClickListener {
+
+public class BolaForaFragment extends Fragment implements OnItemClickListener {
 
 	private TextView texto;
 	private ListView lv;
+	private String address;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,17 +83,49 @@ public class BolaForaFragment extends Fragment implements OnClickListener {
 				texto.setText("Nenhum evento foi encontrado pela sua pesquisa.");
 			} else {
 				lv = (ListView) v.findViewById(R.id.bolaForaListView);
+				lv.setOnItemClickListener(this);
 				lv.setDividerHeight(22);
-				lv.setAdapter(new Botao((Endereco[]) args.getParcelableArray("enderecos"), getActivity(),this));
+				Botao bt = new Botao( (Endereco[]) args.getParcelableArray("enderecos"),getActivity());
+				address = ((Endereco[]) args.getParcelableArray("enderecos"))[0].getName();
+				lv.setAdapter(bt);
 			}
 		}
 
 		return v;
 	}
-	@Override
+	/*@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		ListEventosFragment frag=new ListEventosFragment();
+		Bundle argsR= getArguments();
+		
+		ListEventosFragment frag = new ListEventosFragment();
+		Bundle args_ = new Bundle();
+		
+		args_.putString("data", argsR.getString("data"));
+		args_.putString("horaInicio", argsR.getString("horaInicio"));
+		args_.putString("horaTermino", argsR.getString("horaTermino"));
+		args_.putStringArray("esportes", argsR.getStringArray("esporte"));
+		
+		//args_.putString("endereco");
+		
+	}*/
+	
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Bundle argsR= getArguments();
+		
+		Log.v("aBAbaBABba","TOU AQUIII");
+		ListEventosFragment frag = new ListEventosFragment();
+		Bundle args_ = new Bundle();
+		
+		args_.putString("data", argsR.getString("data"));
+		args_.putString("horaInicio", argsR.getString("horaInicio"));
+		args_.putString("horaTermino", argsR.getString("horaTermino"));
+		args_.putStringArray("esportes", argsR.getStringArray("esporte"));
+		
+		Endereco addr = ((Endereco[]) argsR.getParcelableArray("enderecos"))[arg2];
+		String s = addr.getName()+addr.getAddress();
+		Log.v("aaaaaaaaa", s);
+		args_.putString("endereco",s);
 		((MainActivity)getActivity()).replaceTab(frag);
 	}
 }
