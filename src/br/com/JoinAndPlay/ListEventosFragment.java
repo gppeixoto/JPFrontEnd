@@ -48,10 +48,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
-
-
 	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -84,12 +82,16 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 				if(in.size()==1){
 					Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 				} else {
-					Bundle args = new Bundle();
+					Bundle args2 = new Bundle();
 					Endereco arr[] = new Endereco[in.size()];
 					in.toArray(arr);
-					args.putParcelableArray("enderecos", arr);
+					args2.putParcelableArray("enderecos", arr);
+					args2.putString("data", args.getString("data"));
+					args2.putString("horaInicio", args.getString("data"));
+					args2.putString("horaTermino", args.getString("horaTermino"));
+					args2.putStringArray("esportes", args.getStringArray("esportes"));
 					BolaForaFragment bfm = new BolaForaFragment();
-					bfm.setArguments(args);
+					bfm.setArguments(args2);
 					((MainActivity) self.getActivity()).replaceTab(bfm);
 				}
 			}
