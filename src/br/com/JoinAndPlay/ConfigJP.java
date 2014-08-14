@@ -75,7 +75,7 @@ public final class ConfigJP {
 
 	/*repetidos*/
 	public static final int ESPORTE_CAMINHADA=2;
-	public static final int ESPORTE_TENIS_DE_MESA=8;
+	public static final int ESPORTE_TENIS_DE_MESA=7;
 	public static final int ESPORTE_VOLEI_DE_PRAIA=4;
 
 

@@ -76,24 +76,26 @@ public class ItemEsporte implements Parcelable {
 		ImageView star4 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star4);
 		ImageView star5 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star5);
 		
-		if (Double.compare(1.0, avaliacaoJogador)>=0){
+		if (Double.compare(avaliacaoJogador, 0.5)>=0){
+			star1.setImageResource(R.drawable.halfstar);
+		} if (Double.compare(avaliacaoJogador, 1.0)>=0){
 			star1.setImageResource(R.drawable.star1);
-		} if (Double.compare(1.5, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 1.5)>=0){
 			star2.setImageResource(R.drawable.halfstar);
-		} if (Double.compare(2.0, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 2.0)>=0){
 			star2.setImageResource(R.drawable.star1);
-		} if (Double.compare(2.5, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 2.5)>=0){
 			star3.setImageResource(R.drawable.halfstar);
-		} if (Double.compare(3.0, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 3.0)>=0){
 			star3.setImageResource(R.drawable.star1);
-		} if (Double.compare(3.5, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 3.5)>=0){
 			star4.setImageResource(R.drawable.halfstar);
-		} if (Double.compare(4.0, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 4.0)>=0){
 			star4.setImageResource(R.drawable.star1);
-		} if (Double.compare(4.5, avaliacaoJogador)>=0){
+		} if (Double.compare(avaliacaoJogador, 4.5)>=0){
 			star5.setImageResource(R.drawable.halfstar);
-		} if (Double.compare(5.0, avaliacaoJogador)>=0){
-			star2.setImageResource(R.drawable.star1);
+		} if (Double.compare(avaliacaoJogador, 5.0)>=0){
+			star5.setImageResource(R.drawable.star1);
 		}
 	}
 }
