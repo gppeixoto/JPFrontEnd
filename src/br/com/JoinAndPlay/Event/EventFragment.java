@@ -19,7 +19,7 @@ import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.Comentario;
 import br.com.JoinAndPlay.Server.Connecter;
-import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
+import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -210,7 +210,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
 
-				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(evento.getUsers().get(i).getPhoto());
+				DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
 			}else break;
 		}		
 

@@ -6,7 +6,7 @@ import java.util.Random;
 
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
+import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Evento;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -32,7 +32,7 @@ public class ItemEvent implements Parcelable {
 	public int amigos_qtd;
 	public int qtd_participantes;
 	public int preco_centavos;
-	public int distancia;
+	public String distancia;
 	public boolean privado;
 	public Evento evento;
 
@@ -53,7 +53,7 @@ public class ItemEvent implements Parcelable {
 		amigos_qtd =in.readInt();
 		qtd_participantes =in.readInt();
 		preco_centavos =in.readInt();
-		distancia =in.readInt();
+		distancia =in.readString();
 		amigos = new String[in.readInt()];
 		in.readStringArray(amigos);   
 		privado= in.readInt()==1;
@@ -67,7 +67,10 @@ int i=0;
 	public void drawerView(final View view,Bitmap[] imagens) {
 		// TODO Auto-generated method stub
 		if(view ==null) return;
-		
+		if(evento!=null){
+			
+			distancia=evento.getDistance();
+		}
 		
 		int idEsport=0;
 		if(esporte!= null){
@@ -133,8 +136,8 @@ int i=0;
 		}
 
 		TextView distanciaView = (TextView) view.findViewById(R.id.item_list_distancia);
-		if(distancia==0){
-			distanciaView.setText(distancia+"m");
+		if(distancia!=null){
+			distanciaView.setText(distancia);
 		}
 		TextView precoView = (TextView) view.findViewById(R.id.item_list_preco);
 		if(preco_centavos==0){
@@ -153,22 +156,24 @@ int i=0;
 		privadoView.setVisibility(privado?View.VISIBLE:View.INVISIBLE);
 
 
-		for (int i = 0; i < Math.min(amigos.length,MAX_AMIGOS_QTD); i++) {
-			if(content_image.getChildCount()>i){
-				ImageView imagem = (ImageView) content_image.getChildAt(i);
-
-				new DownloadImagemAsyncTask(view.getContext(),imagem).execute(amigos[i]);
-				//imagem.invalidate();
-			}else break;
-		}		
-
-		for (int i = amigos.length; i <MAX_AMIGOS_QTD; i++) {
+		for (int i = 0; i <MAX_AMIGOS_QTD; i++) {
 			if(content_image.getChildCount()>i){
 				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
 				imagem.setVisibility(View.INVISIBLE);
 			}else break;
 		}
+		
+		for (int i = 0; i < Math.min(amigos.length,MAX_AMIGOS_QTD); i++) {
+			if(content_image.getChildCount()>i){
+				ImageView imagem = (ImageView) content_image.getChildAt(i);
+
+				DownloadImagem.postLoad(imagem, amigos[i]);
+				//imagem.invalidate();
+			}else break;
+		}		
+
+
 
 	}
 
@@ -191,7 +196,7 @@ int i=0;
 		arg0.writeInt(amigos_qtd);
 		arg0.writeInt(qtd_participantes);
 		arg0.writeInt(preco_centavos);
-		arg0.writeInt(distancia);
+		arg0.writeString(distancia);
 		arg0.writeInt(amigos.length);
 		arg0.writeStringArray(amigos);
 		arg0.writeInt(privado?1:0);

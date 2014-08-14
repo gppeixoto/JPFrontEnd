@@ -120,7 +120,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		});
 		
 		bPublico = (Button) view.findViewById(R.id.publico);
-		bPublico.setText("Público");
+		bPublico.setText("Pï¿½blico");
 		bPublico.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -185,7 +185,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					String bairro = (String) args.getString("bairro");
 					String cidade = (String) args.getString("cidade");
 					
-					Server.create_event(Session.getActiveSession().getAccessToken(), localNome, end, 
+					Server.create_event(getActivity(), localNome, end, 
 							cidade, bairro, esporte, dia, inicio, termino, 
 							"", nomeDoEvento, preco, privado, new Connecter<Evento>(){
 

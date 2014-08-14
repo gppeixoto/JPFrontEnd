@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
 import android.app.Activity;
+import android.location.Address;
 import android.util.Log;
 
 public class Server implements Serializable {
@@ -101,40 +102,26 @@ public class Server implements Serializable {
 	 * @param privacy true se for privado, false se nao for.
 	 * @return o evento criado.
 	 * */
-	public static void create_event(String access_token, String localization_name, String localization_address, String city,
-			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
-			String name, double price, boolean privacy, final Connecter<Evento> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("access_token", access_token);
-			obj.put("localizationName", localization_name);
-			obj.put("localizationAddress", localization_address);
-			obj.put("city", city);
-			obj.put("neighbourhood", neighbourhood);
-			obj.put("eventSport", sport_name);
-			obj.put("eventDay", date);
-			obj.put("eventTimeBegin", begin_time);
-			obj.put("eventTimeEnd", end_time);
-			obj.put("eventDescription", description);
-			obj.put("eventName", name);
-			obj.put("eventPrice", price);
-			obj.put("private", privacy);
+	public static boolean create_event(Activity arc,final String localization_name,final String localization_address,final String city,
+			final String neighbourhood, final String sport_name,final String date,final String begin_time,final String end_time,final String description,
+			final String name,final double price,final Boolean privacy, final Connecter<Evento> connecter) {
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/createevent/", obj.toString(), new Connecter<String>() {
+		final double[] latlng=ConfigJP.getLatLngFromAddress(arc,localization_address+","+city+","+neighbourhood);
+		if(latlng!=null){
+			ConfigJP.getToken(arc, new Connecter<String>() {
 
 				@Override
-				public void onTerminado(String in) {
-					try {
-						Evento evt = processEvent(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(evt);
-					} catch (JSONException _) {}
+				public void onTerminado(String access_token) {
+					// TODO Auto-generated method stub
+					Server.create_event(access_token,name, localization_address, city, neighbourhood, sport_name, date, begin_time, end_time, description, name, price, privacy,latlng[0],latlng[1], connecter);
+
 				}
 			});
-
-		} catch (JSONException _) {}
+			return true;
+		}
+		return false;
 	}
-	
+
 	/**
 	 * @param access_token acess_token do criador do evento.
 	 * @param localization_name o nome do local.
@@ -149,13 +136,13 @@ public class Server implements Serializable {
 	 * @param name nome do evento.
 	 * @param price preco do evento.
 	 * @param privacy true se for privado, false se nao for.
-	 * @param longitude longitude.
-	 * @param latitude latitude.
+	 * @param latlng2 longitude.
+	 * @param latlng latitude.
 	 * @return o evento criado.
 	 * */
 	public static void create_event(String access_token, String localization_name, String localization_address, String city,
 			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
-			String name, double price, boolean privacy, String latitude, String longitude, final Connecter<Evento> connecter) {
+			String name, double price, boolean privacy, double latlng, double latlng2, final Connecter<Evento> connecter) {
 		try {
 			JSONObject obj = new JSONObject();
 			obj.put("access_token", access_token);
@@ -171,8 +158,8 @@ public class Server implements Serializable {
 			obj.put("eventName", name);
 			obj.put("eventPrice", price);
 			obj.put("private", privacy);
-			obj.put("latitude", latitude);
-			obj.put("longitude", longitude);
+			obj.put("latitude", latlng);
+			obj.put("longitude", latlng2);
 
 			ServiceHandler sh = new ServiceHandler();
 			sh.makePOST(ServiceHandler.URL_BASE + "/createevent/", obj.toString(), new Connecter<String>() {
@@ -325,7 +312,7 @@ public class Server implements Serializable {
 		} catch (JSONException _) {}
 	}
 
-	
+
 	/**
 	 * @param access_token access_token do usuario que se deseja saber a agenda.
 	 * @return eventos que esse usuario ja participou ou disse que ira participar. 

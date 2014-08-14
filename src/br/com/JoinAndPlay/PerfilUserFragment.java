@@ -8,7 +8,7 @@ import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
 import br.com.JoinAndPlay.ItemEsportePerfil.ItemEsporte;
 import br.com.JoinAndPlay.ItemEsportePerfil.MyGridView;
 import br.com.JoinAndPlay.Server.Connecter;
-import br.com.JoinAndPlay.Server.DownloadImagemAsyncTask;
+import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.RatingSport;
 import br.com.JoinAndPlay.Server.Server;
@@ -46,12 +46,12 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 			return null;
 		}
 		v = (LinearLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
-		/*Requisita o perfil do usuário do servidor*/
+		/*Requisita o perfil do usuï¿½rio do servidor*/
 		Server.user_profile(getActivity(), this);
 		config = getActivity().getResources().getConfiguration();
 		
-		/*Celular com resoluções mais baixas
-		 * muda a resolução para mdpi*/
+		/*Celular com resoluï¿½ï¿½es mais baixas
+		 * muda a resoluï¿½ï¿½o para mdpi*/
 		if (!((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) > 1)){
 			img_genteBoa = (ImageView) v.findViewById(R.id.perfil_imageview_genteboa);
 			img_fairPlay = (ImageView) v.findViewById(R.id.perfil_imageview_fairplay);
@@ -93,13 +93,13 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 					/*Pega o nome do perfil do servidor*/
 					perfil_Nome.setText(in.getName());
 					/*Pega a foto do perfil do servidor*/
-					new DownloadImagemAsyncTask(getActivity(),perfil_Foto).execute(in.getPhoto());
+					DownloadImagem.postLoad(perfil_Foto, in.getPhoto());
 					
-					/*Pega número de amigos*/
+					/*Pega nï¿½mero de amigos*/
 					button_amigos = (Button) ret.findViewById(R.id.perfil_button_amigos);
 					button_amigos.setText(in.getNumFriends() + " Amigos");
 					
-					/*Pegar o número de votos de cada tag do servidor*/
+					/*Pegar o nï¿½mero de votos de cada tag do servidor*/
 					votos_esforcado = (TextView) ret.findViewById(R.id.perfil_textview_votos_esforcado);
 					votos_jogaTime = (TextView) ret.findViewById(R.id.perfil_textview_jogatime);
 					votos_fairPlay = (TextView) ret.findViewById(R.id.perfil_textview_votos_fairplay);
@@ -114,14 +114,14 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							votos_genteBoa.setText(tag.getNumVotes());
 						} else if (NOME.equals("Fair Play")){
 							votos_fairPlay.setText(tag.getNumVotes());							
-						} else if (NOME.equals("Esforçado")){
+						} else if (NOME.equals("Esforï¿½ado")){
 							votos_esforcado.setText(tag.getNumVotes());
 						} else {
 							votos_jogaTime.setText(tag.getNumVotes());
 						}
 					}
 					
-					/*Pegar as informações relativas a cada esporte do usuário*/
+					/*Pegar as informaï¿½ï¿½es relativas a cada esporte do usuï¿½rio*/
 					ArrayList<ItemEsporte> listaEsportes = new ArrayList<ItemEsporte>();
 					for (Iterator<RatingSport> iterator = in.getRateSport().iterator(); iterator.hasNext();) {
 						ItemEsporte itemEsporte = new ItemEsporte();
@@ -131,7 +131,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 						//Pega o nome do esporte
 						itemEsporte.esporte = rating.getSportName();
 						int partidasJogadas = 0;
-						//Pega o numero de partidas do esporte (em O(n²), mas pega)
+						//Pega o numero de partidas do esporte (em O(nï¿½), mas pega)
 						for (Iterator<Esporte> it = in.getTimesSport().iterator(); it.hasNext(); ){
 							Esporte num = (Esporte) it.next();
 							if (num.getName().equals(itemEsporte.esporte)){partidasJogadas = num.getNumTimes(); break;}
