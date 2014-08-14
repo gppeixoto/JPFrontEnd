@@ -33,6 +33,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+
             <LinearLayout
                 android:id="@+id/escolha_nome_layout"
                 android:layout_width="fill_parent"
@@ -50,14 +51,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/my_bottom_line"
                     android:ems="10"
                     android:gravity="bottom"
                     android:height="2dp"
+                    android:textColor="@color/cinza_txt"
                     android:hint="@string/escolha_nomeEvento"
                     android:inputType="text"
+                    android:background="@color/white"
                     android:singleLine="true"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
+                
+                 <View
+                    android:layout_width="fill_parent"
+                   	android:layout_height="0dp"
+                 	android:layout_weight="0.01"
+                 	android:background="@drawable/my_bottom_line" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,13 +153,20 @@
 		            android:layout_gravity="bottom"
 		            android:height="2dp"
 		            android:ems="10"
+		            android:textColor="@color/cinza_txt"
+		            android:background="@color/white"
 		            android:layout_height="wrap_content"
 		            android:hint="@string/convide"
 		            android:inputType="text"
-		            android:background="@drawable/my_bottom_line"
 		            android:singleLine="true"
-		            android:textSize="15sp"
+		            android:textSize="14sp"
 		            />
+		        
+		        <View
+                    android:layout_width="0dp"
+                   	android:layout_height="0dp"
+                 	android:layout_weight="0.01"
+                 	android:background="@drawable/my_bottom_line" />
 		    </LinearLayout>
 		    
             <RelativeLayout 
@@ -162,9 +177,10 @@
                 <br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView
 			         android:id="@+id/gridView1"
 			         android:fastScrollAlwaysVisible="false"
+			         android:fastScrollEnabled="true"
 			         android:numColumns="2"
 			         android:layout_width="fill_parent"
-			         android:layout_height="150dp" >
+			         android:layout_height="wrap_content" >
 		        </br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView>
 		        
              </RelativeLayout>

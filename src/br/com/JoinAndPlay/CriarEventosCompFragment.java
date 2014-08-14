@@ -22,6 +22,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import br.com.JoinAndPlay.ListEvent.AdapterListView;
+import br.com.JoinAndPlay.ListFriend.AdapterGridViewFriend;
+import br.com.JoinAndPlay.ListFriend.ItemFriend;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
 import br.com.JoinAndPlay.Server.Evento;
@@ -43,11 +46,10 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	
 	private ExpandableHeightGridView grid;
 	
-	private TabHost tabhost;
 	private Vector<Usuario> aux;
-	private ArrayList<Usuario> amigos;
+	private ArrayList<ItemFriend> amigos;
 	private Vector<String> convidados;
-	
+		
 	private EditText eNomeEvento;
 	
 	private boolean privado;
@@ -57,17 +59,33 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		if(container==null) return null;
 		
+		amigos = new ArrayList<ItemFriend>();
+		convidados = new Vector<String>();
+		
 		Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
 
 			@Override
 			public void onTerminado(Vector<Usuario> in) {
 				// TODO Auto-generated method stub
 				aux = (Vector<Usuario>) in;
+				if(aux!=null){
+					for(int i = 0; i < aux.size(); i++){
+						amigos.add(new ItemFriend(aux.elementAt(i)));
+					}
+					
+					
+					grid.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							grid.setAdapter(new AdapterGridViewFriend(getActivity(), amigos));
+
+						}
+					});
+				}	
 			}
 		});	
-		
-		convidados = new Vector<String>();
-		amigos = new ArrayList<Usuario>(aux);
 		
 		privado = true;
 		
@@ -120,8 +138,6 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			
 			@Override
 			public void onClick(View v) {
-				// verificar se dados estao completos
-				// criar evento com esses dados
 				
 				String nomeDoEvento = (String) eNomeEvento.getText().toString();
 				
@@ -292,7 +308,16 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		
+		ItemFriend f = amigos.get(position);
+		if(f.getSelected()){
+			amigos.get(position).deselected();
+			convidados.remove(f.id);
+		} else {
+			amigos.get(position).selected();
+			if(!convidados.contains(f.id)){
+				convidados.add(f.id);
+			}
+		}
 	}
 
 	@Override
