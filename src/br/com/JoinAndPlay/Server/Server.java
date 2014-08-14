@@ -36,9 +36,9 @@ public class Server implements Serializable {
 	 * @return o perfil do usuario que possui esse access_token.
 	 */
 	public static void user_profile(Activity act, final Connecter<Usuario> connecter) {
-		
+
 		ConfigJP.getToken(act, new Connecter<String>() {
-			
+
 			@Override
 			public void onTerminado(String access_token) {
 				try {
@@ -59,7 +59,7 @@ public class Server implements Serializable {
 				} catch (JSONException _) {}
 			}
 		});
-		
+
 	}
 
 	/**
@@ -146,10 +146,10 @@ public class Server implements Serializable {
 			obj.put("user_id", user_id);
 			obj.put("event_id", event_id);
 		} catch (JSONException _) {}
-		
+
 		ServiceHandler sh = new ServiceHandler();
 		sh.makePOST(ServiceHandler.URL_BASE + "/deleteevent/", obj.toString(), new Connecter<String>() {
-			
+
 			@Override
 			public void onTerminado(String in) {
 				try {
@@ -428,7 +428,7 @@ public class Server implements Serializable {
 			}
 		});
 	}
-	
+
 	/**
 	 * @param access_token o access_token do usuario que esta saindo.
 	 * @param id o id do evento.
@@ -440,10 +440,10 @@ public class Server implements Serializable {
 			obj.put("access_token", access_token);
 			obj.put("id", id);
 		} catch (JSONException _) {}
-		
+
 		ServiceHandler sh = new ServiceHandler();
 		sh.makePOST(ServiceHandler.URL_BASE + "/leaveevent/", obj.toString(), new Connecter<String>() {
-			
+
 			@Override
 			public void onTerminado(String in) {
 				try {
@@ -475,14 +475,14 @@ public class Server implements Serializable {
 					@Override
 					public void onTerminado(String in) {
 						try {
-                            JSONObject obj = new JSONObject(in);
-                            String name = obj.getString("name");
-                            String photo = obj.getString("photo");
-                            String hour = obj.getString("time");
-                            String date = obj.getString("day");
-                            Comentario c = new Comentario(comment, name, user_id, photo, hour, date);
-                            if (connecter != null) connecter.onTerminado(c);
-                    } catch (JSONException _) {}
+							JSONObject obj = new JSONObject(in);
+							String name = obj.getString("name");
+							String photo = obj.getString("photo");
+							String hour = obj.getString("time");
+							String date = obj.getString("day");
+							Comentario c = new Comentario(comment, name, user_id, photo, hour, date);
+							if (connecter != null) connecter.onTerminado(c);
+						} catch (JSONException _) {}
 					}
 				});
 			}
@@ -584,7 +584,7 @@ public class Server implements Serializable {
 			}
 		});
 	}
-	
+
 	/**
 	 * @param access_token access_token da pessoa que se deseja os amigos.
 	 * @return os amigos.
@@ -594,7 +594,7 @@ public class Server implements Serializable {
 		try {
 			obj.put("access_token", access_token);
 		} catch (JSONException _) {}
-		
+
 		ServiceHandler sh = new ServiceHandler();
 		sh.makePOST(ServiceHandler.URL_BASE + "/getfriends/", obj.toString(), new Connecter<String>() {
 			@Override
@@ -612,93 +612,153 @@ public class Server implements Serializable {
 			}
 		});
 	}
-	
+
 	/**
 	 * @return todos os eventos futuros.
 	 * */
-    public static void get_future_events(Activity activity, final Connecter<Vector<Evento>> connecter) {
-            ConfigJP.getToken(activity, new Connecter<String>() {
-                   
-                    @Override
-                    public void onTerminado(String access_token) {
-                            JSONObject obj = new JSONObject();
-                            try {
-                                    obj.put("access_token", access_token);
-                            } catch (JSONException _) {}
-                           
-                            (new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
-                                   
-                                    @Override
-                                    public void onTerminado(String in) {
-                                            try {
-                                                    Vector<Evento> ret = new Vector<Evento>();
-                                                    JSONObject json_ret = new JSONObject((String) in);
-     
-                                                    JSONArray json_array = json_ret.getJSONArray("events");
-                                                    for (int i = 0; i < json_array.length(); ++i) {
-                                                            ret.add(processEvent(json_array.getJSONObject(i)));
-                                                    }
-                                                   
-                                                    if (connecter != null) connecter.onTerminado(ret);
-                                            } catch (JSONException _) {}
-                                    }
-                            });
-                    }
-            });
-    }
-    
-    /**
-     * @return um map em que cada chave eh o nome de um esporte, e o valor eh um vector com todos os 'invites' desse esporte.
-     * */
-    public static void get_invites(String user_id, final Connecter<Map<String, Vector<Notificacao>>> connecter) {
-    	JSONObject obj = new JSONObject();
-    	try {
-    		obj.put("id", user_id);
-    	} catch (JSONException _) {}
-    	
-    	(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getinvites/", obj.toString(), new Connecter<String>() {
-    		
-    		@Override
-    		public void onTerminado(String in) {
-    			try {
-    				JSONObject obj = new JSONObject(in);
-    				Map<String, Vector<Notificacao>> map = new HashMap<String, Vector<Notificacao>>();
-    				if (!obj.has("no invites for you")) {
-    					obj = obj.getJSONObject("inviteList");
-    					Iterator<String> it = obj.keys();
-    					while (it.hasNext()) {
-    						String key = it.next();
-    						Vector<Notificacao> vec;
-    						if (map.containsKey(key)) {
-    							vec = map.get(key);
-    						} else {
-    							vec = new Vector<Notificacao>();
-    						}
-    						JSONArray arr = obj.getJSONArray(key);
-    						for (int i = 0; i < arr.length(); ++i) {
-    							vec.add(processNotification(arr.getJSONObject(i)));
-    						}
-    						map.put(key, vec);
-    					}
-    				}
-    				if (connecter != null) connecter.onTerminado(map);
-    			} catch (JSONException _) {}
-    		}
-    	});
-    }
+	public static void get_future_events(Activity activity, final Connecter<Vector<Evento>> connecter) {
+		ConfigJP.getToken(activity, new Connecter<String>() {
 
-    private static Notificacao processNotification(JSONObject notification) {
-    	try {
-    		String creator = notification.getString("creator");
-    		String event_name = notification.getString("eventName");
-    		String event_id = notification.get("id")+"";
-    		String begin = notification.getString("timeBegin");
-    		String date = notification.getString("date");
-    		boolean privado = notification.getBoolean("private");
-    		return new Notificacao(creator, event_name, event_id, begin, date, privado);
-    	} catch (JSONException _) {}
-    	return null;
-    }
+			@Override
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
+				try {
+					obj.put("access_token", access_token);
+				} catch (JSONException _) {}
+
+				(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
+
+					@Override
+					public void onTerminado(String in) {
+						try {
+							Vector<Evento> ret = new Vector<Evento>();
+							JSONObject json_ret = new JSONObject((String) in);
+
+							JSONArray json_array = json_ret.getJSONArray("events");
+							for (int i = 0; i < json_array.length(); ++i) {
+								ret.add(processEvent(json_array.getJSONObject(i)));
+							}
+
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
+					}
+				});
+			}
+		});
+	}
+
+	/**
+	 * @return um map em que cada chave eh o nome de um esporte, e o valor eh um vector com todos os 'invites' desse esporte.
+	 * */
+	public static void get_invites(String user_id, final Connecter<Map<String, Vector<Notificacao>>> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("id", user_id);
+		} catch (JSONException _) {}
+
+		(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getinvites/", obj.toString(), new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String in) {
+				try {
+					JSONObject obj = new JSONObject(in);
+					Map<String, Vector<Notificacao>> map = new HashMap<String, Vector<Notificacao>>();
+					if (!obj.has("no invites for you")) {
+						obj = obj.getJSONObject("inviteList");
+						Iterator<String> it = obj.keys();
+						while (it.hasNext()) {
+							String key = it.next();
+							Vector<Notificacao> vec;
+							if (map.containsKey(key)) {
+								vec = map.get(key);
+							} else {
+								vec = new Vector<Notificacao>();
+							}
+							JSONArray arr = obj.getJSONArray(key);
+							for (int i = 0; i < arr.length(); ++i) {
+								vec.add(processNotification(arr.getJSONObject(i)));
+							}
+							map.put(key, vec);
+						}
+					}
+					if (connecter != null) connecter.onTerminado(map);
+				} catch (JSONException _) {}
+			}
+		});
+	}
+
+	/**
+	 * @param access_token access_token do usuario que se deseja saber a agenda.
+	 * @param localization no formato "latitute,longitude", exemplo: "-8.039573000000001,-34.899502"
+	 * @return eventos que esse usuario ja participou ou disse que ira participar.
+	 */
+	public static void user_agenda(String access_token, String localization, final Connecter<Vector<Evento>> connecter) {
+		try {
+			JSONObject obj = new JSONObject();
+			obj.put("access_token", access_token);
+			obj.put("localization", localization);
+
+			ServiceHandler sh = new ServiceHandler();
+			sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
+				@Override
+				public void onTerminado(String in) {
+					try {
+						JSONObject obj = new JSONObject(in);
+						JSONArray arr = obj.getJSONArray("events");
+						Vector<Evento> ret = new Vector<Evento>();
+						for (int i = 0; i < arr.length(); ++i) {
+							ret.add(processEvent(arr.getJSONObject(i)));
+						}
+						if (connecter != null) connecter.onTerminado(ret);
+					} catch (JSONException _) {}
+				}
+			});
+		} catch (JSONException _) {}
+	}
+
+	/**
+	 * @param access_token access_token do usuario que se deseja saber a agenda.
+	 * @param localization no formato "latitute,longitude", exemplo: "-8.039573000000001,-34.899502"
+	 * @return todos os eventos futuros.
+	 * */
+	public static void get_future_events(String access_token, String localization, final Connecter<Vector<Evento>> connecter) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("access_token", access_token);
+			obj.put("localization", localization);
+		} catch (JSONException _) {}
+
+		(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String in) {
+				try {
+					Vector<Evento> ret = new Vector<Evento>();
+					JSONObject json_ret = new JSONObject((String) in);
+
+					JSONArray json_array = json_ret.getJSONArray("events");
+					for (int i = 0; i < json_array.length(); ++i) {
+						ret.add(processEvent(json_array.getJSONObject(i)));
+					}
+
+					if (connecter != null) connecter.onTerminado(ret);
+				} catch (JSONException _) {}
+			}
+		});
+	}
+
+	private static Notificacao processNotification(JSONObject notification) {
+		try {
+			String creator = notification.getString("creator");
+			String event_name = notification.getString("eventName");
+			String event_id = notification.get("id")+"";
+			String begin = notification.getString("timeBegin");
+			String date = notification.getString("date");
+			boolean privado = notification.getBoolean("private");
+			return new Notificacao(creator, event_name, event_id, begin, date, privado);
+		} catch (JSONException _) {}
+		return null;
+	}
 
 
 	private static Usuario processUsuario(JSONObject user) {
@@ -740,7 +800,7 @@ public class Server implements Serializable {
 			Vector<Usuario> users = new Vector<Usuario>();
 			for (int j = 0; j < arr_users.length(); ++j) {
 				JSONArray act_user = arr_users.getJSONArray(j);
-				Usuario to_add = new Usuario(act_user.getString(0), act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
+				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
 				users.add(to_add);
 			}
 			String localization_name = evt.getString("localizationName");
@@ -759,21 +819,20 @@ public class Server implements Serializable {
 				JSONArray arr_comments = evt.getJSONArray("comments");
 				for (int i = 0; i < arr_comments.length(); ++i) {
 					JSONArray aux = arr_comments.getJSONArray(i);
-					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.getString(2), aux.getString(3), aux.getString(4), aux.getString(5)));
+					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.get(2)+"", aux.getString(3), aux.getString(4), aux.getString(5)));
 				}
 			}
-			String id = evt.getString("id");
+			String id = evt.get("id")+"";
 			int price = evt.getInt("price");
 			boolean is_private = evt.getBoolean("private");
-			String city = null; 
+			String city = null;
 			if (evt.has("city")) city = evt.getString("city");
 			String neighbourhood = null;
 			if (evt.has("neighbourhood")) neighbourhood = evt.getString("neighbourhood");
-
-			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood);
-		} catch (JSONException _) {
-			Log.v("retorno2", "ferrou");
-		}
+			String distance = "";
+			if (evt.has("localizationDistance")) distance = evt.get("localizationDistance")+"";
+			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance);
+		} catch (JSONException _) {}
 		return null;
 	}
 }
