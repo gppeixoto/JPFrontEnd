@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
 import br.com.JoinAndPlay.ItemEsportePerfil.ItemEsporte;
-import br.com.JoinAndPlay.ItemEsportePerfil.MyGridView;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Esporte;
@@ -14,21 +13,16 @@ import br.com.JoinAndPlay.Server.RatingSport;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Tag;
 import br.com.JoinAndPlay.Server.Usuario;
+import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.content.res.Configuration;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
@@ -80,7 +74,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 				TextView votos_fairPlay;
 				TextView votos_jogaTime;
 				Button button_amigos;
-				GridView perfil_gridEsportes;
+				ExpandableHeightGridView perfil_gridEsportes_Expandable;
 
 				if(in!=null && ret !=null){
 					//ArrayList<ItemEsporte> gridEsportes = new ArrayList<ItemEsporte>();
@@ -88,7 +82,8 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 					perfil_Foto=(ImageView)ret.findViewById(R.id.profilePictureView1);
 					perfil_Nome=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
 					
-					perfil_gridEsportes=((GridView)ret.findViewById(R.id.perfil_gridview_esportes));
+					//perfil_gridEsportes=((GridView)ret.findViewById(R.id.perfil_gridview_esportes));
+					perfil_gridEsportes_Expandable = (ExpandableHeightGridView) ret.findViewById(R.id.perfil_gridview_esportes_expandable);
 					
 					/*Pega o nome do perfil do servidor*/
 					perfil_Nome.setText(in.getName());
@@ -106,8 +101,6 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 					votos_genteBoa = (TextView) ret.findViewById(R.id.perfil_textview_votos_gente_boa);
 					
 					Vector<Tag> comendacoes = in.getTags();
-					//DEBUG
-					//Log.v("VECSIZE", in.getTags().size()+"");
 					for (Tag tag : comendacoes){
 						String NOME = tag.getName();
 						if (NOME.equals("Gente Boa")){
@@ -139,8 +132,9 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 						itemEsporte.partidasJogadas = partidasJogadas;
 						listaEsportes.add(itemEsporte);
 					}
-					perfil_gridEsportes.setAdapter(new AdapterGridView(getActivity(),listaEsportes));
-					
+					perfil_gridEsportes_Expandable.setAdapter(new AdapterGridView(getActivity(),listaEsportes));
+					perfil_gridEsportes_Expandable.setNumColumns(2);
+					perfil_gridEsportes_Expandable.setExpanded(true);
 				}
 			}
 		});
