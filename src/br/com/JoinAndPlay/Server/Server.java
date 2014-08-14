@@ -134,6 +134,60 @@ public class Server implements Serializable {
 
 		} catch (JSONException _) {}
 	}
+	
+	/**
+	 * @param access_token acess_token do criador do evento.
+	 * @param localization_name o nome do local.
+	 * @param localization_address o endereco do local.
+	 * @param city nome da cidade.
+	 * @param neighbourhood nome do bairro.
+	 * @param sport_name nome do esporte.
+	 * @param date dia do evento. (no formato "ano-mes-dia")
+	 * @param begin_time hora inicial do evento. (no formato "hora:minuto")
+	 * @param end_time hora final do evento. (no formato "hora:minuto")
+	 * @param description descricao do evento.
+	 * @param name nome do evento.
+	 * @param price preco do evento.
+	 * @param privacy true se for privado, false se nao for.
+	 * @param longitude longitude.
+	 * @param latitude latitude.
+	 * @return o evento criado.
+	 * */
+	public static void create_event(String access_token, String localization_name, String localization_address, String city,
+			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
+			String name, double price, boolean privacy, String latitude, String longitude, final Connecter<Evento> connecter) {
+		try {
+			JSONObject obj = new JSONObject();
+			obj.put("access_token", access_token);
+			obj.put("localizationName", localization_name);
+			obj.put("localizationAddress", localization_address);
+			obj.put("city", city);
+			obj.put("neighbourhood", neighbourhood);
+			obj.put("eventSport", sport_name);
+			obj.put("eventDay", date);
+			obj.put("eventTimeBegin", begin_time);
+			obj.put("eventTimeEnd", end_time);
+			obj.put("eventDescription", description);
+			obj.put("eventName", name);
+			obj.put("eventPrice", price);
+			obj.put("private", privacy);
+			obj.put("latitude", latitude);
+			obj.put("longitude", longitude);
+
+			ServiceHandler sh = new ServiceHandler();
+			sh.makePOST(ServiceHandler.URL_BASE + "/createevent/", obj.toString(), new Connecter<String>() {
+
+				@Override
+				public void onTerminado(String in) {
+					try {
+						Evento evt = processEvent(new JSONObject((String) in));
+						if (connecter != null) connecter.onTerminado(evt);
+					} catch (JSONException _) {}
+				}
+			});
+
+		} catch (JSONException _) {}
+	}	
 
 	/**
 	 * @param user_id id do usuario.
@@ -216,6 +270,63 @@ public class Server implements Serializable {
 	}
 
 	/**
+	 * @param access_token acess_token do criador do evento.
+	 * @param localization_name o nome do local.
+	 * @param localization_address o endereco do local.
+	 * @param city nome da cidade.
+	 * @param neighbourhood nome do bairro.
+	 * @param sport_name nome do esporte.
+	 * @param date dia do evento. (no formato "ano-mes-dia")
+	 * @param begin_time hora inicial do evento. (no formato "hora:minuto")
+	 * @param end_time hora final do evento. (no formato "hora:minuto")
+	 * @param description descricao do evento.
+	 * @param name nome do evento.
+	 * @param price preco do evento.
+	 * @param privacy true se for privado, false se nao for.
+	 * @param id id do evento.
+	 * @param latitude latitude.
+	 * @param longitude longitude.
+	 * @return o evento criado.
+	 * */
+	public static void edit_event(String access_token, String localization_name, String localization_address, String city,
+			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
+			String name, double price, boolean privacy, String id, String latitude, String longitude, final Connecter<Evento> connecter) {
+		try {
+			JSONObject obj = new JSONObject();
+			obj.put("access_token", access_token);
+			obj.put("localizationName", localization_name);
+			obj.put("localizationAddress", localization_address);
+			obj.put("city", city);
+			obj.put("neighbourhood", neighbourhood);
+			obj.put("eventSport", sport_name);
+			obj.put("eventDay", date);
+			obj.put("eventTimeBegin", begin_time);
+			obj.put("eventTimeEnd", end_time);
+			obj.put("eventDescription", description);
+			obj.put("eventName", name);
+			obj.put("eventPrice", price);
+			obj.put("private", privacy);
+			obj.put("id", id);
+			obj.put("latitude", latitude);
+			obj.put("longitude", longitude);
+
+			ServiceHandler sh = new ServiceHandler();
+			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter<String>() {
+
+				@Override
+				public void onTerminado(String in) {
+					try {
+						Evento evt = processEvent(new JSONObject((String) in));
+						if (connecter != null) connecter.onTerminado(evt);
+					} catch (JSONException _) {}
+				}
+			});
+
+		} catch (JSONException _) {}
+	}
+
+	
+	/**
 	 * @param access_token access_token do usuario que se deseja saber a agenda.
 	 * @return eventos que esse usuario ja participou ou disse que ira participar. 
 	 */
@@ -230,7 +341,8 @@ public class Server implements Serializable {
 				@Override
 				public void onTerminado(String in) {
 					try {
-						JSONArray arr = new JSONArray((String) in);
+						JSONObject obj = new JSONObject(in);
+						JSONArray arr = obj.getJSONArray("events");
 						Vector<Evento> ret = new Vector<Evento>();
 						for (int i = 0; i < arr.length(); ++i) {
 							ret.add(processEvent(arr.getJSONObject(i)));
@@ -831,7 +943,11 @@ public class Server implements Serializable {
 			if (evt.has("neighbourhood")) neighbourhood = evt.getString("neighbourhood");
 			String distance = "";
 			if (evt.has("localizationDistance")) distance = evt.get("localizationDistance")+"";
-			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance);
+			String latitude = "";
+			if (evt.has("latitude")) latitude = evt.get("latitude")+"";
+			String longitude = "";
+			if (evt.has("longitude")) longitude = evt.get("longitude")+""; 
+			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude);
 		} catch (JSONException _) {}
 		return null;
 	}
