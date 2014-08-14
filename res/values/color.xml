@@ -34,5 +34,6 @@
     <color android:id="@+id/color1" name="tennis_amarelo" android:layout_width="wrap_content" android:layout_height="wrap_content">#fcdb00</color>
     <color android:id="@+id/color1" name="bilhar_preto" android:layout_width="wrap_content" android:layout_height="wrap_content">#181818</color>
     <color android:id="@+id/color1" name="facebook_blue" android:layout_width="wrap_content" android:layout_height="wrap_content">#3B589E</color>
+    <color android:id="@+id/color1" name="esporte_default" android:layout_width="wrap_content" android:layout_height="wrap_content">#6C6C6C</color>
     
 </resources>

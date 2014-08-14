@@ -92,7 +92,7 @@ public final class ConfigJP {
 
 
 	public static final int[] ESPORTE_BITMAP ={
-		R.drawable.listfutebol,
+		R.drawable.espsem,
 		R.drawable.listfutebol,
 		R.drawable.listcaminhar,
 		R.drawable.listboliche,
@@ -107,7 +107,7 @@ public final class ConfigJP {
 
 	};
 	public static final int[] ESPORTE_COR ={
-		R.color.futebol_verde,
+		R.color.esporte_default,
 		R.color.futebol_verde,
 		R.color.Caminhada_verde,
 		R.color.Boliche_lilas,
@@ -122,7 +122,7 @@ public final class ConfigJP {
 
 	};
 	public static final int[] ESPORTE_BARRA ={
-		R.drawable.campo_esporte_futebol,
+		R.drawable.campo_esporte_default,
 		R.drawable.campo_esporte_futebol,
 		R.drawable.campo_esporte_caminhada,
 		R.drawable.campo_esporte_boliche,
@@ -146,7 +146,7 @@ public final class ConfigJP {
 
 			return mapafutebol.get(esporte);
 		}
-		return 1;
+		return 0;
 	}
 
 	public static void login(final Activity act,final Connecter<String> get){
