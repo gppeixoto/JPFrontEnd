@@ -44,7 +44,10 @@ public class DownloadImagem extends AsyncTask<String, Void, Pair<Bitmap,ImageVie
 
 				}
 			}else{
-				list.add(img);
+				synchronized (list) {
+					list.add(img);
+
+				}
 				if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
 					new DownloadImagem().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url);
 				}else{
@@ -80,12 +83,17 @@ public class DownloadImagem extends AsyncTask<String, Void, Pair<Bitmap,ImageVie
 				buffer[id]=imagem;
 				str[id]=urlString;
 			}
-			return new Pair<Bitmap, ImageView>(imagem,		list.remove(0));
+			synchronized (imagem) {
+				return new Pair<Bitmap, ImageView>(imagem,		list.remove(0));
+
+			}
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
+		synchronized (list) {
+			list.remove(0);
 
-		list.remove(0);
+		}
 		return  null;
 	}
 
@@ -98,9 +106,6 @@ public class DownloadImagem extends AsyncTask<String, Void, Pair<Bitmap,ImageVie
 				result.second.setImageBitmap(result.first);
 				result.second.setVisibility(View.VISIBLE);
 			}
-		} else {
-			//	AlertDialog.Builder builder = new AlertDialog.Builder(context). setTitle("Erro"). setMessage("N�o foi possivel carregar imagem, tente novamente mais tarde!"). setPositiveButton("OK", null);
-			//builder.create().show();
 		} 
 	} 
 } 

@@ -43,8 +43,16 @@ public class MainActivity extends FragmentActivity {
 				getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 		}
 
+		
+		
 		tabs=(TabFragment) TabFragment.instantiate(this, TabFragment.class.getName());
-		getSupportFragmentManager().beginTransaction().replace(R.id.tela, tabs).commit();
+		Fragment inicial=tabs;
+		Log.v("session", "");
+		if(Session.getActiveSession()==null || Session.getActiveSession().isOpened()){
+			inicial= new TelaInicialFragment();
+
+		}
+		getSupportFragmentManager().beginTransaction().replace(R.id.tela, inicial).commit();
 
 	//	tabs.addFragments(this,NotificacaoFragment.instantiate(this, NotificacaoFragment.class.getName(),savedInstanceState),R.drawable.tab_notif);
 		tabs.addFragments(this,ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_lista);
