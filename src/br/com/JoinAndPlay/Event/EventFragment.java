@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
@@ -25,6 +26,7 @@ import br.com.JoinAndPlay.Server.Usuario;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -129,28 +131,13 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	@Override
 	public void onActivityCreated( Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		getView().post(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				GoogleMap map = suportMap.getMap();
-				if(map!=null){
-					LatLng target= new LatLng( -7.9900227  , -34.83929520000004);
-					CameraPosition cameraPosition = new CameraPosition.Builder().target(target).zoom(12).build();
-					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-					MarkerOptions marker = new MarkerOptions();
-					marker.position(target).title("Iateclub");
-					map.addMarker(marker);
-				}
-			}
-		});
+		
 	}
 
 	public static String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
-		else if (n == 3) return "Março";
+		else if (n == 3) return "Marï¿½o";
 		else if (n == 4) return "Abril";
 		else if (n == 5) return "Maio";
 		else if (n == 6) return "Junho";
@@ -243,6 +230,27 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		qtd_amigos_amais.setText("+ " + (evento.getNumFriends() > 6 ? evento.getUsers().size() - 6 : 0) + " amigo" + (evento.getNumFriends() > 7 ? "s" : ""));
 		tipo_da_partida.setText(evento.getSport());
 		descricao_do_esporte.setText(evento.getDescription());
+		final double[] latlng=ConfigJP.getLatLngFromAddress(getActivity(),evento.getLocalizationAddress()+","+evento.getCity());
+		final String titulo=evento.getLocalizationName();
+		view.post(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				GoogleMap map = suportMap.getMap();
+				if(map!=null && latlng!=null){
+					LatLng target= new LatLng(latlng[0], latlng[1]);
+					CameraPosition cameraPosition = new CameraPosition.Builder().target(target).zoom(12).build();
+					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+					MarkerOptions marker = new MarkerOptions();
+					marker.position(target).title(titulo);
+					map.addMarker(marker).showInfoWindow();
+					
+				}
+			}
+		});
+		
+		
 		view.requestLayout();
 		view.postInvalidate();
 	}

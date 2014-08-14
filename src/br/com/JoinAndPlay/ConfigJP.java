@@ -1,11 +1,14 @@
 package br.com.JoinAndPlay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 import android.widget.Toast;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -37,20 +40,20 @@ public final class ConfigJP {
 			mapafutebol.put("basquete",ESPORTE_BASQUETE);
 			mapafutebol.put("ciclismo",ESPORTE_CICLISMO);
 			mapafutebol.put("ping pong",ESPORTE_PING_PONG);
-			mapafutebol.put("tênis",ESPORTE_TENIS);
+			mapafutebol.put("tï¿½nis",ESPORTE_TENIS);
 			mapafutebol.put("baseball",ESPORTE_BASEBALL);
 			mapafutebol.put("boxe",ESPORTE_BOXE);
 			mapafutebol.put("cartas",ESPORTE_CARTAS);
-			mapafutebol.put("dominó",ESPORTE_DOMINO);
+			mapafutebol.put("dominï¿½",ESPORTE_DOMINO);
 			mapafutebol.put("futebol americano",ESPORTE_FUTEBOL_AMERICANO);
 			mapafutebol.put("golfe",ESPORTE_GOLFE);
-			mapafutebol.put("patinação",ESPORTE_PATINACAO);
+			mapafutebol.put("patinaï¿½ï¿½o",ESPORTE_PATINACAO);
 			mapafutebol.put("sinuca",ESPORTE_SINUCA);
 			mapafutebol.put("skate",ESPORTE_SKATE);
-			mapafutebol.put("tênis de mesa",ESPORTE_TENIS_DE_MESA);
+			mapafutebol.put("tï¿½nis de mesa",ESPORTE_TENIS_DE_MESA);
 			mapafutebol.put("video-game",ESPORTE_VIDEO_GAME);
-			mapafutebol.put("vôlei",ESPORTE_VOLEI);
-			mapafutebol.put("vôlei de praia",ESPORTE_VOLEI_DE_PRAIA);
+			mapafutebol.put("vï¿½lei",ESPORTE_VOLEI);
+			mapafutebol.put("vï¿½lei de praia",ESPORTE_VOLEI_DE_PRAIA);
 			mapafutebol.put("xadrez",ESPORTE_XADREZ);
 			mapafutebol.put("jogos de tabuleiro",ESPORTE_JOGOS_DE_TABULEIRO);
 
@@ -220,6 +223,30 @@ public final class ConfigJP {
 				}
 			});
 		}
+
+
+	}
+	
+	public static double[] getLatLngFromAddress(final Activity act,String address){
+		double[] ret= null;
+		try {
+			List<Address> foundGeocode = new Geocoder(act).getFromLocationName(address, 1);
+			Log.v("add", ""+address);
+			Log.v("add", ""+foundGeocode);
+
+			if(foundGeocode!=null && foundGeocode.size()>0){
+				ret= new double[2];
+				ret[0]=foundGeocode.get(0).getLatitude();
+				ret[1]=foundGeocode.get(0).getLongitude();
+
+			}
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 
 
 	}
