@@ -12,9 +12,6 @@ import android.location.Geocoder;
 import android.util.Log;
 import android.widget.Toast;
 import br.com.JoinAndPlay.Server.Connecter;
-import br.com.JoinAndPlay.Server.Server;
-import br.com.JoinAndPlay.Server.Usuario;
-
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -55,6 +52,7 @@ public final class ConfigJP {
 			mapafutebol.put("v�lei",ESPORTE_VOLEI);
 			mapafutebol.put("v�lei de praia",ESPORTE_VOLEI_DE_PRAIA);
 			mapafutebol.put("xadrez",ESPORTE_XADREZ);
+			mapafutebol.put("dardo",ESPORTE_DARDO);
 			mapafutebol.put("jogos de tabuleiro",ESPORTE_JOGOS_DE_TABULEIRO);
 
 
@@ -74,6 +72,16 @@ public final class ConfigJP {
 	public static final int ESPORTE_VIDEO_GAME=9;
 	public static final int ESPORTE_SINUCA=10;
 	public static final int ESPORTE_FUTEBOL_AMERICANO=11;
+	public static final int ESPORTE_CARTAS=12;
+	public static final int ESPORTE_JOGOS_DE_TABULEIRO=13;
+	public static final int ESPORTE_DARDO=14;
+	public static final int ESPORTE_DOMINO=15;
+	public static final int ESPORTE_PATINACAO=16;
+	public static final int ESPORTE_SKATE=17;
+	public static final int ESPORTE_BOXE=18;
+	public static final int ESPORTE_BASEBALL=19;
+
+
 
 
 	/*repetidos*/
@@ -83,15 +91,9 @@ public final class ConfigJP {
 
 
 	/*faltam icones*/
-	public static final int ESPORTE_BASEBALL=0;
-	public static final int ESPORTE_BOXE=0;
-	public static final int ESPORTE_CARTAS=0;
-	public static final int ESPORTE_DOMINO=0;
 	public static final int ESPORTE_GOLFE=0;
-	public static final int ESPORTE_PATINACAO=0;
-	public static final int ESPORTE_SKATE=0;
 	public static final int ESPORTE_XADREZ=0;
-	public static final int ESPORTE_JOGOS_DE_TABULEIRO=0;
+
 
 
 	public static final int[] ESPORTE_BITMAP ={
@@ -106,7 +108,15 @@ public final class ConfigJP {
 		R.drawable.listtennis,
 		R.drawable.listgame,
 		R.drawable.listbilhar,
-		R.drawable.listfuame
+		R.drawable.listfuame,		
+		R.drawable.listcarta,
+		R.drawable.listdado,
+		R.drawable.listdardo,
+		R.drawable.listdomino,
+		R.drawable.listpatins,
+		R.drawable.listskate,
+		R.drawable.listboxe,
+		R.drawable.listbilhar
 
 	};
 	public static final int[] ESPORTE_COR ={
@@ -121,7 +131,15 @@ public final class ConfigJP {
 		R.color.tennis_amarelo,
 		R.color.Game_lilas,
 		R.color.bilhar_preto,
-		R.color.futebol_americano_laranja
+		R.color.futebol_americano_laranja,
+		R.color.carta_rosa,
+		R.color.dado_azul,
+		R.color.dardo_vermelho,
+		R.color.domino_verde,
+		R.color.patins_azul,
+		R.color.skate_roxo,
+		R.color.boxe_vermelho,
+		R.color.baseball_amarelo
 
 	};
 	public static final int[] ESPORTE_BARRA ={
@@ -136,9 +154,15 @@ public final class ConfigJP {
 		R.drawable.campo_esporte_tennis,
 		R.drawable.campo_esporte_game,
 		R.drawable.campo_esporte_bilhar,
-		R.drawable.campo_esporte_futebol_americano
-
-
+		R.drawable.campo_esporte_futebol_americano,
+		R.drawable.campo_esporte_carta,
+		R.drawable.campo_esporte_dado,
+		R.drawable.campo_esporte_dardo,
+		R.drawable.campo_esporte_domino,
+		R.drawable.campo_esporte_patins,
+		R.drawable.campo_esporte_skate,
+		R.drawable.campo_esporte_boxe,
+		R.drawable.campo_esporte_baseboll
 	};
 
 
@@ -175,10 +199,6 @@ public final class ConfigJP {
 						public void onCompleted(GraphUser user, Response response) {
 							// TODO Auto-generated method stub
 							if(user!=null){
-
-								TelaInicialFragment tela = new TelaInicialFragment();
-								//act.getFragmentManager().beginTransaction().replace(R.id.tela, tela).commit();
-
 								UserId =user.getId();
 								getToken(act, get);
 

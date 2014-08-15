@@ -35,5 +35,13 @@
     <color android:id="@+id/color1" name="bilhar_preto" android:layout_width="wrap_content" android:layout_height="wrap_content">#181818</color>
     <color android:id="@+id/color1" name="facebook_blue" android:layout_width="wrap_content" android:layout_height="wrap_content">#3B589E</color>
     <color android:id="@+id/color1" name="esporte_default" android:layout_width="wrap_content" android:layout_height="wrap_content">#6C6C6C</color>
-    
+    <color android:id="@+id/color1" name="boxe_vermelho" android:layout_width="wrap_content" android:layout_height="wrap_content">#9e0e0e</color>
+    <color android:id="@+id/color1" name="carta_rosa" android:layout_width="wrap_content" android:layout_height="wrap_content">#e0395c</color>
+    <color android:id="@+id/color1" name="dardo_vermelho" android:layout_width="wrap_content" android:layout_height="wrap_content">#720c22</color>
+    <color android:id="@+id/color1" name="domino_verde" android:layout_width="wrap_content" android:layout_height="wrap_content">#869827</color>
+    <color android:id="@+id/color1" name="skate_roxo" android:layout_width="wrap_content" android:layout_height="wrap_content">#481938</color>
+    <color android:id="@+id/color1" name="patins_azul" android:layout_width="wrap_content" android:layout_height="wrap_content">#3292d3</color>
+    <color android:id="@+id/color1" name="dado_azul" android:layout_width="wrap_content" android:layout_height="wrap_content">#127e88</color>
+    <color android:id="@+id/color1" name="baseball_amarelo" android:layout_width="wrap_content" android:layout_height="wrap_content">#bf7010</color>
+
 </resources>

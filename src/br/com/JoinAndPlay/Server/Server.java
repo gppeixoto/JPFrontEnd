@@ -24,16 +24,30 @@ public class Server implements Serializable {
 	 * @param access_token acess_token do usuario que se quer logar.
 	 * @return true se conseguiu logar, false caso contrario.
 	 */
-	public static void login(String access_token, Connecter<String> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("access_token", access_token);
-
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/login/", obj.toString(), connecter);
-		} catch (JSONException _) {}
-	}
-
+	public static void get_version(final Connecter<Vector<Integer>> connecter) {
+        (new ServiceHandler()).makeGET(ServiceHandler.URL_BASE + "/getversion/", new Connecter<String>() {
+               
+                @Override
+                public void onTerminado(String in) {
+                        try {
+                                if (connecter != null) {
+                                        if (in != null) {
+                                                JSONObject obj = new JSONObject(in);
+                                                String version = obj.getString("version");
+                                                String[] arr = version.split("[.]");
+                                                int a = Integer.parseInt(arr[0]);
+                                                int b = Integer.parseInt(arr[1]);
+                                                Vector<Integer> v = new Vector<Integer>();
+                                                v.add(a); v.add(b);
+                                                connecter.onTerminado(v);
+                                        } else {
+                                                connecter.onTerminado(null);
+                                        }
+                                }
+                        } catch (JSONException _) {}
+                }
+        });
+}
 	/**
 	 * @param access_token acess_token do usuario que se quer o perfil.
 	 * @return o perfil do usuario que possui esse access_token.

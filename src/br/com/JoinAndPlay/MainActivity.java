@@ -33,6 +33,9 @@ import br.com.tabActive.TabFragment;
 
 public class MainActivity extends FragmentActivity {
 	protected TabFragment tabs;
+	public static int VERSION=0;
+	public static int SUB_VERSION=0;
+
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,7 +74,6 @@ public class MainActivity extends FragmentActivity {
 
 		//MyThread t = new MyThread();
 		//t.start();
-		Server.login(Session.getActiveSession().getAccessToken(),null);
 
 
 
