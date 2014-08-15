@@ -21,7 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class AgendaEventosFragment extends Fragment implements OnItemClickListener,Connecter<Vector<Evento>>{
 
 
-	
+	LayoutInflater inflater=null;	
 	private MyListView listV;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -31,7 +31,7 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		this.inflater=inflater;
 		listV = new MyListView(getActivity());
 		listV.setOnItemClickListener(this);			
 		Server.user_agenda(getActivity(), this);
@@ -54,7 +54,7 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 	public void onTerminado(Vector<Evento> in) {
 		// TODO Auto-generated method stub
 		ArrayList<Evento> lista = new ArrayList<Evento>();
-		final AdapterListView adapter =new AdapterListView(getActivity(), lista);
+		final AdapterListView adapter =new AdapterListView(inflater, lista);
 listV.post(new Runnable() {
 	
 	@Override

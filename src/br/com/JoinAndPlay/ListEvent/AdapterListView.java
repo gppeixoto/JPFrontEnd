@@ -25,12 +25,12 @@ public class AdapterListView extends BaseAdapter
 	private LayoutInflater mInflater;
 	private ArrayList<Evento> itens;
 	public static int MAX_AMIGOS_QTD=7;
-	public AdapterListView(Context context, ArrayList<Evento> itens)
+	public AdapterListView(LayoutInflater inflater, ArrayList<Evento> itens)
 	{
 		//Itens que preencheram o listview
 		this.itens = itens;
 		//responsavel por pegar o Layout do item.
-		mInflater = LayoutInflater.from(context);
+		mInflater = inflater;
 	}
 	public int getCount()
 	{

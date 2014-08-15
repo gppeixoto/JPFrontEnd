@@ -43,7 +43,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	static ArrayList<Evento> lista;
 	ListView listV;
 	protected Button Button_criar;
-
+	LayoutInflater inflater=null;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -66,17 +66,15 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
-
+		this.inflater=inflater;
 		if(getArguments()!=null){
 			final Bundle args= getArguments();
 			final ListEventosFragment self=this;
 
 			final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
-
-
 			boolean getA = args.getBoolean("getA");
 			Log.v("getiA", getA+"");
-			if (getA){
+			if (getA && args.getString("endereco")!=null && args.getString("endereco").length()>0){
 				Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
 					@Override
 					public void onTerminado(Vector<Endereco> in) {
@@ -192,7 +190,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				listV.setAdapter(new AdapterListView(getActivity(), lista));
+				listV.setAdapter(new AdapterListView(inflater, lista));
 
 			}
 		});
