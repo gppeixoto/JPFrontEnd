@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.com.JoinAndPlay.ConfigJP;
+import br.com.JoinAndPlay.CriarEventosCompFragment;
 import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
@@ -150,7 +151,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		else return "fail";
 	}
 
-	public void setValuesEvent(final View view,Evento evento){
+	public void setValuesEvent(final View view,final Evento evento){
 		if(evento == null || view==null) return;
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
@@ -162,7 +163,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 		TextView qtd_amigos_amais = (TextView)view.findViewById(R.id.qtd_amigos_amais);
 
-		ImageView imagem_da_partida = (ImageView)view.findViewById(R.id.imagem_da_partida);
 		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
 
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
@@ -175,6 +175,37 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 		qtd_confirmados.setText(""+evento.getUsers().size());
 		//	qtd_no_local(evento.);
+		
+		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
+		butao_terminar.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView myText = (TextView) v;
+				myText.setText("Jogo Finalizado");
+				Server.close_event(evento.getId(), null);
+			}
+		});
+		
+		Button editar_evento = (Button)view.findViewById(R.id.editar_evento);
+		editar_evento.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EditEvent next = new EditEvent();
+				Bundle args = new Bundle();				
+				
+				args.putString("nome_evento", evento.getName());
+				args.putString("descricao_evento", evento.getDescription());
+				args.putString("bairro", evento.getNeighbourhood());
+				args.putString("cidade", evento.getCity());
+				args.putBoolean("privacidade", evento.getPrivacy());
+				args.putDouble("preco",evento.getPrice());
+				
+				next.setArguments(args);
+				((MainActivity)getActivity()).mudarAbaAtual(next);	
+			}
+		});
 		
 		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
 		final Connecter<Evento> listener = this;
