@@ -41,7 +41,7 @@
                 android:orientation="horizontal" >
 
                 <EditText
-                    android:id="@+id/nome_evento"
+                    android:id="@+id/edit_nome_evento"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -77,7 +77,7 @@
                 android:orientation="horizontal" >
 
                 <EditText
-                    android:id="@+id/descricao_evento"
+                    android:id="@+id/edit_descricao_evento"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -297,7 +297,7 @@
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/escolha_preco"
+                    android:id="@+id/editar_preco"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"

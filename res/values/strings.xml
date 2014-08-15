@@ -93,4 +93,5 @@
     <string name="foraColisaoTxt">Mais de um endereço foi encontrado pela sua pesquisa. Escolha um dos endereços abaixo.</string>
     <string name="sobre_evento">Descreva sobre o evento</string>
     <string name="enviar">Enviar</string>
+    <string name="terminar_jogo">Terminar Jogo</string>
 </resources>

@@ -943,8 +943,36 @@ public class Server implements Serializable {
 			if (evt.has("latitude")) latitude = evt.get("latitude")+"";
 			String longitude = "";
 			if (evt.has("longitude")) longitude = evt.get("longitude")+""; 
-			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude);
+			String creator_id = null;
+			if (evt.has("creatorId")) creator_id = evt.get("creatorId")+"";
+			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id);
 		} catch (JSONException _) {}
 		return null;
+	}
+	/**
+	 * @return true se tiver dado certo e false caso contrario.
+	 * */
+	public static void close_event(String event_id, final Connecter<Boolean> connecter) {
+		try {
+			JSONObject obj = new JSONObject();
+			obj.put("id", event_id);
+			
+			(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/closeevent/", obj.toString(), new Connecter<String>() {
+				@Override
+				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
+					try {
+						JSONObject obj = new JSONObject(in);
+						if (connecter != null) {
+							if (obj.has("closed")) connecter.onTerminado(true);
+							else connecter.onTerminado(false);
+						}
+					} catch (JSONException _) {}
+				}
+			});
+		} catch (JSONException _) {}
 	}
 }
