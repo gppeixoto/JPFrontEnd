@@ -167,7 +167,7 @@ public class AdapterListView extends BaseAdapter
 			}else break;
 		}
 
-		for (int i = 0; i < Math.min(evento.getNumFriends()+1,MAX_AMIGOS_QTD); i++) {
+		for (int i = 0; i < Math.min(Math.min(evento.getNumFriends()+1,MAX_AMIGOS_QTD),evento.getUsers().size()-1); i++) {
 			if(content_image.getChildCount()>i){
 				ImageView imagem = (ImageView) content_image.getChildAt(i);
 
