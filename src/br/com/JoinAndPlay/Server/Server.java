@@ -664,7 +664,7 @@ public class Server implements Serializable {
 		}
 		sb.append("&sensor=true&key=AIzaSyDL-BaFaZBo_evgT2pXRJ1avAb8sWZ3KGE");
 		String s = sb.toString();
-		System.out.println(s);
+		Log.v("chuchu", s);
 		(new ServiceHandler()).makeGET(s, new Connecter<String>() {
 			@Override
 			public void onTerminado(String in) {

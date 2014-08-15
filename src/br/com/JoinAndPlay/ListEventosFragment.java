@@ -79,7 +79,18 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
 			@Override
 			public void onTerminado(Vector<Endereco> in) {
-				if(in.size()==1){
+				if(in.size() == 0){
+					Bundle args2 = new Bundle();
+					args2.putParcelableArray("enderecos", new Endereco[0]);
+					args2.putString("data", args.getString("data"));
+					args2.putString("horaInicio", args.getString("data"));
+					args2.putString("horaTermino", args.getString("horaTermino"));
+					args2.putStringArray("esportes", args.getStringArray("esportes"));
+					args2.putBoolean("conflito",false);
+					BolaForaFragment bfm = new BolaForaFragment();
+					bfm.setArguments(args2);
+					((MainActivity) self.getActivity()).replaceTab(bfm);
+				} else if(in.size() == 1){
 					Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 				} else {
 					Bundle args2 = new Bundle();
@@ -90,6 +101,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 					args2.putString("horaInicio", args.getString("data"));
 					args2.putString("horaTermino", args.getString("horaTermino"));
 					args2.putStringArray("esportes", args.getStringArray("esportes"));
+					args2.putBoolean("conflito", true);
 					BolaForaFragment bfm = new BolaForaFragment();
 					bfm.setArguments(args2);
 					((MainActivity) self.getActivity()).replaceTab(bfm);
