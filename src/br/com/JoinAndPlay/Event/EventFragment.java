@@ -57,14 +57,16 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public LinearLayout list;
 	public LayoutInflater inf;
 
-	public void addComment(String nome,String time,String novo_comentario){
+	public void addComment(String nome,String time,String novo_comentario,String photo){
 		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
+		ImageView foto_usuario = (ImageView)novo.findViewById(R.id.perfil_imagem_usuario);
 		TextView nome_usuario = (TextView)novo.findViewById(R.id.nome_usuario);
 		TextView tempo_decorrido  = (TextView)novo.findViewById(R.id.tempo_decorrido);
 		TextView comentario_texto = (TextView)novo.findViewById(R.id.comentario_texto);
 		comentario_texto.setText(novo_comentario);
 		tempo_decorrido.setText(time);
 		nome_usuario.setText(nome);
+		DownloadImagem.postLoad(foto_usuario,photo);
 		list.addView(novo);
 	}
 
@@ -131,7 +133,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		return  v;
 	}
 	@Override
-	public void onActivityCreated( Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
 		
 	}
@@ -200,6 +202,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 					args.putString("rua", evento.getLocalizationAddress());
 					args.putString("esporte",evento.getSport());
 					args.putString("id_evento", evento.getId());
+					args.putString("local_name", evento.getLocalizationName());
 					
 					next.setArguments(args);
 					((MainActivity)getActivity()).mudarAbaAtual(next);	
@@ -266,7 +269,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		if(evento.getComments()!=null)
 			for (Iterator<Comentario> iterator = evento.getComments().iterator(); iterator.hasNext();) {
 				Comentario coment = (Comentario) iterator.next();
-				addComment(coment.getUserName(),"0m",coment.getText());
+				addComment(coment.getUserName(),"0m",coment.getText(),coment.getPhoto());
 
 			}
 
