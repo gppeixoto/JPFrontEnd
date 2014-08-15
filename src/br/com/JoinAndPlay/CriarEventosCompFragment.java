@@ -195,7 +195,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 									Evento e = (Evento) in;
 									Log.v("retorno evento", ""+e);
 									
-									if(!convidados.isEmpty()){
+									if(e!= null && !convidados.isEmpty()){
 										Server.invite(Session.getActiveSession().getAccessToken(),
 												e.getId(), convidados, new Connecter<Boolean>(){
 
@@ -204,35 +204,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 															Boolean in) {
 														// TODO Auto-generated method stub
 														boolean a = (boolean) in;
-														if(!a){
-															AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-															builder1.setCancelable(true);
-															builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-																public void onClick(DialogInterface dialog, int id) {
-																	dialog.cancel();
-															}});
-															
-															builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_convite, null));
-															AlertDialog alert11 = builder1.create();
-															
-															OnShowListener onshow = new OnShowListener() {
-																@Override
-																@SuppressWarnings( "deprecation" )
-																public void onShow(DialogInterface dialog) {
-																	Button positiveButton = ((AlertDialog) dialog)
-													                        .getButton(AlertDialog.BUTTON_POSITIVE);
-																	
-													                positiveButton.setBackgroundDrawable(getResources()
-													                        .getDrawable(R.drawable.alert_button));
-													                
-													                positiveButton.setText("OK");
-													                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
-																	
-																}
-															};
-															alert11.setOnShowListener(onshow);
-															alert11.show();
-														}
+														
 													}
 										});
 									}		
