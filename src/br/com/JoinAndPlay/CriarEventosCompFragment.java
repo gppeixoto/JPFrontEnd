@@ -5,12 +5,9 @@ import java.util.Vector;
 
 import com.facebook.Session;
 
-import br.com.tabActive.TabFactory;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnShowListener;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,11 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.app.AlertDialog.Builder;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.ListFriend.AdapterGridViewFriend;
 import br.com.JoinAndPlay.ListFriend.ItemFriend;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -31,12 +26,7 @@ import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TabHost.TabSpec;
 
 public class CriarEventosCompFragment extends Fragment implements OnItemClickListener, OnTabChangeListener {
 	
@@ -72,7 +62,6 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					for(int i = 0; i < aux.size(); i++){
 						amigos.add(new ItemFriend(aux.elementAt(i)));
 					}
-					
 					
 					grid.post(new Runnable() {
 						
@@ -120,7 +109,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		});
 		
 		bPublico = (Button) view.findViewById(R.id.publico);
-		bPublico.setText("Pï¿½blico");
+		bPublico.setText("Público");
 		bPublico.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -290,6 +279,10 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				convidados.add(f.id);
 			}
 		}
+	}
+	
+	public void onBackPressed(){
+		
 	}
 
 	@Override

@@ -27,33 +27,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/nome_evento"
-                android:textColor="@color/red"
+                android:textColor="@color/red_pesquisa"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
 
             <LinearLayout
                 android:id="@+id/escolha_nome_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="36dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:gravity="bottom"
-                android:orientation="horizontal"
-                android:paddingBottom="0dp"
-                android:paddingTop="0dp" >
+                android:orientation="vertical" >
 
                 <EditText
                     android:id="@+id/escolha_nome_evento"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:gravity="bottom"
                     android:height="2dp"
+                    android:maxLines="1"
                     android:textColor="@color/cinza_txt"
                     android:hint="@string/escolha_nomeEvento"
                     android:inputType="text"
@@ -63,9 +61,8 @@
                 
                  <View
                     android:layout_width="fill_parent"
-                   	android:layout_height="0dp"
-                 	android:layout_weight="0.01"
-                 	android:background="@drawable/my_bottom_line" />
+                    android:layout_height="0dp"
+                    android:background="@drawable/my_bottom_line" />
             </LinearLayout>
 
             <LinearLayout

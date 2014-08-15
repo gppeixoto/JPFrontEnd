@@ -1,5 +1,7 @@
 package br.com.JoinAndPlay;
 
+import java.text.DecimalFormat;
+
 import org.joda.time.DateTime;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
@@ -14,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -26,7 +27,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,6 +174,23 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		this.data[1] = now.getMonthOfYear()+1+"";
 		this.data[2] = now.getYear()+"";
 		
+		if(ePreco.getVisibility()==View.VISIBLE){
+			ePreco.addTextChangedListener(new TextWatcher() {
+				public void onTextChanged(CharSequence s, int start, int before, int count) {}
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+				
+				public void afterTextChanged(Editable s) {
+					String preco = s.toString();
+					if(preco!=null && !preco.trim().equals("")){
+						double p = Double.parseDouble(preco);
+						DecimalFormat df = new DecimalFormat("0.00");
+						preco = ""+df.format(p);
+						ePreco.setText(preco);
+					}
+				}
+			});
+		}
+		
 		bProximo.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -188,7 +205,6 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				String lugar = eNomeLugar.getText().toString();
 				String cidade = eCidade.getText().toString();
 				String bairro = eBairro.getText().toString();
-				
 				
 				if(esporte==null||esporte.trim().equals("")){
 					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
@@ -349,24 +365,14 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				args.putString("horaTermino", bDataFim.getText().toString());
 				
 				if(pago){
-					
 					String aux = ePreco.getText().toString();
 					Log.v("precostring", aux);
 					
-					double b = (((double)Integer.parseInt(""+aux.charAt(aux.length()-2)))/10.0) + (((double)Integer.parseInt(""+aux.charAt(aux.length()-1)))/100.0);
-					
-					double c = 0;
-					double j=1.0;
-					for(int i = aux.length()-4; i > -1; i--){
-						c+=((double)Integer.parseInt(""+aux.charAt(i)))*j;
-						j*=10.0;
-					}
-					
-					double a = b+c;
+					double a = Double.parseDouble(aux);
 					Log.v("precodouble", a+"");
 					args.putDouble("preco", a);
 				} else {
-					args.putDouble("preco", 0.0);
+					args.putDouble("preco", 0.00);
 				}
 				
 				next.setArguments(args);
