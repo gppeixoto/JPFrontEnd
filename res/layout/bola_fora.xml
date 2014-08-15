@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
@@ -28,14 +28,36 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+  
+    <LinearLayout
+        android:id="@+id/poweredLayout"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:gravity="center" >
+
+   		<ImageView
+   		    android:id="@+id/imageGoogle"
+   		    android:layout_width="wrap_content"
+   		    android:layout_height="wrap_content"
+   		    android:layout_marginRight="12dp"
+   		    
+   		    android:src="@drawable/powerednonwhite" />
+
+   	</LinearLayout>
+   	
    	<ListView
         android:id="@+id/bolaForaListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
         android:padding="9dp"
         android:clickable="false" >
     </ListView>
+
+   	
+
+   	
 
 </LinearLayout>
