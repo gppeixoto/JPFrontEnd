@@ -432,6 +432,8 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					args.putDouble("preco", 0.00);
 				}
 				
+				Log.v("pegaporra", "chegou aqui?");
+				
 				next.setArguments(args);
 				((MainActivity)getActivity()).mudarAbaAtual(next);	
 			}
