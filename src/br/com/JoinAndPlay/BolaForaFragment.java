@@ -100,14 +100,16 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 		
 		Bundle args= getArguments();
 		
-		Log.v("parcelable length ", args.getParcelableArray("enderecos").length+"");
 		texto = (TextView) v.findViewById(R.id.bolaForaTxt);
 		lv = (ListView) v.findViewById(R.id.bolaForaListView);
 		lv.setOnItemClickListener(this);
 
 		if(getArguments()!=null){
-			
-			if(args.getBoolean("conflito") == false || args.getParcelableArray("enderecos").length == 0) {
+			if(args.getBoolean("internet") == false ){
+				texto.setText("Verifique sua conexão com a Internet.");
+
+				
+			}else if(args.getBoolean("conflito") == false || args.getParcelableArray("enderecos").length == 0) {
 				texto.setText("Nenhum evento foi encontrado pela sua pesquisa.");
 			} else{
 			
