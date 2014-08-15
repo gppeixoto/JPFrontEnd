@@ -23,35 +23,28 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 
-public class DownloadImagem extends AsyncTask<String, Void, Pair<Bitmap,ImageView>>{
-	ProgressDialog dialog;
-	Context context;
+public class DownloadImagem extends AsyncTask<String, Void, Bitmap>{
 	ImageView img;
 	static final int BufferSize= 100;
 	static Bitmap[] buffer = new Bitmap[BufferSize];
 	static String[] str = new String[BufferSize];
-	static  DownloadImagem executor= new DownloadImagem();
-	static List<ImageView>list = new ArrayList<ImageView>();
 
 	public static void postLoad(final ImageView img,String url){
 		final int id = (url.hashCode()<0?url.hashCode()*(-1):url.hashCode())%BufferSize;
 		synchronized (buffer) {
 			if(str[id]!=null && buffer[id]!=null && str[id].equals(url)){
+				Log.v("imag++", url+" "+str[id]);
 				if(img!=null){
-
 					img.setImageBitmap(buffer[id]);
 					img.setVisibility(View.VISIBLE);
 
 				}
 			}else{
-				synchronized (list) {
-					list.add(img);
-
-				}
+				
 				if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
-					new DownloadImagem().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url);
+					new DownloadImagem(img).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url);
 				}else{
-					new DownloadImagem().execute(url);
+					new DownloadImagem(img).execute(url);
 
 				}
 			}
@@ -61,13 +54,13 @@ public class DownloadImagem extends AsyncTask<String, Void, Pair<Bitmap,ImageVie
 
 
 	}
-	private DownloadImagem(){
+	private DownloadImagem(ImageView img){
 		super();
-
+		this.img=img;
 	}
 
 	@Override 
-	protected Pair<Bitmap,ImageView> doInBackground(String... params) {
+	protected Bitmap doInBackground(String... params) {
 		String urlString = params[0];
 		final int id = (urlString.hashCode()<0?urlString.hashCode()*(-1):urlString.hashCode())%BufferSize;
 
@@ -83,28 +76,24 @@ public class DownloadImagem extends AsyncTask<String, Void, Pair<Bitmap,ImageVie
 				buffer[id]=imagem;
 				str[id]=urlString;
 			}
-			synchronized (imagem) {
-				return new Pair<Bitmap, ImageView>(imagem,		list.remove(0));
+				return imagem;
 
-			}
+			
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
-		synchronized (list) {
-			list.remove(0);
-
-		}
+	
 		return  null;
 	}
 
 	@Override 
-	protected void onPostExecute(Pair<Bitmap,ImageView> result) {
+	protected void onPostExecute(Bitmap result) {
 		super.onPostExecute(result);
 		if (result != null){
-			if(result.second!=null){
+			if(img!=null){
 
-				result.second.setImageBitmap(result.first);
-				result.second.setVisibility(View.VISIBLE);
+				img.setImageBitmap(result);
+				img.setVisibility(View.VISIBLE);
 			}
 		} 
 	} 

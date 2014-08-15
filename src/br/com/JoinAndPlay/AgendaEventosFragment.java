@@ -21,9 +21,8 @@ import android.widget.AdapterView.OnItemClickListener;
 public class AgendaEventosFragment extends Fragment implements OnItemClickListener,Connecter<Vector<Evento>>{
 
 
-	static ArrayList<Evento> lista = new ArrayList<Evento>();
-	static AdapterListView adapter ;
-	MyListView listV;
+	
+	private MyListView listV;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -33,10 +32,8 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		adapter	= new AdapterListView(getActivity(),lista);
 		listV = new MyListView(getActivity());
-		listV.setAdapter(adapter);
-		listV.setOnItemClickListener(this);
+		listV.setOnItemClickListener(this);			
 		Server.user_agenda(getActivity(), this);
 		return  listV;
 
@@ -56,8 +53,20 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 	@Override
 	public void onTerminado(Vector<Evento> in) {
 		// TODO Auto-generated method stub
-	    for (Iterator<Evento> iterator = in.iterator(); iterator.hasNext();) {
+		ArrayList<Evento> lista = new ArrayList<Evento>();
+		final AdapterListView adapter =new AdapterListView(getActivity(), lista);
+listV.post(new Runnable() {
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		listV.setAdapter(adapter);
+	}
+});
+
+		for (Iterator<Evento> iterator = in.iterator(); iterator.hasNext();) {
 			Evento evento = (Evento) iterator.next();
+lista.add(evento);
 			
 		}
 	}
