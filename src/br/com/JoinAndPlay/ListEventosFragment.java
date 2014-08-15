@@ -79,8 +79,17 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 					@Override
 					public void onTerminado(Vector<Endereco> in) {
 						Log.v("ncjbfdebvhjbhj", in+"");
-						if(in == null || in.size() == 0){
+						if(in == null){
 							Bundle args2 = new Bundle();
+
+							args2.putBoolean("internet",false);
+							BolaForaFragment bfm = new BolaForaFragment();
+							bfm.setArguments(args2);
+							((MainActivity) self.getActivity()).replaceTab(bfm);
+
+						}else if (in.size() == 0){
+							Bundle args2 = new Bundle();
+							args2.putBoolean("internet",true);
 							args2.putParcelableArray("enderecos", new Endereco[0]);
 							args2.putString("data", args.getString("data"));
 							args2.putString("horaInicio", args.getString("horaInicio"));
@@ -96,6 +105,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 							Bundle args2 = new Bundle();
 							Endereco arr[] = new Endereco[in.size()];
 							in.toArray(arr);
+							args2.putBoolean("internet",true);
 							args2.putParcelableArray("enderecos", arr);
 							args2.putString("data", args.getString("data"));
 							args2.putString("horaInicio", args.getString("horaInicio"));
@@ -179,23 +189,39 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
 		Log.v("uhu", "oi"+vector);
-		lista=new ArrayList<Evento>();
-		for (int i = 0; i <vector.size(); i++) {
-			lista.add(vector.get(i));
-		}
 
+		if(vector==null){
 
-		listV.post(new Runnable() {
+			Bundle args2 = new Bundle();
+			args2.putBoolean("internet",false);
+			BolaForaFragment bfm = new BolaForaFragment();
+			bfm.setArguments(args2);
+			((MainActivity) getActivity()).replaceTab(bfm);
+		}else if(vector.size()<=0){
 
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				listV.setAdapter(new AdapterListView(inflater, lista));
-
+			Bundle args2 = new Bundle();
+			args2.putBoolean("conflito",false);
+			BolaForaFragment bfm = new BolaForaFragment();
+			bfm.setArguments(args2);
+			((MainActivity) getActivity()).replaceTab(bfm);
+		}else{
+			lista=new ArrayList<Evento>();
+			for (int i = 0; i <vector.size(); i++) {
+				lista.add(vector.get(i));
 			}
-		});
 
 
+			listV.post(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					listV.setAdapter(new AdapterListView(inflater, lista));
+
+				}
+			});
+
+		}
 	}
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {

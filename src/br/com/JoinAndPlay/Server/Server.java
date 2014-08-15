@@ -14,6 +14,9 @@ import br.com.JoinAndPlay.ConfigJP;
 import android.app.Activity;
 import android.util.Log;
 
+import org.joda.*;
+import org.joda.time.DateTime;
+
 public class Server implements Serializable {
 	private static final long serialVersionUID = 8092668778830657391L;
 
@@ -265,8 +268,6 @@ public class Server implements Serializable {
 	 * @param price preco do evento.
 	 * @param privacy true se for privado, false se nao for.
 	 * @param id id do evento.
-	 * @param latitude latitude.
-	 * @param longitude longitude.
 	 * @return o evento criado.
 	 * */
 	public static void edit_event(String access_token, String localization_name, String localization_address, String city,
@@ -280,7 +281,11 @@ public class Server implements Serializable {
 			obj.put("city", city);
 			obj.put("neighbourhood", neighbourhood);
 			obj.put("eventSport", sport_name);
-			obj.put("eventDay", date);
+			String[] aux = date.split("/");
+			DateTime now = DateTime.now();
+			String year = now.getYear()+"";
+			String __date = year + "-" + aux[1] + "-" + aux[0];
+			obj.put("eventDay", __date);
 			obj.put("eventTimeBegin", begin_time);
 			obj.put("eventTimeEnd", end_time);
 			obj.put("eventDescription", description);
@@ -290,18 +295,23 @@ public class Server implements Serializable {
 			obj.put("id", id);
 			obj.put("latitude", latitude);
 			obj.put("longitude", longitude);
-
+			
+			Log.v("enviandooo", obj.toString());
+			
 			ServiceHandler sh = new ServiceHandler();
 			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter<String>() {
 
 				@Override
 				public void onTerminado(String in) {
+					Log.v("retornoooo", in+"");
 					if (in == null) {
 						if (connecter != null) connecter.onTerminado(null);
 						return;
 					}
 					try {
-						Evento evt = processEvent(new JSONObject((String) in));
+						JSONObject obj = new JSONObject(in);
+						Evento evt = null;
+						if (!obj.has("error")) evt = processEvent(obj);
 						if (connecter != null) connecter.onTerminado(evt);
 					} catch (JSONException _) {}
 				}
