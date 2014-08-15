@@ -305,8 +305,14 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		//((MainActivity)getActivity()).mudarAbaAtual(new ListEventosFragment());
-		if(myEvent!=null)
-			Server.enter_event(getActivity(), myEvent.getId(),this );
+		if(myEvent!=null){
+			if(myEvent.getIsParticipating()==false){
+				Server.enter_event(getActivity(), myEvent.getId(),this );
+			}
+			else{
+				Server.leave_event(getActivity(), myEvent.getId(),this );
+			}
+		}
 	}
 
 	@Override

@@ -295,9 +295,9 @@ public class Server implements Serializable {
 			obj.put("id", id);
 			obj.put("latitude", latitude);
 			obj.put("longitude", longitude);
-			
+
 			Log.v("enviandooo", obj.toString());
-			
+
 			ServiceHandler sh = new ServiceHandler();
 			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter<String>() {
 
@@ -572,25 +572,33 @@ public class Server implements Serializable {
 	 * @param id o id do evento.
 	 * @return o evento.
 	 * */
-	public static void leave_event(String access_token, String id, final Connecter<Evento> connecter) {
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("access_token", access_token);
-			obj.put("id", id);
-		} catch (JSONException _) {}
+	public static void leave_event(Activity act,final String id, final Connecter<Evento> connecter) {
 
-		ServiceHandler sh = new ServiceHandler();
-		sh.makePOST(ServiceHandler.URL_BASE + "/leaveevent/", obj.toString(), new Connecter<String>() {
+		ConfigJP.getToken(act, new Connecter<String>() {
 
 			@Override
-			public void onTerminado(String in) {
-				if (in == null) {
-					if (connecter != null) connecter.onTerminado(null);
-					return;
-				}
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
 				try {
-					if (connecter != null) connecter.onTerminado(processEvent(new JSONObject(in)));
-				} catch (JSONException _) {}				
+					obj.put("access_token", access_token);
+					obj.put("id", id);
+				} catch (JSONException _) {}
+
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/leaveevent/", obj.toString(), new Connecter<String>() {
+
+					@Override
+					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
+						try {
+							if (connecter != null) connecter.onTerminado(processEvent(new JSONObject(in)));
+						} catch (JSONException _) {}				
+					}
+				});
+
 			}
 		});
 	}
