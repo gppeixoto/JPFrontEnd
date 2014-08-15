@@ -156,6 +156,15 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		eRua = (EditText) view.findViewById(R.id.escolha_enderecoRua);
 		
 		checkPago = (CheckBox) view.findViewById(R.id.preco_box);
+		if(checkPago.isChecked()){
+			pago = true;
+			ePreco.setVisibility(View.VISIBLE);
+			tUnidade.setVisibility(View.VISIBLE);
+		} else {
+			pago = false;
+			ePreco.setVisibility(View.INVISIBLE);
+			tUnidade.setVisibility(View.INVISIBLE);
+		}
 			
 		bProximo = (Button) view.findViewById(R.id.nextButton);
 		bProximo.setText("Próximo");
@@ -184,24 +193,12 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		if(ePreco.getVisibility()==View.VISIBLE){
 			ePreco.addTextChangedListener(new TextWatcher() {
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					String preco = s.toString();
-					if(preco!=null && !preco.trim().equals("")){
-						double p = Double.parseDouble(preco);
-						DecimalFormat df = new DecimalFormat("0.00");
-						preco = ""+df.format(p);
-						ePreco.setText(preco);
-					}
+					
 				}
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 				
 				public void afterTextChanged(Editable s) {
-					String preco = s.toString();
-					if(preco!=null && !preco.trim().equals("")){
-						double p = Double.parseDouble(preco);
-						DecimalFormat df = new DecimalFormat("0.00");
-						preco = ""+df.format(p);
-						ePreco.setText(preco);
-					}
+					
 				}
 			});
 		}
@@ -422,11 +419,13 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				args.putString("horaTermino", bDataFim.getText().toString());
 				
 				if(pago){
-					String aux = ePreco.getText().toString();
-					Log.v("precostring", aux);
-					
+					String aux = ePreco.getText().toString();					
 					double a = Double.parseDouble(aux);
+					DecimalFormat df = new DecimalFormat("##0.00");
+					aux = df.format(a);
+					a = Double.parseDouble(aux);
 					Log.v("precodouble", a+"");
+					
 					args.putDouble("preco", a);
 				} else {
 					args.putDouble("preco", 0.00);
