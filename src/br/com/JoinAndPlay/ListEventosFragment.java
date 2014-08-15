@@ -72,8 +72,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			final ListEventosFragment self=this;
 
 			final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
-
-
 			boolean getA = args.getBoolean("getA");
 			Log.v("getiA", getA+"");
 			if (getA && args.getString("endereco")!=null && args.getString("endereco").length()>0){
