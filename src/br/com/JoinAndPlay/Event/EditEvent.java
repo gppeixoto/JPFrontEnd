@@ -129,9 +129,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			ruaE.setText(rua);
 			final EditText preco = (EditText) v.findViewById(R.id.editar_preco);
 			preco.setText(valor.toString());
-			
-			//Setar esporte (?)		
-			
+						
 			privadoE = (Button) v.findViewById(R.id.botao_privado);
 			publicoE = (Button) v.findViewById(R.id.botao_publico);
 			
@@ -163,10 +161,13 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			this.dataNOW[0] = now.getDayOfMonth();
 			this.dataNOW[1] = now.getMonthOfYear();
 			this.dataNOW[2] = now.getYear();
+			this.data[0] = now.getDayOfMonth()+"";
+			this.data[1] = now.getMonthOfYear()+"";
+			this.data[2] = now.getYear()+"";
 			
 			diaE = (Button) v.findViewById(R.id.editar_dia);
 			config = getActivity().getResources().getConfiguration();
-			diaE.setText(dia);
+			diaE.setText(dia+"/"+(now.getYear()+""));
 			diaE.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
