@@ -7,6 +7,7 @@
     <string name="alerta_nome">Dê um nome ao evento</string>
     <string name="alerta_bairro">Escolha um bairro</string>
     <string name="alerta_rua">Escolha uma avenida/rua</string>
+    <string name="alerta_endereco">Escolha um endereço válido</string>
     <string name="alerta_esporte">Escolha o esporte</string>
     <string name="alerta_lugar">Diga o nome do local</string>
     <string name="alerta_erro">Erro na criação do evento!</string>
