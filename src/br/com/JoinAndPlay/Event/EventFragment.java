@@ -1,9 +1,12 @@
 package br.com.JoinAndPlay.Event;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Vector;
 import java.util.zip.Inflater;
 
+import com.facebook.Session;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -19,6 +22,10 @@ import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
+import br.com.JoinAndPlay.ListEvent.MyListView;
+import br.com.JoinAndPlay.ListFriend.AdapterGridViewFriend;
+import br.com.JoinAndPlay.ListFriend.AdapterListViewFriend;
+import br.com.JoinAndPlay.ListFriend.ItemFriend;
 import br.com.JoinAndPlay.Server.Comentario;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
@@ -27,7 +34,10 @@ import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -56,6 +66,8 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	SupportMapFragment suportMap;
 	public LinearLayout list;
 	public LayoutInflater inf;
+	private Button bAmigos;
+	private Vector<Usuario> amigos;
 
 	public void addComment(String nome,String time,String novo_comentario,String photo){
 		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
@@ -122,7 +134,53 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
 		Button b = (Button)v.findViewById(R.id.button1);
+		bAmigos = (Button) v.findViewById(R.id.qtd_amigos_amais);
 		//EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
+		bAmigos.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder alertDialog = new AlertDialog.Builder(bAmigos.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+		        LayoutInflater inflater = getActivity().getLayoutInflater();
+		        View convertView = (View) inflater.inflate(R.layout.list_friends, null);
+		        alertDialog.setView(convertView);
+		        alertDialog.setTitle("Amigos Participantes");
+		        final MyListView lv = (MyListView) convertView.findViewById(R.id.views_friends);
+		        final Vector <Usuario> participantes = myEvent.getUsers();
+		        final ArrayList<ItemFriend> amigosp = new ArrayList<ItemFriend>();
+				
+		        Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
+
+					@Override
+					public void onTerminado(Vector<Usuario> in) {
+						// TODO Auto-generated method stub
+						amigos = (Vector<Usuario>) in;
+						if(amigos!=null){
+							
+							for(int i = 0; i < participantes.size(); i++){
+								if(amigos.contains(participantes.elementAt(i))){
+									amigosp.add(new ItemFriend(participantes.elementAt(i)));
+								}
+							}
+							
+							lv.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									lv.setAdapter(new AdapterListViewFriend(getActivity(), amigosp));
+
+								}
+							});
+						}	
+					}
+				});	
+		        
+		        alertDialog.show();
+			}
+		});
+		
 		b.setOnClickListener(this);
 		//edit.setOnKeyListener(this);
 		suportMap= new SupportMapFragment();
@@ -164,7 +222,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 		LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.imagem_perfil_dad);
 
-		TextView qtd_amigos_amais = (TextView)view.findViewById(R.id.qtd_amigos_amais);
+		Button qtd_amigos_amais = (Button)view.findViewById(R.id.qtd_amigos_amais);
 
 		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
 
@@ -313,7 +371,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	public void onTerminado(Evento in) {
 		// TODO Auto-generated method stub
 		if(in!=null ){
-			myEvent=in;
+			myEvent= (Evento) in;
 			if(getView()!=null){
 				getView().post(new Runnable() {
 					public void run() {

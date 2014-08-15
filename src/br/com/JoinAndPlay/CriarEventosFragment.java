@@ -365,12 +365,13 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					alert11.show();
 					return;
 				}
-				
+				/**
 				Server.getAddresses(lugar, rua, bairro, cidade, new Connecter<Vector<Endereco>>(){
 
 					@Override
 					public void onTerminado(Vector<Endereco> in) {
 						// TODO Auto-generated method stub
+						Vector<Endereco> vec;
 						vec = (Vector<Endereco>) in;
 					}
 					
@@ -405,7 +406,7 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					alert11.setOnShowListener(onshow);
 					alert11.show();
 					return;
-				}
+				}*/
 				
 				
 				args.putString("esporte", esporte);
