@@ -135,7 +135,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		
+
 	}
 
 	public static String parseMonth(int n){
@@ -178,7 +178,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 		qtd_confirmados.setText(""+evento.getUsers().size());
 		//	qtd_no_local(evento.);
-		
+
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
 		Button editar_evento = (Button)view.findViewById(R.id.editar_evento);
 		///VERIFICAR AQUI O USERID!
@@ -189,7 +189,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 					// TODO Auto-generated method stub
 					EditEvent next = new EditEvent();
 					Bundle args = new Bundle();				
-					
+
 					args.putString("nome_evento", evento.getName());
 					args.putString("descricao_evento", evento.getDescription());
 					args.putString("bairro", evento.getNeighbourhood());
@@ -203,7 +203,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 					args.putString("esporte",evento.getSport());
 					args.putString("id_evento", evento.getId());
 					args.putString("local_name", evento.getLocalizationName());
-					
+
 					next.setArguments(args);
 					((MainActivity)getActivity()).mudarAbaAtual(next);	
 				}
@@ -221,7 +221,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			editar_evento.setVisibility((View.INVISIBLE));
 			butao_terminar.setVisibility((View.INVISIBLE));
 		}
-		
+
 		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
 		final Connecter<Evento> listener = this;
 		butao_enviar.setOnClickListener(new OnClickListener() {
@@ -240,18 +240,18 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 				});
 				myEditText.getText().clear();
 				myEditText.clearFocus();
-                if(getView() != null){
+				if(getView() != null){
 					getView().setFocusable(true);
-		            getView().setFocusableInTouchMode(true);
-		            getView().requestFocus();
+					getView().setFocusableInTouchMode(true);
+					getView().requestFocus();
 				}
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
 			}
 		});
 
-		
-		
+
+
 		for (int i = 0; i < Math.min(evento.getUsers().size(),AdapterListView.MAX_AMIGOS_QTD); i++) {
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
@@ -276,7 +276,16 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		qtd_amigos_amais.setText("+ " + (evento.getNumFriends() > 6 ? evento.getUsers().size() - 6 : 0) + " amigo" + (evento.getNumFriends() > 7 ? "s" : ""));
 		tipo_da_partida.setText(evento.getSport());
 		descricao_do_esporte.setText(evento.getDescription());
-		final double[] latlng=ConfigJP.getLatLngFromAddress(getActivity(),evento.getLocalizationAddress()+","+evento.getCity());
+		double[] temp=null;
+
+		if(evento.getLatitude()!=null && evento.getLongitude()!=null){
+			temp=new double[2];
+
+			temp[0]	=Double.parseDouble(evento.getLatitude());		
+			temp[1]	=Double.parseDouble(evento.getLongitude());		
+
+		}
+		final double[] latlng= temp;
 		final String titulo=evento.getLocalizationName();
 		view.post(new Runnable() {
 
@@ -291,12 +300,12 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 					MarkerOptions marker = new MarkerOptions();
 					marker.position(target).title(titulo);
 					map.addMarker(marker).showInfoWindow();
-					
+
 				}
 			}
 		});
-		
-		
+
+
 		view.requestLayout();
 		view.postInvalidate();
 	}

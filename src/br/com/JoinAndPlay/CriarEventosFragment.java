@@ -366,7 +366,8 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					return;
 				}
 				
-				Server.getAddresses(lugar, rua, bairro, cidade, new Connecter<Vector<Endereco>>(){
+				Log.v("query de jp", rua + " " + bairro + " " + cidade);
+				Server.getAddresses("", rua, bairro, cidade, new Connecter<Vector<Endereco>>(){
 
 					@Override
 					public void onTerminado(Vector<Endereco> in) {
