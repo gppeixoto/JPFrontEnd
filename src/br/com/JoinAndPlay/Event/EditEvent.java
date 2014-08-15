@@ -249,13 +249,12 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Log.v("EDITAAAAAAA", "=/");
 					Server.edit_event(getActivity(), local_name, ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), valor, privado, id_evento, null);
 					EventFragment next = new EventFragment();
 					Bundle args = new Bundle();
 					args.putString("evento", id_evento);
 					next.setArguments(args);
-					((MainActivity)getActivity()).mudarAbaAtual(next);
+					((MainActivity)getActivity()).replaceTab(next);
 				}
 			});
 		}

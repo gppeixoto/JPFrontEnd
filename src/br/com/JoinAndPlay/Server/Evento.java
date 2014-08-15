@@ -26,12 +26,13 @@ public class Evento implements Serializable {
 	private String latitude;
 	private String longitude;
 	private String creator_id;
+	private boolean participates;
 
 	public Evento(String name, Vector<Usuario> users, String localization_name,
 		String localization_address, String sport, int num_friends, String date,
 		String start_time, String end_time, String description, Vector<Comentario> comments,
 		String id, boolean is_private, int price, String city, String neighbourhood, String distance,
-		String latitude, String longitude, String creator_id) {
+		String latitude, String longitude, String creator_id, boolean participates) {
 		this.name = name;
 		this.users = users;
 		this.localization_name = localization_name;
@@ -52,6 +53,7 @@ public class Evento implements Serializable {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.creator_id = creator_id;
+		this.participates = participates;
 	}
 
 	/**
@@ -153,4 +155,6 @@ public class Evento implements Serializable {
 	 * @return o id do criador.
 	 * */
 	public String getCreatorId() { return this.creator_id; }
+	
+	public boolean getIsParticipating() { return this.participates; }
 }
