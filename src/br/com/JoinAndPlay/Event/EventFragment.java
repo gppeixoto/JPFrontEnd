@@ -17,7 +17,8 @@ import br.com.JoinAndPlay.CriarEventosCompFragment;
 import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.ListEvent.ItemEvent;
+import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
+import br.com.JoinAndPlay.ListEvent.AdapterListView;
 import br.com.JoinAndPlay.Server.Comentario;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
@@ -248,7 +249,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 		
 		
-		for (int i = 0; i < Math.min(evento.getUsers().size(),ItemEvent.MAX_AMIGOS_QTD); i++) {
+		for (int i = 0; i < Math.min(evento.getUsers().size(),AdapterListView.MAX_AMIGOS_QTD); i++) {
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
 
@@ -256,7 +257,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			}else break;
 		}		
 
-		for (int i = evento.getUsers().size(); i <ItemEvent.MAX_AMIGOS_QTD; i++) {
+		for (int i = evento.getUsers().size(); i <AdapterListView.MAX_AMIGOS_QTD; i++) {
 			if(pessoas.getChildCount()-1>i){
 				ImageView imagem = (ImageView) pessoas.getChildAt(i);
 				imagem.setVisibility(View.INVISIBLE);

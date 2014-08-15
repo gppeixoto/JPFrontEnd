@@ -15,7 +15,6 @@ import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.Comentario;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;

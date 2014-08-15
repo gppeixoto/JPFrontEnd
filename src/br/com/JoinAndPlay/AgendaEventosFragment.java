@@ -1,11 +1,15 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
 
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
-import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.ListEvent.MyListView;
+import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Evento;
+import br.com.JoinAndPlay.Server.Server;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,10 +18,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class AgendaEventosFragment extends Fragment implements OnItemClickListener{
+public class AgendaEventosFragment extends Fragment implements OnItemClickListener,Connecter<Vector<Evento>>{
 
 
-	static ArrayList<ItemEvent> lista = new ArrayList<ItemEvent>();
+	static ArrayList<Evento> lista = new ArrayList<Evento>();
 	static AdapterListView adapter ;
 	MyListView listV;
 	@Override
@@ -33,6 +37,7 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 		listV = new MyListView(getActivity());
 		listV.setAdapter(adapter);
 		listV.setOnItemClickListener(this);
+		Server.user_agenda(getActivity(), this);
 		return  listV;
 
 	}
@@ -47,5 +52,13 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 
 		//adapter.notifyDataSetChanged();
 
+	}
+	@Override
+	public void onTerminado(Vector<Evento> in) {
+		// TODO Auto-generated method stub
+	    for (Iterator<Evento> iterator = in.iterator(); iterator.hasNext();) {
+			Evento evento = (Evento) iterator.next();
+			
+		}
 	}
 }

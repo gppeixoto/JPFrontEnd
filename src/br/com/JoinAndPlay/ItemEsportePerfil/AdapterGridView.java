@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

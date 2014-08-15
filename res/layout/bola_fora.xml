@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginBottom="30dp"
-        android:padding="9dp" >
+        android:padding="9dp"
+        android:clickable="false" >
     </ListView>
 
 </LinearLayout>
