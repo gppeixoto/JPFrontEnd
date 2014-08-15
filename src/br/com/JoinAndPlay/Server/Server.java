@@ -317,28 +317,37 @@ public class Server implements Serializable {
 	 * @param access_token access_token do usuario que se deseja saber a agenda.
 	 * @return eventos que esse usuario ja participou ou disse que ira participar. 
 	 */
-	public static void user_agenda(String access_token, final Connecter<Vector<Evento>> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("access_token", access_token);
+	public static void user_agenda(Activity act, final Connecter<Vector<Evento>> connecter) {
+	ConfigJP.login(act, new Connecter<String>() {
+		
+		@Override
+		public void onTerminado(String access_token) {
+			// TODO Auto-generated method stub
+			try {
+				JSONObject obj = new JSONObject();
+				obj.put("access_token", access_token);
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
 
-				@Override
-				public void onTerminado(String in) {
-					try {
-						JSONObject obj = new JSONObject(in);
-						JSONArray arr = obj.getJSONArray("events");
-						Vector<Evento> ret = new Vector<Evento>();
-						for (int i = 0; i < arr.length(); ++i) {
-							ret.add(processEvent(arr.getJSONObject(i)));
-						}
-						if (connecter != null) connecter.onTerminado(ret);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+					@Override
+					public void onTerminado(String in) {
+						try {
+							JSONObject obj = new JSONObject(in);
+							JSONArray arr = obj.getJSONArray("events");
+							Vector<Evento> ret = new Vector<Evento>();
+							for (int i = 0; i < arr.length(); ++i) {
+								ret.add(processEvent(arr.getJSONObject(i)));
+							}
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
+					}
+				});
+			} catch (JSONException _) {}	
+		}
+	});
+		
+		
 	}
 
 	/**

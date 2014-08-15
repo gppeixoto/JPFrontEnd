@@ -24,7 +24,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ListEvent.AdapterListView;
-import br.com.JoinAndPlay.ListEvent.ItemEvent;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.Evento;
@@ -41,7 +40,7 @@ import com.facebook.model.GraphUser;
 
 
 public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>> {
-	static ArrayList<ItemEvent> lista;
+	static ArrayList<Evento> lista;
 	ListView listV;
 	protected Button Button_criar;
 
@@ -163,35 +162,9 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
 		Log.v("uhu", "oi"+vector);
-		lista=new ArrayList<ItemEvent>();
+		lista=new ArrayList<Evento>();
 		for (int i = 0; i <vector.size(); i++) {
-			final	ItemEvent item=new ItemEvent();
-			Log.v("uhu2", ""+vector.get(i).getName());
-			item.titulo=vector.get(i).getName();
-			item.quadra=vector.get(i).getLocalizationName();
-			item.local=vector.get(i).getLocalizationAddress();
-			item.qtd_participantes=vector.get(i).getUsers().size();
-			item.amigos_qtd=vector.get(i).getNumFriends();
-			item.esporte=vector.get(i).getSport();
-			item.cidade=vector.get(i).getNeighbourhood()+"-"+vector.get(i).getCity();
-			item.hora=vector.get(i).getStartTime();
-			item.data=vector.get(i).getDate();
-			item.preco_centavos=vector.get(i).getPrice();
-			//item.distancia=
-			item.privado=vector.get(i).getPrivacy();
-			item.evento=vector.get(i);
-			item.amigos= new String[vector.get(i).getUsers().size()];
-			for (int j = 0; j <vector.get(i).getUsers().size(); j++) {
-				item.amigos[j]=vector.get(i).getUsers().get(j).getPhoto();
-
-				//DownloadImagemAsyncTask
-				Log.v("photo", ""+item.amigos[j]);
-			}
-
-			lista.add(item);
-
-
-
+			lista.add(vector.get(i));
 		}
 		
 		
@@ -211,10 +184,10 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		
-		if(lista!=null && lista.size()>(arg2-1) && lista.get(arg2-1).evento !=null){
+		if(lista!=null && lista.size()>(arg2-1) ){
 			
 			Bundle arg= new Bundle();
-			arg.putString("evento",lista.get(arg2-1).evento.getId() );
+			arg.putString("evento",lista.get(arg2-1).getId() );
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
 			((MainActivity)getActivity()).mudarAbaAtual(fragment);
