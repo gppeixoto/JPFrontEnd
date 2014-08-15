@@ -33,14 +33,13 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
-
+		if(!voltar)
+		getFragmentManagerAba(idtab).popBackStack();
 		FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
 		ft=ft.replace(R.id.tela_aba,arg1);
-		if(voltar){
+		ft.addToBackStack(null);
 
-			ft.addToBackStack(null);
-		}
 
 		ft.commit();
 
@@ -114,7 +113,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		if(savedInstanceState!=null){
 			mTabHost.setCurrentTab((savedInstanceState.getInt("tab")));
 		}else{
-			
+
 			mTabHost.setCurrentTab(1);
 		}
 

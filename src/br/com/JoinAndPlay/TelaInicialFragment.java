@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class TelaInicialFragment extends Fragment implements Connecter<Usuario>, OnClickListener{
+public class TelaInicialFragment extends Fragment implements Connecter<Usuario>, OnClickListener,Runnable{
 	private Button inicial_button_facebookLogin;
 
 
@@ -33,7 +33,7 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 		View view = inflater.inflate(R.layout.layout_inicial, container,false);
 		inicial_button_facebookLogin = (Button) view.findViewById(R.id.inicial_button_facebook_login);
 		inicial_button_facebookLogin.setOnClickListener(this);
-
+view.post(this);
 		return view;
 	}
 
@@ -53,6 +53,21 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 	@Override
 	public void onClick(View v) {
 				Server.user_profile(getActivity(), this);
+	}
+	int i=0;
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		if(getView()!=null){
+			if(Session.getActiveSession()!=null && Session.getActiveSession().isOpened() ){
+				((MainActivity)getActivity()).login();
+			
+				return;
+			}
+			getView().postDelayed(this, i*10);
+			if(i<1000)i++;
+		}
+		
 	}
 
 }
