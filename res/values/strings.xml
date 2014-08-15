@@ -94,4 +94,5 @@
     <string name="sobre_evento">Descreva sobre o evento</string>
     <string name="enviar">Enviar</string>
     <string name="terminar_jogo">Terminar Jogo</string>
+    <string name="editar">Editar Evento</string>
 </resources>

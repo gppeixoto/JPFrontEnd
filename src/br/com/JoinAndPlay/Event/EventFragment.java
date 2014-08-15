@@ -177,35 +177,46 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		//	qtd_no_local(evento.);
 		
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
-		butao_terminar.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				TextView myText = (TextView) v;
-				myText.setText("Jogo Finalizado");
-				Server.close_event(evento.getId(), null);
-			}
-		});
-		
 		Button editar_evento = (Button)view.findViewById(R.id.editar_evento);
-		editar_evento.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				EditEvent next = new EditEvent();
-				Bundle args = new Bundle();				
-				
-				args.putString("nome_evento", evento.getName());
-				args.putString("descricao_evento", evento.getDescription());
-				args.putString("bairro", evento.getNeighbourhood());
-				args.putString("cidade", evento.getCity());
-				args.putBoolean("privacidade", evento.getPrivacy());
-				args.putDouble("preco",evento.getPrice());
-				
-				next.setArguments(args);
-				((MainActivity)getActivity()).mudarAbaAtual(next);	
-			}
-		});
+		///VERIFICAR AQUI O USERID!
+		if(true || evento.getCreatorId() == ConfigJP.UserId){
+			editar_evento.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					EditEvent next = new EditEvent();
+					Bundle args = new Bundle();				
+					
+					args.putString("nome_evento", evento.getName());
+					args.putString("descricao_evento", evento.getDescription());
+					args.putString("bairro", evento.getNeighbourhood());
+					args.putString("cidade", evento.getCity());
+					args.putBoolean("privacidade", evento.getPrivacy());
+					args.putDouble("preco",evento.getPrice());
+					args.putString("dia", evento.getDate());
+					args.putString("hora_begin", evento.getStartTime());
+					args.putString("hora_end",evento.getEndTime());
+					args.putString("rua", evento.getLocalizationAddress());
+					args.putString("esporte",evento.getSport());
+					args.putString("id_evento", evento.getId());
+					
+					next.setArguments(args);
+					((MainActivity)getActivity()).mudarAbaAtual(next);	
+				}
+			});
+			butao_terminar.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					TextView myText = (TextView) v;
+					myText.setText("Jogo Finalizado");
+					Server.close_event(evento.getId(), null);
+				}
+			});
+		}else{
+			editar_evento.setVisibility((View.INVISIBLE));
+			butao_terminar.setVisibility((View.INVISIBLE));
+		}
 		
 		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
 		final Connecter<Evento> listener = this;

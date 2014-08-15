@@ -330,7 +330,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
-                        android:text="@string/data"
+                        android:text="@string/escolha_data"
                         android:textColor="@color/red_pesquisa"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -446,6 +446,7 @@
                     android:background="@drawable/pesq_button"
                     android:gravity="center_horizontal|top"
                     android:padding="10dp"
+                    android:text="@string/editar"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
