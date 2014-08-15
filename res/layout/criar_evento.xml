@@ -323,20 +323,19 @@
                         android:layout_height="wrap_content"
                         android:text="@string/unidade_preco"
                         android:textColor="@color/cinza_escuro"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                     
                     <EditText 
                         android:id="@+id/escolha_preco"
                         android:hint="@string/preco_nulo"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/cinza_escuro"
+                        android:maxLines="1"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        />
-                    
-                   
+                        />   
                     
                 </LinearLayout>
 
