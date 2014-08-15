@@ -56,7 +56,7 @@ class Botao extends BaseAdapter implements OnClickListener{
 	public View getView(int arg0, View arg1, ViewGroup arg2) {	
 		String txt_nome = list[arg0].getName();
 		String txt_end = list[arg0].getAddress();
-		this.addr = txt_nome + txt_end;
+		this.addr = txt_end;
 		Button bt = new Button(cont);
 		bt.setFocusable(false);
 		bt.setOnClickListener(this);
@@ -77,6 +77,7 @@ class Botao extends BaseAdapter implements OnClickListener{
 		args_.putString("horaTermino", bede.getString("horaTermino"));
 		args_.putStringArray("esportes", bede.getStringArray("esporte"));
 		args_.putString("endereco",addr);
+		args_.putBoolean("getA", false);
 		Log.v("enmdiricio", addr);
 		
 		frag.setArguments(args_);

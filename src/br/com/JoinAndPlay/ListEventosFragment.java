@@ -48,7 +48,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -66,53 +66,60 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		Button_criar.setOnTouchListener(this);
-		
-	if(getArguments()!=null){
-	final	Bundle args= getArguments();
-	final ListEventosFragment self=this;
-	
-	final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
-	
-		
-	
-		Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
-			@Override
-			public void onTerminado(Vector<Endereco> in) {
-				if(in.size() == 0){
-					Bundle args2 = new Bundle();
-					args2.putParcelableArray("enderecos", new Endereco[0]);
-					args2.putString("data", args.getString("data"));
-					args2.putString("horaInicio", args.getString("data"));
-					args2.putString("horaTermino", args.getString("horaTermino"));
-					args2.putStringArray("esportes", args.getStringArray("esportes"));
-					args2.putBoolean("conflito",false);
-					BolaForaFragment bfm = new BolaForaFragment();
-					bfm.setArguments(args2);
-					((MainActivity) self.getActivity()).replaceTab(bfm);
-				} else if(in.size() == 1){
-					Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
-				} else {
-					Bundle args2 = new Bundle();
-					Endereco arr[] = new Endereco[in.size()];
-					in.toArray(arr);
-					args2.putParcelableArray("enderecos", arr);
-					args2.putString("data", args.getString("data"));
-					args2.putString("horaInicio", args.getString("data"));
-					args2.putString("horaTermino", args.getString("horaTermino"));
-					args2.putStringArray("esportes", args.getStringArray("esportes"));
-					args2.putBoolean("conflito", true);
-					BolaForaFragment bfm = new BolaForaFragment();
-					bfm.setArguments(args2);
-					((MainActivity) self.getActivity()).replaceTab(bfm);
-				}
+
+		if(getArguments()!=null){
+			final Bundle args= getArguments();
+			final ListEventosFragment self=this;
+
+			final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
+
+
+			boolean getA = args.getBoolean("getA");
+			Log.v("getiA", getA+"");
+			if (getA){
+				Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
+					@Override
+					public void onTerminado(Vector<Endereco> in) {
+						Log.v("ncjbfdebvhjbhj", in+"");
+						if(in == null || in.size() == 0){
+							Bundle args2 = new Bundle();
+							args2.putParcelableArray("enderecos", new Endereco[0]);
+							args2.putString("data", args.getString("data"));
+							args2.putString("horaInicio", args.getString("horaInicio"));
+							args2.putString("horaTermino", args.getString("horaTermino"));
+							args2.putStringArray("esportes", args.getStringArray("esportes"));
+							args2.putBoolean("conflito",false);
+							BolaForaFragment bfm = new BolaForaFragment();
+							bfm.setArguments(args2);
+							((MainActivity) self.getActivity()).replaceTab(bfm);
+						} else if(in.size() == 1){
+							Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
+						} else {
+							Bundle args2 = new Bundle();
+							Endereco arr[] = new Endereco[in.size()];
+							in.toArray(arr);
+							args2.putParcelableArray("enderecos", arr);
+							args2.putString("data", args.getString("data"));
+							args2.putString("horaInicio", args.getString("horaInicio"));
+							args2.putString("horaTermino", args.getString("horaTermino"));
+							args2.putStringArray("esportes", args.getStringArray("esportes"));
+							args2.putBoolean("conflito", true);
+							BolaForaFragment bfm = new BolaForaFragment();
+							bfm.setArguments(args2);
+							((MainActivity) self.getActivity()).replaceTab(bfm);
+						}
+					}
+				});
+			} else {
+				Log.v("aaaf", "pegou");
+				Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 			}
-		});
-		//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
-		//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
-			}else{
-		Server.get_future_events(getActivity(),this);	
-	}
-	
+			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
+			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
+		}else{
+			Server.get_future_events(getActivity(),this);	
+		}
+
 		return tela;
 	}
 	boolean login = true;
@@ -120,12 +127,12 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
-			login=false;
-			
-			CriarEventosFragment criar = new CriarEventosFragment();
-			((MainActivity)getActivity()).mudarAbaAtual(criar);
-		
+
+		login=false;
+
+		CriarEventosFragment criar = new CriarEventosFragment();
+		((MainActivity)getActivity()).mudarAbaAtual(criar);
+
 	}
 
 
@@ -178,10 +185,10 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		for (int i = 0; i <vector.size(); i++) {
 			lista.add(vector.get(i));
 		}
-		
-		
+
+
 		listV.post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -195,18 +202,18 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		
+
 		if(lista!=null && lista.size()>(arg2-1) ){
-			
+
 			Bundle arg= new Bundle();
 			arg.putString("evento",lista.get(arg2-1).getId() );
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
 			((MainActivity)getActivity()).mudarAbaAtual(fragment);
 		}
-			
+
 	}
-	
+
 
 
 }

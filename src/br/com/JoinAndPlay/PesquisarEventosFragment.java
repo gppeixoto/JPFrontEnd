@@ -294,19 +294,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 
 				args.putString("endereco",  endereco);
 				
-				/*args.putString("nome", env.getText().toString());
-				
-				args.putString("bairro", editBairro.getText().toString());
-				
-				args.putString("cidade", editCidade.getText().toString());
-				
-				args.putString("rua", editRua.getText().toString());*/
-				
 				args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));
 
 				args.putString("horaInicio", b2.getText().toString());
 				
 				args.putString("horaTermino", b3.getText().toString());
+				
+				args.putBoolean("getA", true);
 				
 				list.setArguments(args);
 				((MainActivity)getActivity()).mudarAba(0, list);
