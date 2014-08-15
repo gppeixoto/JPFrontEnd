@@ -349,17 +349,21 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 				args.putString("horaTermino", bDataFim.getText().toString());
 				
 				if(pago){
+					
 					String aux = ePreco.getText().toString();
-					double b = (aux.charAt(aux.length()-2)/10) + (aux.charAt(aux.length()-1)/100);
+					Log.v("precostring", aux);
+					
+					double b = (((double)Integer.parseInt(""+aux.charAt(aux.length()-2)))/10.0) + (((double)Integer.parseInt(""+aux.charAt(aux.length()-1)))/100.0);
 					
 					double c = 0;
-					double j=1;
+					double j=1.0;
 					for(int i = aux.length()-4; i > -1; i--){
-						c+= aux.charAt(i)*j;
-						j*=10;
+						c+=((double)Integer.parseInt(""+aux.charAt(i)))*j;
+						j*=10.0;
 					}
 					
 					double a = b+c;
+					Log.v("precodouble", a+"");
 					args.putDouble("preco", a);
 				} else {
 					args.putDouble("preco", 0.0);

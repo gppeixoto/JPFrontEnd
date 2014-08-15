@@ -113,7 +113,7 @@ public class Server implements Serializable {
 				@Override
 				public void onTerminado(String access_token) {
 					// TODO Auto-generated method stub
-					Server.create_event(access_token,name, localization_address, city, neighbourhood, sport_name, date, begin_time, end_time, description, name, price, privacy,latlng[0],latlng[1], connecter);
+					Server.create_event(access_token,localization_name, localization_address, city, neighbourhood, sport_name, date, begin_time, end_time, description, name, price, privacy,latlng[0],latlng[1], connecter);
 
 				}
 			});
