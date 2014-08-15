@@ -67,7 +67,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		tempo_decorrido.setText(time);
 		nome_usuario.setText(nome);
 		DownloadImagem.postLoad(foto_usuario,photo);
-		list.addView(novo);
+		list.addView(novo,0);
 	}
 
 	/*@Override
