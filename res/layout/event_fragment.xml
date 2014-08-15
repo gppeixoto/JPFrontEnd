@@ -237,7 +237,7 @@
                     android:layout_marginTop="7dp"
                     android:src="@drawable/ic_perfil" />
 
-                <TextView
+                <Button
                     android:id="@+id/qtd_amigos_amais"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
