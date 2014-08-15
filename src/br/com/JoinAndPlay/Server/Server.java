@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
 import android.app.Activity;
-import android.location.Address;
 import android.util.Log;
 
 public class Server implements Serializable {
@@ -51,6 +50,10 @@ public class Server implements Serializable {
 
 						@Override
 						public void onTerminado(String in) {
+							if (in == null) {
+								if (connecter != null) connecter.onTerminado(null);
+								return;
+							}
 							try {
 								Usuario user = processUsuario(new JSONObject((String) in));
 								if (connecter != null) connecter.onTerminado(user);
@@ -77,6 +80,10 @@ public class Server implements Serializable {
 
 				@Override
 				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
 					try {
 						Usuario user = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(user);
@@ -109,12 +116,9 @@ public class Server implements Serializable {
 		final double[] latlng=ConfigJP.getLatLngFromAddress(arc,localization_address+","+city+","+neighbourhood);
 		if(latlng!=null){
 			ConfigJP.getToken(arc, new Connecter<String>() {
-
 				@Override
 				public void onTerminado(String access_token) {
-					// TODO Auto-generated method stub
-					Server.create_event(access_token,localization_name, localization_address, city, neighbourhood, sport_name, date, begin_time, end_time, description, name, price, privacy,latlng[0],latlng[1], connecter);
-
+					Server.create_event(access_token,name, localization_address, city, neighbourhood, sport_name, date, begin_time, end_time, description, name, price, privacy,latlng[0],latlng[1], connecter);
 				}
 			});
 			return true;
@@ -166,6 +170,10 @@ public class Server implements Serializable {
 
 				@Override
 				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
 					try {
 						Evento evt = processEvent(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(evt);
@@ -193,6 +201,10 @@ public class Server implements Serializable {
 
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					JSONObject obj = new JSONObject(in);
 					if (connecter != null) {
@@ -221,39 +233,21 @@ public class Server implements Serializable {
 	 * @param id id do evento.
 	 * @return o evento criado.
 	 * */
-	public static void edit_event(String access_token, String localization_name, String localization_address, String city,
-			String neighbourhood, String sport_name, String date, String begin_time, String end_time, String description,
-			String name, double price, boolean privacy, String id, final Connecter<Evento> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("access_token", access_token);
-			obj.put("localizationName", localization_name);
-			obj.put("localizationAddress", localization_address);
-			obj.put("city", city);
-			obj.put("neighbourhood", neighbourhood);
-			obj.put("eventSport", sport_name);
-			obj.put("eventDay", date);
-			obj.put("eventTimeBegin", begin_time);
-			obj.put("eventTimeEnd", end_time);
-			obj.put("eventDescription", description);
-			obj.put("eventName", name);
-			obj.put("eventPrice", price);
-			obj.put("private", privacy);
-			obj.put("id", id);
-
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter<String>() {
+	public static void edit_event(Activity act, final String localization_name, final String localization_address, final String city,
+			final String neighbourhood, final String sport_name, final String date, final String begin_time, final String end_time, final String description,
+			final String name, final double price, final boolean privacy, final String id, final Connecter<Evento> connecter) {
+		final double[] latlng=ConfigJP.getLatLngFromAddress(act,localization_address+","+city+","+neighbourhood);
+		if(latlng!=null){
+			ConfigJP.getToken(act, new Connecter<String>() {
 
 				@Override
-				public void onTerminado(String in) {
-					try {
-						Evento evt = processEvent(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(evt);
-					} catch (JSONException _) {}
+				public void onTerminado(String access_token) {
+					// TODO Auto-generated method stub
+					edit_event(access_token, localization_name, localization_address, city, neighbourhood, sport_name, date, begin_time, end_time, description, name, price, privacy, id, latlng[0]+"", latlng[1]+"",connecter);
+
 				}
 			});
-
-		} catch (JSONException _) {}
+		}
 	}
 
 	/**
@@ -302,6 +296,10 @@ public class Server implements Serializable {
 
 				@Override
 				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
 					try {
 						Evento evt = processEvent(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(evt);
@@ -318,36 +316,38 @@ public class Server implements Serializable {
 	 * @return eventos que esse usuario ja participou ou disse que ira participar. 
 	 */
 	public static void user_agenda(Activity act, final Connecter<Vector<Evento>> connecter) {
-	ConfigJP.login(act, new Connecter<String>() {
-		
-		@Override
-		public void onTerminado(String access_token) {
-			// TODO Auto-generated method stub
-			try {
-				JSONObject obj = new JSONObject();
-				obj.put("access_token", access_token);
+		ConfigJP.getToken(act, new Connecter<String>() {
 
-				ServiceHandler sh = new ServiceHandler();
-				sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
+			@Override
+			public void onTerminado(String access_token) {
+				// TODO Auto-generated method stub
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("access_token", access_token);
 
-					@Override
-					public void onTerminado(String in) {
-						try {
-							JSONObject obj = new JSONObject(in);
-							JSONArray arr = obj.getJSONArray("events");
-							Vector<Evento> ret = new Vector<Evento>();
-							for (int i = 0; i < arr.length(); ++i) {
-								ret.add(processEvent(arr.getJSONObject(i)));
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
+
+						@Override
+						public void onTerminado(String in) {
+							if (in == null) {
+								if (connecter != null) connecter.onTerminado(null);
+								return;
 							}
-							if (connecter != null) connecter.onTerminado(ret);
-						} catch (JSONException _) {}
-					}
-				});
-			} catch (JSONException _) {}	
-		}
-	});
-		
-		
+							try {
+								JSONObject obj = new JSONObject(in);
+								JSONArray arr = obj.getJSONArray("events");
+								Vector<Evento> ret = new Vector<Evento>();
+								for (int i = 0; i < arr.length(); ++i) {
+									ret.add(processEvent(arr.getJSONObject(i)));
+								}
+								if (connecter != null) connecter.onTerminado(ret);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
 	}
 
 	/**
@@ -368,6 +368,10 @@ public class Server implements Serializable {
 
 				@Override
 				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
 					try {
 						Usuario ret = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(ret);
@@ -393,6 +397,10 @@ public class Server implements Serializable {
 
 				@Override
 				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
 					try {
 						Usuario ret = processUsuario(new JSONObject((String) in));
 						if (connecter != null) connecter.onTerminado(ret);
@@ -442,6 +450,10 @@ public class Server implements Serializable {
 
 					@Override    
 					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
 						try {
 							Vector<Evento> ret = new Vector<Evento>();
 							JSONObject json_ret = new JSONObject((String) in);
@@ -487,6 +499,10 @@ public class Server implements Serializable {
 
 					@Override    
 					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
 						try {
 							Evento ret = null;
 							JSONObject json_ret = new JSONObject((String) in);
@@ -527,6 +543,10 @@ public class Server implements Serializable {
 
 					@Override    
 					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
 						try {
 							Evento ret = processEvent(new JSONObject((String) in));
 							if (connecter != null) connecter.onTerminado(ret);
@@ -554,6 +574,10 @@ public class Server implements Serializable {
 
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					if (connecter != null) connecter.onTerminado(processEvent(new JSONObject(in)));
 				} catch (JSONException _) {}				
@@ -582,6 +606,10 @@ public class Server implements Serializable {
 				sh.makePOST(ServiceHandler.URL_BASE + "/comment/", obj.toString(), new Connecter<String>() {
 					@Override
 					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
 						try {
 							JSONObject obj = new JSONObject(in);
 							String name = obj.getString("name");
@@ -618,6 +646,10 @@ public class Server implements Serializable {
 
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					JSONObject obj = new JSONObject(in);
 					if (connecter != null) {
@@ -677,6 +709,10 @@ public class Server implements Serializable {
 		(new ServiceHandler()).makeGET(s, new Connecter<String>() {
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					JSONObject obj = new JSONObject(in);
 					JSONArray arr = obj.getJSONArray("results");
@@ -707,6 +743,10 @@ public class Server implements Serializable {
 		sh.makePOST(ServiceHandler.URL_BASE + "/getfriends/", obj.toString(), new Connecter<String>() {
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					JSONObject obj = new JSONObject(in);
 					JSONArray arr = obj.getJSONArray("friends");
@@ -738,6 +778,10 @@ public class Server implements Serializable {
 
 					@Override
 					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
 						try {
 							Vector<Evento> ret = new Vector<Evento>();
 							JSONObject json_ret = new JSONObject((String) in);
@@ -768,6 +812,10 @@ public class Server implements Serializable {
 
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					JSONObject obj = new JSONObject(in);
 					Map<String, Vector<Notificacao>> map = new HashMap<String, Vector<Notificacao>>();
@@ -810,6 +858,10 @@ public class Server implements Serializable {
 			sh.makePOST(ServiceHandler.URL_BASE + "/useragenda/", obj.toString(), new Connecter<String>() {
 				@Override
 				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
 					try {
 						JSONObject obj = new JSONObject(in);
 						JSONArray arr = obj.getJSONArray("events");
@@ -840,6 +892,10 @@ public class Server implements Serializable {
 
 			@Override
 			public void onTerminado(String in) {
+				if (in == null) {
+					if (connecter != null) connecter.onTerminado(null);
+					return;
+				}
 				try {
 					Vector<Evento> ret = new Vector<Evento>();
 					JSONObject json_ret = new JSONObject((String) in);
@@ -853,6 +909,33 @@ public class Server implements Serializable {
 				} catch (JSONException _) {}
 			}
 		});
+	}
+
+	/**
+	 * @return true se tiver dado certo e false caso contrario.
+	 * */
+	public static void close_event(String event_id, final Connecter<Boolean> connecter) {
+		try {
+			JSONObject obj = new JSONObject();
+			obj.put("id", event_id);
+
+			(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/closeevent/", obj.toString(), new Connecter<String>() {
+				@Override
+				public void onTerminado(String in) {
+					if (in == null) {
+						if (connecter != null) connecter.onTerminado(null);
+						return;
+					}
+					try {
+						JSONObject obj = new JSONObject(in);
+						if (connecter != null) {
+							if (obj.has("closed")) connecter.onTerminado(true);
+							else connecter.onTerminado(false);
+						}
+					} catch (JSONException _) {}
+				}
+			});
+		} catch (JSONException _) {}
 	}
 
 	private static Notificacao processNotification(JSONObject notification) {
@@ -943,36 +1026,10 @@ public class Server implements Serializable {
 			if (evt.has("latitude")) latitude = evt.get("latitude")+"";
 			String longitude = "";
 			if (evt.has("longitude")) longitude = evt.get("longitude")+""; 
-			String creator_id = null;
+			String creator_id = "";
 			if (evt.has("creatorId")) creator_id = evt.get("creatorId")+"";
 			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id);
 		} catch (JSONException _) {}
 		return null;
-	}
-	/**
-	 * @return true se tiver dado certo e false caso contrario.
-	 * */
-	public static void close_event(String event_id, final Connecter<Boolean> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", event_id);
-			
-			(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/closeevent/", obj.toString(), new Connecter<String>() {
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						JSONObject obj = new JSONObject(in);
-						if (connecter != null) {
-							if (obj.has("closed")) connecter.onTerminado(true);
-							else connecter.onTerminado(false);
-						}
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
 	}
 }

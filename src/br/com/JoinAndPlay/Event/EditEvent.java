@@ -69,7 +69,7 @@ public class EditEvent extends Fragment {
 		//b.setOnClickListener(this);
 		//edit.setOnKeyListener(this);
 		if(getArguments()!=null && v!=null){
-			Bundle args = getArguments();
+			final Bundle args = getArguments();
 			String nome_evento = args.getString("nome_evento");
 			String descricao_evento = args.getString("descricao_evento");
 			String bairro = args.getString("bairro");
@@ -111,8 +111,7 @@ public class EditEvent extends Fragment {
 					// TODO Auto-generated method stub
 					//Primeira string vazia = latitude e segunda = longitude
 					//ALTERAR COM EDITTEXT
-					
-					//Server.edit_event(access_token, nome_evento, rua, cidade, bairro, esporte, dia, hora_begin, hora_end, descricao_evento, nome_evento, preco, privado, id_evento, "", "", null);
+					//Server.edit_event(getActivity(), nome_evento, rua, cidade, bairro, esporte, dia, hora_begin, hora_end, descricao_evento, nome_evento, preco, privado, id_evento, null);
 				}
 			});
 		}
