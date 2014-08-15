@@ -1,8 +1,13 @@
 package br.com.JoinAndPlay;
 
 import java.text.DecimalFormat;
+import java.util.Vector;
 
 import org.joda.time.DateTime;
+
+import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Endereco;
+import br.com.JoinAndPlay.Server.Server;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
@@ -43,6 +48,8 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 	private ImageButton e2Button;
 	private ImageButton e3Button;
 	private ImageButton e4Button;
+	
+	private Vector<Endereco> vec;
 	
 	private CheckBox checkPago;
 	
@@ -176,7 +183,15 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 		
 		if(ePreco.getVisibility()==View.VISIBLE){
 			ePreco.addTextChangedListener(new TextWatcher() {
-				public void onTextChanged(CharSequence s, int start, int before, int count) {}
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					String preco = s.toString();
+					if(preco!=null && !preco.trim().equals("")){
+						double p = Double.parseDouble(preco);
+						DecimalFormat df = new DecimalFormat("0.00");
+						preco = ""+df.format(p);
+						ePreco.setText(preco);
+					}
+				}
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 				
 				public void afterTextChanged(Editable s) {
@@ -353,6 +368,48 @@ public class CriarEventosFragment extends Fragment implements RadialTimePickerDi
 					alert11.show();
 					return;
 				}
+				
+				Server.getAddresses(lugar, rua, bairro, cidade, new Connecter<Vector<Endereco>>(){
+
+					@Override
+					public void onTerminado(Vector<Endereco> in) {
+						// TODO Auto-generated method stub
+						vec = (Vector<Endereco>) in;
+					}
+					
+				});
+				
+				if(vec==null || vec.isEmpty()){
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(bProximo.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+					builder1.setCancelable(true);
+					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+					}});
+					
+					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_endereco, null));
+					AlertDialog alert11 = builder1.create();
+					
+					OnShowListener onshow = new OnShowListener() {
+						@Override
+						@SuppressWarnings( "deprecation" )
+						public void onShow(DialogInterface dialog) {
+							Button positiveButton = ((AlertDialog) dialog)
+			                        .getButton(AlertDialog.BUTTON_POSITIVE);
+							
+			                positiveButton.setBackgroundDrawable(getResources()
+			                        .getDrawable(R.drawable.alert_button));
+			                
+			                positiveButton.setText("OK");
+			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+							
+						}
+					};
+					alert11.setOnShowListener(onshow);
+					alert11.show();
+					return;
+				}
+				
 				
 				args.putString("esporte", esporte);
 				args.putString("rua", rua);
