@@ -54,6 +54,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,7 +66,6 @@ import android.widget.TextView;
 public class EditEvent extends Fragment implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener,
 DatePickerDialogFragment.DatePickerDialogHandler,
 TimePickerDialogFragment.TimePickerDialogHandler  {
-	private Evento myEvent=null;
 	SupportMapFragment suportMap;
 	public LinearLayout list;
 	public LayoutInflater inf;
@@ -80,6 +80,8 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 	private boolean begin = false;
 	private boolean end = false;
 	private Configuration config;
+	private boolean eventoPago = false;
+	private Double valor = 0.0;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
 	
@@ -108,7 +110,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			String bairro = args.getString("bairro");
 			String cidade = args.getString("cidade");
 			privado = args.getBoolean("privacidade");
-			final Double valor = args.getDouble("preco");
+			valor = args.getDouble("preco");
 			String dia = args.getString("dia");
 			String hora_begin = args.getString("hora_begin");
 			String hora_end = args.getString("hora_end");
@@ -127,8 +129,33 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			cidadeE.setText(cidade);
 			final EditText ruaE = (EditText) v.findViewById(R.id.editar_rua);
 			ruaE.setText(rua);
+			final CheckBox has_price = (CheckBox) v.findViewById(R.id.com_preco);
+			final TextView real = (TextView) v.findViewById(R.id.valor_preco);
 			final EditText preco = (EditText) v.findViewById(R.id.editar_preco);
-			preco.setText(valor.toString());
+			if(valor == 0.0){
+				real.setVisibility(View.INVISIBLE);
+				preco.setVisibility(View.INVISIBLE);
+			}else{
+				valor=valor/100.0;
+				has_price.setChecked(true);
+				eventoPago=true;
+				preco.setText(valor.toString());
+			}
+			has_price.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(has_price.isChecked()){
+						real.setVisibility(View.VISIBLE);
+						preco.setVisibility(View.VISIBLE);
+						eventoPago=true;
+					} else {
+						real.setVisibility(View.INVISIBLE);
+						preco.setVisibility(View.INVISIBLE);
+						eventoPago=false;
+					}
+				}
+			});
 						
 			privadoE = (Button) v.findViewById(R.id.botao_privado);
 			publicoE = (Button) v.findViewById(R.id.botao_publico);
@@ -249,10 +276,15 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Server.edit_event(getActivity(), local_name, ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), valor, privado, id_evento, null);
+					double priceE = 0.0;
+					if(eventoPago){
+						priceE = Double.parseDouble(preco.getText().toString());
+					}
+					Server.edit_event(getActivity(), local_name, ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), priceE, privado, id_evento, null);
 					EventFragment next = new EventFragment();
 					Bundle args = new Bundle();
 					args.putString("evento", id_evento);
+					((MainActivity)getActivity()).retirarAbaAtual();
 					next.setArguments(args);
 					((MainActivity)getActivity()).replaceTab(next);
 				}
