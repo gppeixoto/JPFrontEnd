@@ -29,8 +29,6 @@
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:background="@color/red"
-                android:text="@string/participar"
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/white" />
         </LinearLayout>

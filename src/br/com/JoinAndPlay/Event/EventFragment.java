@@ -79,6 +79,15 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		list.addView(novo,0);
 	}
 
+	public void paintRed(Button red){
+		red.setBackgroundResource(R.drawable.red_button);
+		//red.setPadding(10, 10, 10, 10);
+	}
+	public void paintGray(Button gray){
+		gray.setBackgroundResource(R.drawable.gray_button);
+		//gray.setPadding(10, 10, 10, 10);
+	}
+
 	/*@Override
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
 Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
@@ -130,7 +139,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		View v = inflater.inflate(R.layout.event_fragment, container, false);
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
-		Button b = (Button)v.findViewById(R.id.button1);
+
 		bAmigos = (Button) v.findViewById(R.id.qtd_amigos_amais);
 		//EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
 		bAmigos.setOnClickListener(new OnClickListener(){
@@ -139,30 +148,30 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(bAmigos.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-		        LayoutInflater inflater = getActivity().getLayoutInflater();
-		        View convertView = (View) inflater.inflate(R.layout.list_friends, null);
-		        alertDialog.setView(convertView);
-		        alertDialog.setTitle("Amigos Participantes");
-		        final MyListView lv = (MyListView) convertView.findViewById(R.id.views_friends);
-		        final Vector <Usuario> participantes = myEvent.getUsers();
-		        final ArrayList<ItemFriend> amigosp = new ArrayList<ItemFriend>();
-				
-		        Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
+				LayoutInflater inflater = getActivity().getLayoutInflater();
+				View convertView = (View) inflater.inflate(R.layout.list_friends, null);
+				alertDialog.setView(convertView);
+				alertDialog.setTitle("Amigos Participantes");
+				final MyListView lv = (MyListView) convertView.findViewById(R.id.views_friends);
+				final Vector <Usuario> participantes = myEvent.getUsers();
+				final ArrayList<ItemFriend> amigosp = new ArrayList<ItemFriend>();
+
+				Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
 
 					@Override
 					public void onTerminado(Vector<Usuario> in) {
 						// TODO Auto-generated method stub
 						amigos = (Vector<Usuario>) in;
 						if(amigos!=null){
-							
+
 							for(int i = 0; i < participantes.size(); i++){
 								if(amigos.contains(participantes.elementAt(i))){
 									amigosp.add(new ItemFriend(participantes.elementAt(i)));
 								}
 							}
-							
+
 							lv.post(new Runnable() {
-								
+
 								@Override
 								public void run() {
 									// TODO Auto-generated method stub
@@ -173,11 +182,10 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 						}	
 					}
 				});	
-		        
-		        alertDialog.show();
+
+				alertDialog.show();
 			}
 		});
-		b.setOnClickListener(this);
 		//edit.setOnKeyListener(this);
 		suportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
@@ -210,6 +218,18 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 	public void setValuesEvent(final View view,final Evento evento){
 		if(evento == null || view==null) return;
+
+		Button participar = (Button)view.findViewById(R.id.button1);
+		if(myEvent.getIsParticipating()==true){
+			participar.setText("Deixar evento");
+			paintGray(participar);
+		}
+		else{
+			participar.setText("Participar");
+			paintRed(participar);
+		}
+		participar.setOnClickListener(this);
+
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
 
@@ -236,7 +256,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
 		Button editar_evento = (Button)view.findViewById(R.id.editar_evento);
 		///VERIFICAR AQUI O USERID!
-		if(true || evento.getCreatorId() == ConfigJP.UserId){
+		if(true || evento.getCreatorId().equals(ConfigJP.UserId)){
 			editar_evento.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -332,13 +352,31 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		descricao_do_esporte.setText(evento.getDescription());
 		double[] temp=null;
 
-		if(evento.getLatitude()!=null && evento.getLongitude()!=null){
+		Log.v("lat", evento.getLatitude()+" "+evento.getLatitude());
+		try{
 			temp=new double[2];
 
 			temp[0]	=Double.parseDouble(evento.getLatitude());		
-			temp[1]	=Double.parseDouble(evento.getLongitude());		
+			temp[1]	=Double.parseDouble(evento.getLongitude());	
+		}catch(Exception _){
+			temp=ConfigJP.getLatLngFromAddress(getActivity(),evento.getLocalizationName()+","+evento.getLocalizationAddress()+","+evento.getNeighbourhood()+","+evento.getCity());
+			if(temp==null)
+				temp=ConfigJP.getLatLngFromAddress(getActivity(),evento.getLocalizationAddress()+","+evento.getNeighbourhood()+","+evento.getCity());
+			if(temp!=null){
+				final double[] cordenada= temp;
+				ConfigJP.getToken(getActivity(), new Connecter<String>() {
+
+					@Override
+					public void onTerminado(String access_token) {
+						// TODO Auto-generated method stub
+						Server.edit_event(access_token, evento.getLocalizationName(),evento.getLocalizationAddress(), evento.getCity(), evento.getNeighbourhood(), evento.getSport(), evento.getDate(), evento.getStartTime(), evento.getEndTime(), evento.getDescription(), evento.getName(), evento.getPrice(), evento.getPrivacy(), evento.getId(), cordenada[0]+"", cordenada[1]+"",null);
+
+					}
+				});
+			}
 
 		}
+
 		final double[] latlng= temp;
 		final String titulo=evento.getLocalizationName();
 		view.post(new Runnable() {
@@ -368,12 +406,17 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		//((MainActivity)getActivity()).mudarAbaAtual(new ListEventosFragment());
+		Button participar = (Button) v.findViewById(R.id.button1);
 		if(myEvent!=null){
 			if(myEvent.getIsParticipating()==false){
 				Server.enter_event(getActivity(), myEvent.getId(),this );
+				participar.setText("Deixar evento");
+				paintGray(participar);
 			}
 			else{
 				Server.leave_event(getActivity(), myEvent.getId(),this );
+				participar.setText("Participar");
+				paintRed(participar);
 			}
 		}
 	}
