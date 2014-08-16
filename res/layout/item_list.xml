@@ -171,7 +171,7 @@
                         android:layout_height="35dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:src="@drawable/avatar_35x335" />
+                        android:src="@drawable/cadeado" />
 
         </RelativeLayout>
 

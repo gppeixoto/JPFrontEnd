@@ -116,7 +116,7 @@ public final class ConfigJP {
 		R.drawable.listpatins,
 		R.drawable.listskate,
 		R.drawable.listboxe,
-		R.drawable.listbilhar
+		R.drawable.listbaseball
 
 	};
 	public static final int[] ESPORTE_COR ={
