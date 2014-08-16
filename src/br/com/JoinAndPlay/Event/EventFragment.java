@@ -81,11 +81,11 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 	public void paintRed(Button red){
 		red.setBackgroundResource(R.drawable.red_button);
-		//red.setPadding(10, 10, 10, 10);
+		red.setPadding(10, 10, 10, 10);
 	}
 	public void paintGray(Button gray){
 		gray.setBackgroundResource(R.drawable.gray_button);
-		//gray.setPadding(10, 10, 10, 10);
+		gray.setPadding(10, 10, 10, 10);
 	}
 
 	/*@Override
@@ -128,7 +128,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	}*/
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 			Bundle savedInstanceState) {
 
 		MapsInitializer.initialize(getActivity());
@@ -146,10 +146,9 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(bAmigos.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				LayoutInflater inflater = getActivity().getLayoutInflater();
-				View convertView = (View) inflater.inflate(R.layout.list_friends, null);
+				View convertView = (View) inflater.inflate(R.layout.list_friends, container,false);
 				alertDialog.setView(convertView);
 				alertDialog.setTitle("Amigos Participantes");
 				final MyListView lv = (MyListView) convertView.findViewById(R.id.views_friends);
@@ -160,7 +159,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 					@Override
 					public void onTerminado(Vector<Usuario> in) {
-						// TODO Auto-generated method stub
 						amigos = (Vector<Usuario>) in;
 						if(amigos!=null){
 
@@ -220,7 +218,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		if(evento == null || view==null) return;
 
 		Button participar = (Button)view.findViewById(R.id.button1);
-		if(myEvent.getIsParticipating()==true){
+		if(evento.getIsParticipating()){
 			participar.setText("Deixar evento");
 			paintGray(participar);
 		}
@@ -229,6 +227,12 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			paintRed(participar);
 		}
 		participar.setOnClickListener(this);
+
+		LinearLayout layout_evento = (LinearLayout)view.findViewById(R.id.linear_evento);
+		ImageView imagem_evento = (ImageView)view.findViewById(R.id.imagem_evento);
+		int id_esporte = ConfigJP.getEsporteID(evento.getSport());
+		layout_evento.setBackgroundResource(ConfigJP.ESPORTE_BARRA[id_esporte]);
+		imagem_evento.setImageResource(ConfigJP.ESPORTE_BITMAP[id_esporte]);
 
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
@@ -256,11 +260,11 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
 		Button editar_evento = (Button)view.findViewById(R.id.editar_evento);
 		///VERIFICAR AQUI O USERID!
-		if(true || evento.getCreatorId().equals(ConfigJP.UserId)){
+		Log.v("IDS!",evento.getCreatorId() + " = " + ConfigJP.UserId);
+		if(true || evento.getCreatorId() == ConfigJP.UserId){
 			editar_evento.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					EditEvent next = new EditEvent();
 					Bundle args = new Bundle();				
 
@@ -285,7 +289,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			butao_terminar.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					TextView myText = (TextView) v;
 					myText.setText("Jogo Finalizado");
 					Server.close_event(evento.getId(), null);
@@ -301,13 +304,10 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		butao_enviar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				EditText myEditText = (EditText) view.findViewById(R.id.criar_comentario);
-				//Log.v("COMEN", myEditText.getText().toString());
 				Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Comentario>() {
 					@Override
 					public void onTerminado(Comentario in) {
-						// TODO Auto-generated method stub
 						Server.get_detailed_event(getActivity(),myEvent.getId(),listener);	
 
 					}
@@ -404,34 +404,38 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		//((MainActivity)getActivity()).mudarAbaAtual(new ListEventosFragment());
-		Button participar = (Button) v.findViewById(R.id.button1);
 		if(myEvent!=null){
-			if(myEvent.getIsParticipating()==false){
-				Server.enter_event(getActivity(), myEvent.getId(),this );
-				participar.setText("Deixar evento");
-				paintGray(participar);
-			}
-			else{
-				Server.leave_event(getActivity(), myEvent.getId(),this );
-				participar.setText("Participar");
-				paintRed(participar);
-			}
+			if(myEvent.getIsParticipating()==false) Server.enter_event(getActivity(), myEvent.getId(),this );
+			else Server.leave_event(getActivity(), myEvent.getId(),this );
+			EventFragment next = new EventFragment();
+			Bundle args = new Bundle();
+			args.putString("evento", myEvent.getId());
+			next.setArguments(args);
+			((MainActivity)getActivity()).replaceTab(next);
 		}
 	}
 
 	@Override
-	public void onTerminado(Evento in) {
-		// TODO Auto-generated method stub
+	public void onTerminado(final Evento in) {
 		if(in!=null ){
 			myEvent=in;
 			if(getView()!=null){
+				final EventFragment self = this;
 				getView().post(new Runnable() {
 					public void run() {
-						setValuesEvent(getView(), myEvent);
-						getView().requestLayout();
-						getView().invalidate();
+						if(ConfigJP.UserId == null){
+							ConfigJP.getUserID(getActivity(), new Connecter<String>() {
+								@Override
+								public void onTerminado(String id) {
+									ConfigJP.UserId=id;
+									self.onTerminado(in);
+								}
+							});
+						}else{
+							setValuesEvent(getView(), myEvent);
+							getView().requestLayout();
+							getView().invalidate();
+						}
 
 					}
 				});

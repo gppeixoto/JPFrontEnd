@@ -87,6 +87,9 @@ public class MainActivity extends FragmentActivity {
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, tabs).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
 
 	}
+	public void retirarAbaAtual(){
+		tabs.tabPop();
+	}
 	void mudarAba(int i){
 		//apartir de uma aba chamar ((MainActivity)getActivity()).mudarAba(n)
 		tabs.onPageSelected(i);
@@ -99,7 +102,7 @@ public class MainActivity extends FragmentActivity {
 		tabs.tabChange(fm,true);
 
 	}
-	void mudarAba(int id,Fragment fm){
+	public void mudarAba(int id,Fragment fm){
 		tabs.tabChange(id,fm,true);
 	}
 

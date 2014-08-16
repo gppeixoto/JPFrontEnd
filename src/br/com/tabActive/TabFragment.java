@@ -44,6 +44,12 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		ft.commit();
 
 	}
+	public void tabPop(int idtab){
+		getFragmentManagerAba(idtab).popBackStack();
+	}
+	public void tabPop(){
+		tabPop(mTabHost.getCurrentTab());
+	}
 	public void tabChange(Fragment arg1,boolean voltar){
 
 		tabChange(mTabHost.getCurrentTab(),arg1, voltar);
