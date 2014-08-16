@@ -12,12 +12,12 @@
             <item android:state_selected="true">
                 <bitmap
                     android:gravity="center"
-                    android:src="@drawable/ib_cal" />
+                    android:src="@drawable/brancoevento" />
             </item>
             <item>
                 <bitmap
                     android:gravity="center"
-                    android:src="@drawable/ic_cal" />
+                    android:src="@drawable/cinzaeventos" />
             </item>
         </selector>
     </item>

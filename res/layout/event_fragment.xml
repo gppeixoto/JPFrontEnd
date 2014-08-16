@@ -195,7 +195,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="7dp"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
 
                 <ImageView
                     android:layout_width="35dp"
@@ -203,7 +203,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="7dp"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
 
                 <ImageView
                     android:layout_width="35dp"
@@ -211,7 +211,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="7dp"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
 
                 <ImageView
                     android:layout_width="35dp"
@@ -219,7 +219,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="7dp"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
 
                 <ImageView
                     android:layout_width="35dp"
@@ -227,7 +227,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="7dp"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
 
                 <ImageView
                     android:layout_width="35dp"
@@ -235,7 +235,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="7dp"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
 
                 <Button
                     android:id="@+id/qtd_amigos_amais"

@@ -12,12 +12,12 @@
             <item android:state_selected="true">
                 <bitmap
                     android:gravity="center"
-                    android:src="@drawable/ib_perfil" />
+                    android:src="@drawable/brancoperfil" />
             </item>
             <item>
                 <bitmap
                     android:gravity="center"
-                    android:src="@drawable/ic_perfil" />
+                    android:src="@drawable/cinzaperfil" />
             </item>
         </selector>
     </item>
