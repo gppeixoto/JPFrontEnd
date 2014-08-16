@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.facebook.Session;
+import com.google.android.gms.maps.MapsInitializer;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -40,6 +41,7 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
+		MapsInitializer.initialize(this);
 		for (int i = 0; i <TabFragment.SIZE; i++) {
 			Fragment fragment = getSupportFragmentManager().findFragmentByTag("tab"+(i+1));
 			if (fragment != null)

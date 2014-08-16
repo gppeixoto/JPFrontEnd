@@ -25,29 +25,29 @@ public class Server implements Serializable {
 	 * @return true se conseguiu logar, false caso contrario.
 	 */
 	public static void get_version(final Connecter<Vector<Integer>> connecter) {
-        (new ServiceHandler()).makeGET(ServiceHandler.URL_BASE + "/getversion/", new Connecter<String>() {
-               
-                @Override
-                public void onTerminado(String in) {
-                        try {
-                                if (connecter != null) {
-                                        if (in != null) {
-                                                JSONObject obj = new JSONObject(in);
-                                                String version = obj.getString("version");
-                                                String[] arr = version.split("[.]");
-                                                int a = Integer.parseInt(arr[0]);
-                                                int b = Integer.parseInt(arr[1]);
-                                                Vector<Integer> v = new Vector<Integer>();
-                                                v.add(a); v.add(b);
-                                                connecter.onTerminado(v);
-                                        } else {
-                                                connecter.onTerminado(null);
-                                        }
-                                }
-                        } catch (JSONException _) {}
-                }
-        });
-}
+		(new ServiceHandler()).makeGET(ServiceHandler.URL_BASE + "/getversion/", new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String in) {
+				try {
+					if (connecter != null) {
+						if (in != null) {
+							JSONObject obj = new JSONObject(in);
+							String version = obj.getString("version");
+							String[] arr = version.split("[.]");
+							int a = Integer.parseInt(arr[0]);
+							int b = Integer.parseInt(arr[1]);
+							Vector<Integer> v = new Vector<Integer>();
+							v.add(a); v.add(b);
+							connecter.onTerminado(v);
+						} else {
+							connecter.onTerminado(null);
+						}
+					}
+				} catch (JSONException _) {}
+			}
+		});
+	}
 
 	/**
 	 * @param access_token acess_token do usuario que se quer o perfil.
@@ -914,34 +914,42 @@ public class Server implements Serializable {
 	 * @param localization no formato "latitute,longitude", exemplo: "-8.039573000000001,-34.899502"
 	 * @return todos os eventos futuros.
 	 * */
-	public static void get_future_events(String access_token, String localization, final Connecter<Vector<Evento>> connecter) {
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("access_token", access_token);
-			obj.put("localization", localization);
-		} catch (JSONException _) {}
+	public static void get_future_events(Activity act, final String localization, final Connecter<Vector<Evento>> connecter) {
 
-		(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
+		ConfigJP.getToken(act, new Connecter<String>() {
 
 			@Override
-			public void onTerminado(String in) {
-				if (in == null) {
-					if (connecter != null) connecter.onTerminado(null);
-					return;
-				}
+			public void onTerminado(String access_token) {
+				// TODO Auto-generated method stub
+
+				JSONObject obj = new JSONObject();
 				try {
-					Vector<Evento> ret = new Vector<Evento>();
-					JSONObject json_ret = new JSONObject((String) in);
-
-					JSONArray json_array = json_ret.getJSONArray("events");
-					for (int i = 0; i < json_array.length(); ++i) {
-						ret.add(processEvent(json_array.getJSONObject(i)));
-					}
-
-					if (connecter != null) connecter.onTerminado(ret);
+					obj.put("access_token", access_token);
+					obj.put("localization", localization);
 				} catch (JSONException _) {}
-			}
-		});
+
+				(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
+
+					@Override
+					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
+						try {
+							Vector<Evento> ret = new Vector<Evento>();
+							JSONObject json_ret = new JSONObject((String) in);
+
+							JSONArray json_array = json_ret.getJSONArray("events");
+							for (int i = 0; i < json_array.length(); ++i) {
+								ret.add(processEvent(json_array.getJSONObject(i)));
+							}
+
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
+					}
+				});
+			}});
 	}
 
 	/**

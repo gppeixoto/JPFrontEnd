@@ -8,6 +8,11 @@ import java.util.Map.Entry;
 
 import org.joda.time.chrono.BuddhistChronology;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -37,9 +42,11 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 
 
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>> {
+public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>>,LocationListener{
 	static ArrayList<Evento> lista;
 	ListView listV;
 	protected Button Button_criar;
@@ -125,9 +132,19 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
 			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
 		}else{
-			Server.get_future_events(getActivity(),this);	
-		}
+			LocationManager lManager = (LocationManager)getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+			Location location =lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			Log.v("local", ""+location);
+			if(location!=null){
+				Server.get_future_events(getActivity(),location.getLatitude()+","+location.getLongitude(),this);	
 
+
+			}else{
+				Server.get_future_events(getActivity(),this);	
+
+			}
+
+		}
 		return tela;
 	}
 	boolean login = true;
@@ -235,6 +252,38 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			fragment.setArguments(arg);
 			((MainActivity)getActivity()).mudarAbaAtual(fragment);
 		}
+
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		Log.v("local", ""+location);
+		if(location!=null){
+			Server.get_future_events(getActivity(),location.getLatitude()+","+location.getLongitude(),this);	
+
+
+		}else{
+			Server.get_future_events(getActivity(),this);	
+
+		}
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
 
 	}
 
