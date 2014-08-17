@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/inicial_relativelayout"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/inicial_background"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/inicial_background" >
+
+    <RelativeLayout
+        android:id="@+id/inicial_relativelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp" >
 
         <ImageView
             android:id="@+id/inicial_imageview_joinplaylogo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -25,12 +29,13 @@
             android:layout_below="@+id/inicial_imageview_joinplaylogo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:scaleType="centerCrop"
-            android:text="      Facebook Login     "
-            android:drawableLeft="@drawable/fb_logo"
-            android:textColor="@color/white"
             android:background="@drawable/inicial_facebook_login_button"
+            android:drawableLeft="@drawable/fb_logo"
             android:padding="12dp"
-            android:src="@drawable/fb_logo" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/fb_logo"
+            android:text="      Facebook Login     "
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>
