@@ -16,13 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AgendaEventosFragment extends Fragment implements OnItemClickListener,Connecter<Vector<Evento>>{
 
 
 	LayoutInflater inflater=null;	
-	private MyListView listV;
+	private ListView listV;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -32,10 +34,14 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.inflater=inflater;
-		listV = new MyListView(getActivity());
-		listV.setOnItemClickListener(this);			
-		Server.user_agenda(getActivity(), this);
-		return  listV;
+		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
+		listV=(ListView) tela.findViewById(R.id.listView1);
+		listV.setOnItemClickListener(this);
+		listV.setAdapter(null);
+
+		Button Button_criar = (Button) tela.findViewById(R.id.bigButton);
+		Button_criar.setVisibility(View.INVISIBLE);
+		return  tela;
 
 	}
 
