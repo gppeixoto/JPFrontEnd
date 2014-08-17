@@ -18,6 +18,7 @@ public class ItemEsporte implements Parcelable {
 	public String esporte;
 	public int partidasJogadas;
 	public double avaliacaoJogador; //numero de estrelas
+	private int numeroVotos;
 	
 	public ItemEsporte(){
 
@@ -26,7 +27,8 @@ public class ItemEsporte implements Parcelable {
 	public ItemEsporte(Parcel in){
 		esporte =in.readString();
 		partidasJogadas = in.readInt();
-		avaliacaoJogador = in.readInt();
+		avaliacaoJogador = in.readDouble();
+		numeroVotos= in.readInt();
 	}
 	
 	@Override
@@ -40,6 +42,8 @@ public class ItemEsporte implements Parcelable {
 		dest.writeString(esporte);
 		dest.writeInt(partidasJogadas);
 		dest.writeDouble(avaliacaoJogador);
+		dest.writeInt(numeroVotos);
+
 	}
 	
 	public void drawerView(View view) {
@@ -65,10 +69,17 @@ public class ItemEsporte implements Parcelable {
 		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_qtd_partidas);
 		TextView qtdPartidas = (TextView) view.findViewById(R.id.perfil_partidas_jogadas);
 		if (partidasJogadas == 1) numPartidasView.setText("1 partida jogada"); else {
-			qtdPartidas.setText(partidasJogadas);
+			qtdPartidas.setText(partidasJogadas+"");
 			numPartidasView.setText(" partidas jogadas");
 		}
-		
+		TextView numVotosView = (TextView) view.findViewById(R.id.perfil_qtd_votos);
+		TextView qtdVotos= (TextView) view.findViewById(R.id.perfil_votos);
+		if (numeroVotos == 1) qtdVotos.setText("1 voto"); else
+		if  (numeroVotos < 1) qtdVotos.setText("Nenhum Voto");else
+		{
+			qtdVotos.setText(numeroVotos+"");
+			numVotosView.setText(" votos");
+		}
 		
 		ImageView star1 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star1);
 		ImageView star2 = (ImageView) view.findViewById(R.id.perfil_imageview_esporte_star2);

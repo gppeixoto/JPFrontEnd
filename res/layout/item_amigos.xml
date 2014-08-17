@@ -2,24 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical|left"
     android:background="@drawable/campo_branco"
+    android:gravity="center_vertical|left"
     android:padding="12dp" >
 
     <ImageView
         android:id="@+id/item_amigos_foto"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="12dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
         android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/item_amigos_texto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
+        android:paddingLeft="18dp"
         android:text="@string/perfil_nome_usuario"
-        android:textSize="20sp"
         android:textStyle="bold" />
 
 </LinearLayout>
