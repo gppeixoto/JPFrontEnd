@@ -60,7 +60,6 @@ import android.widget.TextView;
 
 public class EventFragment extends Fragment implements OnClickListener, Connecter<Evento>{
 	private Evento myEvent=null;
-	SupportMapFragment suportMap;
 	public LinearLayout list;
 	public LayoutInflater inf;
 	private Button bAmigos;
@@ -131,7 +130,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 			Bundle savedInstanceState) {
 
-		MapsInitializer.initialize(getActivity());
 
 		if (container == null) {
 			return null;
@@ -184,15 +182,7 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 				alertDialog.show();
 			}
 		});
-		//edit.setOnKeyListener(this);
-		suportMap= new SupportMapFragment();
-		v.post(new Runnable() {
-			@Override
-			public void run() {
-				suportMap.getMap().getUiSettings().setZoomControlsEnabled(false);
-			}
-		});
-		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
+		
 		if(getArguments()!=null){
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
 		}
@@ -243,15 +233,12 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
 
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
-		
-		TextView nome_evento = (TextView)view.findViewById(R.id.nome_evento);
-		nome_evento.setText(evento.getName());
 
 		String data = evento.getDate();
 		String dia = data.substring(0, 2);
 		data = parseMonth(((int)(data.charAt(3)-'0'))*10 + ((int)(data.charAt(4)-'0')));
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
-		descricao_local.setText(evento.getLocalizationName()+"\n"+evento.getLocalizationAddress());
+		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
 		qtd_confirmados.setText(""+evento.getUsers().size());
 		//	qtd_no_local(evento.);
@@ -383,28 +370,15 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			}
 
 		}
-
-		final double[] latlng= temp;
-		final String titulo=evento.getLocalizationName();
-		view.post(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				GoogleMap map = suportMap.getMap();
-				if(map!=null && latlng!=null){
-					LatLng target= new LatLng(latlng[0], latlng[1]);
-					CameraPosition cameraPosition = new CameraPosition.Builder().target(target).zoom(12).build();
-					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-					MarkerOptions marker = new MarkerOptions();
-					marker.position(target).title(titulo);
-					map.addMarker(marker).showInfoWindow();
-
-				}
-			}
-		});
-
-
+		
+		mapaFragment mapaF = new mapaFragment();
+		Bundle arg= new Bundle();
+		arg.putString("nome", evento.getName());
+		arg.putBoolean("isMax", false);
+		arg.putString("local", evento.getLocalizationName());
+		arg.putDoubleArray("latlng", temp);
+		mapaF.setArguments(arg);
+		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, mapaF).commit();
 		view.requestLayout();
 		view.postInvalidate();
 	}

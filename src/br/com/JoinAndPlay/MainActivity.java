@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
 		MapsInitializer.initialize(this);
+		
 		for (int i = 0; i <TabFragment.SIZE; i++) {
 			Fragment fragment = getSupportFragmentManager().findFragmentByTag("tab"+(i+1));
 			if (fragment != null)
