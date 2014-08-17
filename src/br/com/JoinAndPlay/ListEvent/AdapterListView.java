@@ -140,7 +140,7 @@ public class AdapterListView extends BaseAdapter
 
 		TextView distanciaView = (TextView) view.findViewById(R.id.item_list_distancia);
 		if(evento.getDistance()!=null){
-			distanciaView.setText(evento.getDistance());
+			distanciaView.setText(evento.getDistance()+"m");
 		}
 		TextView precoView = (TextView) view.findViewById(R.id.item_list_preco);
 		if(evento.getPrice()==0){
@@ -167,7 +167,7 @@ public class AdapterListView extends BaseAdapter
 			}else break;
 		}
 
-		for (int i = 0; i < Math.min(Math.min(evento.getNumFriends()+1,MAX_AMIGOS_QTD),evento.getUsers().size()-1); i++) {
+		for (int i = 0; i < Math.min(Math.min(evento.getNumFriends()+1,MAX_AMIGOS_QTD),evento.getUsers().size()); i++) {
 			if(content_image.getChildCount()>i){
 				ImageView imagem = (ImageView) content_image.getChildAt(i);
 

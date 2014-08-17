@@ -125,6 +125,7 @@
                     android:id="@+id/item_list_content_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
                     android:layout_marginTop="6dp" >
 
                     <ImageView
@@ -167,8 +168,9 @@
 
                     <ImageView
                         android:id="@+id/item_list_privado"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="13dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="6dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:src="@drawable/cadeado" />
