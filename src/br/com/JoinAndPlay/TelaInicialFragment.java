@@ -6,6 +6,7 @@ import com.facebook.Session;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -43,7 +44,17 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 
 	@Override
 	public void onClick(View v) {
-		Server.user_profile(getActivity(), this);
+	final	TelaInicialFragment self=this;
+		ConfigJP.login(getActivity(), new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String in) {
+				// TODO Auto-generated method stub
+				Server.user_profile(self.getActivity(), self);
+
+			}
+			
+		});
 	}
 	int i=0;
 	@Override

@@ -1,6 +1,9 @@
 package br.com.JoinAndPlay.Noticacao;
 
+import java.util.ArrayList;
+
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Server.Notificacao;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +14,27 @@ import android.widget.TextView;
 
 public class NotificacaoAdapter extends BaseAdapter {
 	LayoutInflater mInflater;
-
-	public NotificacaoAdapter(LayoutInflater inflater){
-
-		 mInflater = inflater;
+	ArrayList<Notificacao> list;
+	public NotificacaoAdapter(LayoutInflater inflater,ArrayList<Notificacao> list){
+		this.list=list;
+		mInflater = inflater;
 	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 40;
+		return list.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return list.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
-		return 0;
+		return list.get(arg0).hashCode();
 	}
 
 	@Override
@@ -39,8 +42,8 @@ public class NotificacaoAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		if(arg1==null){
 			arg1= mInflater.inflate(R.layout.item_notif, arg2,false);
-			
 		}
+		
 		return arg1;
 	}
 
