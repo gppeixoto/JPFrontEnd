@@ -96,4 +96,5 @@
     <string name="enviar">Enviar</string>
     <string name="terminar_jogo">Terminar Jogo</string>
     <string name="editar">Editar Evento</string>
+    <string name="beginVote">Iniciar Votação</string>
 </resources>

@@ -80,11 +80,11 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	}
 
 	public void paintRed(Button red){
-		red.setBackgroundResource(R.drawable.red_button);
+		red.setBackgroundResource(R.color.red);
 		red.setPadding(10, 10, 10, 10);
 	}
 	public void paintGray(Button gray){
-		gray.setBackgroundResource(R.drawable.gray_button);
+		gray.setBackgroundResource(R.color.cinza_cinza);
 		gray.setPadding(10, 10, 10, 10);
 	}
 
@@ -186,6 +186,12 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		});
 		//edit.setOnKeyListener(this);
 		suportMap= new SupportMapFragment();
+		v.post(new Runnable() {
+			@Override
+			public void run() {
+				suportMap.getMap().getUiSettings().setZoomControlsEnabled(false);
+			}
+		});
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, suportMap).commit();
 		if(getArguments()!=null){
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
@@ -218,16 +224,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		if(evento == null || view==null) return;
 
 		Button participar = (Button)view.findViewById(R.id.button1);
-		if(evento.getIsParticipating()){
-			participar.setText("Deixar evento");
-			paintGray(participar);
-		}
-		else{
-			participar.setText("Participar");
-			paintRed(participar);
-		}
-		participar.setOnClickListener(this);
-
 		LinearLayout layout_evento = (LinearLayout)view.findViewById(R.id.linear_evento);
 		ImageView imagem_evento = (ImageView)view.findViewById(R.id.imagem_evento);
 		int id_esporte = ConfigJP.getEsporteID(evento.getSport());
@@ -247,6 +243,9 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
 
 		TextView descricao_do_esporte = (TextView)view.findViewById(R.id.descricao_do_esporte);
+		
+		TextView nome_evento = (TextView)view.findViewById(R.id.nome_evento);
+		nome_evento.setText(evento.getName());
 
 		String data = evento.getDate();
 		String dia = data.substring(0, 2);
@@ -258,11 +257,11 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		//	qtd_no_local(evento.);
 
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
-		Button editar_evento = (Button)view.findViewById(R.id.editar_evento);
 		///VERIFICAR AQUI O USERID!
-		Log.v("IDS!",evento.getCreatorId() + " = " + ConfigJP.UserId);
-		if(true || evento.getCreatorId() == ConfigJP.UserId){
-			editar_evento.setOnClickListener(new OnClickListener() {
+		if(evento.getCreatorId().equals(ConfigJP.UserId)){
+			participar.setText("Editar Evento");
+			paintRed(participar);
+			participar.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					EditEvent next = new EditEvent();
@@ -295,7 +294,15 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 				}
 			});
 		}else{
-			editar_evento.setVisibility((View.INVISIBLE));
+			if(evento.getIsParticipating()){
+				participar.setText("Deixar evento");
+				paintGray(participar);
+			}
+			else{
+				participar.setText("Participar");
+				paintRed(participar);
+			}
+			participar.setOnClickListener(this);
 			butao_terminar.setVisibility((View.INVISIBLE));
 		}
 
