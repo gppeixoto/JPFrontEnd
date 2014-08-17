@@ -19,8 +19,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -33,18 +35,63 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	private Evento myEvent=null;
 	public LinearLayout list;
 	public LayoutInflater inf;
+	private boolean award[];
 
-	public void addComment(String nome,String time,String novo_comentario,String photo){
+	public void addGuys(LinearLayout pessoas,Evento evento){
+		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
+		for (int i = 0; i < evento.getUsers().size(); i++) {
+			ImageView imagem;
+			imagem = new ImageView(getActivity());
+			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
+			imagem.setPadding(3, 0, 0, 0);
+			imagem.setLayoutParams(nome_legal);
+			pessoas.addView(imagem);
+		}
+	}
+	
+	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
+		String putTime;
+		putTime="à ";
+		if(ups==false) putTime = putTime + "0 minutos";
+		else{
+			if(data.equals("0")){
+				int j=0;
+				int hour=0;
+				while(hora.charAt(j)!=':'){
+					hour*=10;
+					hour += (hora.charAt(j++) - '0');
+				}
+				if(hour != 0){
+					putTime = putTime + (hour+"") + " ";
+					if(hour==1) putTime = putTime + " hora";
+					else putTime = putTime + " horas";
+				}
+				else{
+					hour=0;
+					j++;
+					while(j < hora.length()){
+						hour*=10;
+						hour += (hora.charAt(j++) - '0');
+					}
+					putTime = putTime + (hour+"") + " ";
+					if(hour==1) putTime = putTime + "minuto";
+					else putTime = putTime + "minutos";
+				}
+			}else putTime = putTime + data + " dias";
+		}
 		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
 		ImageView foto_usuario = (ImageView)novo.findViewById(R.id.perfil_imagem_usuario);
 		TextView nome_usuario = (TextView)novo.findViewById(R.id.nome_usuario);
 		TextView tempo_decorrido  = (TextView)novo.findViewById(R.id.tempo_decorrido);
 		TextView comentario_texto = (TextView)novo.findViewById(R.id.comentario_texto);
 		comentario_texto.setText(novo_comentario);
-		tempo_decorrido.setText(time);
+		tempo_decorrido.setText(putTime);
 		nome_usuario.setText(nome);
 		DownloadImagem.postLoad(foto_usuario,photo);
+		Log.v("Imagem: ",photo);
 		list.addView(novo,0);
+		list.requestLayout();
+		list.invalidate();
 	}
 
 	public void paintRed(Button red){
@@ -123,6 +170,8 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
+
+
 		qtd_confirmados.setText(""+evento.getUsers().size());
 		qtd_no_local.setText(evento.getAtEvent().size()+"");
 
@@ -133,7 +182,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		estou_no_local.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Log.v("HAS ARRIVED",evento.getHasArrived()+"");
 				if(evento.getHasArrived()){
 					Server.cancel_arrive(self.getActivity(), evento.getId(), self);
 				}else{
@@ -231,17 +279,103 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			butao_terminar.setVisibility((View.INVISIBLE));
 		}
 
+		final ImageView starNum[] = new ImageView[5];
+		starNum[0] = (ImageView) view.findViewById(R.id.starNum1);
+		starNum[1] = (ImageView) view.findViewById(R.id.starNum2);
+		starNum[2] = (ImageView) view.findViewById(R.id.starNum3);
+		starNum[3] = (ImageView) view.findViewById(R.id.starNum4);
+		starNum[4] = (ImageView) view.findViewById(R.id.starNum5);
+
+		LinearLayout percentual = (LinearLayout) view.findViewById(R.id.percentual);
+		//Server.vote_in_tag_user(id, tag_name, connecter)
+		//Server.rate_user(id, sport_name, rate_value, connecter)
+		OnTouchListener estrelas = new OnTouchListener() {
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				if((arg1.getAction()&MotionEvent.ACTION_MASK)==MotionEvent.ACTION_DOWN){
+					int value = Math.round((arg1.getX()/(arg0.getWidth()))*100);
+					for(int i=0,j=11;i<5;i++,j+=20){
+						if(value >= j) starNum[i].setImageResource(R.drawable.star1);
+						else if(value >= j-10) starNum[i].setImageResource(R.drawable.halfstar);
+						else starNum[i].setImageResource(R.drawable.star2);
+					}
+				}else{
+					Log.v("OPAAAAAA",(arg1.getAction()&MotionEvent.ACTION_MASK)+"");
+				}
+				return false;
+			}
+		};
+		percentual.setOnTouchListener(estrelas);
+		ImageView award1 = (ImageView) view.findViewById(R.id.award1);
+		ImageView award2 = (ImageView) view.findViewById(R.id.award2);
+		ImageView award3 = (ImageView) view.findViewById(R.id.award3);
+		ImageView award4 = (ImageView) view.findViewById(R.id.award4);
+		final ImageView okay[] = new ImageView[4];
+		okay[0] = (ImageView) view.findViewById(R.id.okay1);
+		okay[1] = (ImageView) view.findViewById(R.id.okay2);
+		okay[2] = (ImageView) view.findViewById(R.id.okay3);
+		okay[3] = (ImageView) view.findViewById(R.id.okay4);
+		/** ISSO AQUI TEM QUE PEGAR COM O SERVIDOR **/
+		award = new boolean[4];
+		for(int i=0;i<4;i++){
+			award[i] = false;
+			if(award[i]==false) okay[i].setVisibility(View.INVISIBLE);
+		}
+
+		award1.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				award[0] = !award[0];
+				if(award[0]==false) okay[0].setVisibility(View.INVISIBLE);
+				else okay[0].setVisibility(View.VISIBLE);
+			}
+		});
+		award2.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				award[1] = !award[1];
+				if(award[1]==false) okay[1].setVisibility(View.INVISIBLE);
+				else okay[1].setVisibility(View.VISIBLE);
+			}
+		});
+		award3.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				award[2] = !award[2];
+				if(award[2]==false) okay[2].setVisibility(View.INVISIBLE);
+				else okay[2].setVisibility(View.VISIBLE);
+			}
+		});
+		award4.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				award[3] = !award[3];
+				if(award[3]==false) okay[3].setVisibility(View.INVISIBLE);
+				else okay[3].setVisibility(View.VISIBLE);
+			}
+		});
+		LinearLayout pessoasVotacao = (LinearLayout)view.findViewById(R.id.nova_foto2); 
+		addGuys(pessoasVotacao,evento);
+
 		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
-		final Connecter<Evento> listener = this;
+		final EventFragment listener = this;
 		butao_enviar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				EditText myEditText = (EditText) view.findViewById(R.id.criar_comentario);
 				Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Comentario>() {
 					@Override
-					public void onTerminado(Comentario in) {
-						Server.get_detailed_event(getActivity(),myEvent.getId(),listener);	
-
+					public void onTerminado(final Comentario in) {
+						if(listener.getView()!=null){
+							getView().post(new Runnable() {
+								@Override
+								public void run() {
+									listener.addComment(in.getUserName(), in.getHour(), in.getDate(), in.getText(), in.getPhoto(),false);
+									getView().requestLayout();
+									getView().invalidate();
+								}
+							});
+						}
 					}
 				});
 				myEditText.getText().clear();
@@ -256,25 +390,12 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			}
 		});
 
-		
-		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
-		for (int i = 0; i < evento.getUsers().size(); i++) {
-			ImageView imagem;
-			imagem = new ImageView(getActivity());
-			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
-			imagem.setPadding(3, 0, 0, 0);
-			imagem.setLayoutParams(nome_legal);
-			pessoas.addView(imagem);
-		}		
-		
-		for (int i = evento.getUsers().size(); i <pessoas.getChildCount(); i++) {
-			ImageView imagem = (ImageView) pessoas.getChildAt(i);
-			imagem.setVisibility(View.INVISIBLE);
-		}
+		addGuys(pessoas,evento);
+
 		if(evento.getComments()!=null){
 			for (Iterator<Comentario> iterator = evento.getComments().iterator(); iterator.hasNext();) {
 				Comentario coment = (Comentario) iterator.next();
-				addComment(coment.getUserName(),coment.getHour(),coment.getText(),coment.getPhoto());
+				addComment(coment.getUserName(),coment.getHour(),coment.getDate(),coment.getText(),coment.getPhoto(),true);
 			}
 		}
 		tipo_da_partida.setText(evento.getSport());
