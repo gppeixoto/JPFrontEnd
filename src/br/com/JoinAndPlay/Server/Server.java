@@ -1068,7 +1068,7 @@ public class Server implements Serializable {
 			String longitude = "";
 			if (evt.has("longitude")) longitude = evt.get("longitude")+""; 
 			String creator_id = "";
-			if (evt.has("creatorId")) creator_id = evt.get("creatorId")+"";
+			if (evt.has("creatorID")) creator_id = evt.get("creatorID")+"";
 			boolean participates = false;
 			if (evt.has("isParticipating")) participates = evt.getBoolean("isParticipating");
 			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates);
