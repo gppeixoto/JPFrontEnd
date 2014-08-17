@@ -20,11 +20,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class AgendaEventosFragment extends Fragment implements OnItemClickListener,Connecter<Vector<Evento>>{
+public class AgendaEventosFragment extends ListEventosFragment{
 
 
-	LayoutInflater inflater=null;	
-	private ListView listV;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -33,47 +31,25 @@ public class AgendaEventosFragment extends Fragment implements OnItemClickListen
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		this.inflater=inflater;
-		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
+		super.inflater=inflater;
+		ViewGroup tela=(ViewGroup)inflater.inflate(R.layout.fragment_list_event,container,false) ;
+
 		listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
 		listV.setAdapter(null);
 
 		Button Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setVisibility(View.INVISIBLE);
+		tela.removeView(Button_criar);
+		Server.user_agenda(getActivity(), this);
 		return  tela;
 
 	}
 
-
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
-		arg2--;
-		//ItemEvent item = lista.get(arg2);
-		//lista.remove(arg2);
-
-		//adapter.notifyDataSetChanged();
-
-	}
-	@Override
-	public void onTerminado(Vector<Evento> in) {
-		// TODO Auto-generated method stub
-		ArrayList<Evento> lista = new ArrayList<Evento>();
-		final AdapterListView adapter =new AdapterListView(inflater, lista);
-listV.post(new Runnable() {
-	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		listV.setAdapter(adapter);
-	}
-});
-
-		for (Iterator<Evento> iterator = in.iterator(); iterator.hasNext();) {
-			Evento evento = (Evento) iterator.next();
-lista.add(evento);
-			
-		}
+		if(vector!=null && vector.size()<=0)return;
+		super.onTerminado(vector);
 	}
 }
