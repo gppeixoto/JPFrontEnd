@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
+import br.com.JoinAndPlay.Event.AmigosFragment;
 import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
 import br.com.JoinAndPlay.ItemEsportePerfil.ItemEsporte;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -63,6 +64,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 	@Override
 	public void onTerminado(final Usuario in) {
 		final View ret=getView();
+		final PerfilUserFragment self = this;
 		if (ret == null ) return;
 		ret.post(new Runnable() {
 			
@@ -100,6 +102,27 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
 							
+							Server.get_friends(self.getActivity(),new Connecter<Vector<Usuario>>() {
+								
+								@Override
+								public void onTerminado(Vector<Usuario> in) {
+									if(in==null) return;
+									AmigosFragment fm = new AmigosFragment();
+									Bundle arg = new Bundle();
+									ArrayList<Usuario> array=new ArrayList<Usuario>();
+									for (Iterator<Usuario> iterator = in.iterator(); iterator
+											.hasNext();) {
+										Usuario usuario = (Usuario) iterator
+												.next();
+										array.add(usuario);
+										
+									}
+									arg.putParcelableArrayList("users",array);
+									fm.setArguments(arg);
+									((MainActivity)self.getActivity()).mudarAbaAtual(fm);
+
+								}
+							});
 						}
 					});
 					/*Pegar o n�mero de votos de cada tag do servidor*/

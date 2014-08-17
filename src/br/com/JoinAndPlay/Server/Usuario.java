@@ -3,7 +3,10 @@ package br.com.JoinAndPlay.Server;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class Usuario implements Serializable {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Usuario implements Serializable,Parcelable {
 	private static final long serialVersionUID = 8250002358792274323L;
 	
 	private String id;
@@ -80,4 +83,28 @@ public class Usuario implements Serializable {
 	 * @return true se tiver notificacao, false se nao tiver.
 	 * */
 	public boolean getHasNotification() { return this.has_notification; }
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Usuario(Parcel in){
+		id=in.readString();
+		name=in.readString();
+		photo=in.readString();
+		
+	}
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeString(id);
+		dest.writeString(name);
+		dest.writeString(photo);
+		
+
+		
+		
+	}
 }

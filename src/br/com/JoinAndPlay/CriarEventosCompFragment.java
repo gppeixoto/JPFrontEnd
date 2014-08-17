@@ -52,7 +52,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		amigos = new ArrayList<ItemFriend>();
 		convidados = new Vector<String>();
 		
-		Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
+		Server.get_friends(getActivity(), new Connecter<Vector<Usuario>>(){
 
 			@Override
 			public void onTerminado(Vector<Usuario> in) {
@@ -109,7 +109,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		});
 		
 		bPublico = (Button) view.findViewById(R.id.publico);
-		bPublico.setText("Público");
+		bPublico.setText("Pï¿½blico");
 		bPublico.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
