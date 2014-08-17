@@ -92,7 +92,8 @@ public class mapaFragment extends Fragment {
 		view.post(new Runnable() {
 			@Override
 			public void run() {
-				suportMap.getMap().getUiSettings().setZoomControlsEnabled(false);
+				if(suportMap.getMap()!=null)
+					suportMap.getMap().getUiSettings().setZoomControlsEnabled(false);
 			}
 		});
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag_suport,suportMap).commit();

@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
+import ServerPckg.Evento;
 import android.app.Activity;
 import android.util.Log;
 
@@ -1156,7 +1157,9 @@ public class Server implements Serializable {
 					at_event.add(to_add);
 				}
 			}
-			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates, has_arrived, at_event);
+			boolean closed = false;
+			if (evt.has("startVoting")) closed = evt.getBoolean("startVoting");
+			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates, has_arrived, at_event, closed);
 		} catch (JSONException _) {}
 		return null;
 	}
