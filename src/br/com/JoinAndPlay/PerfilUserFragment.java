@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -93,7 +94,14 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 					/*Pega n�mero de amigos*/
 					button_amigos = (Button) ret.findViewById(R.id.perfil_button_amigos);
 					button_amigos.setText(in.getNumFriends() + " Amigos");
-					
+					button_amigos.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
 					/*Pegar o n�mero de votos de cada tag do servidor*/
 					votos_esforcado = (TextView) ret.findViewById(R.id.perfil_textview_votos_esforcado);
 					votos_jogaTime = (TextView) ret.findViewById(R.id.perfil_textview_jogatime);
