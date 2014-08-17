@@ -117,8 +117,10 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			String rua = args.getString("rua");
 			final String esporte = args.getString("esporte");
 			final String id_evento = args.getString("id_evento");
-			final String local_name = args.getString("local_name");
+			String local_name = args.getString("local_name");
 			
+			final EditText nome_local = (EditText) v.findViewById(R.id.editar_nome_local);
+			nome_local.setText(local_name);
 			final EditText nome_eventoE = (EditText) v.findViewById(R.id.edit_nome_evento);
 			nome_eventoE.setText(nome_evento);
 			final EditText descricao_eventoE = (EditText) v.findViewById(R.id.edit_descricao_evento);
@@ -280,13 +282,8 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					if(eventoPago){
 						priceE = Double.parseDouble(preco.getText().toString());
 					}
-					Server.edit_event(getActivity(), local_name, ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), priceE, privado, id_evento, null);
-					EventFragment next = new EventFragment();
-					Bundle args = new Bundle();
-					args.putString("evento", id_evento);
+					Server.edit_event(getActivity(), nome_local.getText().toString(), ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), priceE, privado, id_evento, null);
 					((MainActivity)getActivity()).retirarAbaAtual();
-					next.setArguments(args);
-					((MainActivity)getActivity()).replaceTab(next);
 				}
 			});
 		}
@@ -309,13 +306,11 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			
 			OnShowListener onshow = new OnShowListener() {
 				@Override
-				@SuppressWarnings( "deprecation" )
 				public void onShow(DialogInterface dialog) {
 					Button positiveButton = ((AlertDialog) dialog)
 	                        .getButton(AlertDialog.BUTTON_POSITIVE);
 					
-	                positiveButton.setBackgroundDrawable(getResources()
-	                        .getDrawable(R.drawable.alert_button));
+	                positiveButton.setBackgroundResource(R.drawable.alert_button);
 	                
 	                positiveButton.setText("OK");
 	                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
@@ -352,13 +347,11 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			
 			OnShowListener onshow = new OnShowListener() {
 				@Override
-				@SuppressWarnings( "deprecation" )
 				public void onShow(DialogInterface dialog) {
 					Button positiveButton = ((AlertDialog) dialog)
 	                        .getButton(AlertDialog.BUTTON_POSITIVE);
 					
-	                positiveButton.setBackgroundDrawable(getResources()
-	                        .getDrawable(R.drawable.alert_button));
+	                positiveButton.setBackgroundResource(R.drawable.alert_button);
 	                
 	                positiveButton.setText("OK");
 	                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
@@ -404,13 +397,11 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				
 				OnShowListener onshow = new OnShowListener() {
 					@Override
-					@SuppressWarnings( "deprecation" )
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
 		                        .getButton(AlertDialog.BUTTON_POSITIVE);
 						
-		                positiveButton.setBackgroundDrawable(getResources()
-		                        .getDrawable(R.drawable.alert_button));
+		                positiveButton.setBackgroundResource(R.drawable.alert_button);
 		                
 		                positiveButton.setText("OK");
 		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
@@ -434,13 +425,11 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				
 				OnShowListener onshow = new OnShowListener() {
 					@Override
-					@SuppressWarnings( "deprecation" )
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
 		                        .getButton(AlertDialog.BUTTON_POSITIVE);
 						
-		                positiveButton.setBackgroundDrawable(getResources()
-		                        .getDrawable(R.drawable.alert_button));
+		                positiveButton.setBackgroundResource((R.drawable.alert_button));
 		                
 		                positiveButton.setText("OK");
 		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
@@ -481,13 +470,11 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				
 				OnShowListener onshow = new OnShowListener() {
 					@Override
-					@SuppressWarnings( "deprecation" )
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
 		                        .getButton(AlertDialog.BUTTON_POSITIVE);
 						
-		                positiveButton.setBackgroundDrawable(getResources()
-		                        .getDrawable(R.drawable.alert_button));
+		                positiveButton.setBackgroundResource(R.drawable.alert_button);
 		                
 		                positiveButton.setText("OK");
 		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
@@ -511,13 +498,11 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				
 				OnShowListener onshow = new OnShowListener() {
 					@Override
-					@SuppressWarnings( "deprecation" )
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
 		                        .getButton(AlertDialog.BUTTON_POSITIVE);
 						
-		                positiveButton.setBackgroundDrawable(getResources()
-		                        .getDrawable(R.drawable.alert_button));
+		                positiveButton.setBackgroundResource(R.drawable.alert_button);
 		                
 		                positiveButton.setText("OK");
 		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);

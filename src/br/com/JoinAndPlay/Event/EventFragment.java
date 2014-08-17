@@ -1,69 +1,34 @@
 package br.com.JoinAndPlay.Event;
 
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
-import java.util.zip.Inflater;
-
-import com.facebook.Session;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import br.com.JoinAndPlay.ConfigJP;
-import br.com.JoinAndPlay.CriarEventosCompFragment;
-import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
-import br.com.JoinAndPlay.ListEvent.AdapterListView;
-import br.com.JoinAndPlay.ListEvent.MyListView;
-import br.com.JoinAndPlay.ListFriend.AdapterListViewFriend;
-import br.com.JoinAndPlay.ListFriend.ItemFriend;
 import br.com.JoinAndPlay.Server.Comentario;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
-import br.com.JoinAndPlay.Server.Usuario;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsoluteLayout;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 public class EventFragment extends Fragment implements OnClickListener, Connecter<Evento>{
 	private Evento myEvent=null;
 	public LinearLayout list;
 	public LayoutInflater inf;
-	private Button bAmigos;
-	private Vector<Usuario> amigos;
 
 	public void addComment(String nome,String time,String novo_comentario,String photo){
 		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
@@ -87,45 +52,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		gray.setPadding(10, 10, 10, 10);
 	}
 
-	/*@Override
-	public boolean onKey(View view, int keyCode, KeyEvent event) {
-Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
-		//TextView responseText = (TextView) findViewById(R.id.responseText);
-		EditText myEditText = (EditText) view;
-
-		if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
-				keyCode == EditorInfo.IME_ACTION_DONE ||
-				event.getAction() == KeyEvent.ACTION_DOWN &&
-				event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-			if (!event.isShiftPressed()) {
-				if(myEvent!=null){
-					final Connecter<Evento> listener = this;
-					Log.v("COMEN", myEditText.getText().toString());
-					Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Usuario>() {
-						@Override
-						public void onTerminado(Usuario in) {
-							// TODO Auto-generated method stub
-							Server.get_detailed_event(getActivity(),myEvent.getId(),listener);	
-
-						}
-					});
-				}				
-				myEditText.getText().clear();
-				myEditText.clearFocus();
-                if(getView() != null){
-					getView().setFocusable(true);
-		            getView().setFocusableInTouchMode(true);
-		            getView().requestFocus();
-				}
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
-				return true;
-			}               
-		}
-		return false; 
-	}*/
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 			Bundle savedInstanceState) {
@@ -138,51 +64,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
 
-		bAmigos = (Button) v.findViewById(R.id.qtd_amigos_amais);
-		//EditText edit = (EditText)v.findViewById(R.id.criar_comentario);
-		bAmigos.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder alertDialog = new AlertDialog.Builder(bAmigos.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-				LayoutInflater inflater = getActivity().getLayoutInflater();
-				View convertView = (View) inflater.inflate(R.layout.list_friends, container,false);
-				alertDialog.setView(convertView);
-				alertDialog.setTitle("Amigos Participantes");
-				final MyListView lv = (MyListView) convertView.findViewById(R.id.views_friends);
-				final Vector <Usuario> participantes = myEvent.getUsers();
-				final ArrayList<ItemFriend> amigosp = new ArrayList<ItemFriend>();
-
-				Server.get_friends(Session.getActiveSession().getAccessToken(), new Connecter<Vector<Usuario>>(){
-
-					@Override
-					public void onTerminado(Vector<Usuario> in) {
-						amigos = (Vector<Usuario>) in;
-						if(amigos!=null){
-
-							for(int i = 0; i < participantes.size(); i++){
-								if(amigos.contains(participantes.elementAt(i))){
-									amigosp.add(new ItemFriend(participantes.elementAt(i)));
-								}
-							}
-
-							lv.post(new Runnable() {
-
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									lv.setAdapter(new AdapterListViewFriend(getActivity(), amigosp));
-
-								}
-							});
-						}	
-					}
-				});	
-
-				alertDialog.show();
-			}
-		});
-		
 		if(getArguments()!=null){
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
 		}
@@ -224,11 +105,9 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		TextView descricao_local = (TextView)view.findViewById(R.id.descricao_local);
 
 		TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
-		//TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
+		TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
 
-		LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.imagem_perfil_dad);
-
-		TextView qtd_amigos_amais = (TextView)view.findViewById(R.id.qtd_amigos_amais);
+		LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.nova_foto); 
 
 		TextView tipo_da_partida = (TextView)view.findViewById(R.id.tipo_da_partida);	
 
@@ -241,7 +120,21 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
 		qtd_confirmados.setText(""+evento.getUsers().size());
-		//	qtd_no_local(evento.);
+		qtd_no_local.setText(evento.getAtEvent().size()+"");
+
+		Button estou_no_local = (Button) view.findViewById(R.id.estou_no_local);
+		final EventFragment self = this;
+		estou_no_local.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Log.v("HAS ARRIVED",evento.getHasArrived()+"");
+				if(evento.getHasArrived()){
+					Server.cancel_arrive(self.getActivity(), evento.getId(), self);
+				}else{
+					Server.arrive_event(self.getActivity(), evento.getId(), self);
+				}
+			}
+		});
 
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
 		///VERIFICAR AQUI O USERID!
@@ -318,30 +211,27 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 			}
 		});
 
-
-
-		for (int i = 0; i < Math.min(evento.getUsers().size(),AdapterListView.MAX_AMIGOS_QTD); i++) {
-			if(pessoas.getChildCount()-1>i){
-				ImageView imagem = (ImageView) pessoas.getChildAt(i);
-
-				DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
-			}else break;
+		
+		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
+		for (int i = 0; i < evento.getUsers().size(); i++) {
+			ImageView imagem;
+			imagem = new ImageView(getActivity());
+			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
+			imagem.setPadding(3, 0, 0, 0);
+			imagem.setLayoutParams(nome_legal);
+			pessoas.addView(imagem);
 		}		
-
-		for (int i = evento.getUsers().size(); i <AdapterListView.MAX_AMIGOS_QTD; i++) {
-			if(pessoas.getChildCount()-1>i){
-				ImageView imagem = (ImageView) pessoas.getChildAt(i);
-				imagem.setVisibility(View.INVISIBLE);
-			}else break;
+		
+		for (int i = evento.getUsers().size(); i <pessoas.getChildCount(); i++) {
+			ImageView imagem = (ImageView) pessoas.getChildAt(i);
+			imagem.setVisibility(View.INVISIBLE);
 		}
-		if(evento.getComments()!=null)
+		if(evento.getComments()!=null){
 			for (Iterator<Comentario> iterator = evento.getComments().iterator(); iterator.hasNext();) {
 				Comentario coment = (Comentario) iterator.next();
 				addComment(coment.getUserName(),"0m",coment.getText(),coment.getPhoto());
-
 			}
-
-		qtd_amigos_amais.setText("+ " + (evento.getNumFriends() > 6 ? evento.getUsers().size() - 6 : 0) + " amigo" + (evento.getNumFriends() > 7 ? "s" : ""));
+		}
 		tipo_da_partida.setText(evento.getSport());
 		descricao_do_esporte.setText(evento.getDescription());
 		double[] temp=null;
@@ -362,15 +252,13 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 
 					@Override
 					public void onTerminado(String access_token) {
-						// TODO Auto-generated method stub
 						Server.edit_event(access_token, evento.getLocalizationName(),evento.getLocalizationAddress(), evento.getCity(), evento.getNeighbourhood(), evento.getSport(), evento.getDate(), evento.getStartTime(), evento.getEndTime(), evento.getDescription(), evento.getName(), evento.getPrice(), evento.getPrivacy(), evento.getId(), cordenada[0]+"", cordenada[1]+"",null);
-
 					}
 				});
 			}
 
 		}
-		
+
 		mapaFragment mapaF = new mapaFragment();
 		Bundle arg= new Bundle();
 		arg.putString("nome", evento.getName());
@@ -417,7 +305,6 @@ Log.v("Digitou uma tecla!!!!","key ="+event.getKeyCode());
 							getView().requestLayout();
 							getView().invalidate();
 						}
-
 					}
 				});
 			}

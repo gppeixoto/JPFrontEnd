@@ -159,8 +159,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/linha_pontilhada2" />
 
-                <ImageView
-                    android:id="@+id/cartinha"
+                <Button
+                    android:id="@+id/estou_no_local"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -177,73 +177,24 @@
                 android:layout_marginTop="6dp"
                 android:background="@drawable/linha_pontilhada" />
 
-            <LinearLayout
-                android:id="@+id/imagem_perfil_dad"
+            <HorizontalScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal"
-                android:padding="0dp" >
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
+                <LinearLayout
+                    android:id="@+id/nova_foto"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_marginLeft="7dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/cinzaperfil" />
+                    android:dividerPadding="3dp"
+                    android:orientation="horizontal"
+                    android:showDividers="middle" >
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/cinzaperfil" />
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/cinzaperfil" />
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/cinzaperfil" />
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/cinzaperfil" />
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginTop="7dp"
-                    android:src="@drawable/cinzaperfil" />
-
-                <Button
-                    android:id="@+id/qtd_amigos_amais"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="12dp"
-                    android:text="+ 3 amigos"
-                    android:textColor="@color/cinza_cinza"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                </LinearLayout>
+               
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="fill_parent"
