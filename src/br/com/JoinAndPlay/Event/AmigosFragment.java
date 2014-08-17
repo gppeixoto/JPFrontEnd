@@ -2,6 +2,8 @@ package br.com.JoinAndPlay.Event;
 
 import java.util.ArrayList;
 
+import br.com.JoinAndPlay.MainActivity;
+import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -97,6 +99,11 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
+		PerfilUserFragment fm = new  PerfilUserFragment();
+		((MainActivity)getActivity()).mudarAbaAtual(fm);
+		
+		
+		
 
 	}
 
