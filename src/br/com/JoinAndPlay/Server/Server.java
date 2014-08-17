@@ -978,6 +978,69 @@ public class Server implements Serializable {
 			});
 		} catch (JSONException _) {}
 	}
+	
+	public static void arrive_event(Activity ac, final String event_id, final Connecter<Evento> connecter) {
+
+		ConfigJP.getToken(ac, new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
+
+				try {
+					obj.put("access_token", access_token);
+					obj.put("id", event_id);
+				} catch(JSONException _) {}
+
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/arrive/", obj.toString(), new Connecter<String>() {
+					@Override    
+					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
+						try {
+							Evento ret = processEvent(new JSONObject((String) in));
+							if (connecter != null) connecter.onTerminado(ret);
+						} catch (JSONException _) {}
+					}
+				});
+			}
+		});
+	}
+	
+	public static void cancel_arrive(Activity act, final String event_id, final Connecter<Evento> connecter) {
+
+		ConfigJP.getToken(act, new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String access_token) {
+				JSONObject obj = new JSONObject();
+				try {
+					obj.put("access_token", access_token);
+					obj.put("id", event_id);
+				} catch (JSONException _) {}
+
+				ServiceHandler sh = new ServiceHandler();
+				sh.makePOST(ServiceHandler.URL_BASE + "/cancelarrive/", obj.toString(), new Connecter<String>() {
+
+					@Override
+					public void onTerminado(String in) {
+						if (in == null) {
+							if (connecter != null) connecter.onTerminado(null);
+							return;
+						}
+						try {
+							if (connecter != null) connecter.onTerminado(processEvent(new JSONObject(in)));
+						} catch (JSONException _) {}				
+					}
+				});
+
+			}
+		});
+	}
+	
 
 	private static Notificacao processNotification(JSONObject notification) {
 		try {
@@ -1028,8 +1091,8 @@ public class Server implements Serializable {
 	private static Evento processEvent(JSONObject evt) {
 		try {
 			String name = evt.getString("name");
-			JSONArray arr_users = evt.getJSONArray("participants");
 			Vector<Usuario> users = new Vector<Usuario>();
+			JSONArray arr_users = evt.getJSONArray("participants");
 			for (int j = 0; j < arr_users.length(); ++j) {
 				JSONArray act_user = arr_users.getJSONArray(j);
 				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
@@ -1071,7 +1134,18 @@ public class Server implements Serializable {
 			if (evt.has("creatorID")) creator_id = evt.get("creatorID")+"";
 			boolean participates = false;
 			if (evt.has("isParticipating")) participates = evt.getBoolean("isParticipating");
-			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates);
+			boolean has_arrived = false;
+			if (evt.has("hasArrived")) has_arrived = evt.getBoolean("hasArrived");
+			Vector<Usuario> at_event = new Vector<Usuario>();
+			if (evt.has("arrived")) {
+				arr_users = evt.getJSONArray("arrived");
+				for (int j = 0; j < arr_users.length(); ++j) {
+					JSONArray act_user = arr_users.getJSONArray(j);
+					Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
+					at_event.add(to_add);
+				}
+			}
+			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates, has_arrived, at_event);
 		} catch (JSONException _) {}
 		return null;
 	}
