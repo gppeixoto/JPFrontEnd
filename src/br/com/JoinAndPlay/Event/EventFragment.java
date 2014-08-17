@@ -124,6 +124,8 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 		Button estou_no_local = (Button) view.findViewById(R.id.estou_no_local);
 		final EventFragment self = this;
+		if(evento.getHasArrived()) estou_no_local.setText("Sai do local");
+		else estou_no_local.setText("Estou aqui");
 		estou_no_local.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -133,6 +135,21 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				}else{
 					Server.arrive_event(self.getActivity(), evento.getId(), self);
 				}
+			}
+		});
+
+		LinearLayout showConfirmed = (LinearLayout) view.findViewById(R.id.visualizar_confirmados);
+		LinearLayout showLocal = (LinearLayout) view.findViewById(R.id.visualizar_local);
+		showConfirmed.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+		showLocal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
 			}
 		});
 
@@ -229,7 +246,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		if(evento.getComments()!=null){
 			for (Iterator<Comentario> iterator = evento.getComments().iterator(); iterator.hasNext();) {
 				Comentario coment = (Comentario) iterator.next();
-				addComment(coment.getUserName(),"0m",coment.getText(),coment.getPhoto());
+				addComment(coment.getUserName(),coment.getHour(),coment.getText(),coment.getPhoto());
 			}
 		}
 		tipo_da_partida.setText(evento.getSport());
