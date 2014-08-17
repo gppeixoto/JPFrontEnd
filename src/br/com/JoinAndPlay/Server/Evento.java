@@ -29,13 +29,14 @@ public class Evento implements Serializable {
 	private boolean participates;
 	private boolean has_arrived;
 	private Vector<Usuario> at_event;
+	private boolean closed;
 
 	public Evento(String name, Vector<Usuario> users, String localization_name,
 		String localization_address, String sport, int num_friends, String date,
 		String start_time, String end_time, String description, Vector<Comentario> comments,
 		String id, boolean is_private, int price, String city, String neighbourhood, String distance,
 		String latitude, String longitude, String creator_id, boolean participates,
-		boolean has_arrived, Vector<Usuario> at_event) {
+		boolean has_arrived, Vector<Usuario> at_event, boolean closed) {
 		this.name = name;
 		this.users = users;
 		this.localization_name = localization_name;
@@ -59,6 +60,7 @@ public class Evento implements Serializable {
 		this.participates = participates;
 		this.at_event = at_event;
 		this.has_arrived = has_arrived;
+		this.closed = closed;
 	}
 
 	/**
@@ -166,4 +168,6 @@ public class Evento implements Serializable {
 	public boolean getHasArrived() { return this.has_arrived; }
 	
 	public Vector<Usuario> getAtEvent() { return this.at_event; }
+	
+	public boolean getIsClosed() { return this.closed; }
 }
