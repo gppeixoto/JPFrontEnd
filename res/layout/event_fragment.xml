@@ -147,7 +147,6 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_marginBottom="6dp"
@@ -161,15 +160,13 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/linha_pontilhada2" />
 
-                <Button
+                <TextView
                     android:id="@+id/estou_no_local"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:scaleType="matrix"
-                    android:textColor="@color/white"
-                    android:src="@drawable/convidar_amigos" />
+                    android:textColor="@color/red" />
             </LinearLayout>
 
             <View

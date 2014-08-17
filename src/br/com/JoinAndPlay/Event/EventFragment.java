@@ -1,7 +1,10 @@
 package br.com.JoinAndPlay.Event;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Vector;
+
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
@@ -10,6 +13,7 @@ import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.Server.Usuario;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -122,7 +126,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		qtd_confirmados.setText(""+evento.getUsers().size());
 		qtd_no_local.setText(evento.getAtEvent().size()+"");
 
-		Button estou_no_local = (Button) view.findViewById(R.id.estou_no_local);
+		TextView estou_no_local = (TextView) view.findViewById(R.id.estou_no_local);
 		final EventFragment self = this;
 		if(evento.getHasArrived()) estou_no_local.setText("Sai do local");
 		else estou_no_local.setText("Estou aqui");
@@ -143,13 +147,37 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		showConfirmed.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				Vector<Usuario> in = evento.getUsers();
+				AmigosFragment fm = new AmigosFragment();
+				Bundle arg = new Bundle();
+				ArrayList<Usuario> array=new ArrayList<Usuario>();
+				for (Iterator<Usuario> iterator = in.iterator(); iterator
+						.hasNext();) {
+					Usuario usuario = (Usuario) iterator
+							.next();
+					array.add(usuario);
+				}
+				arg.putParcelableArrayList("users",array);
+				fm.setArguments(arg);
+				((MainActivity)self.getActivity()).mudarAbaAtual(fm);
 			}
 		});
 		showLocal.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				Vector<Usuario> in = evento.getAtEvent();
+				AmigosFragment fm = new AmigosFragment();
+				Bundle arg = new Bundle();
+				ArrayList<Usuario> array=new ArrayList<Usuario>();
+				for (Iterator<Usuario> iterator = in.iterator(); iterator
+						.hasNext();) {
+					Usuario usuario = (Usuario) iterator
+							.next();
+					array.add(usuario);
+				}
+				arg.putParcelableArrayList("users",array);
+				fm.setArguments(arg);
+				((MainActivity)self.getActivity()).mudarAbaAtual(fm);
 			}
 		});
 
