@@ -6,6 +6,7 @@ public class Notificacao {
 	private String event_id;
 	private String begin;
 	private String date;
+	public String esporte;
 	private boolean privado;
 	
 	public Notificacao(String creator, String event_name, String event_id, String begin, String date, boolean privado) {

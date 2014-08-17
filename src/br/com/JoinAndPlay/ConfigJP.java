@@ -165,6 +165,30 @@ public final class ConfigJP {
 		R.drawable.campo_esporte_baseboll
 	};
 
+	public static final int[] ESPORTE_BUTTON ={
+		R.drawable.icfutebol,
+		R.drawable.icfutebol,
+		R.drawable.iccaminhar,
+		R.drawable.icboliche,
+		R.drawable.icvolei,
+		R.drawable.icbasq,
+		R.drawable.icbike,
+		R.drawable.icpingpong,
+		R.drawable.ictennis,
+		R.drawable.icgame,
+		R.drawable.icbilhar,
+		R.drawable.icfuame,
+		R.drawable.iccarta,
+		R.drawable.icdado,
+		R.drawable.icdardo,
+		R.drawable.icdomino,
+		R.drawable.icpatins,
+		R.drawable.icskate,
+		R.drawable.icboxe,
+		R.drawable.icbaseball
+
+	};
+
 
 	public static final int getEsporteID(String esporte){
 		init();
@@ -198,6 +222,7 @@ public final class ConfigJP {
 						@Override
 						public void onCompleted(GraphUser user, Response response) {
 							// TODO Auto-generated method stub
+					Log.v("user", ""+user);
 							if(user!=null){
 								UserId =user.getId();
 								getToken(act, get);
@@ -234,7 +259,7 @@ public final class ConfigJP {
 			connecter.onTerminado(UserId);
 		}else{
 
-			getToken(act, new Connecter<String>() {
+			login(act, new Connecter<String>() {
 
 				@Override
 				public void onTerminado(String in) {
@@ -246,7 +271,7 @@ public final class ConfigJP {
 
 
 	}
-	
+
 	public static double[] getLatLngFromAddress(final Activity act,String address){
 		double[] ret= null;
 		try {
