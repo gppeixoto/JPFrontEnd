@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.MainActivity;
+import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.Comentario;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -36,18 +37,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public LinearLayout list;
 	public LayoutInflater inf;
 	private boolean award[];
-
-	public void addGuys(LinearLayout pessoas,Evento evento){
-		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
-		for (int i = 0; i < evento.getUsers().size(); i++) {
-			ImageView imagem;
-			imagem = new ImageView(getActivity());
-			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
-			imagem.setPadding(3, 0, 0, 0);
-			imagem.setLayoutParams(nome_legal);
-			pessoas.addView(imagem);
-		}
-	}
+	private String voteGuy;
 	
 	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
 		String putTime;
@@ -279,6 +269,10 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			butao_terminar.setVisibility((View.INVISIBLE));
 		}
 
+//		/evento.getIsClosed();
+		
+		TextView num_participantes = (TextView) view.findViewById(R.id.num_participantes);
+		num_participantes.setText(""+evento.getUsers().size());
 		final ImageView starNum[] = new ImageView[5];
 		starNum[0] = (ImageView) view.findViewById(R.id.starNum1);
 		starNum[1] = (ImageView) view.findViewById(R.id.starNum2);
@@ -355,7 +349,30 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			}
 		});
 		LinearLayout pessoasVotacao = (LinearLayout)view.findViewById(R.id.nova_foto2); 
-		addGuys(pessoasVotacao,evento);
+		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
+		final ImageView foto_doidinho = (ImageView) view.findViewById(R.id.foto_usuario_votar);
+		final TextView nome_doidinho = (TextView) view.findViewById(R.id.nome_usuario_votar);
+		for (int i = 0; i < evento.getUsers().size(); i++) {
+			if(evento.getUsers().get(i).getId().equals(ConfigJP.UserId)) continue;
+			ImageView imagem;
+			imagem = new ImageView(getActivity());
+			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
+			imagem.setPadding(3, 0, 0, 0);
+			imagem.setLayoutParams(nome_legal);
+			pessoasVotacao.addView(imagem);
+			final int index=i;
+			imagem.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(index).getPhoto());
+					nome_doidinho.setText(evento.getUsers().get(index).getName());
+				}
+			});
+			if(i==0){
+				DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(i).getPhoto());
+				nome_doidinho.setText(evento.getUsers().get(i).getName());
+			}
+		}
 
 		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
 		final EventFragment listener = this;
@@ -390,8 +407,25 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			}
 		});
 
-		addGuys(pessoas,evento);
-
+		for (int i = 0; i < evento.getUsers().size(); i++) {
+			ImageView imagem;
+			imagem = new ImageView(getActivity());
+			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
+			imagem.setPadding(3, 0, 0, 0);
+			imagem.setLayoutParams(nome_legal);
+			pessoas.addView(imagem);
+			final int index=i;
+			imagem.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					PerfilUserFragment fm = new  PerfilUserFragment();
+					Bundle arg = new Bundle();
+					arg.putString("idUser",evento.getUsers().get(index).getId());
+					fm.setArguments(arg);
+					((MainActivity)getActivity()).mudarAbaAtual(fm);
+				}
+			});
+		}
 		if(evento.getComments()!=null){
 			for (Iterator<Comentario> iterator = evento.getComments().iterator(); iterator.hasNext();) {
 				Comentario coment = (Comentario) iterator.next();
