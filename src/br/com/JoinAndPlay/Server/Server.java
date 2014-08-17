@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
-import ServerPckg.Evento;
 import android.app.Activity;
 import android.util.Log;
 
