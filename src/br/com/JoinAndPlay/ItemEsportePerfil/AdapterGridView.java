@@ -43,7 +43,7 @@ public class AdapterGridView extends BaseAdapter {
 	@Override
 	public View getView(int position, View view, ViewGroup parent) {
 		if (view == null){
-			view = mInflater.inflate(R.layout.tab_layout_perfil_esporte, parent, false);
+			view = mInflater.inflate(R.layout.item_perfil_esporte, parent, false);
 		}
 		ItemEsporte item = itens.get(position);
 		item.drawerView(view);

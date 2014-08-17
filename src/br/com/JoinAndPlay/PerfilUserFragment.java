@@ -43,9 +43,13 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 		}
 		v = (LinearLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
 		/*Requisita o perfil do usu�rio do servidor*/
-		Server.user_profile(getActivity(), this);
+		if(null!=getArguments() && getArguments().containsKey("idUser")){
+			Server.user_profile_id(getArguments().getString("idUser"), this);
+		}else{
+			Server.user_profile(getActivity(), this);
+		}
 		config = getActivity().getResources().getConfiguration();
-		
+
 		/*Celular com resolu��es mais baixas
 		 * muda a resolu��o para mdpi*/
 		if (!((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) > 1)){
@@ -58,16 +62,19 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 			img_jogaTime.setImageResource(R.drawable.perfil_imageview_jogatime_mdpi);
 			img_fairPlay.setImageResource(R.drawable.perfil_imageview_fairplay_mdpi);
 		}
+
+
+
 		return v;
 	}
-	
+
 	@Override
 	public void onTerminado(final Usuario in) {
 		final View ret=getView();
 		final PerfilUserFragment self = this;
 		if (ret == null ) return;
 		ret.post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				ImageView perfil_Foto;
@@ -84,26 +91,26 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 
 					perfil_Foto=(ImageView)ret.findViewById(R.id.profilePictureView1);
 					perfil_Nome=(TextView)ret.findViewById(R.id.perfil_nome_usuario);
-					
+
 					//perfil_gridEsportes=((GridView)ret.findViewById(R.id.perfil_gridview_esportes));
 					perfil_gridEsportes_Expandable = (ExpandableHeightGridView) ret.findViewById(R.id.perfil_gridview_esportes_expandable);
-					
+
 					/*Pega o nome do perfil do servidor*/
 					perfil_Nome.setText(in.getName());
 					/*Pega a foto do perfil do servidor*/
 					DownloadImagem.postLoad(perfil_Foto, in.getPhoto());
-					
+
 					/*Pega n�mero de amigos*/
 					button_amigos = (Button) ret.findViewById(R.id.perfil_button_amigos);
 					button_amigos.setText(in.getNumFriends() + " Amigos");
 					button_amigos.setOnClickListener(new OnClickListener() {
-						
+
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
-							
+
 							Server.get_friends(self.getActivity(),new Connecter<Vector<Usuario>>() {
-								
+
 								@Override
 								public void onTerminado(Vector<Usuario> in) {
 									if(in==null) return;
@@ -115,7 +122,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 										Usuario usuario = (Usuario) iterator
 												.next();
 										array.add(usuario);
-										
+
 									}
 									arg.putParcelableArrayList("users",array);
 									fm.setArguments(arg);
@@ -125,12 +132,27 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							});
 						}
 					});
+					
+					Button button = (Button) ret.findViewById(R.id.perfil_button_eventosAnteriores);
+					button.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							AgendaEventosFragment agenda = new AgendaEventosFragment();
+							Bundle arg = new Bundle();
+							arg.putString("idUser",in.getId() );
+							agenda.setArguments(arg);
+							((MainActivity)self.getActivity()).mudarAbaAtual(agenda);
+							
+						}
+					});
+
 					/*Pegar o n�mero de votos de cada tag do servidor*/
 					votos_esforcado = (TextView) ret.findViewById(R.id.perfil_textview_votos_esforcado);
 					votos_jogaTime = (TextView) ret.findViewById(R.id.perfil_textview_jogatime);
 					votos_fairPlay = (TextView) ret.findViewById(R.id.perfil_textview_votos_fairplay);
 					votos_genteBoa = (TextView) ret.findViewById(R.id.perfil_textview_votos_gente_boa);
-					
+
 					Vector<Tag> comendacoes = in.getTags();
 					for (Tag tag : comendacoes){
 						String NOME = tag.getName();
@@ -144,7 +166,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							votos_jogaTime.setText(tag.getNumVotes());
 						}
 					}
-					
+
 					/*Pegar as informa��es relativas a cada esporte do usu�rio*/
 					ArrayList<ItemEsporte> listaEsportes = new ArrayList<ItemEsporte>();
 					for (Iterator<RatingSport> iterator = in.getRateSport().iterator(); iterator.hasNext();) {

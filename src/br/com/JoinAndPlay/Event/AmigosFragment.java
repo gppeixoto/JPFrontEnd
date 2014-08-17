@@ -2,6 +2,8 @@ package br.com.JoinAndPlay.Event;
 
 import java.util.ArrayList;
 
+import org.joda.time.chrono.BuddhistChronology;
+
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
@@ -97,14 +99,12 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {		
 		PerfilUserFragment fm = new  PerfilUserFragment();
+		Bundle arg = new Bundle();
+		arg.putString("idUser",vetor.get(arg2-1).getId());
+		fm.setArguments(arg);
 		((MainActivity)getActivity()).mudarAbaAtual(fm);
-		
-		
-		
-
 	}
 
 }
