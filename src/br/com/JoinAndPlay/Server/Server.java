@@ -395,7 +395,7 @@ public class Server implements Serializable {
 					obj.put("id", id);
 					obj.put("v_id", voter_id);
 					obj.put("sport", sport_name);
-					obj.put("value", rate_value);
+					obj.put("value", Double.parseDouble(rate_value));
 					System.out.println(obj.toString());
 					ServiceHandler sh = new ServiceHandler();
 					sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
