@@ -25,69 +25,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-class AdapterAmigo extends BaseAdapter{
-	private ArrayList<Usuario> vetor;
-	private LayoutInflater inflater;
-	public AdapterAmigo(ArrayList<Usuario> vetor,LayoutInflater inflater){
-		this.vetor=vetor;
-		this.inflater=inflater;
-
-	}
-
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return vetor.size();
-	}
-
-	@Override
-	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
-		return vetor.get(arg0);
-	}
-
-	@Override
-	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
-		return vetor.get(arg0).hashCode();
-	}
-
-	@Override
-	public View getView(int i, View view, ViewGroup arg2) {
-		// TODO Auto-generated method stub
-		if(view==null)
-			view = inflater.inflate(R.layout.item_amigos, arg2, false);
-		Usuario user = vetor.get(i);
-
-		ImageView imag = (ImageView)view.findViewById(R.id.item_amigos_foto);
-		TextView texto = (TextView)view.findViewById(R.id.item_amigos_texto);
-		ViewGroup bad = (ViewGroup)view.findViewById(R.id.item_amigos_badges);
-		DownloadImagem.postLoad(imag, user.getPhoto());
-		texto.setText(user.getName());
-		boolean[] b = new boolean[4];
-		for (int j = 0; j < b.length; j++) {
-			b[j]=false;
-		}
-		if(user.getTags()!=null)
-		for (Iterator<Tag> iterator = user.getTags().iterator(); iterator.hasNext();) {
-			Tag type = (Tag) iterator.next();
-			String NOME = type.getName();
-			if (NOME.equals("Gente Boa")) b[0]=true;
-			else if (NOME.equals("Fair Play")) b[3]=true;							
-			else if (NOME.equals("Esforcado")) b[1]=true;
-			else if (NOME.equals("Joga Pro Time")) b[2]=true;
-		}
-		
-		for (int j = 0; j < b.length; j++) {
-			if(b[j]==false){
-				bad.getChildAt(j).setVisibility(View.INVISIBLE);
-				
-			}
-		}
-		return view;
-	}
-
-}
 public class AmigosFragment extends Fragment implements OnItemClickListener {
 	LayoutInflater inflater;
 	ListView listV;
@@ -108,7 +45,7 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 		}
 		Log.v("usuario", ""+vetor);
 		if(vetor!=null)
-			listV.setAdapter(new AdapterAmigo(vetor, inflater));
+			listV.setAdapter(new AdapterAmigo(vetor, inflater,null));
 
 		Button Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setVisibility(View.INVISIBLE);

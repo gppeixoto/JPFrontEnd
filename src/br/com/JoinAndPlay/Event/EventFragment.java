@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import br.com.JoinAndPlay.ConfigJP;
+import br.com.JoinAndPlay.CriarEventosCompFragment;
+import br.com.JoinAndPlay.CriarEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
@@ -213,11 +215,24 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			convidar_amigos.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Bundle args = new Bundle();
-					args.putString("id_evento",evento.getId());
-					InviteFriends next = new InviteFriends();
-					next.setArguments(args);
-					((MainActivity)getActivity()).mudarAbaAtual(next);
+					Server.get_friends(getActivity(), new Connecter<Vector<Usuario>>() {
+						@Override
+						public void onTerminado(Vector<Usuario> in) {
+							Bundle args = new Bundle();
+							args.putString("id_evento",evento.getId());
+							ArrayList<Usuario> array=new ArrayList<Usuario>();
+							for (Iterator<Usuario> iterator = in.iterator(); iterator
+									.hasNext();) {
+								Usuario usuario = (Usuario) iterator
+										.next();
+								array.add(usuario);
+							}
+							args.putParcelableArrayList("users",array);
+							InviteFriends next = new InviteFriends();
+							next.setArguments(args);
+							((MainActivity)getActivity()).mudarAbaAtual(next);
+						}
+					});
 				}
 			});
 			
@@ -471,7 +486,17 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			repeat.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					
+					Bundle args = new Bundle();
+					args.putString("esporte",evento.getSport());
+					args.putDouble("preco",(evento.getPrice())/100.0);
+					args.putString("rua",evento.getLocalizationAddress());
+					args.putString("nomeLocal",evento.getLocalizationName());
+					args.putString("bairro",evento.getNeighbourhood());
+					args.putString("cidade",evento.getCity());
+					args.putBoolean("repearEvent", true);
+					CriarEventosFragment next = new CriarEventosFragment();
+					next.setArguments(args);
+					((MainActivity)getActivity()).mudarAbaAtual(next);
 				}
 			});
 		}

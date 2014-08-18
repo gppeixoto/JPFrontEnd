@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/campo_branco"
+    android:background="@drawable/seletor_friends"
     android:gravity="center_vertical|left"
     android:padding="12dp" >
 
@@ -17,7 +17,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:background="@drawable/campo_branco"
+        android:background="@drawable/seletor_friends"
         android:orientation="vertical" >
 
         <TextView
