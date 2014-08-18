@@ -151,7 +151,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 
 					/*Pegar o n�mero de votos de cada tag do servidor*/
 					votos_esforcado = (TextView) ret.findViewById(R.id.perfil_textview_votos_esforcado);
-					votos_jogaTime = (TextView) ret.findViewById(R.id.perfil_textview_jogatime);
+					votos_jogaTime = (TextView) ret.findViewById(R.id.perfil_textview_votos_jogatime);
 					votos_fairPlay = (TextView) ret.findViewById(R.id.perfil_textview_votos_fairplay);
 					votos_genteBoa = (TextView) ret.findViewById(R.id.perfil_textview_votos_gente_boa);
 					Vector<Tag> comendacoes = in.getTags();

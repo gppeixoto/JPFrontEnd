@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -112,19 +113,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 			}
 			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
 			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
-		}else{
-			LocationManager lManager = (LocationManager)getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-			Location location =lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			Log.v("local", ""+location);
-			if(location!=null){
-				Server.get_future_events(getActivity(),location.getLatitude()+","+location.getLongitude(),this);	
-
-
-			}else{
-				Server.get_future_events(getActivity(),this);	
-
-			}
-
 		}
 		return tela;
 	}
@@ -146,7 +134,15 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 	public void onResume(){
 		super.onResume();
 
+		LocationManager lManager = (LocationManager)getActivity().getSystemService(FragmentActivity.LOCATION_SERVICE);
+		Location location =lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 50, this);
+		// de mudança na posição GPS  
+		lManager.requestLocationUpdates(  
+				LocationManager.GPS_PROVIDER, 0, 0, this);  
 
+		lManager.requestLocationUpdates(  
+				LocationManager.NETWORK_PROVIDER, 0, 0, this);
 	}
 
 	@Override
