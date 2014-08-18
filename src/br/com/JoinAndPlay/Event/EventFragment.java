@@ -201,7 +201,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 		
-		if(evento.getIsClosed()==false){
+		if( evento.getIsClosed()==false ){
 			votacao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_iniciada.removeAllViews();
 			Button participar = (Button)view.findViewById(R.id.button1);

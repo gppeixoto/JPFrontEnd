@@ -17,7 +17,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:background="@drawable/seletor_friends"
         android:orientation="vertical" >
 
         <TextView
@@ -40,7 +39,7 @@
                 android:layout_height="30dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/icongenteboa" />
+                android:src="@drawable/votgenteboa" />
 
             <ImageView
                 android:id="@+id/badge2"
@@ -49,7 +48,7 @@
                 android:layout_marginLeft="12dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/iconesforcado" />
+                android:src="@drawable/votesfor" />
 
             <ImageView
                 android:id="@+id/badge3"
@@ -58,7 +57,7 @@
                 android:layout_marginLeft="12dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/iconjogaprotime" />
+                android:src="@drawable/votjogatime" />
 
             <ImageView
                 android:id="@+id/badge4"
@@ -67,7 +66,7 @@
                 android:layout_marginLeft="12dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/iconfairplay" />
+                android:src="@drawable/votfairplay" />
         </LinearLayout>
     </LinearLayout>
 

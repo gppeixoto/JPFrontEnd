@@ -104,4 +104,5 @@
     <string name="fulano">Fulano</string>
     <string name="voteMe">Como você me classificaria?</string>
     <string name="voteFriend">Escolha alguém e nos diga quantas estrelas de habilidade e como o classificaria.</string>
+    <string name="describeEvent">Descreva seu evento.</string>
 </resources>
