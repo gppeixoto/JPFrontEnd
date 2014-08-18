@@ -18,13 +18,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import br.com.JoinAndPlay.ListFriend.AdapterGridViewFriend;
-import br.com.JoinAndPlay.ListFriend.ItemFriend;
+import android.widget.ListView;
+import br.com.JoinAndPlay.Event.AdapterAmigo;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
-import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.widget.EditText;
 import android.widget.TabHost.OnTabChangeListener;
 
@@ -33,43 +32,47 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	private Button bCriarEvento;
 	private Button bParticular;
 	private Button bPublico;
-	
-	private ExpandableHeightGridView grid;
+	private AdapterAmigo adapter;
+
+	private ExpandScrollView grid;
 	
 	private Vector<Usuario> aux;
-	private ArrayList<ItemFriend> amigos;
+	private ArrayList<Usuario> amigos;
 	private Vector<String> convidados;
 		
 	private EditText eNomeEvento;
+	private EditText eDescricao;
 	
 	private boolean privado;
 	
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	private boolean selector[] = null;
+	
+	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
 		
 		if(container==null) return null;
 		
-		amigos = new ArrayList<ItemFriend>();
+		amigos = new ArrayList<Usuario>();
 		convidados = new Vector<String>();
-		
 		Server.get_friends(getActivity(), new Connecter<Vector<Usuario>>(){
 
 			@Override
-			public void onTerminado(Vector<Usuario> in) {
+			public void onTerminado(final Vector<Usuario> in) {
 				// TODO Auto-generated method stub
 				aux = (Vector<Usuario>) in;
 				if(aux!=null){
 					for(int i = 0; i < aux.size(); i++){
-						amigos.add(new ItemFriend(aux.elementAt(i)));
+						amigos.add((aux.elementAt(i)));
 					}
-					
 					grid.post(new Runnable() {
-						
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
-							grid.setAdapter(new AdapterGridViewFriend(getActivity(), amigos));
-
+							if(amigos!=null && amigos.size()>0){
+								selector = new boolean[amigos.size()];
+								adapter = new AdapterAmigo(amigos, inflater,selector);
+								grid.setAdapter(adapter);
+								
+							}
 						}
 					});
 				}	
@@ -85,8 +88,10 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		//tabhost.setOnTabChangedListener(this);
 		
 		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
+		eDescricao = (EditText) view.findViewById(R.id.descrever_evento);
 		
-		grid = (ExpandableHeightGridView) view.findViewById(R.id.gridView1);
+		grid = (ExpandScrollView) view.findViewById(R.id.gridView1);
+		grid.addHeaderView(new View(getActivity()));
 		grid.setExpanded(true);
 		grid.setOnItemClickListener(this);
 		
@@ -127,6 +132,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			
 			@Override
 			public void onClick(View v) {
+				
+				String descricaoEvento = eDescricao.getText().toString();
 				
 				String nomeDoEvento = (String) eNomeEvento.getText().toString();
 				
@@ -176,7 +183,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					
 					Server.create_event(getActivity(), localNome, end, 
 							cidade, bairro, esporte, dia, inicio, termino, 
-							"", nomeDoEvento, preco, privado, new Connecter<Evento>(){
+							descricaoEvento, nomeDoEvento, preco, privado, new Connecter<Evento>(){
 
 								@Override
 								public void onTerminado(Evento in) {
@@ -266,18 +273,11 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
+	public void onItemClick(AdapterView<?> parent, View view, int i,
 			long id) {
-		// TODO Auto-generated method stub
-		ItemFriend f = amigos.get(position);
-		if(f.getSelected()){
-			amigos.get(position).deselected();
-			convidados.remove(f.id);
-		} else {
-			amigos.get(position).selected();
-			if(!convidados.contains(f.id)){
-				convidados.add(f.id);
-			}
+		selector[i-1]=!selector[i-1];
+		if(adapter!=null){
+			adapter.draw(view, i-1);
 		}
 	}
 	
