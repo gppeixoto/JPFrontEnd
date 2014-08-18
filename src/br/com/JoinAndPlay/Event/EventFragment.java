@@ -423,11 +423,10 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				@Override
 				public void onClick(View arg0) {
 					//Verificar se ele não já votou no usuario
-					//Server.vote_in_tag_user(id, tag_name, connecter)
-					Server.rate_user(evento.getUsers().get(ind).getId(), evento.getSport(), rating+"", null);
+					Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
 					for(int i=0;i<4;i++){
 						if(award[i]){
-							Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), badges[i], null);
+							Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), getActivity(), badges[i], null);
 						}
 					}
 				}
