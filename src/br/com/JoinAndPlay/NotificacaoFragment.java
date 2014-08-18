@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.Noticacao.NotificacaoAdapter;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Notificacao;
@@ -17,14 +18,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class NotificacaoFragment extends Fragment implements Connecter<Map<String,Vector<Notificacao>>> {
+public class NotificacaoFragment extends Fragment implements Connecter<Map<String,Vector<Notificacao>>>,OnItemClickListener {
 	//	LinearLayout.LayoutParams parans_max= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1);
 	//	LinearLayout.LayoutParams parans_min= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 	LayoutInflater inflater;
 	ListView list;
+	 ArrayList<Notificacao> notifi ;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	public void onTerminado(Map<String, Vector<Notificacao>> in) {
 		if(in==null)return;
 		if(in.size()==0)return;
-		final ArrayList<Notificacao> notifi = new ArrayList<Notificacao>();
+		notifi = new ArrayList<Notificacao>();
 		for (Iterator<Entry<String, Vector<Notificacao>>> iterator = in.entrySet().iterator(); iterator.hasNext();) {
 			Entry<String, Vector<Notificacao>> type = (Entry<String, Vector<Notificacao>>) iterator.next();
 			for (Iterator<Notificacao> iterator2 = type.getValue().iterator(); iterator2
@@ -76,7 +80,9 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 				not.esporte=type.getKey();
 				notifi.add(not);
 			}
+			
 		}
+		list.setOnItemClickListener(this);
 		list.post(new Runnable() {
 
 			@Override
@@ -89,7 +95,17 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 
 	}
 
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int i, long arg3) {
+		// TODO Auto-generated method stub
+		if(notifi!=null && notifi.size()>(i) ){
 
-
+			Bundle arg= new Bundle();
+			arg.putString("evento",notifi.get(i).getEventId() );
+			Fragment fragment = new EventFragment();
+			fragment.setArguments(arg);
+			((MainActivity)getActivity()).mudarAbaAtual(fragment);
+		}	
+	}
 
 }
