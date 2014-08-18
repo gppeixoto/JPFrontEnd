@@ -32,7 +32,14 @@ public class AgendaEventosFragment extends ListEventosFragment{
 		Button Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setVisibility(View.INVISIBLE);
 		tela.removeView(Button_criar);
+		if(getArguments()!=null){
+		
 		Server.user_agenda(getActivity(), this);
+		}else{
+			
+			Server.get_past(getActivity(), this);
+		}
+		
 		return  tela;
 
 	}

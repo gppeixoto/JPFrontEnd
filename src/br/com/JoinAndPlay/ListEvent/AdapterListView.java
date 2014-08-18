@@ -139,9 +139,27 @@ public class AdapterListView extends BaseAdapter
 		}
 
 		TextView distanciaView = (TextView) view.findViewById(R.id.item_list_distancia);
-		if(evento.getDistance()!=null){
-			distanciaView.setText(evento.getDistance()+"m");
+		try{
+			int i = Integer.parseInt(evento.getDistance());
+			
+			if(i==0){
+				distanciaView.setText("AQUI");
+	
+			}else if(i<1000){
+				distanciaView.setText(i+"m");
+
+			}else{
+				
+				distanciaView.setText(Math.round(i/1000.0)+"Km");
+
+			}
+			
+		}catch(Exception _){
+			distanciaView.setText("");
+
 		}
+		
+		
 		TextView precoView = (TextView) view.findViewById(R.id.item_list_preco);
 		if(evento.getPrice()==0){
 			precoView.setText("");

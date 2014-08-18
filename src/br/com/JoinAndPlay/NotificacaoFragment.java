@@ -24,11 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class NotificacaoFragment extends Fragment implements Connecter<Map<String,Vector<Notificacao>>>,OnItemClickListener {
-	//	LinearLayout.LayoutParams parans_max= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1);
-	//	LinearLayout.LayoutParams parans_min= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
 	LayoutInflater inflater;
 	ListView list;
-	 ArrayList<Notificacao> notifi ;
+	ArrayList<Notificacao> notifi ;
+	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 				not.esporte=type.getKey();
 				notifi.add(not);
 			}
-			
+
 		}
 		list.setOnItemClickListener(this);
 		list.post(new Runnable() {

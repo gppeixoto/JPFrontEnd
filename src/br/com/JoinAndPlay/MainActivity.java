@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
 		MapsInitializer.initialize(this);
-
+//onAlertEvent();
 		for (int i = 0; i <TabFragment.SIZE; i++) {
 			Fragment fragment = getSupportFragmentManager().findFragmentByTag("tab"+(i+1));
 			if (fragment != null)
@@ -144,6 +144,11 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 
 	}
 
-
+    //manda um alerta para o usuario
+    public void onAlertEvent (){
+        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+        NewMessageNotification notification = new NewMessageNotification();
+        notification.notify(this, "Nível de óleo baixo", "Toque para detalhes", R.drawable.basquete, "Alerta de risco veicular", intent, 0);
+    }
 
 }

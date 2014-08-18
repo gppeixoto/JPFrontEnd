@@ -104,20 +104,19 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 						}
 					}
 				});
-			} else {
+			}		}
+			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
+			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
+		 else {
 				Location local =((MainActivity)(getActivity())).location;
 				if(local!=null){
-					
 					Server.get_future_events(getActivity(),local.getLatitude()+","+local.getLongitude(),this);	
-
 
 				}else{
 					Server.get_future_events(getActivity(),this);	
 
-				}		}
-			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
-			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
-		}
+				}
+		 }
 		return tela;
 	}
 	boolean login = true;

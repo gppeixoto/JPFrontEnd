@@ -102,12 +102,13 @@ public class Usuario implements Serializable,Parcelable {
 		name=in.readString();
 		photo=in.readString();
 		
-	}
+			}
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
 		dest.writeString(id);
 		dest.writeString(name);
 		dest.writeString(photo);
+		//dest.writeString(tags);
 	}
 }

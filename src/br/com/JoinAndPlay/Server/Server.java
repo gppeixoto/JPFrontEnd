@@ -91,7 +91,7 @@ public class Server implements Serializable {
 	 */
 	public static void user_profile_id(final String id, Activity act, final Connecter<Usuario> connecter) {
 		ConfigJP.getUserID(act, new Connecter<String>() {
-			
+
 			@Override
 			public void onTerminado(String caller_id) {
 				try {
@@ -380,6 +380,42 @@ public class Server implements Serializable {
 		});
 	}
 
+	public static void get_past(Activity act, final Connecter<Vector<Evento>> connecter) {
+		ConfigJP.getToken(act, new Connecter<String>() {
+
+			@Override
+			public void onTerminado(String access_token) {
+				// TODO Auto-generated method stub
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("access_token", access_token);
+
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/getpast/", obj.toString(), new Connecter<String>() {
+
+						@Override
+						public void onTerminado(String in) {
+							if (in == null) {
+								if (connecter != null) connecter.onTerminado(null);
+								return;
+							}
+							try {
+								JSONObject obj = new JSONObject(in);
+								JSONArray arr = obj.getJSONArray("events");
+								Vector<Evento> ret = new Vector<Evento>();
+								for (int i = 0; i < arr.length(); ++i) {
+									ret.add(processEvent(arr.getJSONObject(i)));
+								}
+								if (connecter != null) connecter.onTerminado(ret);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
+	}
+
+	
 	/**
 	 * @param id id do usuario que sera avaliado.
 	 * @param sport_name nome do esporte que o usuario sera avaliado.
@@ -420,7 +456,7 @@ public class Server implements Serializable {
 	 * */
 	public static void vote_in_tag_user(final String id, Activity act, final String tag_name, final Connecter<Usuario> connecter) {
 		ConfigJP.getUserID(act, new Connecter<String>() {
-			
+
 			@Override
 			public void onTerminado(String voter_id) {
 				try {
@@ -954,7 +990,7 @@ public class Server implements Serializable {
 					obj.put("access_token", access_token);
 					obj.put("localization", localization);
 				} catch (JSONException _) {}
-
+				Log.v("mandando", obj.toString());
 				(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
 
 					@Override
@@ -1138,7 +1174,7 @@ public class Server implements Serializable {
 					}
 					votou = act_user.getBoolean(4);
 				}
-				
+
 				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, tags, null, false, votou);
 				users.add(to_add);
 			}
@@ -1162,7 +1198,7 @@ public class Server implements Serializable {
 				}
 			}
 			String id = evt.get("id")+"";
-			int price = evt.getInt("price");
+			int price = Integer.parseInt(evt.getString("price"));
 			boolean is_private = evt.getBoolean("private");
 			String city = null;
 			if (evt.has("city")) city = evt.getString("city");
