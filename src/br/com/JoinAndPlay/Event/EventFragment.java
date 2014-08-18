@@ -37,7 +37,33 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public LinearLayout list;
 	public LayoutInflater inf;
 	private boolean award[];
-	private String voteGuy;
+	private double rating;
+	private int ind;
+	private int index;
+	private String badges[];
+	
+	public void addGuys(LinearLayout pessoas,final Evento evento){
+		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
+		for (int i = 0; i < evento.getUsers().size(); i++) {
+			ImageView imagem;
+			imagem = new ImageView(getActivity());
+			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
+			imagem.setPadding(3, 0, 0, 0);
+			imagem.setLayoutParams(nome_legal);
+			pessoas.addView(imagem);
+			index=i;
+			imagem.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					PerfilUserFragment fm = new  PerfilUserFragment();
+					Bundle arg = new Bundle();
+					arg.putString("idUser",evento.getUsers().get(index).getId());
+					fm.setArguments(arg);
+					((MainActivity)getActivity()).mudarAbaAtual(fm);
+				}
+			});
+		}
+	}
 
 	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
 		String putTime;
@@ -144,7 +170,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 		
-		if(evento.getIsClosed()==false){
+		if(evento.getIsClosed()==true){
 			votacao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_iniciada.removeAllViews();
 			Button participar = (Button)view.findViewById(R.id.button1);
@@ -266,26 +292,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				participar.setOnClickListener(this);
 				butao_terminar.setVisibility((View.INVISIBLE));
 			}
-			LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
-			for (int i = 0; i < evento.getUsers().size(); i++) {
-				ImageView imagem;
-				imagem = new ImageView(getActivity());
-				DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
-				imagem.setPadding(3, 0, 0, 0);
-				imagem.setLayoutParams(nome_legal);
-				pessoas.addView(imagem);
-				final int index=i;
-				imagem.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						PerfilUserFragment fm = new  PerfilUserFragment();
-						Bundle arg = new Bundle();
-						arg.putString("idUser",evento.getUsers().get(index).getId());
-						fm.setArguments(arg);
-						((MainActivity)getActivity()).mudarAbaAtual(fm);
-					}
-				});
-			}
+			addGuys(pessoas,evento);
 		}else{
 			votacao_nao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_nao_iniciada.removeAllViews();
@@ -298,22 +305,25 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			starNum[2] = (ImageView) view.findViewById(R.id.starNum3);
 			starNum[3] = (ImageView) view.findViewById(R.id.starNum4);
 			starNum[4] = (ImageView) view.findViewById(R.id.starNum5);
-
+			rating=0.0;
 			LinearLayout percentual = (LinearLayout) view.findViewById(R.id.percentual);
-			//Server.vote_in_tag_user(id, tag_name, connecter)
-			//Server.rate_user(id, sport_name, rate_value, connecter)
 			OnTouchListener estrelas = new OnTouchListener() {
 				@Override
 				public boolean onTouch(View arg0, MotionEvent arg1) {
 					if((arg1.getAction()&MotionEvent.ACTION_MASK)==MotionEvent.ACTION_DOWN){
 						int value = Math.round((arg1.getX()/(arg0.getWidth()))*100);
+						rating=0.0;
 						for(int i=0,j=11;i<5;i++,j+=20){
-							if(value >= j) starNum[i].setImageResource(R.drawable.star1);
-							else if(value >= j-10) starNum[i].setImageResource(R.drawable.halfstar);
+							if(value >= j){
+								starNum[i].setImageResource(R.drawable.star1);
+								rating+=1.0;
+							}
+							else if(value >= j-10){
+								starNum[i].setImageResource(R.drawable.halfstar);
+								rating+=0.5;
+							}
 							else starNum[i].setImageResource(R.drawable.star2);
 						}
-					}else{
-						Log.v("OPAAAAAA",(arg1.getAction()&MotionEvent.ACTION_MASK)+"");
 					}
 					return false;
 				}
@@ -323,51 +333,51 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			ImageView award2 = (ImageView) view.findViewById(R.id.award2);
 			ImageView award3 = (ImageView) view.findViewById(R.id.award3);
 			ImageView award4 = (ImageView) view.findViewById(R.id.award4);
-			final ImageView okay[] = new ImageView[4];
-			okay[0] = (ImageView) view.findViewById(R.id.okay1);
-			okay[1] = (ImageView) view.findViewById(R.id.okay2);
-			okay[2] = (ImageView) view.findViewById(R.id.okay3);
-			okay[3] = (ImageView) view.findViewById(R.id.okay4);
 			/** ISSO AQUI TEM QUE PEGAR COM O SERVIDOR **/
 			award = new boolean[4];
 			for(int i=0;i<4;i++){
 				award[i] = false;
-				if(award[i]==false) okay[i].setVisibility(View.INVISIBLE);
 			}
 
 			award1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+					ImageView view = (ImageView)arg0;
 					award[0] = !award[0];
-					if(award[0]==false) okay[0].setVisibility(View.INVISIBLE);
-					else okay[0].setVisibility(View.VISIBLE);
+					if(award[0]==false) view.setImageResource(R.drawable.icongenteboa);
+					else view.setImageResource(R.drawable.okaygenteboa);
 				}
 			});
 			award2.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+					ImageView view = (ImageView)arg0;
 					award[1] = !award[1];
-					if(award[1]==false) okay[1].setVisibility(View.INVISIBLE);
-					else okay[1].setVisibility(View.VISIBLE);
+					if(award[1]==false) view.setImageResource(R.drawable.iconesforcado);
+					else view.setImageResource(R.drawable.okayesforcado);
 				}
 			});
 			award3.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+					ImageView view = (ImageView)arg0;
 					award[2] = !award[2];
-					if(award[2]==false) okay[2].setVisibility(View.INVISIBLE);
-					else okay[2].setVisibility(View.VISIBLE);
+					if(award[2]==false) view.setImageResource(R.drawable.iconjogaprotime);
+					else view.setImageResource(R.drawable.okayjogaprotime);
 				}
 			});
 			award4.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+					ImageView view = (ImageView)arg0;
 					award[3] = !award[3];
-					if(award[3]==false) okay[3].setVisibility(View.INVISIBLE);
-					else okay[3].setVisibility(View.VISIBLE);
+					if(award[3]==false) view.setImageResource(R.drawable.iconfairplay);
+					else view.setImageResource(R.drawable.okayfairplay);
 				}
 			});
 			LinearLayout pessoasVotacao = (LinearLayout)view.findViewById(R.id.nova_foto2); 
+			LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.nova_foto3);
+			addGuys(pessoas,evento);
 			LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
 			final ImageView foto_doidinho = (ImageView) view.findViewById(R.id.foto_usuario_votar);
 			final TextView nome_doidinho = (TextView) view.findViewById(R.id.nome_usuario_votar);
@@ -385,13 +395,52 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					public void onClick(View v) {
 						DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(index).getPhoto());
 						nome_doidinho.setText(evento.getUsers().get(index).getName());
+						ind = index;
 					}
 				});
-				if(i==0){
-					DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(i).getPhoto());
-					nome_doidinho.setText(evento.getUsers().get(i).getName());
-				}
 			}
+			if(evento.getUsers().get(0).getId().equals(ConfigJP.UserId)){
+				if(evento.getUsers().size() > 1){
+					ind=1;
+					DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
+					nome_doidinho.setText(evento.getUsers().get(ind).getName());
+					evento.getUsers().get(ind).getTags();
+				}else{
+					//Lançar exceção
+				}
+			}else{
+				ind=0;
+				DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
+				nome_doidinho.setText(evento.getUsers().get(ind).getName());
+			}
+			badges = new String[4];
+			badges[0] = "Gente Boa";
+			badges[1] = "Fair Play";
+			badges[2] = "Esforcado";
+			badges[3] = "Joga Pro Time";
+			Button votar = (Button) view.findViewById(R.id.vote);
+			votar.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					//Verificar se ele não já votou no usuario
+					//Server.vote_in_tag_user(id, tag_name, connecter)
+					Server.rate_user(evento.getUsers().get(ind).getId(), evento.getSport(), rating+"", null);
+					for(int i=0;i<4;i++){
+						if(award[i]){
+							Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), badges[i], null);
+						}
+					}
+				}
+			});
+			Button repeat = (Button) view.findViewById(R.id.button1);
+			paintGray(repeat);
+			repeat.setText("Deseja repetir o evento?");
+			repeat.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					
+				}
+			});
 		}
 
 		Button butao_enviar = (Button)view.findViewById(R.id.enviar_comentario);
