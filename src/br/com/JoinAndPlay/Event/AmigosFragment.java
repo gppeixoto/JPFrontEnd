@@ -1,6 +1,7 @@
 package br.com.JoinAndPlay.Event;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.joda.time.chrono.BuddhistChronology;
 
@@ -8,6 +9,7 @@ import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.DownloadImagem;
+import br.com.JoinAndPlay.Server.Tag;
 import br.com.JoinAndPlay.Server.Usuario;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -59,10 +61,29 @@ class AdapterAmigo extends BaseAdapter{
 
 		ImageView imag = (ImageView)view.findViewById(R.id.item_amigos_foto);
 		TextView texto = (TextView)view.findViewById(R.id.item_amigos_texto);
+		ViewGroup bad = (ViewGroup)view.findViewById(R.id.item_amigos_badges);
 		DownloadImagem.postLoad(imag, user.getPhoto());
 		texto.setText(user.getName());
-
-
+		boolean[] b = new boolean[4];
+		for (int j = 0; j < b.length; j++) {
+			b[j]=false;
+		}
+		if(user.getTags()!=null)
+		for (Iterator<Tag> iterator = user.getTags().iterator(); iterator.hasNext();) {
+			Tag type = (Tag) iterator.next();
+			String NOME = type.getName();
+			if (NOME.equals("Gente Boa")) b[0]=true;
+			else if (NOME.equals("Fair Play")) b[3]=true;							
+			else if (NOME.equals("Esforcado")) b[1]=true;
+			else if (NOME.equals("Joga Pro Time")) b[2]=true;
+		}
+		
+		for (int j = 0; j < b.length; j++) {
+			if(b[j]==false){
+				bad.getChildAt(j).setVisibility(View.INVISIBLE);
+				
+			}
+		}
 		return view;
 	}
 
