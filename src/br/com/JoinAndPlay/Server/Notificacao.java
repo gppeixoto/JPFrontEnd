@@ -10,6 +10,7 @@ public class Notificacao {
 	private String creator_photo;
 	private String localization_name;
 	private String neighborhood;
+	public String esporte;
 	
 	public Notificacao(String creator, String event_name, String event_id, String begin, String date, boolean privado,
 			String creator_photo, String local_name, String neighborhood) {

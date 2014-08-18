@@ -63,6 +63,7 @@ public class NotificacaoAdapter extends BaseAdapter {
 
 		nomeView.setText(not.getEventName());
 		dataHoraView.setText(not.getDate()+" • "+not.getHourBegin());
+		
 		///	bairroCidadeView.setText("");
 		nomePerfilView.setText(not.getCreatorName()+" convidou voçê");
 		//	tempoView.setText(not.get)
