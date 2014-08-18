@@ -62,7 +62,6 @@ public class InviteFriends extends Fragment implements OnItemClickListener {
 				Vector<String> conv = new Vector<String>();
 				for (int i = 0; i < checked.size(); i++) {
 					int position = checked.keyAt(i);
-					Log.v("mimigo convidei mimico legal", ""+((Usuario)(listV.getAdapter().getItem(position))).getName());
 					if (checked.valueAt(i)) conv.add(((Usuario)(listV.getAdapter().getItem(position))).getId());
 				}				
 				Server.invite(ConfigJP.UserId, id_evento, conv, null);

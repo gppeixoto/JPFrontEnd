@@ -291,7 +291,20 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 				}
 			}
 		});
-
+		
+		if(getArguments() != null && getArguments().getBoolean("repearEvent", false)){
+			eNomeLugar.setText(getArguments().getString("nomeLocal"));
+			eEsporte.setText(getArguments().getString("esporte"));
+			eRua.setText(getArguments().getString("rua"));
+			eBairro.setText(getArguments().getString("bairro"));
+			eCidade.setText(getArguments().getString("cidade"));
+			if(getArguments().getDouble("preco") != 0.0){
+				pago=true;
+				ePreco.setVisibility(View.VISIBLE);
+				tUnidade.setVisibility(View.VISIBLE);
+				ePreco.setText(getArguments().getDouble("preco")+"");
+			}
+		}
 		return view;
 	}
 
