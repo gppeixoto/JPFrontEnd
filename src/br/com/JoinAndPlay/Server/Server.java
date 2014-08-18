@@ -11,6 +11,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
+import ServerPckg.Connecter;
+import ServerPckg.Esporte;
+import ServerPckg.Notificacao;
+import ServerPckg.RatingSport;
+import ServerPckg.ServiceHandler;
+import ServerPckg.Tag;
+import ServerPckg.Usuario;
 import android.app.Activity;
 import android.util.Log;
 
@@ -86,29 +93,34 @@ public class Server implements Serializable {
 
 	/**
 	 * @param id id do usuario que se quer o perfil.
+	 * @param caller_id id de quem ta chamando o metodo
 	 * @return o perfil do usuario que possui esse access_token.
 	 */
-	public static void user_profile_id(String id, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", id);
+	public static void user_profile_id(final String id, Activity act, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(act, new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String caller_id) {
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("id", id);
+					obj.put("uId", caller_id);
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/userprofileid/", obj.toString(), new Connecter<String>() {
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/userprofileid/", obj.toString(), new Connecter<String>() {
 
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						Usuario user = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(user);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario user = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(user);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
+
 	}
 
 	/**
@@ -381,29 +393,31 @@ public class Server implements Serializable {
 	 * @param rate_vaue valor da avaliacao.
 	 * @return o perfil do usuario avaliado. 
 	 * */
-	public static void rate_user(String id, String sport_name, String rate_value, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", id);
-			obj.put("sport", sport_name);
-			obj.put("value", rate_value);
+	public static void rate_user(final String id, Activity act, final String sport_name, final String rate_value, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(act, new Connecter<String>() {
+			@Override
+			public void onTerminado(String voter_id) {
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("id", id);
+					obj.put("v_id", voter_id);
+					obj.put("sport", sport_name);
+					obj.put("value", rate_value);
+					System.out.println(obj.toString());
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
-
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						Usuario ret = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(ret);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario ret = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(ret);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
 	}
 
 	/**
@@ -411,28 +425,31 @@ public class Server implements Serializable {
 	 * @param tag_name nome da tag que o usuario sera avaliado.
 	 * @return o perfil do usuario avaliado. 
 	 * */
-	public static void vote_in_tag_user(String id, String tag_name, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", id);
-			obj.put("tag", tag_name);
+	public static void vote_in_tag_user(final String id, Activity act, final String tag_name, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(act, new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String voter_id) {
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("id", id);
+					obj.put("v_id", voter_id);
+					obj.put("tag", tag_name);
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/voteintaguser/", obj.toString(), new Connecter<String>() {
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/voteintaguser/", obj.toString(), new Connecter<String>() {
 
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						Usuario ret = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(ret);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario ret = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(ret);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
 	}
 
 	/**
@@ -1056,12 +1073,15 @@ public class Server implements Serializable {
 	private static Notificacao processNotification(JSONObject notification) {
 		try {
 			String creator = notification.getString("creator");
+			String photo = notification.getString("creatorImage");
 			String event_name = notification.getString("eventName");
 			String event_id = notification.get("id")+"";
 			String begin = notification.getString("timeBegin");
 			String date = notification.getString("date");
 			boolean privado = notification.getBoolean("private");
-			return new Notificacao(creator, event_name, event_id, begin, date, privado);
+			String local_name = notification.getString("localizationName");
+			String bairro = notification.getString("neighbourhood");
+			return new Notificacao(creator, event_name, event_id, begin, date, privado, photo, local_name, bairro);
 		} catch (JSONException _) {}
 		return null;
 	}
@@ -1070,14 +1090,14 @@ public class Server implements Serializable {
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {
-			String id = user.getString("id");
+			String id = user.get("id")+"";
 			String name = user.getString("name");
 			String photo = user.getString("url");
 			Vector<RatingSport> ratings = new Vector<RatingSport>();
 			JSONArray arr = user.getJSONArray("ratings");
 			for (int i = 0; i < arr.length(); ++i) {
 				JSONArray aux = arr.getJSONArray(i);
-				ratings.add(new RatingSport(aux.getString(0), aux.getString(1)));
+				ratings.add(new RatingSport(aux.getString(0), aux.get(2)+"", aux.getInt(1), aux.getInt(3)));
 			}
 			Vector<Tag> tags = new Vector<Tag>();
 			arr = user.getJSONArray("tags");
@@ -1086,10 +1106,12 @@ public class Server implements Serializable {
 				tags.add(new Tag(aux.getString(0), aux.getInt(1)));
 			}
 			Vector<Esporte> times_sports = new Vector<Esporte>();
-			arr = user.getJSONArray("sportsInfo");
-			for (int i = 0; i < arr.length(); ++i) {
-				JSONArray aux = arr.getJSONArray(i);
-				times_sports.add(new Esporte(aux.getString(0), aux.getInt(1)));
+			if (user.has("sportsInfo")) {
+				arr = user.getJSONArray("sportsInfo");
+				for (int i = 0; i < arr.length(); ++i) {
+					JSONArray aux = arr.getJSONArray(i);
+					times_sports.add(new Esporte(aux.getString(0), aux.getInt(1)));
+				}
 			}
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
