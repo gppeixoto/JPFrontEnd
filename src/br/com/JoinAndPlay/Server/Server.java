@@ -11,13 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.JoinAndPlay.ConfigJP;
-import ServerPckg.Connecter;
-import ServerPckg.Esporte;
-import ServerPckg.Notificacao;
-import ServerPckg.RatingSport;
-import ServerPckg.ServiceHandler;
-import ServerPckg.Tag;
-import ServerPckg.Usuario;
 import android.app.Activity;
 import android.util.Log;
 
