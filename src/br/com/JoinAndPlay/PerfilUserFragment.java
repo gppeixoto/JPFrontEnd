@@ -44,7 +44,7 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 		v = (LinearLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
 		/*Requisita o perfil do usu�rio do servidor*/
 		if(null!=getArguments() && getArguments().containsKey("idUser")){
-			Server.user_profile_id(getArguments().getString("idUser"), this);
+			Server.user_profile_id(getArguments().getString("idUser"),getActivity(), this);
 		}else{
 			Server.user_profile(getActivity(), this);
 		}

@@ -86,29 +86,34 @@ public class Server implements Serializable {
 
 	/**
 	 * @param id id do usuario que se quer o perfil.
+	 * @param caller_id id de quem ta chamando o metodo
 	 * @return o perfil do usuario que possui esse access_token.
 	 */
-	public static void user_profile_id(String id, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", id);
+	public static void user_profile_id(final String id, Activity act, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(act, new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String caller_id) {
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("id", id);
+					obj.put("uId", caller_id);
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/userprofileid/", obj.toString(), new Connecter<String>() {
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/userprofileid/", obj.toString(), new Connecter<String>() {
 
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						Usuario user = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(user);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario user = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(user);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
+
 	}
 
 	/**
@@ -381,29 +386,31 @@ public class Server implements Serializable {
 	 * @param rate_vaue valor da avaliacao.
 	 * @return o perfil do usuario avaliado. 
 	 * */
-	public static void rate_user(String id, String sport_name, String rate_value, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", id);
-			obj.put("sport", sport_name);
-			obj.put("value", rate_value);
+	public static void rate_user(final String id, Activity act, final String sport_name, final String rate_value, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(act, new Connecter<String>() {
+			@Override
+			public void onTerminado(String voter_id) {
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("id", id);
+					obj.put("v_id", voter_id);
+					obj.put("sport", sport_name);
+					obj.put("value", rate_value);
+					System.out.println(obj.toString());
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
-
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						Usuario ret = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(ret);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario ret = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(ret);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
 	}
 
 	/**
@@ -411,28 +418,31 @@ public class Server implements Serializable {
 	 * @param tag_name nome da tag que o usuario sera avaliado.
 	 * @return o perfil do usuario avaliado. 
 	 * */
-	public static void vote_in_tag_user(String id, String tag_name, final Connecter<Usuario> connecter) {
-		try {
-			JSONObject obj = new JSONObject();
-			obj.put("id", id);
-			obj.put("tag", tag_name);
+	public static void vote_in_tag_user(final String id, Activity act, final String tag_name, final Connecter<Usuario> connecter) {
+		ConfigJP.getUserID(act, new Connecter<String>() {
+			
+			@Override
+			public void onTerminado(String voter_id) {
+				try {
+					JSONObject obj = new JSONObject();
+					obj.put("id", id);
+					obj.put("v_id", voter_id);
+					obj.put("tag", tag_name);
 
-			ServiceHandler sh = new ServiceHandler();
-			sh.makePOST(ServiceHandler.URL_BASE + "/voteintaguser/", obj.toString(), new Connecter<String>() {
+					ServiceHandler sh = new ServiceHandler();
+					sh.makePOST(ServiceHandler.URL_BASE + "/voteintaguser/", obj.toString(), new Connecter<String>() {
 
-				@Override
-				public void onTerminado(String in) {
-					if (in == null) {
-						if (connecter != null) connecter.onTerminado(null);
-						return;
-					}
-					try {
-						Usuario ret = processUsuario(new JSONObject((String) in));
-						if (connecter != null) connecter.onTerminado(ret);
-					} catch (JSONException _) {}
-				}
-			});
-		} catch (JSONException _) {}
+						@Override
+						public void onTerminado(String in) {
+							try {
+								Usuario ret = processUsuario(new JSONObject((String) in));
+								if (connecter != null) connecter.onTerminado(ret);
+							} catch (JSONException _) {}
+						}
+					});
+				} catch (JSONException _) {}
+			}
+		});
 	}
 
 	/**
@@ -794,7 +804,7 @@ public class Server implements Serializable {
 							Vector<Usuario> ret = new Vector<Usuario>();
 							for (int i = 0; i < arr.length(); ++i) {
 								JSONArray a = arr.getJSONArray(i);
-								ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false));
+								ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false,false));
 							}
 							if (connecter != null) connecter.onTerminado(ret);
 						} catch (JSONException _) {}
@@ -1056,12 +1066,15 @@ public class Server implements Serializable {
 	private static Notificacao processNotification(JSONObject notification) {
 		try {
 			String creator = notification.getString("creator");
+			String photo = notification.getString("creatorImage");
 			String event_name = notification.getString("eventName");
 			String event_id = notification.get("id")+"";
 			String begin = notification.getString("timeBegin");
 			String date = notification.getString("date");
 			boolean privado = notification.getBoolean("private");
-			return new Notificacao(creator, event_name, event_id, begin, date, privado);
+			String local_name = notification.getString("localizationName");
+			String bairro = notification.getString("neighbourhood");
+			return new Notificacao(creator, event_name, event_id, begin, date, privado, photo, local_name, bairro);
 		} catch (JSONException _) {}
 		return null;
 	}
@@ -1070,14 +1083,14 @@ public class Server implements Serializable {
 	private static Usuario processUsuario(JSONObject user) {
 
 		try {
-			String id = user.getString("id");
+			String id = user.get("id")+"";
 			String name = user.getString("name");
 			String photo = user.getString("url");
 			Vector<RatingSport> ratings = new Vector<RatingSport>();
 			JSONArray arr = user.getJSONArray("ratings");
 			for (int i = 0; i < arr.length(); ++i) {
 				JSONArray aux = arr.getJSONArray(i);
-				ratings.add(new RatingSport(aux.getString(0), aux.getString(1)));
+				ratings.add(new RatingSport(aux.getString(0), aux.get(2)+"", aux.getInt(1), aux.getInt(3)));
 			}
 			Vector<Tag> tags = new Vector<Tag>();
 			arr = user.getJSONArray("tags");
@@ -1086,15 +1099,17 @@ public class Server implements Serializable {
 				tags.add(new Tag(aux.getString(0), aux.getInt(1)));
 			}
 			Vector<Esporte> times_sports = new Vector<Esporte>();
-			arr = user.getJSONArray("sportsInfo");
-			for (int i = 0; i < arr.length(); ++i) {
-				JSONArray aux = arr.getJSONArray(i);
-				times_sports.add(new Esporte(aux.getString(0), aux.getInt(1)));
+			if (user.has("sportsInfo")) {
+				arr = user.getJSONArray("sportsInfo");
+				for (int i = 0; i < arr.length(); ++i) {
+					JSONArray aux = arr.getJSONArray(i);
+					times_sports.add(new Esporte(aux.getString(0), aux.getInt(1)));
+				}
 			}
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
 
-			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
+			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification, false);
 		} catch (JSONException a) { a.printStackTrace();}
 		return null;
 	}
@@ -1106,7 +1121,19 @@ public class Server implements Serializable {
 			JSONArray arr_users = evt.getJSONArray("participants");
 			for (int j = 0; j < arr_users.length(); ++j) {
 				JSONArray act_user = arr_users.getJSONArray(j);
-				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
+				Vector<Tag> tags = new Vector<Tag>();
+				boolean votou = false;
+				if (act_user.length() > 3) {
+					System.out.println(act_user);
+					JSONArray arr = act_user.getJSONArray(3);
+					for (int i = 0; i < arr.length(); ++i) {
+						String aux = arr.getString(i);
+						tags.add(new Tag(aux, 0));
+					}
+					votou = act_user.getBoolean(4);
+				}
+				
+				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, tags, null, false, votou);
 				users.add(to_add);
 			}
 			String localization_name = evt.getString("localizationName");
@@ -1125,7 +1152,7 @@ public class Server implements Serializable {
 				JSONArray arr_comments = evt.getJSONArray("comments");
 				for (int i = 0; i < arr_comments.length(); ++i) {
 					JSONArray aux = arr_comments.getJSONArray(i);
-					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.get(2)+"", aux.getString(3), aux.getString(4), aux.getString(5)));
+					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.get(2)+"", aux.getString(3), aux.getString(4), aux.get(5)+""));
 				}
 			}
 			String id = evt.get("id")+"";
@@ -1152,14 +1179,16 @@ public class Server implements Serializable {
 				arr_users = evt.getJSONArray("arrived");
 				for (int j = 0; j < arr_users.length(); ++j) {
 					JSONArray act_user = arr_users.getJSONArray(j);
-					Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
+					Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false, false);
 					at_event.add(to_add);
 				}
 			}
 			boolean closed = false;
 			if (evt.has("startVoting")) closed = evt.getBoolean("startVoting");
 			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates, has_arrived, at_event, closed);
-		} catch (JSONException _) {}
+		} catch (JSONException _) {
+			_.printStackTrace();
+		}
 		return null;
 	}
 }
