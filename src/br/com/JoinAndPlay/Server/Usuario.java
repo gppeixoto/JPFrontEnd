@@ -19,9 +19,10 @@ public class Usuario implements Serializable,Parcelable {
 	private Vector<Tag> tags;
 	private Vector<Esporte> times_sport;
 	private boolean has_notification;
+	private boolean votou_esporte;
 	
 	public Usuario(String id, String name, String rating, String photo, Vector<Evento> events, int num_friends,
-				   Vector<RatingSport> rating_sport, Vector<Tag> tags, Vector<Esporte> times_sport, boolean has_notification) {
+				   Vector<RatingSport> rating_sport, Vector<Tag> tags, Vector<Esporte> times_sport, boolean has_notification, boolean votou) {
 		this.id = id;
 		this.name = name;
 		this.rating = rating;
@@ -32,6 +33,7 @@ public class Usuario implements Serializable,Parcelable {
 		this.tags = tags;
 		this.times_sport = times_sport;
 		this.has_notification = has_notification;
+		this.votou_esporte = votou;
 	}
 	
 	/**
@@ -83,6 +85,11 @@ public class Usuario implements Serializable,Parcelable {
 	 * @return true se tiver notificacao, false se nao tiver.
 	 * */
 	public boolean getHasNotification() { return this.has_notification; }
+	
+	/**
+	 * @return true se tiver votado no esporte do evento nesse usuario.
+	 * */
+	public boolean getVotedInSport() { return this.votou_esporte; }
 
 	@Override
 	public int describeContents() {
@@ -102,9 +109,5 @@ public class Usuario implements Serializable,Parcelable {
 		dest.writeString(id);
 		dest.writeString(name);
 		dest.writeString(photo);
-		
-
-		
-		
 	}
 }

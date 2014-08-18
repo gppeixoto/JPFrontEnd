@@ -395,7 +395,7 @@ public class Server implements Serializable {
 					obj.put("id", id);
 					obj.put("v_id", voter_id);
 					obj.put("sport", sport_name);
-					obj.put("value", rate_value);
+					obj.put("value", Double.parseDouble(rate_value));
 					System.out.println(obj.toString());
 					ServiceHandler sh = new ServiceHandler();
 					sh.makePOST(ServiceHandler.URL_BASE + "/rateuser/", obj.toString(), new Connecter<String>() {
@@ -804,7 +804,7 @@ public class Server implements Serializable {
 							Vector<Usuario> ret = new Vector<Usuario>();
 							for (int i = 0; i < arr.length(); ++i) {
 								JSONArray a = arr.getJSONArray(i);
-								ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false));
+								ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false,false));
 							}
 							if (connecter != null) connecter.onTerminado(ret);
 						} catch (JSONException _) {}
@@ -1109,7 +1109,7 @@ public class Server implements Serializable {
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
 
-			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification);
+			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification, false);
 		} catch (JSONException a) { a.printStackTrace();}
 		return null;
 	}
@@ -1121,7 +1121,19 @@ public class Server implements Serializable {
 			JSONArray arr_users = evt.getJSONArray("participants");
 			for (int j = 0; j < arr_users.length(); ++j) {
 				JSONArray act_user = arr_users.getJSONArray(j);
-				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
+				Vector<Tag> tags = new Vector<Tag>();
+				boolean votou = false;
+				if (act_user.length() > 3) {
+					System.out.println(act_user);
+					JSONArray arr = act_user.getJSONArray(3);
+					for (int i = 0; i < arr.length(); ++i) {
+						String aux = arr.getString(i);
+						tags.add(new Tag(aux, 0));
+					}
+					votou = act_user.getBoolean(4);
+				}
+				
+				Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, tags, null, false, votou);
 				users.add(to_add);
 			}
 			String localization_name = evt.getString("localizationName");
@@ -1140,7 +1152,7 @@ public class Server implements Serializable {
 				JSONArray arr_comments = evt.getJSONArray("comments");
 				for (int i = 0; i < arr_comments.length(); ++i) {
 					JSONArray aux = arr_comments.getJSONArray(i);
-					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.get(2)+"", aux.getString(3), aux.getString(4), aux.getString(5)));
+					comments.add(new Comentario(aux.getString(0), aux.getString(1), aux.get(2)+"", aux.getString(3), aux.getString(4), aux.get(5)+""));
 				}
 			}
 			String id = evt.get("id")+"";
@@ -1167,14 +1179,16 @@ public class Server implements Serializable {
 				arr_users = evt.getJSONArray("arrived");
 				for (int j = 0; j < arr_users.length(); ++j) {
 					JSONArray act_user = arr_users.getJSONArray(j);
-					Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false);
+					Usuario to_add = new Usuario(act_user.get(0)+"", act_user.getString(1), "", act_user.getString(2), null, 0, null, null, null, false, false);
 					at_event.add(to_add);
 				}
 			}
 			boolean closed = false;
 			if (evt.has("startVoting")) closed = evt.getBoolean("startVoting");
 			return new Evento(name, users, localization_name, localization_address, sport, num_friends, date_evt, begin_time, end_time, description, comments, id, is_private, price, city, neighbourhood, distance, latitude, longitude, creator_id, participates, has_arrived, at_event, closed);
-		} catch (JSONException _) {}
+		} catch (JSONException _) {
+			_.printStackTrace();
+		}
 		return null;
 	}
 }
