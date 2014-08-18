@@ -20,7 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class mapaFragment extends Fragment {
+public class MapaFragment extends Fragment {
 	SupportMapFragment suportMap;
 
 
@@ -60,7 +60,7 @@ public class mapaFragment extends Fragment {
 					@Override
 					public void onClick(View v) {
 
-						mapaFragment mapa= new mapaFragment();
+						MapaFragment mapa= new MapaFragment();
 						arg.putBoolean("isMax", true);
 						mapa.setArguments(arg);
 						((MainActivity)getActivity()).mudarAbaAtual(mapa);
