@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Notificacao;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,38 +58,20 @@ public class NotificacaoAdapter extends BaseAdapter {
 		ImageView perfilView= (ImageView)view.findViewById(R.id.item_notif_usuario);
 
 		View cadeado =		view.findViewById(R.id.item_notif_privado);
-		View confirmarView = view.findViewById(R.id.item_notif_confirmar);
-		View recusarView = view.findViewById(R.id.item_notif_recusar);
 
 
 		nomeView.setText(not.getEventName());
 		dataHoraView.setText(not.getDate()+" • "+not.getHourBegin());
-		
-		///	bairroCidadeView.setText("");
+
+		bairroCidadeView.setText(not.getLocalizationName()+" • "+not.getNeighborhood());
 		nomePerfilView.setText(not.getCreatorName()+" convidou voçê");
-		//	tempoView.setText(not.get)
+		tempoView.setText("");
+		DownloadImagem.postLoad(perfilView, not.getCreatorPhoto());
 		esportView.setImageResource(ConfigJP.ESPORTE_BUTTON[ConfigJP.getEsporteID(not.esporte)]);
 
 
 		if(!not.getPrivacy()) cadeado.setVisibility(View.INVISIBLE);
-		confirmarView.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		recusarView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		
 		return view;
 	}
 

@@ -18,7 +18,7 @@ public class ItemEsporte implements Parcelable {
 	public String esporte;
 	public int partidasJogadas;
 	public double avaliacaoJogador; //numero de estrelas
-	private int numeroVotos;
+	public int numeroVotos;
 	
 	public ItemEsporte(){
 
@@ -66,14 +66,14 @@ public class ItemEsporte implements Parcelable {
 		
 		Log.v("PARTIDAS JOGADAS", partidasJogadas+"");
 		
-		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_qtd_partidas);
-		TextView qtdPartidas = (TextView) view.findViewById(R.id.perfil_partidas_jogadas);
+		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_partidas_jogadas);
+		TextView qtdPartidas = (TextView) view.findViewById(R.id.perfil_qtd_partidas);
 		if (partidasJogadas == 1) numPartidasView.setText("1 partida jogada"); else {
 			qtdPartidas.setText(partidasJogadas+"");
 			numPartidasView.setText(" partidas jogadas");
 		}
-		TextView numVotosView = (TextView) view.findViewById(R.id.perfil_qtd_votos);
-		TextView qtdVotos= (TextView) view.findViewById(R.id.perfil_votos);
+		TextView numVotosView = (TextView) view.findViewById(R.id.perfil_votos);
+		TextView qtdVotos= (TextView) view.findViewById(R.id.perfil_qtd_votos);
 		if (numeroVotos == 1) qtdVotos.setText("1 voto"); else
 		if  (numeroVotos < 1) qtdVotos.setText("Nenhum Voto");else
 		{

@@ -18,6 +18,7 @@ import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -146,24 +147,26 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							
 						}
 					});
+					
 
 					/*Pegar o n�mero de votos de cada tag do servidor*/
 					votos_esforcado = (TextView) ret.findViewById(R.id.perfil_textview_votos_esforcado);
 					votos_jogaTime = (TextView) ret.findViewById(R.id.perfil_textview_jogatime);
 					votos_fairPlay = (TextView) ret.findViewById(R.id.perfil_textview_votos_fairplay);
 					votos_genteBoa = (TextView) ret.findViewById(R.id.perfil_textview_votos_gente_boa);
-
 					Vector<Tag> comendacoes = in.getTags();
 					for (Tag tag : comendacoes){
 						String NOME = tag.getName();
+						Log.v("tag",NOME +""+tag.getNumVotes());
+
 						if (NOME.equals("Gente Boa")){
-							votos_genteBoa.setText(tag.getNumVotes());
+							votos_genteBoa.setText(tag.getNumVotes()+"");
 						} else if (NOME.equals("Fair Play")){
-							votos_fairPlay.setText(tag.getNumVotes());							
-						} else if (NOME.equals("Esfor�ado")){
-							votos_esforcado.setText(tag.getNumVotes());
-						} else {
-							votos_jogaTime.setText(tag.getNumVotes());
+							votos_fairPlay.setText(tag.getNumVotes()+"");							
+						} else if (NOME.equals("Esforçado")){
+							votos_esforcado.setText(tag.getNumVotes()+"");
+						} else if (NOME.equals("Joga pro Time")){
+							votos_jogaTime.setText(tag.getNumVotes()+"");
 						}
 					}
 
@@ -173,16 +176,11 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 						ItemEsporte itemEsporte = new ItemEsporte();
 						RatingSport rating = (RatingSport) iterator.next();
 						//Pega o numero de estrelas do esporte
-						itemEsporte.avaliacaoJogador = Double.parseDouble(rating.getRating());
 						//Pega o nome do esporte
 						itemEsporte.esporte = rating.getSportName();
-						int partidasJogadas = 0;
-						//Pega o numero de partidas do esporte (em O(n�), mas pega)
-						for (Iterator<Esporte> it = in.getTimesSport().iterator(); it.hasNext(); ){
-							Esporte num = (Esporte) it.next();
-							if (num.getName().equals(itemEsporte.esporte)){partidasJogadas = num.getNumTimes(); break;}
-						}
-						itemEsporte.partidasJogadas = partidasJogadas;
+						itemEsporte.partidasJogadas = rating.getQntGames();
+						itemEsporte.numeroVotos= rating.getNumVoters();
+						itemEsporte.avaliacaoJogador=Double.parseDouble(rating.getRating());
 						listaEsportes.add(itemEsporte);
 					}
 					perfil_gridEsportes_Expandable.setAdapter(new AdapterGridView(getActivity(),listaEsportes));
