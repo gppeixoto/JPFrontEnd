@@ -213,11 +213,24 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			convidar_amigos.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Bundle args = new Bundle();
-					args.putString("id_evento",evento.getId());
-					InviteFriends next = new InviteFriends();
-					next.setArguments(args);
-					((MainActivity)getActivity()).mudarAbaAtual(next);
+					Server.get_friends(getActivity(), new Connecter<Vector<Usuario>>() {
+						@Override
+						public void onTerminado(Vector<Usuario> in) {
+							Bundle args = new Bundle();
+							args.putString("id_evento",evento.getId());
+							ArrayList<Usuario> array=new ArrayList<Usuario>();
+							for (Iterator<Usuario> iterator = in.iterator(); iterator
+									.hasNext();) {
+								Usuario usuario = (Usuario) iterator
+										.next();
+								array.add(usuario);
+							}
+							args.putParcelableArrayList("users",array);
+							InviteFriends next = new InviteFriends();
+							next.setArguments(args);
+							((MainActivity)getActivity()).mudarAbaAtual(next);
+						}
+					});
 				}
 			});
 			
