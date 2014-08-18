@@ -14,6 +14,7 @@ import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
+import br.com.JoinAndPlay.Server.Tag;
 import br.com.JoinAndPlay.Server.Usuario;
 import android.content.Context;
 import android.os.Bundle;
@@ -37,10 +38,38 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public LinearLayout list;
 	public LayoutInflater inf;
 	private boolean award[];
+	private boolean cantVote[];
 	private double rating;
 	private int ind;
 	private int index;
 	private String badges[];
+	private ImageView award1;
+	private ImageView award2;
+	private ImageView award3;
+	private ImageView award4;
+	
+	public void initBadges(ImageView foto_doidinho,Evento evento,TextView nome_doidinho){
+		DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
+		nome_doidinho.setText(evento.getUsers().get(ind).getName());
+		Vector<Tag> tags = evento.getUsers().get(ind).getTags();
+		for(int i=0;i<4;i++) award[i] = false;
+		for (Tag tag : tags){
+			String NOME = tag.getName();
+			if (NOME.equals("Gente Boa")) award[0]=true;
+			else if (NOME.equals("Fair Play")) award[3]=true;							
+			else if (NOME.equals("Esforcado")) award[1]=true;
+			else if (NOME.equals("Joga Pro Time")) award[2]=true;
+		}
+		if(award[0]==false) award1.setImageResource(R.drawable.icongenteboa);
+		else award1.setImageResource(R.drawable.okaygenteboa);
+		if(award[1]==false) award2.setImageResource(R.drawable.iconesforcado);
+		else award2.setImageResource(R.drawable.okayesforcado);
+		if(award[2]==false) award3.setImageResource(R.drawable.iconjogaprotime);
+		else award3.setImageResource(R.drawable.okayjogaprotime);
+		if(award[3]==false) award4.setImageResource(R.drawable.iconfairplay);
+		else award4.setImageResource(R.drawable.okayfairplay);
+		for(int i=0;i<4;i++) cantVote[i]=award[i];
+	}
 	
 	public void addGuys(LinearLayout pessoas,final Evento evento){
 		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
@@ -180,7 +209,14 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			layout_evento.setBackgroundResource(ConfigJP.ESPORTE_BARRA[id_esporte]);
 			imagem_evento.setImageResource(ConfigJP.ESPORTE_BITMAP[id_esporte]);
 
-
+			Button convidar_amigos = (Button)view.findViewById(R.id.convidar_amigos);
+			convidar_amigos.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					
+				}
+			});
+			
 			TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
 			TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
 
@@ -329,16 +365,14 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				}
 			};
 			percentual.setOnTouchListener(estrelas);
-			ImageView award1 = (ImageView) view.findViewById(R.id.award1);
-			ImageView award2 = (ImageView) view.findViewById(R.id.award2);
-			ImageView award3 = (ImageView) view.findViewById(R.id.award3);
-			ImageView award4 = (ImageView) view.findViewById(R.id.award4);
+			award1 = (ImageView) view.findViewById(R.id.award1);
+			award2 = (ImageView) view.findViewById(R.id.award2);
+			award3 = (ImageView) view.findViewById(R.id.award3);
+			award4 = (ImageView) view.findViewById(R.id.award4);
 			/** ISSO AQUI TEM QUE PEGAR COM O SERVIDOR **/
 			award = new boolean[4];
-			for(int i=0;i<4;i++){
-				award[i] = false;
-			}
-
+			cantVote = new boolean[4];
+			
 			award1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -393,25 +427,21 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				imagem.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(index).getPhoto());
-						nome_doidinho.setText(evento.getUsers().get(index).getName());
 						ind = index;
+						initBadges(foto_doidinho,evento,nome_doidinho);
 					}
 				});
 			}
 			if(evento.getUsers().get(0).getId().equals(ConfigJP.UserId)){
 				if(evento.getUsers().size() > 1){
 					ind=1;
-					DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
-					nome_doidinho.setText(evento.getUsers().get(ind).getName());
-					evento.getUsers().get(ind).getTags();
+					initBadges(foto_doidinho,evento,nome_doidinho);
 				}else{
 					//Lançar exceção
 				}
 			}else{
 				ind=0;
-				DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
-				nome_doidinho.setText(evento.getUsers().get(ind).getName());
+				initBadges(foto_doidinho,evento,nome_doidinho);
 			}
 			badges = new String[4];
 			badges[0] = "Gente Boa";
@@ -423,9 +453,9 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				@Override
 				public void onClick(View arg0) {
 					//Verificar se ele não já votou no usuario
-					Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
+					if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
 					for(int i=0;i<4;i++){
-						if(award[i]){
+						if(award[i] && cantVote[i]==false){
 							Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), getActivity(), badges[i], null);
 						}
 					}

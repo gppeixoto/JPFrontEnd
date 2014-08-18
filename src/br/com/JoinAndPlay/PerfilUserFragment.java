@@ -163,9 +163,9 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							votos_genteBoa.setText(tag.getNumVotes()+"");
 						} else if (NOME.equals("Fair Play")){
 							votos_fairPlay.setText(tag.getNumVotes()+"");							
-						} else if (NOME.equals("Esforçado")){
+						} else if (NOME.equals("Esforcado")){
 							votos_esforcado.setText(tag.getNumVotes()+"");
-						} else if (NOME.equals("Joga pro Time")){
+						} else if (NOME.equals("Joga Pro Time")){
 							votos_jogaTime.setText(tag.getNumVotes()+"");
 						}
 					}
