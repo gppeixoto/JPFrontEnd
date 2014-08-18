@@ -804,7 +804,13 @@ public class Server implements Serializable {
 							Vector<Usuario> ret = new Vector<Usuario>();
 							for (int i = 0; i < arr.length(); ++i) {
 								JSONArray a = arr.getJSONArray(i);
-								ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, null, null, false,false));
+								Vector<Tag> tags = new Vector<Tag>();
+								JSONArray tags_json = a.getJSONArray(3);
+								for (int j = 0; j < tags_json.length(); ++j) {
+									String aux = tags_json.getString(j);
+									tags.add(new Tag(aux, 0));
+								}
+								ret.add(new Usuario(a.getString(0), a.getString(1), null, a.getString(2), null, 0, null, tags, null, false,false));
 							}
 							if (connecter != null) connecter.onTerminado(ret);
 						} catch (JSONException _) {}
