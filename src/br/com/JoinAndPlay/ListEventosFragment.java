@@ -10,10 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -28,7 +26,7 @@ import br.com.JoinAndPlay.Server.Endereco;
 
 
 
-public class ListEventosFragment extends Fragment implements OnClickListener, OnTouchListener,OnItemClickListener,Connecter<Vector<Evento>>,LocationListener{
+public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
 	static ArrayList<Evento> lista;
 	ListView listV;
 	protected Button Button_criar;
@@ -54,7 +52,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 		Button_criar.setText("Criar Evento");
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
-		Button_criar.setOnTouchListener(this);
 		this.inflater=inflater;
 		if(getArguments()!=null){
 			final Bundle args= getArguments();
@@ -108,9 +105,16 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 					}
 				});
 			} else {
-				Log.v("aaaf", "pegou");
-				Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
-			}
+				Location local =((MainActivity)(getActivity())).location;
+				if(local!=null){
+					
+					Server.get_future_events(getActivity(),local.getLatitude()+","+local.getLongitude(),this);	
+
+
+				}else{
+					Server.get_future_events(getActivity(),this);	
+
+				}		}
 			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
 			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
 		}
@@ -131,21 +135,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 
 	@Override
-	public void onResume(){
-		super.onResume();
-
-		LocationManager lManager = (LocationManager)getActivity().getSystemService(FragmentActivity.LOCATION_SERVICE);
-		Location location =lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 50, this);
-		// de mudança na posição GPS  
-		lManager.requestLocationUpdates(  
-				LocationManager.GPS_PROVIDER, 0, 0, this);  
-
-		lManager.requestLocationUpdates(  
-				LocationManager.NETWORK_PROVIDER, 0, 0, this);
-	}
-
-	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
@@ -158,27 +147,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 
 	}
-	@Override
-	public boolean onTouch(View arg0,MotionEvent  arg1) {
-		// TODO Auto-generated method stub
-		switch (arg1.getAction()&255) {
-		case MotionEvent.ACTION_DOWN:
-		case MotionEvent.ACTION_MOVE:
-			Button_criar.setTextColor(getResources().getColor(R.color.red));
-
-
-			break;
-
-		default:
-			Button_criar.setTextColor(getResources().getColor(R.color.white));
-
-			break;
-		}
-
-
-		return false;
-	}
-
 	@Override
 	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
@@ -232,37 +200,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener, On
 
 	}
 
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		Log.v("local", ""+location);
-		if(location!=null){
-			Server.get_future_events(getActivity(),location.getLatitude()+","+location.getLongitude(),this);	
-
-
-		}else{
-			Server.get_future_events(getActivity(),this);	
-
-		}
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 
 
