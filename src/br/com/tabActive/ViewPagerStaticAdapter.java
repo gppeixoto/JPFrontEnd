@@ -3,7 +3,6 @@ package br.com.tabActive;
 import br.com.JoinAndPlay.R;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +62,7 @@ public class ViewPagerStaticAdapter extends PagerAdapter {
 		//=inflater.inflate(R.layout.tela_aba_fragment_1, pager,false);//new View(pager.getContext());
 		// imagem.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		int id=getid(position);
-		Log.v("view", ""+id+" "+((ViewPager) pager).getChildCount());
 		View v =pager.findViewById(getid(position));
-		Log.v("view", ""+v);
 		///v.postInvalidate();
 				v.getParent().requestLayout();
 		((View) v.getParent()).invalidate();

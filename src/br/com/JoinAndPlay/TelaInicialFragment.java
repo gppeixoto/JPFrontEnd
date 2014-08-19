@@ -17,7 +17,7 @@ import android.widget.Button;
 
 public class TelaInicialFragment extends Fragment implements Connecter<Usuario>, OnClickListener,Runnable{
 	private Button inicial_button_facebookLogin;
-
+private View load;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +26,8 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 		inicial_button_facebookLogin = (Button) view.findViewById(R.id.inicial_button_facebook_login);
 		inicial_button_facebookLogin.setOnClickListener(this);
 		view.post(this);
+		load= view.findViewById(R.id.loader);
+		load.setVisibility(View.INVISIBLE);
 		return view;
 	}
 
@@ -51,7 +53,8 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 	@Override
 	public void onClick(View v) {
 		final	TelaInicialFragment self=this;
-	//	load();
+		load.setVisibility(View.VISIBLE);
+
 		ConfigJP.login(getActivity(), new Connecter<String>() {
 
 			@Override
@@ -69,7 +72,7 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 		if(getView()!=null){
 			if(Session.getActiveSession()!=null ){
 				if(Session.getActiveSession().isOpened()){
-			//		load();
+					load.setVisibility(View.VISIBLE);
 					onTerminado(null);
 				}else{
 					onClick(null);

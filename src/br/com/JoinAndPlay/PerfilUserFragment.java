@@ -17,6 +17,7 @@ import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,8 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 	private ImageView img_jogaTime;
 	private ImageView img_esforcado;
 	private Configuration config;
-	 int ID=3;
+	int ID=3;
+	String idUser;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,11 +46,14 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 		}
 		v = (LinearLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
 		/*Requisita o perfil do usu�rio do servidor*/
+		
+
 		if(null!=getArguments() && getArguments().containsKey("idUser")){
 			ID=getArguments().getInt("idTab");
+			idUser=getArguments().getString("idUser");
 			Server.user_profile_id(getArguments().getString("idUser"),getActivity(), this);
 		}else{
-			
+			idUser=ConfigJP.UserId+"";
 			Server.user_profile(getActivity(), this);
 		}
 		((MainActivity) getActivity()).loadTela(ID);
@@ -137,10 +142,10 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							});
 						}
 					});
-					
+
 					Button button = (Button) ret.findViewById(R.id.perfil_button_eventosAnteriores);
 					button.setOnClickListener(new OnClickListener() {
-						
+
 						@Override
 						public void onClick(View v) {
 							AgendaEventosFragment agenda = new AgendaEventosFragment();
@@ -150,10 +155,10 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 
 							agenda.setArguments(arg);
 							((MainActivity)self.getActivity()).mudarAbaAtual(agenda);
-							
+
 						}
 					});
-					if(getArguments()!=null){
+					if(idUser.equals(ConfigJP.UserId)){
 
 						button_amigos.setVisibility(View.INVISIBLE);
 						button.setVisibility(View.INVISIBLE);

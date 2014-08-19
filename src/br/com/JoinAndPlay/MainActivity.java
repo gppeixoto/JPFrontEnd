@@ -16,10 +16,13 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 	protected TabFragment tabs;
 	public static int VERSION=0;
 	public static int SUB_VERSION=0;
+	public static MainActivity self;
 	LocationManager lManager;
 	Location location ;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		self=this;
 		setContentView(R.layout.main_active);
 		MapsInitializer.initialize(this);
 		//onAlertEvent();

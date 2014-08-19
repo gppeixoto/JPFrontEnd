@@ -3,8 +3,9 @@ package br.com.tabActive;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +33,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	public final static int SIZE=5;
 	private boolean[] isNotBack= new boolean[SIZE];
 	public void onloader(final int idtab){
-	BaseFragment base=((BaseFragment)getActivity().getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
-	Log.v("tabopen", ""+base);
+	BaseFragment base=((BaseFragment)MainActivity.self.getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
 	if(base!=null)
 	base.open();
 /*
@@ -53,8 +52,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 */
 	}
 	public void onfinish(int idtab){
-		BaseFragment base=((BaseFragment)getActivity().getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
-		Log.v("tabclase", ""+base);
+		BaseFragment base=((BaseFragment)MainActivity.self.getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
 		if(base!=null)
 		base.close();
 
@@ -66,8 +64,10 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 */
 	}
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
-		if(!voltar)
+		if(!voltar){
+			onfinish(idtab);
 			getFragmentManagerAba(idtab).popBackStack();
+		}
 		FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
 		ft=ft.replace(R.id.tela_aba,arg1);
@@ -79,6 +79,8 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	}
 	public void tabPop(int idtab){
+
+		onfinish(idtab);
 		getFragmentManagerAba(idtab).popBackStack();
 	}
 	public void tabPop(){
@@ -154,7 +156,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 			mTabHost.setCurrentTab((savedInstanceState.getInt("tab")));
 		}else{
 
-			mTabHost.setCurrentTab(1);
+			mTabHost.setCurrentTab(0);
 		}
 
 

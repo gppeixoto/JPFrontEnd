@@ -1,41 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/inicial_background" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:id="@+id/inicial_relativelayout"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="10dp" >
+        android:layout_height="fill_parent"
+        android:background="@drawable/inicial_background" >
 
-        <ImageView
-            android:id="@+id/inicial_imageview_joinplaylogo"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/inicial_relativelayout"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/joinplaylogo" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dp" >
 
-        <Button
-            android:id="@+id/inicial_button_facebook_login"
+            <ImageView
+                android:id="@+id/inicial_imageview_joinplaylogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/joinplaylogo" />
+
+            <Button
+                android:id="@+id/inicial_button_facebook_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/inicial_imageview_joinplaylogo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/inicial_facebook_login_button"
+                android:drawableLeft="@drawable/fb_logo"
+                android:padding="12dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fb_logo"
+                android:text="      Facebook Login     "
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/loader"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/cinza_escuro_med"
+        android:clickable="true"
+        android:gravity="center" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/inicial_imageview_joinplaylogo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:background="@drawable/inicial_facebook_login_button"
-            android:drawableLeft="@drawable/fb_logo"
-            android:padding="12dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/fb_logo"
-            android:text="      Facebook Login     "
-            android:textColor="@color/white" />
-    </RelativeLayout>
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-</ScrollView>
+</FrameLayout>
