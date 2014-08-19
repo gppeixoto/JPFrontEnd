@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
-import android.util.Log;
-import android.widget.Toast;
 import br.com.JoinAndPlay.Server.Connecter;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -222,7 +219,6 @@ public final class ConfigJP {
 						@Override
 						public void onCompleted(GraphUser user, Response response) {
 							// TODO Auto-generated method stub
-					Log.v("user", ""+user);
 							if(user!=null){
 								UserId =user.getId();
 								getToken(act, get);
@@ -276,8 +272,6 @@ public final class ConfigJP {
 		double[] ret= null;
 		try {
 			List<Address> foundGeocode = new Geocoder(act).getFromLocationName(address, 1);
-			Log.v("add", ""+address);
-			Log.v("add", ""+foundGeocode);
 
 			if(foundGeocode!=null && foundGeocode.size()>0){
 				ret= new double[2];

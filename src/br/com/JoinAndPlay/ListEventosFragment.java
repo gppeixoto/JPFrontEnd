@@ -3,12 +3,8 @@ package br.com.JoinAndPlay;
 import java.util.ArrayList;
 import java.util.Vector;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,8 +19,6 @@ import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Endereco;
-
-
 
 public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
 	static ArrayList<Evento> lista;
@@ -61,12 +55,10 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 			final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
 			boolean getA = args.getBoolean("getA");
-			Log.v("getiA", getA+"");
 			if (getA && args.getString("endereco")!=null && args.getString("endereco").length()>0){
 				Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
 					@Override
 					public void onTerminado(Vector<Endereco> in) {
-						Log.v("ncjbfdebvhjbhj", in+"");
 						if(in == null){
 							Bundle args2 = new Bundle();
 
@@ -125,12 +117,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
-
 		CriarEventosFragment criar = new CriarEventosFragment();
 		((MainActivity)getActivity()).mudarAbaAtual(criar);
-
 	}
 
 
@@ -149,9 +137,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	}
 	@Override
 	public void onTerminado(Vector<Evento> vector) {
-		// TODO Auto-generated method stub
-		Log.v("uhu", "oi"+vector);
-
 		if(vector==null){
 
 			Bundle args2 = new Bundle();
@@ -177,11 +162,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					listV.setAdapter(new AdapterListView(inflater, lista));
 					((MainActivity) getActivity()).popLoadTela(ID);
-
-
 				}
 			});
 
@@ -189,8 +171,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	}
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-
 		if(lista!=null && lista.size()>(arg2-1) ){
 
 			Bundle arg= new Bundle();

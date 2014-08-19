@@ -1,29 +1,19 @@
 package br.com.JoinAndPlay.Event;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.joda.time.chrono.BuddhistChronology;
-
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.Server.DownloadImagem;
-import br.com.JoinAndPlay.Server.Tag;
 import br.com.JoinAndPlay.Server.Usuario;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class AmigosFragment extends Fragment implements OnItemClickListener {
 	LayoutInflater inflater;
@@ -43,7 +33,6 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 			vetor= getArguments().getParcelableArrayList("users");
 
 		}
-		Log.v("usuario", ""+vetor);
 		if(vetor!=null)
 			listV.setAdapter(new AdapterAmigo(vetor, inflater,null));
 

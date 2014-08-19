@@ -5,16 +5,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import br.com.JoinAndPlay.ConfigJP;
 import android.app.Activity;
-import android.util.Log;
-
-import org.joda.*;
 import org.joda.time.DateTime;
 
 public class Server implements Serializable {
@@ -316,14 +311,11 @@ public class Server implements Serializable {
 			obj.put("latitude", latitude);
 			obj.put("longitude", longitude);
 
-			Log.v("enviandooo", obj.toString());
-
 			ServiceHandler sh = new ServiceHandler();
 			sh.makePOST(ServiceHandler.URL_BASE + "/editevent/", obj.toString(), new Connecter<String>() {
 
 				@Override
 				public void onTerminado(String in) {
-					Log.v("retornoooo", in+"");
 					if (in == null) {
 						if (connecter != null) connecter.onTerminado(null);
 						return;
@@ -511,7 +503,6 @@ public class Server implements Serializable {
 					obj.put("start_time", start_time == null ? "" : start_time);
 					obj.put("end_time", end_time == null ? "" : end_time);
 					obj.put("sports", arr_sports);
-					Log.v("enviando", ""+obj);
 				}catch(JSONException _) {
 
 				}
@@ -560,7 +551,6 @@ public class Server implements Serializable {
 				try {
 					obj.put("access_token", access_token);
 					obj.put("id", id);
-					Log.v("tesssste", id);
 				}catch(JSONException _) {
 
 				}
@@ -577,7 +567,6 @@ public class Server implements Serializable {
 						try {
 							Evento ret = null;
 							JSONObject json_ret = new JSONObject((String) in);
-							Log.v("retorno", json_ret.toString()); 
 							JSONObject json_evt = json_ret.getJSONObject("event");
 							ret = processEvent(json_evt);
 
@@ -990,7 +979,6 @@ public class Server implements Serializable {
 					obj.put("access_token", access_token);
 					obj.put("localization", localization);
 				} catch (JSONException _) {}
-				Log.v("mandando", obj.toString());
 				(new ServiceHandler()).makePOST(ServiceHandler.URL_BASE + "/getfutureevents/", obj.toString(), new Connecter<String>() {
 
 					@Override

@@ -1,17 +1,10 @@
 package br.com.JoinAndPlay.ListEvent;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Evento;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +54,7 @@ public class AdapterListView extends BaseAdapter
 
 		drawerView(view,item);
 
-		Log.v("uhu3",item+ " "+itens);
-		;		//atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
+		//atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
 		//ao item e definimos as informações.
 		// ((TextView) view.findViewById(R.id.)).setText(item.getTexto());
 		//  ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(item.getIconeRid());

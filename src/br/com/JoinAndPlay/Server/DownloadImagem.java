@@ -3,23 +3,10 @@ package br.com.JoinAndPlay.Server;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executor;
-
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -33,7 +20,6 @@ public class DownloadImagem extends AsyncTask<String, Void, Bitmap>{
 		final int id = (url.hashCode()<0?url.hashCode()*(-1):url.hashCode())%BufferSize;
 		synchronized (buffer) {
 			if(str[id]!=null && buffer[id]!=null && str[id].equals(url)){
-				Log.v("imag++", url+" "+str[id]);
 				if(img!=null){
 					img.setImageBitmap(buffer[id]);
 					img.setVisibility(View.VISIBLE);

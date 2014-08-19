@@ -2,16 +2,7 @@ package br.com.JoinAndPlay.ListEvent;
 
 import br.com.JoinAndPlay.R;
 import android.content.Context;
-import android.graphics.AvoidXfermode.Mode;
-import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Xfermode;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
@@ -70,7 +61,7 @@ protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
     // calculate scale and rotation
     float scale = (float)(1 - 0.9 * (1 - Math.cos(distFromCenter)));    if(distFromCenter<0) distFromCenter=-distFromCenter;
 
-    float rotation = 1 * distFromCenter;
+    //float rotation = 1 * distFromCenter;
     canvas.save();
 
    /* Camera a = new Camera();

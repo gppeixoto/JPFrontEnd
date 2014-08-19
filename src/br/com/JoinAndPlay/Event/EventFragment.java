@@ -1,12 +1,8 @@
 package br.com.JoinAndPlay.Event;
-
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
-
 import br.com.JoinAndPlay.ConfigJP;
-import br.com.JoinAndPlay.CriarEventosCompFragment;
 import br.com.JoinAndPlay.CriarEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.PerfilUserFragment;
@@ -21,7 +17,6 @@ import br.com.JoinAndPlay.Server.Usuario;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -132,7 +127,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		tempo_decorrido.setText(putTime);
 		nome_usuario.setText(nome);
 		DownloadImagem.postLoad(foto_usuario,photo);
-		Log.v("Imagem: ",photo);
 		list.addView(novo,0);
 		list.requestLayout();
 		list.invalidate();
@@ -552,7 +546,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		tipo_da_partida.setText(evento.getSport());
 		descricao_do_esporte.setText(evento.getDescription());
 		double[] temp=null;
-		Log.v("lat", evento.getLatitude()+" "+evento.getLatitude());
 		try{
 			temp=new double[2];
 

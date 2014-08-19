@@ -1,7 +1,5 @@
 package br.com.JoinAndPlay.ItemEsportePerfil;
 
-import com.google.android.gms.drive.internal.OpenContentsRequest;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,7 +9,6 @@ import android.graphics.Rect;
 import android.graphics.Region.Op;
 import android.util.AttributeSet;
 import android.view.View;
-
 
 public class Estrela extends View {
 

@@ -6,7 +6,6 @@ import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.*;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,7 +17,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -259,9 +257,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				
 				if(esportes != null){
 					for(int i = 0; i < esportes.length ; ++i){
-						Log.v("ahuabahbhabhabha", esportes[i]);
 						esportes[i] = esportes[i].trim();
-						Log.v("ahuabahbhabhabha", esportes[i]);
 					}
 				}
 

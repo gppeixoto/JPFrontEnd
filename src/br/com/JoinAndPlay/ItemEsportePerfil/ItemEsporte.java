@@ -4,7 +4,6 @@ import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,9 +62,7 @@ public class ItemEsporte implements Parcelable {
 			esporteView.setText(esporte);
 			//esporteView.setText("Teste estatico");
 		}
-		
-		Log.v("PARTIDAS JOGADAS", partidasJogadas+"");
-		
+				
 		TextView numPartidasView = (TextView) view.findViewById(R.id.perfil_partidas_jogadas);
 		TextView qtdPartidas = (TextView) view.findViewById(R.id.perfil_qtd_partidas);
 		if (partidasJogadas == 1) numPartidasView.setText("1 partida jogada"); else {

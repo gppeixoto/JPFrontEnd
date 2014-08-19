@@ -1,66 +1,32 @@
 package br.com.JoinAndPlay.Event;
 
-import java.util.Iterator;
-import java.util.zip.Inflater;
-
 import org.joda.time.DateTime;
-
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import br.com.JoinAndPlay.ConfigJP;
-import br.com.JoinAndPlay.CriarEventosFragment;
-import br.com.JoinAndPlay.ListEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
-import br.com.JoinAndPlay.PesquisarEventosFragment;
 import br.com.JoinAndPlay.R;
-import br.com.JoinAndPlay.Server.Comentario;
-import br.com.JoinAndPlay.Server.Connecter;
-import br.com.JoinAndPlay.Server.DownloadImagem;
-import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
-import br.com.JoinAndPlay.Server.Usuario;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
-import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsoluteLayout;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 public class EditEvent extends Fragment implements RadialTimePickerDialog.OnTimeSetListener, CalendarDatePickerDialog.OnDateSetListener,

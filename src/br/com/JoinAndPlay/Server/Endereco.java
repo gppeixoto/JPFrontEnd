@@ -1,7 +1,5 @@
 package br.com.JoinAndPlay.Server;
 
-import java.io.Serializable;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
