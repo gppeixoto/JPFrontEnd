@@ -28,6 +28,7 @@ import br.com.JoinAndPlay.Server.Endereco;
 
 public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
 	static ArrayList<Evento> lista;
+	static final int ID=0;
 	ListView listV;
 	protected Button Button_criar;
 	LayoutInflater inflater=null;
@@ -39,6 +40,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		((MainActivity) getActivity()).loadTela(ID);
 
 		if (container == null) {
 			return null;
@@ -109,6 +111,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
 		 else {
 				Location local =((MainActivity)(getActivity())).location;
+
 				if(local!=null){
 					Server.get_future_events(getActivity(),local.getLatitude()+","+local.getLongitude(),this);	
 
@@ -119,13 +122,11 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		 }
 		return tela;
 	}
-	boolean login = true;
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 
-		login=false;
 
 		CriarEventosFragment criar = new CriarEventosFragment();
 		((MainActivity)getActivity()).mudarAbaAtual(criar);
@@ -178,6 +179,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 				public void run() {
 					// TODO Auto-generated method stub
 					listV.setAdapter(new AdapterListView(inflater, lista));
+					((MainActivity) getActivity()).popLoadTela(ID);
+
 
 				}
 			});

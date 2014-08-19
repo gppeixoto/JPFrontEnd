@@ -29,12 +29,33 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private HorizontalScrollView scroll;
 	private View tamanho;
 	public final static int SIZE=5;
+	private boolean[] isNotBack= new boolean[SIZE];
+	public void onloader(int idtab){
+		if(!isNotBack[idtab]){
+
+			FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
+
+			ft=ft.add(R.id.tela_aba,new loadFragment());
+			ft.addToBackStack(null);
 
 
+			ft.commit();
 
+		}
+		isNotBack[idtab]=true;
+
+	}
+	public void onfinish(int idtab){
+		if(isNotBack[idtab]){
+			tabPop(idtab);
+		}
+		isNotBack[idtab]=false;
+
+
+	}
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
 		if(!voltar)
-		getFragmentManagerAba(idtab).popBackStack();
+			getFragmentManagerAba(idtab).popBackStack();
 		FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
 		ft=ft.replace(R.id.tela_aba,arg1);
@@ -42,6 +63,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 
 		ft.commit();
+
 
 	}
 	public void tabPop(int idtab){
@@ -149,7 +171,9 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	}
 	public boolean onBackPressed() {
-		FragmentManager childFragmentManager =getFragmentManagerAba(mTabHost.getCurrentTab());	if(childFragmentManager.getBackStackEntryCount()==0){
+		if(isNotBack[mTabHost.getCurrentTab()])return true;
+		FragmentManager childFragmentManager =getFragmentManagerAba(mTabHost.getCurrentTab());
+		if(childFragmentManager.getBackStackEntryCount()==0){
 			return false;
 
 		} else {

@@ -28,11 +28,13 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	LayoutInflater inflater;
 	ListView list;
 	ArrayList<Notificacao> notifi ;
-	
+	static final int ID=2;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		((MainActivity) getActivity()).loadTela(ID);
 
 		if (container == null) {
 			return null;
@@ -90,6 +92,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 			public void run() {
 				// TODO Auto-generated method stub
 				list.setAdapter(new NotificacaoAdapter(inflater,notifi));
+				((MainActivity) getActivity()).popLoadTela(ID);
 
 			}
 		});

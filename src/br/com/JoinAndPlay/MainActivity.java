@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_active);
 		MapsInitializer.initialize(this);
-//onAlertEvent();
+		//onAlertEvent();
 		for (int i = 0; i <TabFragment.SIZE; i++) {
 			Fragment fragment = getSupportFragmentManager().findFragmentByTag("tab"+(i+1));
 			if (fragment != null)
@@ -75,7 +75,6 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 	@Override
 	public void onResume(){
 		super.onResume();
-
 		lManager = (LocationManager)getSystemService(FragmentActivity.LOCATION_SERVICE);
 		location=lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if(location==null){
@@ -83,6 +82,16 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		}
 		lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 50, this);
 		lManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,2000, 50, this);
+	}
+
+	void loadTela (int i){
+
+		tabs.onloader(i);
+	}
+	void popLoadTela(int i){
+
+		tabs.onfinish(i);
+
 	}
 	void login(){
 
@@ -144,11 +153,11 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 
 	}
 
-    //manda um alerta para o usuario
-    public void onAlertEvent (){
-        Intent intent = new Intent(MainActivity.this,MainActivity.class);
-        NewMessageNotification notification = new NewMessageNotification();
-        notification.notify(this, "Nível de óleo baixo", "Toque para detalhes", R.drawable.basquete, "Alerta de risco veicular", intent, 0);
-    }
+	//manda um alerta para o usuario
+	public void onAlertEvent (){
+		Intent intent = new Intent(MainActivity.this,MainActivity.class);
+		NewMessageNotification notification = new NewMessageNotification();
+		notification.notify(this, "Nível de óleo baixo", "Toque para detalhes", R.drawable.basquete, "Alerta de risco veicular", intent, 0);
+	}
 
 }
