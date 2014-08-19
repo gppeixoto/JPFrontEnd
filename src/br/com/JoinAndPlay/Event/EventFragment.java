@@ -502,9 +502,9 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			}
 			badges = new String[4];
 			badges[0] = "Gente Boa";
-			badges[1] = "Fair Play";
-			badges[2] = "Esforcado";
-			badges[3] = "Joga Pro Time";
+			badges[3] = "Fair Play";
+			badges[1] = "Esforcado";
+			badges[2] = "Joga Pro Time";
 			Button votar = (Button) view.findViewById(R.id.vote);
 			votar.setOnClickListener(new OnClickListener() {
 				@Override
