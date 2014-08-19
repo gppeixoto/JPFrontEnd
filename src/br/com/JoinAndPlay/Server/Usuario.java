@@ -9,8 +9,8 @@ import android.os.Parcelable;
 public class Usuario implements Serializable,Parcelable {
 	private static final long serialVersionUID = 8250002358792274323L;
 	
-	private String id;
-	private String name;
+	public String id;
+	public String name;
 	private String rating;
 	private String photo;
 	private Vector<Evento> events;

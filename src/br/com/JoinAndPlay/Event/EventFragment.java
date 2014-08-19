@@ -1,5 +1,6 @@
 package br.com.JoinAndPlay.Event;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -48,11 +49,14 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	private ImageView award3;
 	private ImageView award4;
 	static int ID=0;
+	private HashMap<String, Boolean>  map;
+	private boolean hasUser;
 
 	public void reloadPage(){
 		EventFragment next = new EventFragment();
 		Bundle args = new Bundle();
 		args.putString("evento", myEvent.getId());
+		args.putInt("idTab",ID);
 		next.setArguments(args);
 		((MainActivity)getActivity()).replaceTab(next);
 	}
@@ -92,7 +96,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				public void onClick(View arg0) {
 					PerfilUserFragment fm = new  PerfilUserFragment();
 					Bundle arg = new Bundle();
-					arg.putInt("idUser",ID);
+					arg.putInt("idTab",ID);
 					arg.putString("idUser",evento.getUsers().get(index).getId());
 					fm.setArguments(arg);
 					((MainActivity)getActivity()).mudarAbaAtual(fm);
@@ -218,6 +222,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
+		hasUser = evento.getUsers().size() > 1 ? true : false;
 		
 		if(evento.getIsClosed()==false){
 			votacao_iniciada.setVisibility(View.INVISIBLE);
@@ -230,6 +235,16 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			imagem_evento.setImageResource(ConfigJP.ESPORTE_BITMAP[id_esporte]);
 
 			Button convidar_amigos = (Button)view.findViewById(R.id.convidar_amigos);
+			
+			map = new HashMap<String, Boolean>();
+			Vector<Usuario> in = evento.getUsers();
+			for (Iterator<Usuario> iterator = in.iterator(); iterator
+					.hasNext();) {
+				Usuario usuario = (Usuario) iterator
+						.next();
+				map.put(usuario.id,true);
+			}
+			
 			convidar_amigos.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -238,12 +253,15 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						public void onTerminado(Vector<Usuario> in) {
 							Bundle args = new Bundle();
 							args.putString("id_evento",evento.getId());
+							args.putInt("idTab",ID);
 							ArrayList<Usuario> array=new ArrayList<Usuario>();
 							for (Iterator<Usuario> iterator = in.iterator(); iterator
 									.hasNext();) {
 								Usuario usuario = (Usuario) iterator
 										.next();
-								array.add(usuario);
+								if(map.containsKey(usuario.id)==false) {
+									array.add(usuario);
+								}
 							}
 							args.putParcelableArrayList("users",array);
 							InviteFriends next = new InviteFriends();
@@ -287,6 +305,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					Vector<Usuario> in = evento.getUsers();
 					AmigosFragment fm = new AmigosFragment();
 					Bundle arg = new Bundle();
+					arg.putInt("idTab",ID);
 					ArrayList<Usuario> array=new ArrayList<Usuario>();
 					for (Iterator<Usuario> iterator = in.iterator(); iterator
 							.hasNext();) {
@@ -305,6 +324,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					Vector<Usuario> in = evento.getAtEvent();
 					AmigosFragment fm = new AmigosFragment();
 					Bundle arg = new Bundle();
+					arg.putInt("idTab",ID);
 					ArrayList<Usuario> array=new ArrayList<Usuario>();
 					for (Iterator<Usuario> iterator = in.iterator(); iterator
 							.hasNext();) {
@@ -341,6 +361,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						args.putString("esporte",evento.getSport());
 						args.putString("id_evento", evento.getId());
 						args.putString("local_name", evento.getLocalizationName());
+						args.putInt("idTab",ID);
 
 						next.setArguments(args);
 						((MainActivity)getActivity()).mudarAbaAtual(next);	
@@ -473,7 +494,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					ind=1;
 					initBadges(foto_doidinho,evento,nome_doidinho);
 				}else{
-					//Lan�ar exce��o
+					nome_doidinho.setText("No user");
 				}
 			}else{
 				ind=0;
@@ -488,11 +509,13 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			votar.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					//Verificar se ele n�o j� votou no usuario
-					if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
-					for(int i=0;i<4;i++){
-						if(award[i] && cantVote[i]==false){
-							Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), getActivity(), badges[i], null);
+					if(hasUser){
+						if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
+						for(int i=0;i<4;i++){
+							if(award[i] && cantVote[i]==false){
+								Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), getActivity(), badges[i], null);
+								reloadPage();
+							}
 						}
 					}
 				}
@@ -511,6 +534,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					args.putString("bairro",evento.getNeighbourhood());
 					args.putString("cidade",evento.getCity());
 					args.putBoolean("repearEvent", true);
+					args.putInt("idTab",ID);
 					CriarEventosFragment next = new CriarEventosFragment();
 					next.setArguments(args);
 					((MainActivity)getActivity()).mudarAbaAtual(next);
