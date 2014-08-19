@@ -1,15 +1,11 @@
 package br.com.JoinAndPlay.ListPlace;
 
-
-
-import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.Local;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ItemPlace implements Parcelable {

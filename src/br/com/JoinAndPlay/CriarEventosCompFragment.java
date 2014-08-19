@@ -2,23 +2,18 @@ package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
 import java.util.Vector;
-
 import com.facebook.Session;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.app.AlertDialog.Builder;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 import br.com.JoinAndPlay.Event.AdapterAmigo;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -188,9 +183,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 								@Override
 								public void onTerminado(Evento in) {
 									// TODO Auto-generated method stub
-									Evento e = (Evento) in;
-									Log.v("retorno evento", ""+e);
-									
+									Evento e = (Evento) in;									
 									if(e!= null && !convidados.isEmpty()){
 										Server.invite(Session.getActiveSession().getAccessToken(),
 												e.getId(), convidados, new Connecter<Boolean>(){

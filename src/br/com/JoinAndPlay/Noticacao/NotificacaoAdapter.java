@@ -1,19 +1,15 @@
 package br.com.JoinAndPlay.Noticacao;
 
 import java.util.ArrayList;
-
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Notificacao;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class NotificacaoAdapter extends BaseAdapter {

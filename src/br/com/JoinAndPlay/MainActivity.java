@@ -2,7 +2,6 @@ package br.com.JoinAndPlay;
 
 import com.facebook.Session;
 import com.google.android.gms.maps.MapsInitializer;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -11,11 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import br.com.tabActive.TabFragment;
-
-
-
 
 public class MainActivity extends FragmentActivity implements LocationListener  {
 	protected TabFragment tabs;
@@ -38,7 +33,6 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 
 		tabs=(TabFragment) TabFragment.instantiate(this, TabFragment.class.getName());
 		Fragment inicial=tabs;
-		Log.v("session", "");
 		if(Session.getActiveSession()==null || Session.getActiveSession().isOpened()){
 			inicial= new TelaInicialFragment();
 

@@ -1,16 +1,13 @@
 package br.com.JoinAndPlay.Event;
 import java.util.ArrayList;
 import java.util.Vector;
-
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.MainActivity;
-import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;

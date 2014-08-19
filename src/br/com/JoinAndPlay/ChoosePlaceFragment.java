@@ -1,33 +1,17 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
 import br.com.JoinAndPlay.ListPlace.AdapterListViewPlace;
 import br.com.JoinAndPlay.ListPlace.ItemPlace;
-import br.com.JoinAndPlay.Server.Connecter;
-import br.com.JoinAndPlay.Server.Local;
-import br.com.JoinAndPlay.Server.Server;
-
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.Request.GraphUserCallback;
-import com.facebook.model.GraphUser;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 

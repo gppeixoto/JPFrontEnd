@@ -2,12 +2,10 @@ package br.com.JoinAndPlay;
 
 
 import com.facebook.Session;
-
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
 import br.com.tabActive.loadFragment;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;

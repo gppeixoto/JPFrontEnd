@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
-
 import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.Noticacao.NotificacaoAdapter;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -14,7 +13,6 @@ import br.com.JoinAndPlay.Server.Server;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +52,6 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 			@Override
 			public void onTerminado(String in) {
 				// TODO Auto-generated method stub
-				Log.v("invite",""+ConfigJP.UserId);
 				Server.get_invites(ConfigJP.UserId,self);
 			}
 		});

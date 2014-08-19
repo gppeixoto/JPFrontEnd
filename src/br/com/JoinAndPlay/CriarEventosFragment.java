@@ -2,18 +2,14 @@ package br.com.JoinAndPlay;
 
 import java.text.DecimalFormat;
 import java.util.Vector;
-
 import org.joda.time.DateTime;
-
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Endereco;
 import br.com.JoinAndPlay.Server.Server;
-
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
-
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
@@ -31,7 +26,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -451,8 +445,6 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 			}
 
 		} else if (end){
-			Log.v("aaaaaa",(h + ":" + m));
-			Log.v("bbbbbb", bDataInicio.getText().toString());
 			if((h + ":" + m).compareTo(bDataInicio.getText().toString()) <= 0){
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
@@ -720,8 +712,6 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 			alert11.show();
 			return;
 		}
-
-		Log.v("query de jp", rua + " " + bairro + " " + cidade);
 		Server.getAddresses("", rua, bairro, cidade, this);
 
 	}
@@ -777,15 +767,10 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 				DecimalFormat df = new DecimalFormat("##0.00");
 				aux = df.format(a);
 				a = Double.parseDouble(aux);
-				Log.v("precodouble", a+"");
-
 				args.putDouble("preco", a);
 			} else {
 				args.putDouble("preco", 0.00);
 			}
-
-			Log.v("pegaporra", "chegou aqui?");
-
 			next.setArguments(args);
 			((MainActivity)getActivity()).mudarAbaAtual(next);	
 		}

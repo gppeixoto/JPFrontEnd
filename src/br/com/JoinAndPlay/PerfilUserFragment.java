@@ -9,7 +9,6 @@ import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
 import br.com.JoinAndPlay.ItemEsportePerfil.ItemEsporte;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.DownloadImagem;
-import br.com.JoinAndPlay.Server.Esporte;
 import br.com.JoinAndPlay.Server.RatingSport;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Tag;
@@ -18,7 +17,6 @@ import br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -169,8 +167,6 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 					Vector<Tag> comendacoes = in.getTags();
 					for (Tag tag : comendacoes){
 						String NOME = tag.getName();
-						Log.v("tag",NOME +""+tag.getNumVotes());
-
 						if (NOME.equals("Gente Boa")){
 							votos_genteBoa.setText(tag.getNumVotes()+"");
 						} else if (NOME.equals("Fair Play")){
