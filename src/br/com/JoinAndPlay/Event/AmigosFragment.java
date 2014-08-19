@@ -18,6 +18,7 @@ import android.widget.ListView;
 public class AmigosFragment extends Fragment implements OnItemClickListener {
 	LayoutInflater inflater;
 	ListView listV;
+	int ID;
 	private ArrayList<Usuario> vetor;
 
 	@Override
@@ -31,7 +32,7 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 		vetor=null;
 		if(getArguments()!=null){
 			vetor= getArguments().getParcelableArrayList("users");
-
+			ID=getArguments().getInt("idTab");
 		}
 		if(vetor!=null)
 			listV.setAdapter(new AdapterAmigo(vetor, inflater,null));
@@ -50,6 +51,7 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 		PerfilUserFragment fm = new  PerfilUserFragment();
 		Bundle arg = new Bundle();
 		arg.putString("idUser",vetor.get(arg2-1).getId());
+		arg.putInt("idTab", ID);
 		fm.setArguments(arg);
 		((MainActivity)getActivity()).mudarAbaAtual(fm);
 	}

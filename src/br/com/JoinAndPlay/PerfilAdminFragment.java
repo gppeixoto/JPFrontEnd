@@ -133,6 +133,8 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 
 									}
 									arg.putParcelableArrayList("users",array);
+									arg.putInt("idTab",ID);
+
 									fm.setArguments(arg);
 									((MainActivity)self.getActivity()).mudarAbaAtual(fm);
 
@@ -149,6 +151,8 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 							AgendaEventosFragment agenda = new AgendaEventosFragment();
 							Bundle arg = new Bundle();
 							arg.putString("idUser",in.getId() );
+							arg.putInt("idTab",ID);
+
 							arg.putBoolean("anteriores",true);
 
 							agenda.setArguments(arg);

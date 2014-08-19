@@ -34,7 +34,6 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 	private ImageView img_jogaTime;
 	private ImageView img_esforcado;
 	private Configuration config;
-	int ID=3;
 	String idUser;
 
 	@Override
