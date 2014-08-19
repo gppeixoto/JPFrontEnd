@@ -11,14 +11,28 @@ public class BaseFragment extends Fragment implements Runnable {
 	private View load;
 	void open(){
 
-		load.setVisibility(View.VISIBLE);
+load.post(new Runnable() {
 
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			load.setVisibility(View.VISIBLE);
+
+		}
+	});
 
 	}
 	void close(){
 
-
+load.post(new Runnable() {
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		load.setVisibility(View.INVISIBLE);
+
+	}
+});
 	}	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

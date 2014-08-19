@@ -22,6 +22,7 @@ import android.widget.TabHost.TabSpec;
 
 public class TabFragment extends Fragment implements
 TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+	
 
 	private TabHost mTabHost;
 	private ViewPager mViewPager;
@@ -64,8 +65,9 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 */
 	}
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
+		onfinish(idtab);
+
 		if(!voltar){
-			onfinish(idtab);
 			getFragmentManagerAba(idtab).popBackStack();
 		}
 		FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();

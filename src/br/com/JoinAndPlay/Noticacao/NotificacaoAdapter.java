@@ -60,7 +60,7 @@ public class NotificacaoAdapter extends BaseAdapter {
 		dataHoraView.setText(not.getDate()+" • "+not.getHourBegin());
 
 		bairroCidadeView.setText(not.getLocalizationName()+" • "+not.getNeighborhood());
-		nomePerfilView.setText(not.getCreatorName()+" convidou voçê");
+		nomePerfilView.setText(not.getCreatorName()+" convidou você");
 		tempoView.setText("");
 		DownloadImagem.postLoad(perfilView, not.getCreatorPhoto());
 		esportView.setImageResource(ConfigJP.ESPORTE_BUTTON[ConfigJP.getEsporteID(not.esporte)]);

@@ -69,8 +69,31 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 
 	@Override
 	public void onTerminado(Map<String, Vector<Notificacao>> in) {
-		if(in==null)return;
-		if(in.size()==0)return;
+		if(in==null){
+			list.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					((MainActivity) getActivity()).popLoadTela(ID);
+
+				}
+			});
+
+			return;
+		}
+		if(in.size()==0){
+			list.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					((MainActivity) getActivity()).popLoadTela(ID);
+
+				}
+			});return;
+		}
+		
 		notifi = new ArrayList<Notificacao>();
 		for (Iterator<Entry<String, Vector<Notificacao>>> iterator = in.entrySet().iterator(); iterator.hasNext();) {
 			Entry<String, Vector<Notificacao>> type = (Entry<String, Vector<Notificacao>>) iterator.next();

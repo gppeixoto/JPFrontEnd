@@ -16,11 +16,10 @@
         android:background="@color/cinza_escuro_med"
         android:clickable="true"
         android:gravity="center" >
-
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
+    
 </FrameLayout>

@@ -52,13 +52,15 @@ public class ServiceHandler {
 		
 		@Override
 		public void run() {
+			//Log.v("enviando", targetURL+jsonData);
+
 			if (this.method == ServiceHandler.GET) {
 				retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
-				Log.v("user...",this.targetURL+""+ retorno);
+		//	Log.v("user...",this.targetURL+""+ retorno);
 				if (con != null) con.onTerminado(retorno);
 			} else {
 				retorno = makeRequest(this.targetURL, this.jsonData, ServiceHandler.POST);
-				Log.v("user..",this.targetURL+""+ retorno);
+		///	Log.v("user..",this.targetURL+""+ retorno);
 				if (con != null) con.onTerminado(retorno);
 			}
 		}

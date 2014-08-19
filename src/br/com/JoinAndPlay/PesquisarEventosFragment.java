@@ -87,10 +87,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 
 		config = getActivity().getResources().getConfiguration();
 
-		String[] str={"Baseball","Basquete","Boliche","Boxe","Cartas","Ciclismo","Corrida",
-				"Dominó","Futebol","Futebol Americano","Golfe","Jogos de Tabuleiro", "Patinação","Sinuca",
-				"Skate", "Tênis", "Tênis de Mesa", "Video-Game", "Vôlei", "Vôlei de Praia", 
-		"Xadrez"};
+		String[] str={"Dardo", "Jogos de Tabuleiro", "Skate", "Ciclismo", "PatinaÃ§Ã£o", "Corrida", "Boxe", "DominÃ³", "Video-Game", "Xadrez", "Cartas", "Badminton", "Basquete", "Golfe", "Sinuca", "VÃ´lei de Praia", "VÃ´lei", "Futebol", "Futebol Americano", "Baseball", "TÃªnis", "Boliche", "TÃªnis de Mesa"};
 
 		eesv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
@@ -143,7 +140,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		e3Button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				eesv.setText(eesv.getText().toString() + "Vôlei, ");
+				eesv.setText(eesv.getText().toString() + "Volei, ");
 			}
 		});
 		
@@ -561,7 +558,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 	public String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
-		else if (n == 3) return "Março";
+		else if (n == 3) return "Marï¿½o";
 		else if (n == 4) return "Abril";
 		else if (n == 5) return "Maio";
 		else if (n == 6) return "Junho";

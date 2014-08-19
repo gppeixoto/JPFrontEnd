@@ -22,7 +22,7 @@ import br.com.JoinAndPlay.Server.Endereco;
 
 public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
 	static ArrayList<Evento> lista;
-	static int ID=0;
+	 int ID=0;
 	ListView listV;
 	protected Button Button_criar;
 	LayoutInflater inflater=null;
@@ -61,6 +61,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 					public void onTerminado(Vector<Endereco> in) {
 						if(in == null){
 							Bundle args2 = new Bundle();
+							((MainActivity) getActivity()).popLoadTela(ID);
 
 							args2.putBoolean("internet",false);
 							BolaForaFragment bfm = new BolaForaFragment();
@@ -68,6 +69,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 							((MainActivity) self.getActivity()).replaceTab(bfm);
 
 						}else if (in.size() == 0){
+							((MainActivity) getActivity()).popLoadTela(ID);
+
 							Bundle args2 = new Bundle();
 							args2.putBoolean("internet",true);
 							args2.putParcelableArray("enderecos", new Endereco[0]);
@@ -82,6 +85,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 						} else if(in.size() == 1){
 							Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 						} else {
+							((MainActivity) getActivity()).popLoadTela(ID);
+
 							Bundle args2 = new Bundle();
 							Endereco arr[] = new Endereco[in.size()];
 							in.toArray(arr);
@@ -98,7 +103,13 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 						}
 					}
 				});
-			}		}
+			}else{
+				Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
+				
+				
+			}
+		
+		}
 			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
 			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
 		 else {
