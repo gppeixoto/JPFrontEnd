@@ -68,11 +68,11 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		lManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,2000, 50, this);
 	}
 
-	void loadTela (int i){
+	public void loadTela (int i){
 
 		tabs.onloader(i);
 	}
-	void popLoadTela(int i){
+	public void popLoadTela(int i){
 
 		tabs.onfinish(i);
 
