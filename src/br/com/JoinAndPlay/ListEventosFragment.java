@@ -5,7 +5,6 @@ import java.util.Vector;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +34,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.v("classe", "listEventos");
 		if (container == null) {
 			return null;
 		}
@@ -134,6 +132,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	public void onClick(View v) {
 		CriarEventosFragment criar = new CriarEventosFragment();
 		((MainActivity)getActivity()).mudarAbaAtual(criar);
+
+
 	}
 
 
@@ -194,8 +194,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 			Bundle arg= new Bundle();
 			arg.putString("evento",lista.get(arg2-1).getId() );
-			Log.v("id", ""+ID);
-			arg.putInt("idTab", ID);
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
 			((MainActivity)getActivity()).mudarAbaAtual(fragment);

@@ -72,8 +72,6 @@ private View load;
 	public void run() {
 		// TODO Auto-generated method stub
 		if(getView()!=null){
-			Log.v("haha","+"+Session.getActiveSession());
-
 			if(Session.getActiveSession()!=null ){
 				if(Session.getActiveSession().isOpened()){
 					load.setVisibility(View.VISIBLE);

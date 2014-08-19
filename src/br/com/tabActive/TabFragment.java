@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private Runnable[] acoes = new Runnable[SIZE]; 
 	public final static int SIZE=5;
 	public void onloader(final int idtab){
-		Log.v("open", ""+idtab);
 
 		BaseFragment base=((BaseFragment)MainActivity.self.getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
 		if(base!=null)
@@ -43,7 +41,6 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	}
 	public void onfinish(int idtab){
-		Log.v("close", ""+idtab);
 		BaseFragment base=((BaseFragment)MainActivity.self.getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
 		if(base!=null)
 			base.close();

@@ -17,7 +17,6 @@ load.post(new Runnable() {
 
 		@Override
 		public void run() {
-			Log.v("open", "__");
 
 			// TODO Auto-generated method stub
 			load.setVisibility(View.VISIBLE);
@@ -34,7 +33,6 @@ load.post(new Runnable() {
 	
 	@Override
 	public void run() {
-Log.v("close", "____");
 		// TODO Auto-generated method stub
 		load.setVisibility(View.INVISIBLE);
 		pai.requestLayout();
