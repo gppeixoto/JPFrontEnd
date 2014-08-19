@@ -32,6 +32,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private List<Integer> ids;
 	private HorizontalScrollView scroll;
 	private View tamanho;
+	private Runnable[] acoes = new Runnable[SIZE]; 
 	public final static int SIZE=5;
 	public void onloader(final int idtab){
 		Log.v("open", ""+idtab);
@@ -39,7 +40,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		BaseFragment base=((BaseFragment)MainActivity.self.getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
 		if(base!=null)
 			base.open();
-		
+
 	}
 	public void onfinish(int idtab){
 		Log.v("close", ""+idtab);
@@ -77,12 +78,13 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 		tabChange(mTabHost.getCurrentTab(),arg1, voltar);
 	}
-	public TabSpec addFragments(FragmentActivity context,Fragment a, int id){
+	public TabSpec addFragments(FragmentActivity context,Fragment a,Runnable ac ,int id){
 		if(fragments==null){
 			fragments= new ArrayList<Fragment>();
 			ids=new ArrayList<Integer>();
 		}
-
+		if(fragments.size()<SIZE)
+			acoes[fragments.size()]=ac;
 		fragments.add(a);
 		a.setRetainInstance(true);
 		ids.add(id);
@@ -168,7 +170,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		int pos = this.mTabHost.getCurrentTab();
 		scroll.scrollTo((tamanho.getWidth()*(pos-1))/SIZE,scroll.getScrollY());
 		this.mViewPager.setCurrentItem(pos);
-
+		if(acoes[pos]!=null) scroll.post(acoes[pos]);
 
 	}
 	public boolean onBackPressed() {

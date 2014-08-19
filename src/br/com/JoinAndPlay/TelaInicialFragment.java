@@ -9,6 +9,7 @@ import br.com.tabActive.loadFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,7 @@ private View load;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Session.openActiveSessionFromCache(getActivity());
 		View view = inflater.inflate(R.layout.layout_inicial, container,false);
 		inicial_button_facebookLogin = (Button) view.findViewById(R.id.inicial_button_facebook_login);
 		inicial_button_facebookLogin.setOnClickListener(this);
@@ -70,6 +72,8 @@ private View load;
 	public void run() {
 		// TODO Auto-generated method stub
 		if(getView()!=null){
+			Log.v("haha","+"+Session.getActiveSession());
+
 			if(Session.getActiveSession()!=null ){
 				if(Session.getActiveSession().isOpened()){
 					load.setVisibility(View.VISIBLE);
