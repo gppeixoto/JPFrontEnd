@@ -93,10 +93,8 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 
 		config = getActivity().getResources().getConfiguration();
 
-		String[] str={"Baseball","Basquete","Boliche","Boxe","Cartas","Ciclismo","Corrida",
-				"Domin�","Futebol","Futebol Americano","Golfe","Patina��o","Sinuca",
-				"Skate", "T�nis", "T�nis de Mesa", "Video-Game", "V�lei", "V�lei de Praia", 
-		"Xadrez"};
+		String[] str={"Dardo", "Jogos de Tabuleiro", "Skate", "Ciclismo", "Patinação", "Corrida", "Boxe", "Dominó", "Video-Game", "Xadrez", "Cartas", "Badminton", "Basquete", "Golfe", "Sinuca", "Vôlei de Praia", "Vôlei", "Futebol", "Futebol Americano", "Baseball", "Tênis", "Boliche", "Tênis de Mesa"};
+
 
 		ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getActivity(),
 				android.R.layout.simple_dropdown_item_1line, str);
@@ -123,7 +121,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 		e3Button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				eEsporte.setText("V�lei");
+				eEsporte.setText("Vólei");
 			}
 		});
 
@@ -162,7 +160,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 		}
 
 		bProximo = (Button) view.findViewById(R.id.nextButton);
-		bProximo.setText("Pr�ximo");
+		bProximo.setText("Próximo");
 
 		bDataInicio = (Button) view.findViewById(R.id.buttonDataInicio);
 		bDataInicio.setText("00:00");
@@ -305,7 +303,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 	public String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
-		else if (n == 3) return "Mar�o";
+		else if (n == 3) return "Março";
 		else if (n == 4) return "Abril";
 		else if (n == 5) return "Maio";
 		else if (n == 6) return "Junho";

@@ -558,7 +558,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 	public String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
-		else if (n == 3) return "Mar�o";
+		else if (n == 3) return "Março";
 		else if (n == 4) return "Abril";
 		else if (n == 5) return "Maio";
 		else if (n == 6) return "Junho";

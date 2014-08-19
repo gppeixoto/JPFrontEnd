@@ -172,7 +172,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	    // Consultar o AdView como um recurso e carregar uma solicitação.
 		AdView adView = (AdView)v.findViewById(R.id.propaganda);
 	    AdRequest adRequest = new AdRequest.Builder().build();
-	//    adView.loadAd(adRequest);
+	    adView.loadAd(adRequest);
 
 		if(getArguments()!=null){
 			ID=getArguments().getInt("idTab");
