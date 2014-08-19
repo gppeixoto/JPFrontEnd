@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:background="@drawable/campo_red"
+            android:background="@drawable/campo_notif"
             android:gravity="top"
             android:orientation="horizontal" >
 
@@ -27,7 +27,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:scaleType="matrix"
-                android:src="@drawable/avatar_35x335" />
+                android:src="@drawable/notifi" />
 
             <LinearLayout
                 android:layout_width="match_parent"

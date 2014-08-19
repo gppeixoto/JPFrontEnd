@@ -31,7 +31,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	public final static int SIZE=5;
 	private boolean[] isNotBack= new boolean[SIZE];
 	public void onloader(int idtab){
-		if(!isNotBack[idtab]){
+/*		if(!isNotBack[idtab]){
 
 			FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
@@ -43,15 +43,15 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 		}
 		isNotBack[idtab]=true;
-
+*/
 	}
 	public void onfinish(int idtab){
-		if(isNotBack[idtab]){
+/*		if(isNotBack[idtab]){
 			tabPop(idtab);
 		}
 		isNotBack[idtab]=false;
 
-
+*/
 	}
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
 		if(!voltar)

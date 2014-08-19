@@ -5,24 +5,13 @@ import com.google.android.gms.maps.MapsInitializer;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Base64;
 import android.util.Log;
-import android.view.animation.Transformation;
-import br.com.JoinAndPlay.Server.Connecter;
-import br.com.JoinAndPlay.Server.Evento;
-import br.com.JoinAndPlay.Server.Server;
-import br.com.JoinAndPlay.Server.ServiceHandler;
 import br.com.tabActive.TabFragment;
 
 
@@ -68,9 +57,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		super.onActivityResult(requestCode, resultCode, data);
 		Session.getActiveSession()
 		.onActivityResult(this, requestCode, resultCode, data);
-		Log.v("tokenscc"," "+ 	    Session.getActiveSession()
-				.getAccessToken());
-
+	
 	}
 	@Override
 	public void onResume(){

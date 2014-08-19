@@ -35,20 +35,26 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 	private ImageView img_jogaTime;
 	private ImageView img_esforcado;
 	private Configuration config;
+	 int ID=3;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		if (container == null) {
 			return null;
 		}
 		v = (LinearLayout) inflater.inflate(R.layout.tab_layout_perfil, container, false);		
 		/*Requisita o perfil do usu�rio do servidor*/
 		if(null!=getArguments() && getArguments().containsKey("idUser")){
+			ID=getArguments().getInt("idTab");
 			Server.user_profile_id(getArguments().getString("idUser"),getActivity(), this);
 		}else{
+			
 			Server.user_profile(getActivity(), this);
 		}
+		((MainActivity) getActivity()).loadTela(ID);
+
 		config = getActivity().getResources().getConfiguration();
 
 		/*Celular com resolu��es mais baixas
@@ -149,7 +155,11 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 							
 						}
 					});
-					
+					if(getArguments()!=null){
+
+						button_amigos.setVisibility(View.INVISIBLE);
+						button.setVisibility(View.INVISIBLE);
+					}
 
 					/*Pegar o n�mero de votos de cada tag do servidor*/
 					votos_esforcado = (TextView) ret.findViewById(R.id.perfil_textview_votos_esforcado);
@@ -189,6 +199,8 @@ public class PerfilUserFragment extends Fragment implements Connecter<Usuario>{
 					perfil_gridEsportes_Expandable.setNumColumns(2);
 					perfil_gridEsportes_Expandable.setExpanded(true);
 				}
+				((MainActivity) getActivity()).popLoadTela(ID);
+
 			}
 		});
 	}

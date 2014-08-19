@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
+            android:background="@drawable/perfil_fundo_branco"
             android:gravity="left"
             android:orientation="vertical" >
 
@@ -25,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/perfil_fundo_branco"
                 android:orientation="vertical"
                 android:paddingBottom="15dp	" >
 
@@ -256,7 +256,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="fill_parent"
+                android:background="@color/cinzafundo" >
 
                 <br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView
                     android:id="@+id/perfil_gridview_esportes_expandable"

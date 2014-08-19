@@ -6,9 +6,11 @@ import com.facebook.Session;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
+import br.com.tabActive.loadFragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,25 +37,31 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 
 		if(getView()!=null){
 			((MainActivity)getActivity()).login();
-
 		}
 
 
 
 	}
+	public void load (){
+		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+		ft=ft.add(R.id.tela,new loadFragment());
+		ft.addToBackStack(null);
+		ft.commit();
+
+	}
 
 	@Override
 	public void onClick(View v) {
-	final	TelaInicialFragment self=this;
+		final	TelaInicialFragment self=this;
+	//	load();
 		ConfigJP.login(getActivity(), new Connecter<String>() {
 
 			@Override
 			public void onTerminado(String in) {
 				// TODO Auto-generated method stub
 				Server.user_profile(self.getActivity(), self);
-
 			}
-			
+
 		});
 	}
 	int i=0;
@@ -62,9 +70,9 @@ public class TelaInicialFragment extends Fragment implements Connecter<Usuario>,
 		// TODO Auto-generated method stub
 		if(getView()!=null){
 			if(Session.getActiveSession()!=null ){
-
 				if(Session.getActiveSession().isOpened()){
-					((MainActivity)getActivity()).login();
+			//		load();
+					onTerminado(null);
 				}else{
 					onClick(null);
 				}

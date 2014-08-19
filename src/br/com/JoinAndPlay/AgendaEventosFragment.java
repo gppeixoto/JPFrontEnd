@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 public class AgendaEventosFragment extends ListEventosFragment{
-
+	static int ID=3;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -22,7 +22,10 @@ public class AgendaEventosFragment extends ListEventosFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		((MainActivity) getActivity()).loadTela(ID);
+
 		super.inflater=inflater;
+
 		ViewGroup tela=(ViewGroup)inflater.inflate(R.layout.fragment_list_event,container,false) ;
 
 		listV=(ListView) tela.findViewById(R.id.listView1);

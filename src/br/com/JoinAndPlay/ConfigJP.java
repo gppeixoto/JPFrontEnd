@@ -236,7 +236,7 @@ public final class ConfigJP {
 		});
 
 		if (session != null && session.isOpened()) {
-			Toast.makeText(act, session.getAccessToken(), Toast.LENGTH_LONG).show();
+		//	Toast.makeText(act, session.getAccessToken(), Toast.LENGTH_LONG).show();
 
 		}
 
