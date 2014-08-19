@@ -44,7 +44,16 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	private ImageView award2;
 	private ImageView award3;
 	private ImageView award4;
+	static int ID=0;
 
+	public void reloadPage(){
+		EventFragment next = new EventFragment();
+		Bundle args = new Bundle();
+		args.putString("evento", myEvent.getId());
+		next.setArguments(args);
+		((MainActivity)getActivity()).replaceTab(next);
+	}
+	
 	public void initBadges(ImageView foto_doidinho,Evento evento,TextView nome_doidinho){
 		DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
 		nome_doidinho.setText(evento.getUsers().get(ind).getName());
@@ -149,6 +158,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		if (container == null) {
 			return null;
 		}
+		((MainActivity) getActivity()).loadTela(ID);
 		View v = inflater.inflate(R.layout.event_fragment, container, false);
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
@@ -198,7 +208,9 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
-		if( evento.getIsClosed()==false ){
+		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
+		
+		if(evento.getIsClosed()==false){
 			votacao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_iniciada.removeAllViews();
 			Button participar = (Button)view.findViewById(R.id.button1);
@@ -255,11 +267,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						}else{
 							Server.arrive_event(self.getActivity(), evento.getId(), self);
 						}
-						EventFragment next = new EventFragment();
-						Bundle args = new Bundle();
-						args.putString("evento", myEvent.getId());
-						next.setArguments(args);
-						((MainActivity)getActivity()).replaceTab(next);
+						reloadPage();
 					}
 				}
 			});
@@ -303,7 +311,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				}
 			});
 
-			TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
 			///VERIFICAR AQUI O USERID!
 			if(evento.getCreatorId().equals(ConfigJP.UserId)){
 				participar.setText("Editar Evento");
@@ -335,9 +342,8 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				butao_terminar.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						TextView myText = (TextView) v;
-						myText.setText("Jogo Finalizado");
 						Server.close_event(evento.getId(), null);
+						reloadPage();
 					}
 				});
 			}else{
@@ -356,6 +362,8 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		}else{
 			votacao_nao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_nao_iniciada.removeAllViews();
+			
+			butao_terminar.setVisibility(View.INVISIBLE);
 
 			TextView num_participantes = (TextView) view.findViewById(R.id.num_participantes);
 			num_participantes.setText(""+evento.getUsers().size());
@@ -578,6 +586,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, mapaF).commit();
 		view.requestLayout();
 		view.postInvalidate();
+		((MainActivity) getActivity()).popLoadTela(ID);
 	}
 
 	@Override
@@ -588,11 +597,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				if(myEvent.getHasArrived()) Server.cancel_arrive(getActivity(), myEvent.getId(), this);
 				Server.leave_event(getActivity(), myEvent.getId(),this );
 			}
-			EventFragment next = new EventFragment();
-			Bundle args = new Bundle();
-			args.putString("evento", myEvent.getId());
-			next.setArguments(args);
-			((MainActivity)getActivity()).replaceTab(next);
+			reloadPage();
 		}
 	}
 

@@ -110,7 +110,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="12"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -141,7 +140,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="6"
                         android:textColor="@color/red"
                         android:textSize="24sp"
                         android:textStyle="bold" />
