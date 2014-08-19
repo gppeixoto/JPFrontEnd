@@ -38,7 +38,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	private boolean cantVote[];
 	private double rating;
 	private int ind;
-	private int index;
 	private String badges[];
 	private ImageView award1;
 	private ImageView award2;
@@ -100,7 +99,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
 		String putTime;
-		putTime="há ";
+		putTime="ha";
 		if(ups==false) putTime = putTime + "0 minutos";
 		else{
 			if(data.equals("0")){
@@ -179,7 +178,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public static String parseMonth(int n){
 		if(n == 1) return "Janeiro";
 		else if (n == 2) return "Fevereiro";
-		else if (n == 3) return "Mar�o";
+		else if (n == 3) return "Marco";
 		else if (n == 4) return "Abril";
 		else if (n == 5) return "Maio";
 		else if (n == 6) return "Junho";
@@ -258,18 +257,16 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			LinearLayout estou_no_local = (LinearLayout) view.findViewById(R.id.estou_no_local);
 			TextView texto_no_local = (TextView) view.findViewById(R.id.texto_no_local);
 			final EventFragment self = this;
-			if(evento.getHasArrived()) texto_no_local.setText("Saindo");
+			if(evento.getHasArrived()) texto_no_local.setText("No local");
 			else texto_no_local.setText("Cheguei");
 			estou_no_local.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
 					if(evento.getIsParticipating()){
-						if(evento.getHasArrived()){
-							Server.cancel_arrive(self.getActivity(), evento.getId(), self);
-						}else{
+						if(!evento.getHasArrived()){
 							Server.arrive_event(self.getActivity(), evento.getId(), self);
+							reloadPage();
 						}
-						reloadPage();
 					}
 				}
 			});
