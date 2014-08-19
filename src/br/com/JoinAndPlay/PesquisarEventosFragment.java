@@ -140,7 +140,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		e3Button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				eesv.setText(eesv.getText().toString() + "Volei, ");
+				eesv.setText(eesv.getText().toString() + "Vôlei, ");
 			}
 		});
 		

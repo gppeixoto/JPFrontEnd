@@ -121,7 +121,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 		e3Button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				eEsporte.setText("Vólei");
+				eEsporte.setText("Vôlei");
 			}
 		});
 

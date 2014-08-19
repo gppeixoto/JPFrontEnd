@@ -109,7 +109,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		});
 		
 		bPublico = (Button) view.findViewById(R.id.publico);
-		bPublico.setText("P�blico");
+		bPublico.setText("Público");
 		bPublico.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

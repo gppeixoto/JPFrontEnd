@@ -64,7 +64,7 @@ class Botao extends BaseAdapter implements OnClickListener{
 		args_.putString("data", bede.getString("data"));
 		args_.putString("horaInicio", bede.getString("horaInicio"));
 		args_.putString("horaTermino", bede.getString("horaTermino"));
-		args_.putStringArray("esportes", bede.getStringArray("esporte"));
+		args_.putStringArray("esportes", bede.getStringArray("esportes"));
 		args_.putString("endereco",addr);
 		args_.putBoolean("getA", false);
 		
@@ -120,7 +120,7 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 		args_.putString("data", argsR.getString("data"));
 		args_.putString("horaInicio", argsR.getString("horaInicio"));
 		args_.putString("horaTermino", argsR.getString("horaTermino"));
-		args_.putStringArray("esportes", argsR.getStringArray("esporte"));
+		args_.putStringArray("esportes", argsR.getStringArray("esportes"));
 		
 		Endereco addr = ((Endereco[]) argsR.getParcelableArray("enderecos"))[arg2];
 		String s = addr.getName()+addr.getAddress();
