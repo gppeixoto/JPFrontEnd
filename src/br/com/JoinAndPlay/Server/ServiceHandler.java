@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.Normalizer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,10 +25,12 @@ public class ServiceHandler {
 		                                                                                                                 
 	}                                                                                                                    
 	                                                                                                                     
-	public void makeGET(String targetURL,Connecter<String> con) {
-		MyThread t = new MyThread(targetURL, ServiceHandler.GET, null, con);
+	public void makeGET(String targetURL, Connecter<String> con) {
+        targetURL = Normalizer.normalize(targetURL, Normalizer.Form.NFD);
+        targetURL = targetURL.replaceAll("[^\\p{ASCII}]", "");
+        MyThread t = new MyThread(targetURL, ServiceHandler.GET, null, con);
         executor.execute(t);
-	}                                                                                           
+}                                                                                        
 	
 	                                                                                                                     
 	public void makePOST(String targetURL, String jsonData,Connecter<String>  con) {                                                          

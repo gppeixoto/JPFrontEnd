@@ -13,6 +13,7 @@ import br.com.JoinAndPlay.Server.Server;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class NotificacaoFragment extends Fragment implements Connecter<Map<String,Vector<Notificacao>>>,OnItemClickListener {
+public class NotificacaoFragment extends Fragment implements Connecter<Map<String,Vector<Notificacao>>>,OnItemClickListener,Runnable {
 
 	LayoutInflater inflater;
 	ListView list;
@@ -131,6 +132,15 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 			fragment.setArguments(arg);
 			((MainActivity)getActivity()).mudarAbaAtual(fragment);
 		}	
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		if(getView()!=null){
+			
+			
+		}
 	}
 
 }

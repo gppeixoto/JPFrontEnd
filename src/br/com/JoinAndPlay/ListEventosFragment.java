@@ -66,7 +66,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 				@Override
 				public void onTerminado(Vector<Endereco> in) {
 					if(in == null){
-						Log.v("in", ""+in);
 
 						Bundle args2 = new Bundle();
 						((MainActivity) getActivity()).popLoadTela(ID);
@@ -78,7 +77,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 					}else if (in.size() == 0){
 						((MainActivity) getActivity()).popLoadTela(ID);
-						Log.v("in", ""+in.size());
 
 						Bundle args2 = new Bundle();
 						args2.putBoolean("internet",true);
@@ -92,11 +90,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 						bfm.setArguments(args2);
 						((MainActivity) self.getActivity()).replaceTab(bfm);
 					} else if(in.size() == 1){
-						Log.v("in", ""+in.size());
 						Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 					} else {
-						Log.v("in", ""+in.size());
-
 						Bundle args2 = new Bundle();
 						Endereco arr[] = new Endereco[in.size()];
 						in.toArray(arr);
@@ -120,7 +115,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
 		//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
 		else {
-			Log.v("in", "notIN");
 
 			Location local =((MainActivity)(getActivity())).location;
 			((MainActivity) getActivity()).loadTela(ID);
@@ -132,8 +126,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 				Server.get_future_events(getActivity(),this);	
 
 			}
-			Log.v("in", "fimNotIn");
-
 		}
 		return tela;
 	}
@@ -210,10 +202,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		}
 
 	}
-
-
-
-
 
 }
 

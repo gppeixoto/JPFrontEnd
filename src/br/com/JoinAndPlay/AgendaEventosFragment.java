@@ -52,4 +52,6 @@ public class AgendaEventosFragment extends ListEventosFragment{
 		}else
 		super.onTerminado(vector);
 	}
+	
+	
 }
