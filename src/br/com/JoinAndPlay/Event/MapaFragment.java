@@ -46,6 +46,7 @@ public class MapaFragment extends Fragment {
 			final MainActivity act = (MainActivity)getActivity();
 			nome_evento.setText(arg.getString("nome"));
 			if(arg.getBoolean("isMax")){
+				maximizar.setBackgroundResource(R.drawable.menos);
 				maximizar.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -55,7 +56,7 @@ public class MapaFragment extends Fragment {
 				});
 
 			}else{
-
+				maximizar.setBackgroundResource(R.drawable.mais);
 				maximizar.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {

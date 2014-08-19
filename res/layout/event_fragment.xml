@@ -160,13 +160,28 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/linha_pontilhada2" />
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/estou_no_local"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="1dp"
                     android:layout_weight="1"
-                    android:textColor="@color/red" />
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="matrix"
+                        android:src="@drawable/apito" />
+
+                    <TextView
+                        android:id="@+id/texto_no_local"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -179,6 +194,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="6dp"
                 android:layout_marginTop="6dp" >
 
                 <LinearLayout
@@ -206,7 +223,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@color/trasparent"
-                    android:drawableLeft="@drawable/get_there"
+                    android:drawableLeft="@drawable/convidaramigos"
                     android:padding="5dp"
                     android:text="@string/inviteFriends"
                     android:textColor="@color/cinza_escuro" />
@@ -282,9 +299,11 @@
                 <HorizontalScrollView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginTop="6dp" >
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_weight="1" >
 
                     <LinearLayout
                         android:id="@+id/nova_foto3"

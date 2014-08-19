@@ -49,7 +49,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	private ImageView award2;
 	private ImageView award3;
 	private ImageView award4;
-	
+
 	public void initBadges(ImageView foto_doidinho,Evento evento,TextView nome_doidinho){
 		DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
 		nome_doidinho.setText(evento.getUsers().get(ind).getName());
@@ -72,15 +72,12 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		else award4.setImageResource(R.drawable.okayfairplay);
 		for(int i=0;i<4;i++) cantVote[i]=award[i];
 	}
-	
+
 	public void addGuys(LinearLayout pessoas,final Evento evento){
-		LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
 		for (int i = 0; i < evento.getUsers().size(); i++) {
 			ImageView imagem;
-			imagem = new ImageView(getActivity());
+			imagem = (ImageView) View.inflate(getActivity(), R.layout.image_foto, null);
 			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
-			imagem.setPadding(3, 0, 0, 0);
-			imagem.setLayoutParams(nome_legal);
 			pessoas.addView(imagem);
 			index=i;
 			imagem.setOnClickListener(new OnClickListener() {
@@ -98,7 +95,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
 		String putTime;
-		putTime="à ";
+		putTime="há ";
 		if(ups==false) putTime = putTime + "0 minutos";
 		else{
 			if(data.equals("0")){
@@ -191,6 +188,12 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 	public void setValuesEvent(final View view,final Evento evento){
 		if(evento == null || view==null) return;
+
+		//QUANDO FIZER O SHARE DO FB
+		/*Button compartilhar = (Button) view.findViewById(R.id.compartilhar);
+		compartilhar.setVisibility(View.INVISIBLE);
+		((ViewGroup)view).removeView(compartilhar);*/
+
 		LinearLayout votacao_iniciada = (LinearLayout) view.findViewById(R.id.votacao_iniciada);
 		LinearLayout votacao_nao_iniciada = (LinearLayout) view.findViewById(R.id.votacao_nao_iniciada);
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
@@ -200,7 +203,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		data = parseMonth(((int)(data.charAt(3)-'0'))*10 + ((int)(data.charAt(4)-'0')));
 		descricao_horario.setText(dia + " de " + data + " as " + evento.getStartTime() + " horas");
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
-		
+
 		if( evento.getIsClosed()==false ){
 			votacao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_iniciada.removeAllViews();
@@ -235,7 +238,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					});
 				}
 			});
-			
+
 			TextView qtd_confirmados = (TextView)view.findViewById(R.id.qtd_confirmados);
 			TextView qtd_no_local = (TextView)view.findViewById(R.id.qtd_no_local);
 
@@ -244,17 +247,25 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			qtd_confirmados.setText(""+evento.getUsers().size());
 			qtd_no_local.setText(evento.getAtEvent().size()+"");
 
-			TextView estou_no_local = (TextView) view.findViewById(R.id.estou_no_local);
+			LinearLayout estou_no_local = (LinearLayout) view.findViewById(R.id.estou_no_local);
+			TextView texto_no_local = (TextView) view.findViewById(R.id.texto_no_local);
 			final EventFragment self = this;
-			if(evento.getHasArrived()) estou_no_local.setText("Sai do local");
-			else estou_no_local.setText("Estou aqui");
+			if(evento.getHasArrived()) texto_no_local.setText("Saindo");
+			else texto_no_local.setText("Cheguei");
 			estou_no_local.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					if(evento.getHasArrived()){
-						Server.cancel_arrive(self.getActivity(), evento.getId(), self);
-					}else{
-						Server.arrive_event(self.getActivity(), evento.getId(), self);
+					if(evento.getIsParticipating()){
+						if(evento.getHasArrived()){
+							Server.cancel_arrive(self.getActivity(), evento.getId(), self);
+						}else{
+							Server.arrive_event(self.getActivity(), evento.getId(), self);
+						}
+						EventFragment next = new EventFragment();
+						Bundle args = new Bundle();
+						args.putString("evento", myEvent.getId());
+						next.setArguments(args);
+						((MainActivity)getActivity()).replaceTab(next);
 					}
 				}
 			});
@@ -391,7 +402,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			/** ISSO AQUI TEM QUE PEGAR COM O SERVIDOR **/
 			award = new boolean[4];
 			cantVote = new boolean[4];
-			
+
 			award1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -431,16 +442,13 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			LinearLayout pessoasVotacao = (LinearLayout)view.findViewById(R.id.nova_foto2); 
 			LinearLayout pessoas = (LinearLayout)view.findViewById(R.id.nova_foto3);
 			addGuys(pessoas,evento);
-			LinearLayout.LayoutParams nome_legal = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1); 
 			final ImageView foto_doidinho = (ImageView) view.findViewById(R.id.foto_usuario_votar);
 			final TextView nome_doidinho = (TextView) view.findViewById(R.id.nome_usuario_votar);
 			for (int i = 0; i < evento.getUsers().size(); i++) {
 				if(evento.getUsers().get(i).getId().equals(ConfigJP.UserId)) continue;
 				ImageView imagem;
-				imagem = new ImageView(getActivity());
+				imagem = (ImageView) View.inflate(getActivity(), R.layout.image_foto, null);
 				DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
-				imagem.setPadding(3, 0, 0, 0);
-				imagem.setLayoutParams(nome_legal);
 				pessoasVotacao.addView(imagem);
 				final int index=i;
 				imagem.setOnClickListener(new OnClickListener() {
@@ -583,7 +591,10 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public void onClick(View v) {
 		if(myEvent!=null){
 			if(myEvent.getIsParticipating()==false) Server.enter_event(getActivity(), myEvent.getId(),this );
-			else Server.leave_event(getActivity(), myEvent.getId(),this );
+			else{
+				if(myEvent.getHasArrived()) Server.cancel_arrive(getActivity(), myEvent.getId(), this);
+				Server.leave_event(getActivity(), myEvent.getId(),this );
+			}
 			EventFragment next = new EventFragment();
 			Bundle args = new Bundle();
 			args.putString("evento", myEvent.getId());
