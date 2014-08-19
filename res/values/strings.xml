@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Join &amp; Play</string>
+    <string name="id_banner">ca-app-pub-2926234763097056/9126206725</string>
     <string name="alerta_cidade">Escolha uma cidade</string>
     <string name="alerta_convite">Não foi possível convidar seus amigos :(</string>
     <string name="alerta_nome">Dê um nome ao evento</string>

@@ -33,27 +33,13 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private HorizontalScrollView scroll;
 	private View tamanho;
 	public final static int SIZE=5;
-	private boolean[] isNotBack= new boolean[SIZE];
 	public void onloader(final int idtab){
 		Log.v("open", ""+idtab);
 
 		BaseFragment base=((BaseFragment)MainActivity.self.getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
 		if(base!=null)
 			base.open();
-		/*
-		if(!isNotBack[idtab]){
-
-			FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
-
-			ft=ft.add(R.id.tela_aba,new loadFragment());
-			ft.addToBackStack(null);
-
-
-			ft.commit();
-
-		}
-		isNotBack[idtab]=true;
-		 */
+		
 	}
 	public void onfinish(int idtab){
 		Log.v("close", ""+idtab);
@@ -61,12 +47,6 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		if(base!=null)
 			base.close();
 
-		/*		if(isNotBack[idtab]){
-			tabPop(idtab);
-		}
-		isNotBack[idtab]=false;
-
-		 */
 	}
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
 
@@ -192,7 +172,6 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	}
 	public boolean onBackPressed() {
-		if(isNotBack[mTabHost.getCurrentTab()])return true;
 		FragmentManager childFragmentManager =getFragmentManagerAba(mTabHost.getCurrentTab());
 		if(childFragmentManager.getBackStackEntryCount()==0){
 			return false;
@@ -213,7 +192,6 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	public void onPageSelected(int position) {
 		this.mTabHost.setCurrentTab(position);
 		scroll.scrollTo((tamanho.getWidth()*(position-1))/SIZE,scroll.getScrollY());
-
 	}
 
 	@Override

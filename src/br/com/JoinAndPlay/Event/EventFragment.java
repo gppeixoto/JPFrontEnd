@@ -2,6 +2,10 @@ package br.com.JoinAndPlay.Event;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.CriarEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
@@ -99,7 +103,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
 		String putTime;
-		putTime="ha";
+		putTime="há ";
 		if(ups==false) putTime = putTime + "0 minutos";
 		else{
 			if(data.equals("0")){
@@ -161,6 +165,10 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		View v = inflater.inflate(R.layout.event_fragment, container, false);
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
+	    // Consultar o AdView como um recurso e carregar uma solicitação.
+		AdView adView = (AdView)v.findViewById(R.id.propaganda);
+	    AdRequest adRequest = new AdRequest.Builder().build();
+	//    adView.loadAd(adRequest);
 
 		if(getArguments()!=null){
 			ID=getArguments().getInt("idTab");

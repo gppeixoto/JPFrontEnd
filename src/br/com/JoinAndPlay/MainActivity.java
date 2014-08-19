@@ -14,6 +14,7 @@ import br.com.tabActive.TabFragment;
 
 public class MainActivity extends FragmentActivity implements LocationListener  {
 	protected TabFragment tabs;
+	private boolean login=false;
 	public static int VERSION=0;
 	public static int SUB_VERSION=0;
 	public static MainActivity self;
@@ -80,7 +81,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 	void login(){
 
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, tabs).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-
+login=true;
 	}
 	public void retirarAbaAtual(){
 		tabs.tabPop();
@@ -103,7 +104,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 
 	@Override
 	public void onBackPressed() {
-		if(!tabs.onBackPressed()){
+		if(!login || !tabs.onBackPressed()){
 
 			super.onBackPressed();
 		}
