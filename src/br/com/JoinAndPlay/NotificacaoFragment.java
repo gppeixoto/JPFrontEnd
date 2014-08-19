@@ -126,6 +126,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 
 			Bundle arg= new Bundle();
 			arg.putString("evento",notifi.get(i).getEventId() );
+			arg.putInt("idTab", ID);
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
 			((MainActivity)getActivity()).mudarAbaAtual(fragment);

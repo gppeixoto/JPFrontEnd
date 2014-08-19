@@ -80,15 +80,16 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public void addGuys(LinearLayout pessoas,final Evento evento){
 		for (int i = 0; i < evento.getUsers().size(); i++) {
 			ImageView imagem;
-			imagem = (ImageView) View.inflate(getActivity(), R.layout.image_foto, null);
+			imagem = (ImageView) inf.inflate( R.layout.image_foto,pessoas ,false);
 			DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
 			pessoas.addView(imagem);
-			index=i;
+			final int index=i;
 			imagem.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
 					PerfilUserFragment fm = new  PerfilUserFragment();
 					Bundle arg = new Bundle();
+					arg.putInt("idUser",ID);
 					arg.putString("idUser",evento.getUsers().get(index).getId());
 					fm.setArguments(arg);
 					((MainActivity)getActivity()).mudarAbaAtual(fm);
@@ -99,7 +100,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 	public void addComment(String nome,String hora,String data,String novo_comentario,String photo,boolean ups){
 		String putTime;
-		putTime="há ";
+		putTime="hÃ¡ ";
 		if(ups==false) putTime = putTime + "0 minutos";
 		else{
 			if(data.equals("0")){
@@ -164,7 +165,9 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		inf = inflater;
 
 		if(getArguments()!=null){
+			ID=getArguments().getInt("idTab");
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
+			MainActivity.self.loadTela(ID);
 		}
 		return  v;
 	}
@@ -466,7 +469,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					ind=1;
 					initBadges(foto_doidinho,evento,nome_doidinho);
 				}else{
-					//Lançar exceção
+					//Lanï¿½ar exceï¿½ï¿½o
 				}
 			}else{
 				ind=0;
@@ -481,7 +484,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			votar.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					//Verificar se ele não já votou no usuario
+					//Verificar se ele nï¿½o jï¿½ votou no usuario
 					if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
 					for(int i=0;i<4;i++){
 						if(award[i] && cantVote[i]==false){

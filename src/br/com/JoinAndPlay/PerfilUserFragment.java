@@ -51,7 +51,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 		if(null!=getArguments() && getArguments().containsKey("idUser")){
 			ID=getArguments().getInt("idTab");
 			idUser=getArguments().getString("idUser");
-			Server.user_profile_id(getArguments().getString("idUser"),getActivity(), this);
+			Server.user_profile_id(idUser,getActivity(), this);
 			((MainActivity) getActivity()).loadTela(ID);
 		}
 		config = getActivity().getResources().getConfiguration();

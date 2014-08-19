@@ -76,7 +76,7 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 		final View ret=getView();
 		final PerfilAdminFragment self = this;
 		if (ret == null ){ 
-			((MainActivity) getActivity()).popLoadTela(ID);
+			((MainActivity) MainActivity.self).popLoadTela(ID);
 			return;
 
 

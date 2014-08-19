@@ -19,7 +19,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 	public static MainActivity self;
 	LocationManager lManager;
 	Location location ;
-
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		self=this;
@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		super.onActivityResult(requestCode, resultCode, data);
 		Session.getActiveSession()
 		.onActivityResult(this, requestCode, resultCode, data);
-	
+
 	}
 	@Override
 	public void onResume(){
