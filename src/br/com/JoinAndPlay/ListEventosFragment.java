@@ -202,6 +202,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 			Bundle arg= new Bundle();
 			arg.putString("evento",lista.get(arg2-1).getId() );
+			Log.v("id", ""+ID);
 			arg.putInt("idTab", ID);
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);

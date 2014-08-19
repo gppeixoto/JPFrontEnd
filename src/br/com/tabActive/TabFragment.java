@@ -75,7 +75,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		}
 		FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
-		ft=ft.replace(R.id.tela_aba,arg1);
+		ft=ft.replace(R.id.tela_aba,arg1).setTransition(android.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		ft.addToBackStack(null);
 
 		onfinish(idtab);

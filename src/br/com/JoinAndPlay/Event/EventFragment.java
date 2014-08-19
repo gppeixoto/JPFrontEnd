@@ -159,7 +159,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		if (container == null) {
 			return null;
 		}
-		((MainActivity) getActivity()).loadTela(ID);
 		View v = inflater.inflate(R.layout.event_fragment, container, false);
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
