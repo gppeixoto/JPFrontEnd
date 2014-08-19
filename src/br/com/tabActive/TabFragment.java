@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import br.com.JoinAndPlay.R;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +32,13 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	private View tamanho;
 	public final static int SIZE=5;
 	private boolean[] isNotBack= new boolean[SIZE];
-	public void onloader(int idtab){
-/*		if(!isNotBack[idtab]){
+	public void onloader(final int idtab){
+	BaseFragment base=((BaseFragment)getActivity().getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
+	Log.v("tabopen", ""+base);
+	if(base!=null)
+	base.open();
+/*
+		if(!isNotBack[idtab]){
 
 			FragmentTransaction ft = getFragmentManagerAba(idtab).beginTransaction();
 
@@ -46,7 +53,12 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 */
 	}
 	public void onfinish(int idtab){
-/*		if(isNotBack[idtab]){
+		BaseFragment base=((BaseFragment)getActivity().getSupportFragmentManager().findFragmentByTag("tab"+(idtab+1)));
+		Log.v("tabclase", ""+base);
+		if(base!=null)
+		base.close();
+
+		/*		if(isNotBack[idtab]){
 			tabPop(idtab);
 		}
 		isNotBack[idtab]=false;
