@@ -9,6 +9,7 @@
         android:layout_height="match_parent" >
     </FrameLayout>
 
+    
     <LinearLayout
         android:id="@+id/loader"
         android:layout_width="fill_parent"

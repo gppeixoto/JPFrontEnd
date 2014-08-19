@@ -5,6 +5,7 @@ import java.util.Vector;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +23,7 @@ import br.com.JoinAndPlay.Server.Endereco;
 
 public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
 	static ArrayList<Evento> lista;
-	 int ID=0;
+	protected int ID=0;
 	ListView listV;
 	protected Button Button_criar;
 	LayoutInflater inflater=null;
@@ -34,8 +35,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		((MainActivity) getActivity()).loadTela(ID);
-
+		Log.v("classe", "listEventos");
 		if (container == null) {
 			return null;
 		}
@@ -49,80 +49,92 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		Button_criar.setOnClickListener(this);
 		Button_criar.setTextColor(0xffffffff);
 		this.inflater=inflater;
+		final Bundle args= getArguments();
+		final ListEventosFragment self=this;
+		String[] esportes_temp=null;
+		boolean getA =false;
 		if(getArguments()!=null){
-			final Bundle args= getArguments();
-			final ListEventosFragment self=this;
 
-			final String[] esportes=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
-			boolean getA = args.getBoolean("getA");
-			if (getA && args.getString("endereco")!=null && args.getString("endereco").length()>0){
-				Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
-					@Override
-					public void onTerminado(Vector<Endereco> in) {
-						if(in == null){
-							Bundle args2 = new Bundle();
-							((MainActivity) getActivity()).popLoadTela(ID);
-
-							args2.putBoolean("internet",false);
-							BolaForaFragment bfm = new BolaForaFragment();
-							bfm.setArguments(args2);
-							((MainActivity) self.getActivity()).replaceTab(bfm);
-
-						}else if (in.size() == 0){
-							((MainActivity) getActivity()).popLoadTela(ID);
-
-							Bundle args2 = new Bundle();
-							args2.putBoolean("internet",true);
-							args2.putParcelableArray("enderecos", new Endereco[0]);
-							args2.putString("data", args.getString("data"));
-							args2.putString("horaInicio", args.getString("horaInicio"));
-							args2.putString("horaTermino", args.getString("horaTermino"));
-							args2.putStringArray("esportes", args.getStringArray("esportes"));
-							args2.putBoolean("conflito",false);
-							BolaForaFragment bfm = new BolaForaFragment();
-							bfm.setArguments(args2);
-							((MainActivity) self.getActivity()).replaceTab(bfm);
-						} else if(in.size() == 1){
-							Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
-						} else {
-							((MainActivity) getActivity()).popLoadTela(ID);
-
-							Bundle args2 = new Bundle();
-							Endereco arr[] = new Endereco[in.size()];
-							in.toArray(arr);
-							args2.putBoolean("internet",true);
-							args2.putParcelableArray("enderecos", arr);
-							args2.putString("data", args.getString("data"));
-							args2.putString("horaInicio", args.getString("horaInicio"));
-							args2.putString("horaTermino", args.getString("horaTermino"));
-							args2.putStringArray("esportes", args.getStringArray("esportes"));
-							args2.putBoolean("conflito", true);
-							BolaForaFragment bfm = new BolaForaFragment();
-							bfm.setArguments(args2);
-							((MainActivity) self.getActivity()).replaceTab(bfm);
-						}
-					}
-				});
-			}else{
-				Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
-				
-				
-			}
-		
+			esportes_temp=args.getInt("esportes_qtd")>0?args.getStringArray("esportes"):null;
+			getA= args.getBoolean("getA");
 		}
-			//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
-			//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
-		 else {
-				Location local =((MainActivity)(getActivity())).location;
+		if (getA && args.getString("endereco")!=null && args.getString("endereco").length()>0){
+			((MainActivity) getActivity()).loadTela(ID);
+			final String[] esportes=esportes_temp;
 
-				if(local!=null){
-					Server.get_future_events(getActivity(),local.getLatitude()+","+local.getLongitude(),this);	
+			Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
+				@Override
+				public void onTerminado(Vector<Endereco> in) {
+					if(in == null){
+						Log.v("in", ""+in);
 
-				}else{
-					Server.get_future_events(getActivity(),this);	
+						Bundle args2 = new Bundle();
+						((MainActivity) getActivity()).popLoadTela(ID);
 
+						args2.putBoolean("internet",false);
+						BolaForaFragment bfm = new BolaForaFragment();
+						bfm.setArguments(args2);
+						((MainActivity) self.getActivity()).replaceTab(bfm);
+
+					}else if (in.size() == 0){
+						((MainActivity) getActivity()).popLoadTela(ID);
+						Log.v("in", ""+in.size());
+
+						Bundle args2 = new Bundle();
+						args2.putBoolean("internet",true);
+						args2.putParcelableArray("enderecos", new Endereco[0]);
+						args2.putString("data", args.getString("data"));
+						args2.putString("horaInicio", args.getString("horaInicio"));
+						args2.putString("horaTermino", args.getString("horaTermino"));
+						args2.putStringArray("esportes", args.getStringArray("esportes"));
+						args2.putBoolean("conflito",false);
+						BolaForaFragment bfm = new BolaForaFragment();
+						bfm.setArguments(args2);
+						((MainActivity) self.getActivity()).replaceTab(bfm);
+					} else if(in.size() == 1){
+						Log.v("in", ""+in.size());
+						Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
+					} else {
+						Log.v("in", ""+in.size());
+
+						Bundle args2 = new Bundle();
+						Endereco arr[] = new Endereco[in.size()];
+						in.toArray(arr);
+						args2.putBoolean("internet",true);
+						args2.putParcelableArray("enderecos", arr);
+						args2.putString("data", args.getString("data"));
+						args2.putString("horaInicio", args.getString("horaInicio"));
+						args2.putString("horaTermino", args.getString("horaTermino"));
+						args2.putStringArray("esportes", args.getStringArray("esportes"));
+						args2.putBoolean("conflito", true);
+						BolaForaFragment bfm = new BolaForaFragment();
+						bfm.setArguments(args2);
+						((MainActivity) getActivity()).popLoadTela(ID);
+
+						((MainActivity) self.getActivity()).replaceTab(bfm);
+					}
 				}
-		 }
+			});
+		}
+
+		//Log.v("parametros", "esportes: " + esportes[0] + " endereco: " + args.getString("endereco") + " data: " + args.getString("data")
+		//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
+		else {
+			Log.v("in", "notIN");
+
+			Location local =((MainActivity)(getActivity())).location;
+			((MainActivity) getActivity()).loadTela(ID);
+
+			if(local!=null){
+				Server.get_future_events(getActivity(),local.getLatitude()+","+local.getLongitude(),this);	
+
+			}else{
+				Server.get_future_events(getActivity(),this);	
+
+			}
+			Log.v("in", "fimNotIn");
+
+		}
 		return tela;
 	}
 
@@ -154,6 +166,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			args2.putBoolean("internet",false);
 			BolaForaFragment bfm = new BolaForaFragment();
 			bfm.setArguments(args2);
+			((MainActivity) getActivity()).popLoadTela(ID);
+
 			((MainActivity) getActivity()).replaceTab(bfm);
 		}else if(vector.size()<=0){
 
@@ -161,6 +175,8 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			args2.putBoolean("conflito",false);
 			BolaForaFragment bfm = new BolaForaFragment();
 			bfm.setArguments(args2);
+			((MainActivity) getActivity()).popLoadTela(ID);
+
 			((MainActivity) getActivity()).replaceTab(bfm);
 		}else{
 			lista=new ArrayList<Evento>();
@@ -193,7 +209,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 	}
 
-	
+
 
 
 

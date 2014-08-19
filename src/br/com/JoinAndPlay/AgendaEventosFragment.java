@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 public class AgendaEventosFragment extends ListEventosFragment{
-	static int ID=3;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -22,35 +21,35 @@ public class AgendaEventosFragment extends ListEventosFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		((MainActivity) getActivity()).loadTela(ID);
 
 		super.inflater=inflater;
-
 		ViewGroup tela=(ViewGroup)inflater.inflate(R.layout.fragment_list_event,container,false) ;
-
 		listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
 		listV.setAdapter(null);
-
 		Button Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setVisibility(View.INVISIBLE);
 		tela.removeView(Button_criar);
 		if(getArguments()!=null && getArguments().containsKey("anteriores")){
-		
-		Server.user_agenda(getActivity(), this);
-		}else{
-			
+			ID=4;
 			Server.get_past(getActivity(), this);
+		}else{
+			Server.user_agenda(getActivity(), this);
+			ID=3;
 		}
-		
-		return  tela;
+		((MainActivity) getActivity()).loadTela(ID);
 
+		return  tela;
 	}
 
 	@Override
 	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
-		if(vector!=null && vector.size()<=0)return;
+		if(vector!=null && vector.size()<=0){;
+		((MainActivity) getActivity()).popLoadTela(ID);
+
+
+		}else
 		super.onTerminado(vector);
 	}
 }

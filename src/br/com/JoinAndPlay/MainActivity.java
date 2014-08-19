@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		tabs.addFragments(this,PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_pesq);
 		tabs.addFragments(this,NotificacaoFragment.instantiate(this, NotificacaoFragment.class.getName(),savedInstanceState),R.drawable.tab_notif);
 		tabs.addFragments(this,AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState),R.drawable.tab_cal);
-		tabs.addFragments(this,PerfilUserFragment.instantiate(this, PerfilUserFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
+		tabs.addFragments(this,PerfilAdminFragment.instantiate(this, PerfilAdminFragment.class.getName(),savedInstanceState),R.drawable.tab_perfil);
 	}
 
 	@Override

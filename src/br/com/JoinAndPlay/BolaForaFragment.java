@@ -82,6 +82,7 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		((MainActivity) getActivity()).popLoadTela(0);
 
 		View v=inflater.inflate(R.layout.bola_fora, container,false);
 		
