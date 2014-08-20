@@ -127,7 +127,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 		mViewPager = (ViewPager) mTabHost.findViewById(R.id.pager);
 
 		for (int i = 0; i < Math.min(ids.size(),SIZE); i++) {
-			TabSpec tabSpec =mTabHost.newTabSpec("Tab"+ids.get(i)).setIndicator("").setContent(new TabFactory(getActivity()));
+			TabSpec tabSpec =mTabHost.newTabSpec("Tab"+ids.get(i)).setIndicator("").setContent(new TabFactory(MainActivity.self));
 			mTabHost.addTab(tabSpec);
 			tamanho.setMinimumWidth(Math.max(fragments.size()*60,tamanho.getWidth()));
 			mTabHost.getTabWidget().getChildAt(mTabHost.getTabWidget().getChildCount()-1).setBackgroundResource(ids.get(i));//(getResources().getDrawable(R.drawable.seletc_tab));;
