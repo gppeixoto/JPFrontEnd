@@ -1,6 +1,8 @@
 package br.com.JoinAndPlay;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Vector;
 import org.joda.time.DateTime;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -26,6 +28,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +73,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
 	
-	private int ID;
+	private int ID=0;
 
 
 	@Override
@@ -87,6 +90,9 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 			Bundle savedInstanceState) {
 
 		if(container==null) return null;
+		if(getArguments() != null){
+			ID = getArguments().getInt("idTab");
+		}
 
 		View view = inflater.inflate(R.layout.criar_evento, container,false);
 
@@ -286,9 +292,6 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 			}
 		});
 		
-		if(getArguments() != null){
-			ID = getArguments().getInt("idTab");
-		}
 		if(getArguments() != null && getArguments().getBoolean("repearEvent", false)){
 			eNomeLugar.setText(getArguments().getString("nomeLocal"));
 			eEsporte.setText(getArguments().getString("esporte"));
@@ -771,6 +774,15 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 				double a = Double.parseDouble(aux);
 				DecimalFormat df = new DecimalFormat("##0.00");
 				aux = df.format(a);
+				for(int i=0;i<aux.length();i++){ 
+					if(aux.charAt(i) == ','){
+						if(i+1 < aux.length())
+							aux = aux.substring(0,i)+'.'+aux.substring(i+1);
+						else 
+							aux = aux.substring(0,i)+'.'+"00";
+						break;
+					}
+				}
 				a = Double.parseDouble(aux);
 				args.putDouble("preco", a);
 			} else {

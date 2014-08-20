@@ -22,7 +22,6 @@ import br.com.JoinAndPlay.Server.Usuario;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,7 +57,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		Bundle args = new Bundle();
 		args.putString("evento", myEvent.getId());
 		args.putInt("idTab",ID);
-		Log.v("RELOAD: ",ID+"");
 		next.setArguments(args);
 		((MainActivity)getActivity()).replaceTab(next);
 	}
@@ -181,7 +179,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 		if(getArguments()!=null){
 			ID=getArguments().getInt("idTab");
-			Log.v("LOAD: ",""+ID);
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
 			MainActivity.self.loadTela(ID);
 		}

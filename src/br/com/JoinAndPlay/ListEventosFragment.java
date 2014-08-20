@@ -135,9 +135,10 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	@Override
 	public void onClick(View v) {
 		CriarEventosFragment criar = new CriarEventosFragment();
+		Bundle args = new Bundle();
+		args.putInt("idTab", ID);
+		criar.setArguments(args);
 		((MainActivity)getActivity()).mudarAbaAtual(criar);
-
-
 	}
 
 

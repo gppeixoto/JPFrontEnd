@@ -9,13 +9,13 @@ import android.content.DialogInterface.OnShowListener;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import br.com.JoinAndPlay.R.drawable;
 import br.com.JoinAndPlay.Event.AdapterAmigo;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -44,10 +44,18 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	
 	private boolean selector[] = null;
 	
+	private int ID=0;
+	
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
 		
 		if(container==null) return null;
+		
+		if(getArguments() != null){
+			ID = getArguments().getInt("idTab");
+			Log.v("ID CARREGAR AMIGOS: ", ID+"");
+			MainActivity.self.loadTela(ID);
+		}
 		
 		amigos = new ArrayList<Usuario>();
 		convidados = new Vector<String>();
@@ -68,11 +76,12 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 								selector = new boolean[amigos.size()];
 								adapter = new AdapterAmigo(amigos, inflater,selector);
 								grid.setAdapter(adapter);
-								
 							}
+							MainActivity.self.popLoadTela(ID);
 						}
 					});
-				}	
+				}else
+					MainActivity.self.popLoadTela(ID);
 			}
 		});	
 		
@@ -88,8 +97,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		eDescricao = (EditText) view.findViewById(R.id.descrever_evento);
 		
 		grid = (ExpandScrollView) view.findViewById(R.id.gridView1);
-		grid.addHeaderView(new View(getActivity()));
-		grid.setExpanded(true);
+ 		grid.setExpanded(true);
 		grid.setOnItemClickListener(this);
 		
 		bCriarEvento = (Button) view.findViewById(R.id.criar_evento_button);
@@ -207,8 +215,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 								}
 					});
 					
-					ListEventosFragment list = new ListEventosFragment();
-					((MainActivity)getActivity()).mudarAbaAtual(list);
+					((MainActivity)getActivity()).retirarAbaAtual();
+					((MainActivity)getActivity()).retirarAbaAtual();
 					
 				} else {
 					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
