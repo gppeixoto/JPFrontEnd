@@ -121,33 +121,34 @@
                     android:layout_height="wrap_content"
                     android:text="@string/privacidade"
                     android:layout_gravity="center"
+                    android:layout_marginRight="20dp"
                     android:textColor="@color/red"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/buttons_priv"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right" >
 
                     <Button
                         android:id="@+id/particular"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/red_button"
                         android:text="@string/particular"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:padding="5dp"
                         android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/publico"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:padding="5dp"
                         android:background="@drawable/gray_button"
                         android:text="@string/publico"
                         android:textColor="@color/white"
@@ -161,6 +162,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginRight="12dp"
                 android:orientation="horizontal" >
 
@@ -176,36 +178,7 @@
                
             </LinearLayout>
             
-            <LinearLayout 
-		        android:id="@+id/layout_text_amigo"
-		        android:layout_width="fill_parent"
-		        android:layout_height="36dp"
-		        android:layout_marginLeft="12dp"
-		        android:layout_marginRight="12dp"
-		        android:layout_marginBottom="15dp"
-		        android:orientation="horizontal" >
-		        
-		        <EditText 
-		            android:id="@+id/text_search"
-		            android:layout_width="fill_parent"
-		            android:layout_gravity="bottom"
-		            android:height="2dp"
-		            android:ems="10"
-		            android:textColor="@color/cinza_txt"
-		            android:background="@color/white"
-		            android:layout_height="wrap_content"
-		            android:hint="@string/convide"
-		            android:inputType="text"
-		            android:singleLine="true"
-		            android:textSize="14sp"
-		            />
-		        
-		        <View
-                    android:layout_width="0dp"
-                   	android:layout_height="0dp"
-                 	android:layout_weight="0.01"
-                 	android:background="@drawable/my_bottom_line" />
-		    </LinearLayout>
+            
 		    
             <RelativeLayout 
                 android:id="@+id/rel"
@@ -217,7 +190,7 @@
 			         android:fastScrollAlwaysVisible="false"
 			         android:fastScrollEnabled="true"
 			         android:layout_width="fill_parent"
-			         android:layout_height="wrap_content" >
+			         android:layout_height="300dp" >
 		        </br.com.JoinAndPlay.ExpandScrollView>
 		        
              </RelativeLayout>

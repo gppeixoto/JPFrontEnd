@@ -6,6 +6,7 @@ import com.facebook.Session;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import br.com.JoinAndPlay.R.drawable;
 import br.com.JoinAndPlay.Event.AdapterAmigo;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -93,32 +95,36 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		bCriarEvento = (Button) view.findViewById(R.id.criar_evento_button);
 		bCriarEvento.setText("Criar Evento");
 		
+		final Drawable red = getResources().getDrawable(R.drawable.red_button);
+		final Drawable gray = getResources().getDrawable(R.drawable.gray_button);
+		
 		bParticular = (Button) view.findViewById(R.id.particular);
+		bParticular.setPadding(10, 10, 10, 10);
 		bParticular.setText("Particular");
 		bParticular.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				bParticular.setBackgroundResource(R.drawable.red_button);
+				bParticular.setBackgroundDrawable(red);
 				bParticular.setPadding(10, 10, 10, 10);
-				bPublico.setBackgroundResource(R.drawable.gray_button);
+				bPublico.setBackgroundDrawable(gray);
 				bPublico.setPadding(10, 10, 10, 10);
 				privado = true;	
 			}
 		});
-		
 		bPublico = (Button) view.findViewById(R.id.publico);
 		bPublico.setText("Público");
+		bPublico.setPadding(10, 10, 10, 10);
 		bPublico.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				bPublico.setBackgroundResource(R.drawable.red_button);
-				bPublico.setPadding(10, 10, 10, 10);
-				bParticular.setBackgroundResource(R.drawable.gray_button);
+				bParticular.setBackgroundDrawable(gray);
 				bParticular.setPadding(10, 10, 10, 10);
+				bPublico.setBackgroundDrawable(red);
+				bPublico.setPadding(10, 10, 10, 10);
 				privado = false;	
 			}
 		});
