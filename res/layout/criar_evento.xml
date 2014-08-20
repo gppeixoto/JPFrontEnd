@@ -12,12 +12,13 @@
         android:layout_weight="1"
         android:clipChildren="false"
         android:fillViewport="true"
-        android:padding="9dp" >
+        >
 
         <LinearLayout
             android:id="@+id/white_field_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="9dp"
             android:background="@drawable/campo_branco"
             android:orientation="vertical" >
 
