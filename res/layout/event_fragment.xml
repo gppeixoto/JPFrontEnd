@@ -550,6 +550,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/dad_terminar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"

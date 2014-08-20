@@ -225,6 +225,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
+		LinearLayout dad = (LinearLayout)view.findViewById(R.id.dad_terminar);
 		hasUser = evento.getUsers().size() > 1 ? true : false;
 
 		if(evento.getIsClosed()==false){
@@ -388,6 +389,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				}
 				participar.setOnClickListener(this);
 				butao_terminar.setVisibility((View.INVISIBLE));
+				dad.removeView(butao_terminar);
 			}
 			addGuys(pessoas,evento);
 		}else{
@@ -395,6 +397,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			votacao_nao_iniciada.removeAllViews();
 
 			butao_terminar.setVisibility(View.INVISIBLE);
+			dad.removeView(butao_terminar);
 
 			TextView num_participantes = (TextView) view.findViewById(R.id.num_participantes);
 			num_participantes.setText(""+evento.getUsers().size());
