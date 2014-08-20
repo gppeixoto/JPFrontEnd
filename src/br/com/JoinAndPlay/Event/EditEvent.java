@@ -213,7 +213,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			
 			
 			horaeE = (Button) v.findViewById(R.id.editar_hora_final);
-			horaeE.setText(hora_end);
+			horaeE.setText("23:59");
 			horaeE.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {

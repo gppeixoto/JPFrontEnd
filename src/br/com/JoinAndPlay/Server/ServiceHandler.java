@@ -60,10 +60,26 @@ public class ServiceHandler {
 			if (this.method == ServiceHandler.GET) {
 				retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
 		//	Log.v("user...",this.targetURL+""+ retorno);
+				for (int i = 0; i < 3 && retorno == null; ++i) {
+					retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 				if (con != null) con.onTerminado(retorno);
 			} else {
 				retorno = makeRequest(this.targetURL, this.jsonData, ServiceHandler.POST);
 		///	Log.v("user..",this.targetURL+""+ retorno);
+				for (int i = 0; i < 3 && retorno == null; ++i) {
+					retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 				if (con != null) con.onTerminado(retorno);
 			}
 		}

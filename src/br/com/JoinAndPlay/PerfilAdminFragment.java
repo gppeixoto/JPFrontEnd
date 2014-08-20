@@ -152,6 +152,8 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 							Bundle arg = new Bundle();
 							arg.putString("idUser",in.getId() );
 							arg.putInt("idTab",ID);
+							
+							Log.v("MANDEI: ",""+ID);
 
 							arg.putBoolean("anteriores",true);
 

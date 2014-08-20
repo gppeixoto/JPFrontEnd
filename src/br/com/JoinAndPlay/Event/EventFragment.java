@@ -22,6 +22,7 @@ import br.com.JoinAndPlay.Server.Usuario;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,6 +58,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		Bundle args = new Bundle();
 		args.putString("evento", myEvent.getId());
 		args.putInt("idTab",ID);
+		Log.v("RELOAD: ",ID+"");
 		next.setArguments(args);
 		((MainActivity)getActivity()).replaceTab(next);
 	}
@@ -133,7 +135,10 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					if(hour==1) putTime = putTime + "minuto";
 					else putTime = putTime + "minutos";
 				}
-			}else putTime = putTime + data + " dias";
+			}else{
+				putTime = putTime + data + " dia";
+				if(!data.equals("1")) putTime = putTime + "s";
+			}
 		}
 		View novo = inf.inflate(R.layout.add_comentario, (ViewGroup)getView(), false);
 		ImageView foto_usuario = (ImageView)novo.findViewById(R.id.perfil_imagem_usuario);
@@ -176,6 +181,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 		if(getArguments()!=null){
 			ID=getArguments().getInt("idTab");
+			Log.v("LOAD: ",""+ID);
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
 			MainActivity.self.loadTela(ID);
 		}
