@@ -19,6 +19,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -257,9 +258,9 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 	}
 	@Override
 	public void onDateSet(CalendarDatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-		if((dayOfMonth < this.dataNOW[0] && monthOfYear <= this.dataNOW[1] && year <= this.dataNOW[2])
-			|| (monthOfYear < this.dataNOW[1] && year < this.dataNOW[2])
-			|| (year < this.dataNOW[2])){
+		if((dayOfMonth < this.dataNOW[0] && monthOfYear+1 <= this.dataNOW[1] && year <= this.dataNOW[2])
+				|| (monthOfYear+1 < this.dataNOW[1] && year <= this.dataNOW[2])
+				|| (year < this.dataNOW[2])){
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -299,9 +300,9 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 
 	@Override
 	public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
-		if(dayOfMonth < this.dataNOW[0] && monthOfYear <= this.dataNOW[1] && year <= this.dataNOW[2]
-			|| (monthOfYear < this.dataNOW[1] && year < this.dataNOW[2])
-			|| (year < this.dataNOW[2])){
+		if((dayOfMonth < this.dataNOW[0] && monthOfYear+1 <= this.dataNOW[1] && year <= this.dataNOW[2])
+				|| (monthOfYear+1 < this.dataNOW[1] && year <= this.dataNOW[2])
+				|| (year < this.dataNOW[2])){
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

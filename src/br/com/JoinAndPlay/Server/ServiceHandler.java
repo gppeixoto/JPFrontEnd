@@ -60,7 +60,7 @@ public class ServiceHandler {
 			if (this.method == ServiceHandler.GET) {
 				retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
 		//	Log.v("user...",this.targetURL+""+ retorno);
-				for (int i = 0; i < 3 && retorno == null; ++i) {
+				for (int i = 0; i < 10 && retorno == null; ++i) {
 					retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
 					try {
 						Thread.sleep(500);
@@ -72,7 +72,7 @@ public class ServiceHandler {
 			} else {
 				retorno = makeRequest(this.targetURL, this.jsonData, ServiceHandler.POST);
 		///	Log.v("user..",this.targetURL+""+ retorno);
-				for (int i = 0; i < 3 && retorno == null; ++i) {
+				for (int i = 0; i < 10 && retorno == null; ++i) {
 					retorno = makeRequest(this.targetURL, null, ServiceHandler.GET);
 					try {
 						Thread.sleep(500);
