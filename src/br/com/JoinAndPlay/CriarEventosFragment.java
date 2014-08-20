@@ -69,6 +69,8 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
+	
+	private int ID;
 
 
 	@Override
@@ -284,6 +286,9 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 			}
 		});
 		
+		if(getArguments() != null){
+			ID = getArguments().getInt("idTab");
+		}
 		if(getArguments() != null && getArguments().getBoolean("repearEvent", false)){
 			eNomeLugar.setText(getArguments().getString("nomeLocal"));
 			eEsporte.setText(getArguments().getString("esporte"));
@@ -754,7 +759,9 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 			args.putString("cidade", cidade);
 			args.putString("bairro", bairro);
 			args.putString("nomeLocal", lugar);
-			args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));				
+			args.putString("data", (data[2]+"-"+data[1]+"-"+data[0]));		
+			
+			args.putInt("idTab",ID);
 
 			args.putString("horaInicio", bDataInicio.getText().toString());
 			args.putString("horaTermino", bDataFim.getText().toString());

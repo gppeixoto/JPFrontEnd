@@ -477,7 +477,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			for (int i = 0; i < evento.getUsers().size(); i++) {
 				if(evento.getUsers().get(i).getId().equals(ConfigJP.UserId)) continue;
 				ImageView imagem;
-				imagem = (ImageView) View.inflate(getActivity(), R.layout.image_foto, null);
+				imagem = (ImageView) inf.inflate( R.layout.image_foto,pessoasVotacao ,false);
 				DownloadImagem.postLoad(imagem,	evento.getUsers().get(i).getPhoto());
 				pessoasVotacao.addView(imagem);
 				final int index=i;
