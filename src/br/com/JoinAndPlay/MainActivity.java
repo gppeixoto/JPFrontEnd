@@ -1,5 +1,6 @@
 package br.com.JoinAndPlay;
 
+
 import com.facebook.Session;
 import com.google.android.gms.maps.MapsInitializer;
 import android.support.v4.app.Fragment;
