@@ -17,10 +17,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
             android:background="@drawable/perfil_fundo_branco"
             android:gravity="left"
             android:orientation="vertical" >
+            
+            <View 
+                android:id="@+id/ajuste"
+                android:layout_height="9dp"
+                android:layout_width="fill_parent"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
