@@ -122,6 +122,8 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 	@Override
 	public void onLocationChanged(Location arg0) {
 		// TODO Auto-generated method stub
+		location=arg0;
+		lManager.removeUpdates(this);
 
 	}
 

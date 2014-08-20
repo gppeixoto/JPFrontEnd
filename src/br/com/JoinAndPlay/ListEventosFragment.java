@@ -5,6 +5,7 @@ import java.util.Vector;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -167,9 +168,10 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 			MainActivity.self.replaceTab(bfm);
 		}else if(vector.size()<=0){
-
 			Bundle args2 = new Bundle();
 			args2.putBoolean("conflito",false);
+			args2.putBoolean("internet",true);
+
 			BolaForaFragment bfm = new BolaForaFragment();
 			bfm.setArguments(args2);
 			MainActivity.self.popLoadTela(ID);
