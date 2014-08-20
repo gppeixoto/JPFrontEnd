@@ -60,7 +60,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		next.setArguments(args);
 		((MainActivity)getActivity()).replaceTab(next);
 	}
-	
+
 	public void initBadges(ImageView foto_doidinho,Evento evento,TextView nome_doidinho){
 		DownloadImagem.postLoad(foto_doidinho,evento.getUsers().get(ind).getPhoto());
 		nome_doidinho.setText(evento.getUsers().get(ind).getName());
@@ -172,15 +172,15 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		View v = inflater.inflate(R.layout.event_fragment, container, false);
 		list = (LinearLayout)v.findViewById(R.id.lista_comentarios);
 		inf = inflater;
-	    // Consultar o AdView como um recurso e carregar uma solicitação.
+		// Consultar o AdView como um recurso e carregar uma solicitação.
 		AdView adView = (AdView)v.findViewById(R.id.propaganda);
-	    AdRequest adRequest = new AdRequest.Builder().build();
-	    adView.loadAd(adRequest);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		adView.loadAd(adRequest);
 
 		if(getArguments()!=null){
 			ID=getArguments().getInt("idTab");
 			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
-			MainActivity.self.loadTela(ID);
+			MainActivity.self.loadTela(ID); 
 		}
 		return  v;
 	}
@@ -226,7 +226,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
 		hasUser = evento.getUsers().size() > 1 ? true : false;
-		
+
 		if(evento.getIsClosed()==false){
 			votacao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_iniciada.removeAllViews();
@@ -238,7 +238,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			imagem_evento.setImageResource(ConfigJP.ESPORTE_BITMAP[id_esporte]);
 
 			Button convidar_amigos = (Button)view.findViewById(R.id.convidar_amigos);
-			
+
 			map = new HashMap<String, Boolean>();
 			Vector<Usuario> in = evento.getUsers();
 			for (Iterator<Usuario> iterator = in.iterator(); iterator
@@ -247,7 +247,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						.next();
 				map.put(usuario.id,true);
 			}
-			
+
 			convidar_amigos.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -393,7 +393,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		}else{
 			votacao_nao_iniciada.setVisibility(View.INVISIBLE);
 			votacao_nao_iniciada.removeAllViews();
-			
+
 			butao_terminar.setVisibility(View.INVISIBLE);
 
 			TextView num_participantes = (TextView) view.findViewById(R.id.num_participantes);
@@ -439,37 +439,45 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			award1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					ImageView view = (ImageView)arg0;
-					award[0] = !award[0];
-					if(award[0]==false) view.setImageResource(R.drawable.icongenteboa);
-					else view.setImageResource(R.drawable.okaygenteboa);
+					if(cantVote[0]==false){
+						ImageView view = (ImageView)arg0;
+						award[0] = !award[0];
+						if(award[0]==false) view.setImageResource(R.drawable.icongenteboa);
+						else view.setImageResource(R.drawable.okaygenteboa);
+					}
 				}
 			});
 			award2.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					ImageView view = (ImageView)arg0;
-					award[1] = !award[1];
-					if(award[1]==false) view.setImageResource(R.drawable.iconesforcado);
-					else view.setImageResource(R.drawable.okayesforcado);
+					if(cantVote[1]==false){
+						ImageView view = (ImageView)arg0;
+						award[1] = !award[1];
+						if(award[1]==false) view.setImageResource(R.drawable.iconesforcado);
+						else view.setImageResource(R.drawable.okayesforcado);
+					}
 				}
 			});
 			award3.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					ImageView view = (ImageView)arg0;
-					award[2] = !award[2];
-					if(award[2]==false) view.setImageResource(R.drawable.iconjogaprotime);
-					else view.setImageResource(R.drawable.okayjogaprotime);
+					if(cantVote[2]==false){
+						ImageView view = (ImageView)arg0;
+						award[2] = !award[2];
+						if(award[2]==false) view.setImageResource(R.drawable.iconjogaprotime);
+						else view.setImageResource(R.drawable.okayjogaprotime);
+					}
 				}
 			});
 			award4.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					ImageView view = (ImageView)arg0;
-					award[3] = !award[3];
-					if(award[3]==false) view.setImageResource(R.drawable.iconfairplay);
-					else view.setImageResource(R.drawable.okayfairplay);
+					if(cantVote[3]==false){
+						ImageView view = (ImageView)arg0;
+						award[3] = !award[3];
+						if(award[3]==false) view.setImageResource(R.drawable.iconfairplay);
+						else view.setImageResource(R.drawable.okayfairplay);
+					}
 				}
 			});
 			LinearLayout pessoasVotacao = (LinearLayout)view.findViewById(R.id.nova_foto2); 

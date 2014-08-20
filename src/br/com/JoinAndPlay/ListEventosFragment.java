@@ -57,7 +57,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			getA= args.getBoolean("getA");
 
 			if (getA && args.getString("endereco")!=null && args.getString("endereco").length()>0){
-				((MainActivity) getActivity()).loadTela(ID);
+				MainActivity.self.loadTela(ID);
 				final String[] esportes=esportes_temp;
 
 				Server.getAddresses(args.getString("endereco"), null, null, null, new  Connecter<Vector<Endereco>>() {
@@ -66,15 +66,15 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 						if(in == null){
 
 							Bundle args2 = new Bundle();
-							((MainActivity) getActivity()).popLoadTela(ID);
+							MainActivity.self.popLoadTela(ID);
 
 							args2.putBoolean("internet",false);
 							BolaForaFragment bfm = new BolaForaFragment();
 							bfm.setArguments(args2);
-							((MainActivity) self.getActivity()).replaceTab(bfm);
+							MainActivity.self.replaceTab(bfm);
 
 						}else if (in.size() == 0){
-							((MainActivity) getActivity()).popLoadTela(ID);
+							MainActivity.self.popLoadTela(ID);
 
 							Bundle args2 = new Bundle();
 							args2.putBoolean("internet",true);
@@ -86,7 +86,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 							args2.putBoolean("conflito",false);
 							BolaForaFragment bfm = new BolaForaFragment();
 							bfm.setArguments(args2);
-							((MainActivity) self.getActivity()).replaceTab(bfm);
+							MainActivity.self.replaceTab(bfm);
 						} else if(in.size() == 1){
 							Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 						} else {
@@ -102,9 +102,9 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 							args2.putBoolean("conflito", true);
 							BolaForaFragment bfm = new BolaForaFragment();
 							bfm.setArguments(args2);
-							((MainActivity) getActivity()).popLoadTela(ID);
+							MainActivity.self.popLoadTela(ID);
 
-							((MainActivity) self.getActivity()).replaceTab(bfm);
+							MainActivity.self.replaceTab(bfm);
 						}
 					}
 				});
@@ -138,7 +138,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		Bundle args = new Bundle();
 		args.putInt("idTab", ID);
 		criar.setArguments(args);
-		((MainActivity)getActivity()).mudarAbaAtual(criar);
+		MainActivity.self.mudarAbaAtual(criar);
 	}
 
 
@@ -163,18 +163,18 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			args2.putBoolean("internet",false);
 			BolaForaFragment bfm = new BolaForaFragment();
 			bfm.setArguments(args2);
-			((MainActivity) getActivity()).popLoadTela(ID);
+			MainActivity.self.popLoadTela(ID);
 
-			((MainActivity) getActivity()).replaceTab(bfm);
+			MainActivity.self.replaceTab(bfm);
 		}else if(vector.size()<=0){
 
 			Bundle args2 = new Bundle();
 			args2.putBoolean("conflito",false);
 			BolaForaFragment bfm = new BolaForaFragment();
 			bfm.setArguments(args2);
-			((MainActivity) getActivity()).popLoadTela(ID);
+			MainActivity.self.popLoadTela(ID);
 
-			((MainActivity) getActivity()).replaceTab(bfm);
+			MainActivity.self.replaceTab(bfm);
 		}else{
 			lista=new ArrayList<Evento>();
 			for (int i = 0; i <vector.size(); i++) {
@@ -187,7 +187,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 				@Override
 				public void run() {
 					listV.setAdapter(new AdapterListView(inflater, lista));
-					((MainActivity) getActivity()).popLoadTela(ID);
+					MainActivity.self.popLoadTela(ID);
 				}
 			});
 
@@ -202,7 +202,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			arg.putInt("idTab", ID);
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
-			((MainActivity)getActivity()).mudarAbaAtual(fragment);
+			MainActivity.self.mudarAbaAtual(fragment);
 		}
 
 	}

@@ -454,15 +454,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
-                android:layout_marginLeft="28dp"
-                android:layout_marginRight="28dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
                 android:layout_marginTop="18dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
                 <ImageView
                     android:id="@+id/award1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="fill_parent"
                     android:adjustViewBounds="true"
                     android:scaleType="matrix"
@@ -470,7 +470,7 @@
 
                 <ImageView
                     android:id="@+id/award2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="12dp"
                     android:adjustViewBounds="true"
@@ -479,7 +479,7 @@
 
                 <ImageView
                     android:id="@+id/award3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="12dp"
                     android:adjustViewBounds="true"
@@ -488,7 +488,7 @@
 
                 <ImageView
                     android:id="@+id/award4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="12dp"
                     android:adjustViewBounds="true"
