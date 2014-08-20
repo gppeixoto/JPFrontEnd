@@ -61,8 +61,8 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 			Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.pesquisa_fragment, container,false);
 	
-		//Typeface fontBold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arialBold.ttf");
-		//Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/arial.ttf");
+		//Typeface fontBold = Typeface.createFromAsset(MainActivity.self.getAssets(), "fonts/arialBold.ttf");
+		//Typeface font = Typeface.createFromAsset(MainActivity.self.getAssets(), "fonts/arial.ttf");
 		data = new String[3];
 		dataNOW = new int[3];
 		
@@ -86,13 +86,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		eendv.setTypeface(font);
 		eesv.setTypeface(font);*/
 
-		config = getActivity().getResources().getConfiguration();
+		config = MainActivity.self.getResources().getConfiguration();
 
 		String[] str={"Dardo", "Jogos de Tabuleiro", "Skate", "Ciclismo", "Patinação", "Corrida", "Boxe", "Dominó", "Video-Game", "Xadrez", "Cartas", "Badminton", "Basquete", "Golfe", "Sinuca", "Vôlei de Praia", "Vôlei", "Futebol", "Futebol Americano", "Baseball", "Tênis", "Boliche", "Tênis de Mesa"};
 
 		eesv.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
-		ArrayAdapter<String> adp=new ArrayAdapter<String>(this.getActivity(),
+		ArrayAdapter<String> adp=new ArrayAdapter<String>(MainActivity.self,
 				android.R.layout.simple_dropdown_item_1line,str);
 
 		eesv.setThreshold(1);
@@ -120,7 +120,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		bg = (Button) v.findViewById(R.id.bigButton);
 
 		Spannable buttonLabel = new SpannableString("   Pesquisar");
-		buttonLabel.setSpan(new ImageSpan(this.getActivity(), R.drawable.lupa_pesq,      
+		buttonLabel.setSpan(new ImageSpan(MainActivity.self, R.drawable.lupa_pesq,      
 		    ImageSpan.ALIGN_BASELINE), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		bg.setText(buttonLabel);
 		
@@ -182,7 +182,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 					DateTime now = DateTime.now();
 					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
 							now.getHourOfDay(), now.getMinuteOfHour(), 
-							DateFormat.is24HourFormat(getActivity()));
+							DateFormat.is24HourFormat(MainActivity.self));
 
 					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
 				} else { //Time picker for low end smartphones
@@ -206,7 +206,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 					DateTime now = DateTime.now();
 					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(PesquisarEventosFragment.this, 
 							now.getHourOfDay(), now.getMinuteOfHour(), 
-							DateFormat.is24HourFormat(getActivity()));
+							DateFormat.is24HourFormat(MainActivity.self));
 
 					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
 				} else { //Time picker for low-end smartphones
@@ -297,8 +297,8 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				args.putBoolean("getA", true);
 				
 				list.setArguments(args);
-				((MainActivity)getActivity()).mudarAba(0, list);
-				((MainActivity)getActivity()).mudarAba(0);
+				((MainActivity)MainActivity.self).mudarAba(0, list);
+				((MainActivity)MainActivity.self).mudarAba(0);
 			}
 		});
 
@@ -310,14 +310,14 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		if((dayOfMonth < this.dataNOW[0] && monthOfYear+1 <= this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (monthOfYear+1 < this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (year < this.dataNOW[2])){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 			}});
 			
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_xml, null));
 			AlertDialog alert11 = builder1.create();
 			
 			OnShowListener onshow = new OnShowListener() {
@@ -331,7 +331,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 	                        .getDrawable(R.drawable.alert_button));
 	                
 	                positiveButton.setText("OK");
-	                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+	                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 					
 				}
 			};
@@ -354,13 +354,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		if((dayOfMonth < this.dataNOW[0] && monthOfYear+1 <= this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (monthOfYear+1 < this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (year < this.dataNOW[2])){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 			}});	
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_xml, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_xml, null));
 			AlertDialog alert11 = builder1.create();
 			
 			OnShowListener onshow = new OnShowListener() {
@@ -374,7 +374,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 	                        .getDrawable(R.drawable.alert_button));
 	                
 	                positiveButton.setText("OK");
-	                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+	                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 					
 				}
 			};
@@ -406,13 +406,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				b2.setText(h + ":" + m);
 				begin = false;
 			} else {
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 				}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert2_xml, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
 				
 				OnShowListener onshow = new OnShowListener() {
@@ -426,7 +426,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		                        .getDrawable(R.drawable.alert_button));
 		                
 		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 						
 					}
 				};
@@ -436,13 +436,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 
 		} else if (end){
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 				}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert2_xml, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
 				
 				OnShowListener onshow = new OnShowListener() {
@@ -456,7 +456,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		                        .getDrawable(R.drawable.alert_button));
 		                
 		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 						
 					}
 				};
@@ -483,13 +483,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 				b2.setText(h + ":" + m);
 				begin = false;
 			} else {
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 				}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert2_xml, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
 				
 				OnShowListener onshow = new OnShowListener() {
@@ -503,7 +503,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		                        .getDrawable(R.drawable.alert_button));
 		                
 		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 						
 					}
 				};
@@ -513,13 +513,13 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 
 		} else if (end){
 			if((h + ":" + m).compareTo(b2.getText().toString()) <= 0){
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 				}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert2_xml, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
 				
 				OnShowListener onshow = new OnShowListener() {
@@ -533,7 +533,7 @@ TimePickerDialogFragment.TimePickerDialogHandler {
 		                        .getDrawable(R.drawable.alert_button));
 		                
 		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 						
 					}
 				};

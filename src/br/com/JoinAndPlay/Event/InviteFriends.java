@@ -62,7 +62,7 @@ public class InviteFriends extends Fragment implements OnItemClickListener {
 					if (checked.valueAt(i)) conv.add(((Usuario)(listV.getAdapter().getItem(position))).getId());
 				}				
 				Server.invite(ConfigJP.UserId, id_evento, conv, null);
-				((MainActivity)getActivity()).retirarAbaAtual();
+				((MainActivity)MainActivity.self).retirarAbaAtual();
 			}
 		});
 		return  tela;

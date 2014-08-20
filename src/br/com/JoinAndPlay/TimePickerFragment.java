@@ -20,8 +20,8 @@ implements TimePickerDialog.OnTimeSetListener {
 		int minute = c.get(Calendar.MINUTE);
 
 		// Create a new instance of TimePickerDialog and return it
-		return new TimePickerDialog(getActivity(), this, hour, minute,
-				DateFormat.is24HourFormat(getActivity()));
+		return new TimePickerDialog(MainActivity.self, this, hour, minute,
+				DateFormat.is24HourFormat(MainActivity.self));
 	}
 
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

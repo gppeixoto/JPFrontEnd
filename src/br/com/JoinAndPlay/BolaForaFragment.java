@@ -82,7 +82,7 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		((MainActivity) getActivity()).popLoadTela(0);
+		MainActivity.self.popLoadTela(0);
 
 		View v=inflater.inflate(R.layout.bola_fora, container,false);
 		
@@ -102,7 +102,7 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 			} else{
 			
 				lv.setDividerHeight(22);
-				Botao bt = new Botao( (Endereco[]) args.getParcelableArray("enderecos"),getActivity(),args);
+				Botao bt = new Botao( (Endereco[]) args.getParcelableArray("enderecos"),MainActivity.self,args);
 				address = ((Endereco[]) args.getParcelableArray("enderecos"))[0].getName();
 				lv.setAdapter(bt);
 			}
@@ -125,6 +125,6 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 		Endereco addr = ((Endereco[]) argsR.getParcelableArray("enderecos"))[arg2];
 		String s = addr.getName()+addr.getAddress();
 		args_.putString("endereco",s);
-		((MainActivity)getActivity()).replaceTab(frag);
+		((MainActivity)MainActivity.self).replaceTab(frag);
 	}
 }

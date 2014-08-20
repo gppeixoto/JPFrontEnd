@@ -32,12 +32,12 @@ public class AgendaEventosFragment extends ListEventosFragment{
 		tela.removeView(Button_criar);
 		if(getArguments()!=null && getArguments().containsKey("anteriores")){
 			ID=4;
-			Server.get_past(getActivity(), this);
+			Server.get_past(MainActivity.self, this);
 		}else{
-			Server.user_agenda(getActivity(), this);
+			Server.user_agenda(MainActivity.self, this);
 			ID=3;
 		}
-		((MainActivity) getActivity()).loadTela(ID);
+		((MainActivity) MainActivity.self).loadTela(ID);
 
 		return  tela;
 	}
@@ -46,7 +46,7 @@ public class AgendaEventosFragment extends ListEventosFragment{
 	public void onTerminado(Vector<Evento> vector) {
 		// TODO Auto-generated method stub
 		if(vector!=null && vector.size()<=0){;
-		((MainActivity) getActivity()).popLoadTela(ID);
+		((MainActivity) MainActivity.self).popLoadTela(ID);
 
 
 		}else

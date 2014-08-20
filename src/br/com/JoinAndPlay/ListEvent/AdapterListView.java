@@ -140,6 +140,9 @@ public class AdapterListView extends BaseAdapter
 			}else if(i<1000){
 				distanciaView.setText(i+"m");
 
+			}else if(i>Math.pow(10, 9)){
+				distanciaView.setText("");
+				
 			}else{
 				
 				distanciaView.setText(Math.round(i/1000.0)+"Km");

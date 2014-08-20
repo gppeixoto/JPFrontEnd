@@ -27,13 +27,13 @@ public class MapaFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		MapsInitializer.initialize(getActivity());
+		MapsInitializer.initialize(MainActivity.self);
 
 		if (container == null) {
 			return null;
 		}
 
-		MapsInitializer.initialize(getActivity());
+		MapsInitializer.initialize(MainActivity.self);
 
 		View view = inflater.inflate(R.layout.mapa_fragment, container, false);
 		suportMap= new SupportMapFragment();
@@ -43,7 +43,7 @@ public class MapaFragment extends Fragment {
 
 		if(getArguments()!=null){
 			final Bundle arg= getArguments();
-			final MainActivity act = (MainActivity)getActivity();
+			final MainActivity act = (MainActivity)MainActivity.self;
 			nome_evento.setText(arg.getString("nome"));
 			if(arg.getBoolean("isMax")){
 				maximizar.setBackgroundResource(R.drawable.menos);
@@ -64,7 +64,7 @@ public class MapaFragment extends Fragment {
 						MapaFragment mapa= new MapaFragment();
 						arg.putBoolean("isMax", true);
 						mapa.setArguments(arg);
-						((MainActivity)getActivity()).mudarAbaAtual(mapa);
+						((MainActivity)MainActivity.self).mudarAbaAtual(mapa);
 					}
 				});
 			}

@@ -53,7 +53,7 @@ public class AmigosFragment extends Fragment implements OnItemClickListener {
 		arg.putString("idUser",vetor.get(arg2-1).getId());
 		arg.putInt("idTab", ID);
 		fm.setArguments(arg);
-		((MainActivity)getActivity()).mudarAbaAtual(fm);
+		((MainActivity)MainActivity.self).mudarAbaAtual(fm);
 	}
 
 }

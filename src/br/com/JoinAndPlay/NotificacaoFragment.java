@@ -33,12 +33,12 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		((MainActivity) getActivity()).loadTela(ID);
+		((MainActivity) MainActivity.self).loadTela(ID);
 
 		if (container == null) {
 			return null;
 		}
-		Configuration config = getActivity().getResources().getConfiguration();
+		Configuration config = MainActivity.self.getResources().getConfiguration();
 		LinearLayout v = (LinearLayout)inflater.inflate(R.layout.notificacao_fragment, container, false);
 
 		if(config.orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -48,7 +48,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 		final NotificacaoFragment self = this;
 		this.inflater=inflater;
 		maker((ListView)v.findViewById(R.id.lista_view_convites_1),inflater);
-		ConfigJP.getUserID(getActivity(), new Connecter<String>() {
+		ConfigJP.getUserID(MainActivity.self, new Connecter<String>() {
 
 			@Override
 			public void onTerminado(String in) {
@@ -76,7 +76,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					((MainActivity) getActivity()).popLoadTela(ID);
+					((MainActivity) MainActivity.self).popLoadTela(ID);
 
 				}
 			});
@@ -89,7 +89,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					((MainActivity) getActivity()).popLoadTela(ID);
+					((MainActivity) MainActivity.self).popLoadTela(ID);
 
 				}
 			});return;
@@ -113,7 +113,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 			public void run() {
 				// TODO Auto-generated method stub
 				list.setAdapter(new NotificacaoAdapter(inflater,notifi));
-				((MainActivity) getActivity()).popLoadTela(ID);
+				((MainActivity) MainActivity.self).popLoadTela(ID);
 
 			}
 		});
@@ -130,7 +130,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 			arg.putInt("idTab", ID);
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
-			((MainActivity)getActivity()).mudarAbaAtual(fragment);
+			((MainActivity)MainActivity.self).mudarAbaAtual(fragment);
 		}	
 	}
 

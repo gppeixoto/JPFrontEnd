@@ -58,7 +58,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		args.putString("evento", myEvent.getId());
 		args.putInt("idTab",ID);
 		next.setArguments(args);
-		((MainActivity)getActivity()).replaceTab(next);
+		((MainActivity)MainActivity.self).replaceTab(next);
 	}
 
 	public void initBadges(ImageView foto_doidinho,Evento evento,TextView nome_doidinho){
@@ -99,7 +99,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					arg.putInt("idTab",ID);
 					arg.putString("idUser",evento.getUsers().get(index).getId());
 					fm.setArguments(arg);
-					((MainActivity)getActivity()).mudarAbaAtual(fm);
+					((MainActivity)MainActivity.self).mudarAbaAtual(fm);
 				}
 			});
 		}
@@ -179,7 +179,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 
 		if(getArguments()!=null){
 			ID=getArguments().getInt("idTab");
-			Server.get_detailed_event(getActivity(),getArguments().getString("evento"),this);	
+			Server.get_detailed_event(MainActivity.self,getArguments().getString("evento"),this);	
 			MainActivity.self.loadTela(ID); 
 		}
 		return  v;
@@ -251,7 +251,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			convidar_amigos.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Server.get_friends(getActivity(), new Connecter<Vector<Usuario>>() {
+					Server.get_friends(MainActivity.self, new Connecter<Vector<Usuario>>() {
 						@Override
 						public void onTerminado(Vector<Usuario> in) {
 							Bundle args = new Bundle();
@@ -269,7 +269,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 							args.putParcelableArrayList("users",array);
 							InviteFriends next = new InviteFriends();
 							next.setArguments(args);
-							((MainActivity)getActivity()).mudarAbaAtual(next);
+							((MainActivity)MainActivity.self).mudarAbaAtual(next);
 						}
 					});
 				}
@@ -293,7 +293,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				public void onClick(View arg0) {
 					if(evento.getIsParticipating()){
 						if(!evento.getHasArrived()){
-							Server.arrive_event(self.getActivity(), evento.getId(), self);
+							Server.arrive_event(MainActivity.self, evento.getId(), self);
 							reloadPage();
 						}
 					}
@@ -318,7 +318,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					}
 					arg.putParcelableArrayList("users",array);
 					fm.setArguments(arg);
-					((MainActivity)self.getActivity()).mudarAbaAtual(fm);
+					((MainActivity)MainActivity.self).mudarAbaAtual(fm);
 				}
 			});
 			showLocal.setOnClickListener(new OnClickListener() {
@@ -337,7 +337,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					}
 					arg.putParcelableArrayList("users",array);
 					fm.setArguments(arg);
-					((MainActivity)self.getActivity()).mudarAbaAtual(fm);
+					((MainActivity)MainActivity.self).mudarAbaAtual(fm);
 				}
 			});
 
@@ -367,7 +367,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						args.putInt("idTab",ID);
 
 						next.setArguments(args);
-						((MainActivity)getActivity()).mudarAbaAtual(next);	
+						((MainActivity)MainActivity.self).mudarAbaAtual(next);	
 					}
 				});
 				butao_terminar.setOnClickListener(new OnClickListener() {
@@ -521,10 +521,10 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				@Override
 				public void onClick(View arg0) {
 					if(hasUser){
-						if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),getActivity(), evento.getSport(), rating+"", null);
+						if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),MainActivity.self, evento.getSport(), rating+"", null);
 						for(int i=0;i<4;i++){
 							if(award[i] && cantVote[i]==false){
-								Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), getActivity(), badges[i], null);
+								Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), MainActivity.self, badges[i], null);
 								reloadPage();
 							}
 						}
@@ -548,7 +548,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					args.putInt("idTab",ID);
 					CriarEventosFragment next = new CriarEventosFragment();
 					next.setArguments(args);
-					((MainActivity)getActivity()).mudarAbaAtual(next);
+					((MainActivity)MainActivity.self).mudarAbaAtual(next);
 				}
 			});
 		}
@@ -559,7 +559,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			@Override
 			public void onClick(View v) {
 				EditText myEditText = (EditText) view.findViewById(R.id.criar_comentario);
-				Server.comment(getActivity(),myEvent.getId(),myEditText.getText().toString(), new Connecter<Comentario>() {
+				Server.comment(MainActivity.self,myEvent.getId(),myEditText.getText().toString(), new Connecter<Comentario>() {
 					@Override
 					public void onTerminado(final Comentario in) {
 						if(listener.getView()!=null){
@@ -581,7 +581,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					getView().setFocusableInTouchMode(true);
 					getView().requestFocus();
 				}
-				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				InputMethodManager imm = (InputMethodManager)MainActivity.self.getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
 			}
 		});
@@ -602,12 +602,12 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			temp[0]	=Double.parseDouble(evento.getLatitude());		
 			temp[1]	=Double.parseDouble(evento.getLongitude());	
 		}catch(Exception _){
-			temp=ConfigJP.getLatLngFromAddress(getActivity(),evento.getLocalizationName()+","+evento.getLocalizationAddress()+","+evento.getNeighbourhood()+","+evento.getCity());
+			temp=ConfigJP.getLatLngFromAddress(MainActivity.self,evento.getLocalizationName()+","+evento.getLocalizationAddress()+","+evento.getNeighbourhood()+","+evento.getCity());
 			if(temp==null)
-				temp=ConfigJP.getLatLngFromAddress(getActivity(),evento.getLocalizationAddress()+","+evento.getNeighbourhood()+","+evento.getCity());
+				temp=ConfigJP.getLatLngFromAddress(MainActivity.self,evento.getLocalizationAddress()+","+evento.getNeighbourhood()+","+evento.getCity());
 			if(temp!=null){
 				final double[] cordenada= temp;
-				ConfigJP.getToken(getActivity(), new Connecter<String>() {
+				ConfigJP.getToken(MainActivity.self, new Connecter<String>() {
 
 					@Override
 					public void onTerminado(String access_token) {
@@ -628,16 +628,16 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_frag, mapaF).commit();
 		view.requestLayout();
 		view.postInvalidate();
-		((MainActivity) getActivity()).popLoadTela(ID);
+		((MainActivity) MainActivity.self).popLoadTela(ID);
 	}
 
 	@Override
 	public void onClick(View v) {
 		if(myEvent!=null){
-			if(myEvent.getIsParticipating()==false) Server.enter_event(getActivity(), myEvent.getId(),this );
+			if(myEvent.getIsParticipating()==false) Server.enter_event(MainActivity.self, myEvent.getId(),this );
 			else{
-				if(myEvent.getHasArrived()) Server.cancel_arrive(getActivity(), myEvent.getId(), this);
-				Server.leave_event(getActivity(), myEvent.getId(),this );
+				if(myEvent.getHasArrived()) Server.cancel_arrive(MainActivity.self, myEvent.getId(), this);
+				Server.leave_event(MainActivity.self, myEvent.getId(),this );
 			}
 			reloadPage();
 		}
@@ -652,7 +652,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				getView().post(new Runnable() {
 					public void run() {
 						if(ConfigJP.UserId == null){
-							ConfigJP.getUserID(getActivity(), new Connecter<String>() {
+							ConfigJP.getUserID(MainActivity.self, new Connecter<String>() {
 								@Override
 								public void onTerminado(String id) {
 									ConfigJP.UserId=id;

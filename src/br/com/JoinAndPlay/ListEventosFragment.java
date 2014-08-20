@@ -89,7 +89,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 							bfm.setArguments(args2);
 							MainActivity.self.replaceTab(bfm);
 						} else if(in.size() == 1){
-							Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
+							Server.get_matched_events(MainActivity.self,args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes, self);	
 						} else {
 							Bundle args2 = new Bundle();
 							Endereco arr[] = new Endereco[in.size()];
@@ -110,7 +110,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 					}
 				});
 			}else{
-				Server.get_matched_events(getActivity(),args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes_temp, self);	
+				Server.get_matched_events(MainActivity.self,args.getString("endereco"),args.getString("data") ,args.getString("horaInicio"),args.getString("horaTermino"), esportes_temp, self);	
 
 
 			}
@@ -119,14 +119,14 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		//		+ " hora de inicio: " + args.getString("horaInicio") + " hora de termino: " + args.getString("horaTermino"));
 		else {
 
-			Location local =((MainActivity)(getActivity())).location;
-			((MainActivity) getActivity()).loadTela(ID);
+			Location local =((MainActivity)(MainActivity.self)).location;
+			((MainActivity) MainActivity.self).loadTela(ID);
 
 			if(local!=null){
-				Server.get_future_events(getActivity(),local.getLatitude()+","+local.getLongitude(),this);	
+				Server.get_future_events(MainActivity.self,local.getLatitude()+","+local.getLongitude(),this);	
 
 			}else{
-				Server.get_future_events(getActivity(),this);	
+				Server.get_future_events(MainActivity.self,this);	
 
 			}
 		}

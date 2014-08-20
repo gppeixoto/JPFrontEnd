@@ -48,10 +48,10 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 		/*Requisita o perfil do usu�rio do servidor*/
 
 
-		Server.user_profile(getActivity(), this);
-		((MainActivity) getActivity()).loadTela(ID);
+		Server.user_profile(MainActivity.self, this);
+		((MainActivity) MainActivity.self).loadTela(ID);
 
-		config = getActivity().getResources().getConfiguration();
+		config = MainActivity.self.getResources().getConfiguration();
 
 		/*Celular com resolu��es mais baixas
 		 * muda a resolu��o para mdpi*/
@@ -117,7 +117,7 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
 
-							Server.get_friends(self.getActivity(),new Connecter<Vector<Usuario>>() {
+							Server.get_friends(MainActivity.self,new Connecter<Vector<Usuario>>() {
 
 								@Override
 								public void onTerminado(Vector<Usuario> in) {
@@ -136,7 +136,7 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 									arg.putInt("idTab",ID);
 
 									fm.setArguments(arg);
-									((MainActivity)self.getActivity()).mudarAbaAtual(fm);
+									((MainActivity)MainActivity.self).mudarAbaAtual(fm);
 
 								}
 							});
@@ -158,7 +158,7 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 							arg.putBoolean("anteriores",true);
 
 							agenda.setArguments(arg);
-							((MainActivity)self.getActivity()).mudarAbaAtual(agenda);
+							((MainActivity)MainActivity.self).mudarAbaAtual(agenda);
 
 						}
 					});
@@ -195,11 +195,11 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 						itemEsporte.avaliacaoJogador=Double.parseDouble(rating.getRating());
 						listaEsportes.add(itemEsporte);
 					}
-					perfil_gridEsportes_Expandable.setAdapter(new AdapterGridView(getActivity(),listaEsportes));
+					perfil_gridEsportes_Expandable.setAdapter(new AdapterGridView(MainActivity.self,listaEsportes));
 					perfil_gridEsportes_Expandable.setNumColumns(2);
 					perfil_gridEsportes_Expandable.setExpanded(true);
 				}
-				((MainActivity) getActivity()).popLoadTela(ID);
+				((MainActivity) MainActivity.self).popLoadTela(ID);
 
 			}
 		});

@@ -99,12 +99,12 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 		data = new String[3];
 		dataNOW = new int[3];
 
-		config = getActivity().getResources().getConfiguration();
+		config = MainActivity.self.getResources().getConfiguration();
 
 		String[] str={"Dardo", "Jogos de Tabuleiro", "Skate", "Ciclismo", "Patinação", "Corrida", "Boxe", "Dominó", "Video-Game", "Xadrez", "Cartas", "Badminton", "Basquete", "Golfe", "Sinuca", "Vôlei de Praia", "Vôlei", "Futebol", "Futebol Americano", "Baseball", "Tênis", "Boliche", "Tênis de Mesa"};
 
 
-		ArrayAdapter<String> adp = new ArrayAdapter<String>(this.getActivity(),
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(MainActivity.self,
 				android.R.layout.simple_dropdown_item_1line, str);
 
 		e1Button = (ImageButton) view.findViewById(R.id.esporte1);
@@ -236,7 +236,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					DateTime now = DateTime.now();
 					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(CriarEventosFragment.this, 
 							now.getHourOfDay(), now.getMinuteOfHour(), 
-							DateFormat.is24HourFormat(getActivity()));
+							DateFormat.is24HourFormat(MainActivity.self));
 
 					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
 				} else { //Time picker for low end smartphones
@@ -261,7 +261,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					DateTime now = DateTime.now();
 					RadialTimePickerDialog radial = RadialTimePickerDialog.newInstance(CriarEventosFragment.this, 
 							now.getHourOfDay(), now.getMinuteOfHour(), 
-							DateFormat.is24HourFormat(getActivity()));
+							DateFormat.is24HourFormat(MainActivity.self));
 
 					radial.show(getFragmentManager(), FRAG_TAG_TIME_PICKER);
 				} else { //Time picker for low-end smartphones
@@ -331,14 +331,14 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 		if((dayOfMonth < this.dataNOW[0] && monthOfYear+1 <= this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (monthOfYear+1 < this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (year < this.dataNOW[2])){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_dia, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_dia, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -350,7 +350,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -374,13 +374,13 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 		if((dayOfMonth < this.dataNOW[0] && monthOfYear+1 <= this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (monthOfYear+1 < this.dataNOW[1] && year <= this.dataNOW[2])
 				|| (year < this.dataNOW[2])){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 			builder1.setCancelable(true);
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
 				}});	
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_dia, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_dia, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -392,7 +392,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -424,13 +424,13 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 				bDataInicio.setText(h + ":" + m);
 				begin = false;
 			} else {
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_hora, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_hora, null));
 				AlertDialog alert11 = builder1.create();
 
 				OnShowListener onshow = new OnShowListener() {
@@ -442,7 +442,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 						positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 						positiveButton.setText("OK");
-						positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 					}
 				};
@@ -452,13 +452,13 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 
 		} else if (end){
 			if((h + ":" + m).compareTo(bDataInicio.getText().toString()) <= 0){
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_hora, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_hora, null));
 				AlertDialog alert11 = builder1.create();
 
 				OnShowListener onshow = new OnShowListener() {
@@ -470,7 +470,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 						positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 						positiveButton.setText("OK");
-						positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 					}
 				};
@@ -499,13 +499,13 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 				bDataInicio.setText(h + ":" + m);
 				begin = false;
 			} else {
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_hora, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_hora, null));
 				AlertDialog alert11 = builder1.create();
 
 				OnShowListener onshow = new OnShowListener() {
@@ -517,7 +517,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 						positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 						positiveButton.setText("OK");
-						positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 					}
 				};
@@ -527,13 +527,13 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 
 		} else if (end){
 			if((h + ":" + m).compareTo(bDataInicio.getText().toString()) <= 0){
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+				AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 				builder1.setCancelable(true);
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}});	
-				builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_hora, null));
+				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_hora, null));
 				AlertDialog alert11 = builder1.create();
 
 				OnShowListener onshow = new OnShowListener() {
@@ -545,7 +545,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 						positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 						positiveButton.setText("OK");
-						positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 					}
 				};
@@ -589,7 +589,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_esporte, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_esporte, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -601,7 +601,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -616,7 +616,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_rua, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_rua, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -628,7 +628,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -643,7 +643,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_lugar, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_lugar, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -655,7 +655,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -670,7 +670,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_bairro, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_bairro, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -682,7 +682,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -698,7 +698,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_cidade, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_cidade, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -710,7 +710,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -733,7 +733,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					dialog.cancel();
 				}});
 
-			builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_endereco, null));
+			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_endereco, null));
 			AlertDialog alert11 = builder1.create();
 
 			OnShowListener onshow = new OnShowListener() {
@@ -745,7 +745,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 					positiveButton.setBackgroundResource(R.drawable.alert_button);
 
 					positiveButton.setText("OK");
-					positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 
 				}
 			};
@@ -789,7 +789,7 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 				args.putDouble("preco", 0.00);
 			}
 			next.setArguments(args);
-			((MainActivity)getActivity()).mudarAbaAtual(next);	
+			((MainActivity)MainActivity.self).mudarAbaAtual(next);	
 		}
 		
 	}		

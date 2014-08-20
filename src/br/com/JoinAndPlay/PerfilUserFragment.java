@@ -50,10 +50,10 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 		if(null!=getArguments() && getArguments().containsKey("idUser")){
 			ID=getArguments().getInt("idTab");
 			idUser=getArguments().getString("idUser");
-			Server.user_profile_id(idUser,getActivity(), this);
-			((MainActivity) getActivity()).loadTela(ID);
+			Server.user_profile_id(idUser,MainActivity.self, this);
+			((MainActivity) MainActivity.self).loadTela(ID);
 		}
-		config = getActivity().getResources().getConfiguration();
+		config = MainActivity.self.getResources().getConfiguration();
 
 		/*Celular com resolu��es mais baixas
 		 * muda a resolu��o para mdpi*/

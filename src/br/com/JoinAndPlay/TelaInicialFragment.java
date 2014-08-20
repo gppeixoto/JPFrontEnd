@@ -23,7 +23,7 @@ private View load;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Session.openActiveSessionFromCache(getActivity());
+		Session.openActiveSessionFromCache(MainActivity.self);
 		View view = inflater.inflate(R.layout.layout_inicial, container,false);
 		inicial_button_facebookLogin = (Button) view.findViewById(R.id.inicial_button_facebook_login);
 		inicial_button_facebookLogin.setOnClickListener(this);
@@ -38,14 +38,14 @@ private View load;
 	public void onTerminado(Usuario in) {
 
 		if(getView()!=null){
-			((MainActivity)getActivity()).login();
+			((MainActivity)MainActivity.self).login();
 		}
 
 
 
 	}
 	public void load (){
-		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+		FragmentTransaction ft = MainActivity.self.getSupportFragmentManager().beginTransaction();
 		ft=ft.add(R.id.tela,new loadFragment());
 		ft.addToBackStack(null);
 		ft.commit();
@@ -57,12 +57,12 @@ private View load;
 		final	TelaInicialFragment self=this;
 		load.setVisibility(View.VISIBLE);
 
-		ConfigJP.login(getActivity(), new Connecter<String>() {
+		ConfigJP.login(MainActivity.self, new Connecter<String>() {
 
 			@Override
 			public void onTerminado(String in) {
 				// TODO Auto-generated method stub
-				Server.user_profile(self.getActivity(), self);
+				Server.user_profile(MainActivity.self, self);
 			}
 
 		});

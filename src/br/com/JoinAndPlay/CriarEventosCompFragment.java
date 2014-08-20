@@ -59,7 +59,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 		amigos = new ArrayList<Usuario>();
 		convidados = new Vector<String>();
-		Server.get_friends(getActivity(), new Connecter<Vector<Usuario>>(){
+		Server.get_friends(MainActivity.self, new Connecter<Vector<Usuario>>(){
 
 			@Override
 			public void onTerminado(final Vector<Usuario> in) {
@@ -154,7 +154,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 							dialog.cancel();
 					}});
 					
-					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_nome, null));
+					builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_nome, null));
 					AlertDialog alert11 = builder1.create();
 					
 					OnShowListener onshow = new OnShowListener() {
@@ -168,7 +168,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			                        .getDrawable(R.drawable.alert_button));
 			                
 			                positiveButton.setText("OK");
-			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+			                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 							
 						}
 					};
@@ -190,7 +190,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					String bairro = (String) args.getString("bairro");
 					String cidade = (String) args.getString("cidade");
 					
-					Server.create_event(getActivity(), localNome, end, 
+					Server.create_event(MainActivity.self, localNome, end, 
 							cidade, bairro, esporte, dia, inicio, termino, 
 							descricaoEvento, nomeDoEvento, preco, privado, new Connecter<Evento>(){
 
@@ -215,8 +215,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 								}
 					});
 					
-					((MainActivity)getActivity()).retirarAbaAtual();
-					((MainActivity)getActivity()).retirarAbaAtual();
+					((MainActivity)MainActivity.self).retirarAbaAtual();
+					((MainActivity)MainActivity.self).retirarAbaAtual();
 					
 				} else {
 					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
@@ -226,7 +226,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 							dialog.cancel();
 					}});
 					
-					builder1.setView(getActivity().getLayoutInflater().inflate(R.layout.alert_create_erro, null));
+					builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_erro, null));
 					AlertDialog alert11 = builder1.create();
 					
 					OnShowListener onshow = new OnShowListener() {
@@ -240,7 +240,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			                        .getDrawable(R.drawable.alert_button));
 			                
 			                positiveButton.setText("OK");
-			                positiveButton.setTextAppearance(getActivity(), R.style.AlertStyle);
+			                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
 							
 						}
 					};
@@ -254,15 +254,15 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		/**
 		TabHost.TabSpec spec;
 		
-		Intent intent = new Intent().setClass(this.getActivity(), tabConvite.class);
+		Intent intent = new Intent().setClass(this.MainActivity.self, tabConvite.class);
         spec = tabhost.newTabSpec("First").setIndicator("")
                       .setContent(intent);
         
-        intent = new Intent().setClass(this.getActivity(), tabConvite.class);
+        intent = new Intent().setClass(this.MainActivity.self, tabConvite.class);
         spec = tabhost.newTabSpec("Second").setIndicator("")
                       .setContent(intent);
         
-        intent = new Intent().setClass(this.getActivity(), tabConvite.class);
+        intent = new Intent().setClass(this.MainActivity.self, tabConvite.class);
         spec = tabhost.newTabSpec("Third").setIndicator("")
                       .setContent(intent);
         
@@ -270,7 +270,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
         
 		
 		for (int i = 0; i < 3; i++) {
-			TabSpec tabSpec =tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(getActivity()));
+			TabSpec tabSpec =tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(MainActivity.self));
 			tabhost.addTab(tabSpec);
 			
 			

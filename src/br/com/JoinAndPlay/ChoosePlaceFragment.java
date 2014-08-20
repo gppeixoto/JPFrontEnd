@@ -25,7 +25,7 @@ public class ChoosePlaceFragment extends Fragment implements OnItemClickListener
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 lista.add(new ItemPlace());
-		adapter = new AdapterListViewPlace(getActivity(),lista);
+		adapter = new AdapterListViewPlace(MainActivity.self,lista);
 
 	}
 	
@@ -33,7 +33,7 @@ lista.add(new ItemPlace());
 			Bundle savedInstanceState){
 		
 		if(container==null) return null;
-		MapsInitializer.initialize(getActivity());
+		MapsInitializer.initialize(MainActivity.self);
 		supportMap= new SupportMapFragment();
 		getChildFragmentManager().beginTransaction().replace(R.id.mapa_fragPlaces, supportMap).commit();
 		

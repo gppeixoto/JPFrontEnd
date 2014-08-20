@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		tabs.tabPop();
 	}
 	void mudarAba(int i){
-		//apartir de uma aba chamar ((MainActivity)getActivity()).mudarAba(n)
+		//apartir de uma aba chamar ((MainActivity)MainActivity.self).mudarAba(n)
 		tabs.onPageSelected(i);
 	}
 	void mudarFragment(Fragment fm){
