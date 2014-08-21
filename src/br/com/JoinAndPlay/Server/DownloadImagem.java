@@ -3,6 +3,11 @@ package br.com.JoinAndPlay.Server;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import br.com.JoinAndPlay.MainActivity;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -23,12 +28,19 @@ public class DownloadImagem extends AsyncTask<String, Void, Bitmap>{
 				if(img!=null){
 					img.setImageBitmap(buffer[id]);
 					img.setVisibility(View.VISIBLE);
+					img.requestLayout();
+					img.invalidate();
 
 				}
 			}else{
 				
 				if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
-					new DownloadImagem(img).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url);
+					try {
+						new DownloadImagem(img).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url);
+
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				}else{
 					new DownloadImagem(img).execute(url);
 
@@ -80,6 +92,8 @@ public class DownloadImagem extends AsyncTask<String, Void, Bitmap>{
 
 				img.setImageBitmap(result);
 				img.setVisibility(View.VISIBLE);
+				img.requestLayout();
+				img.invalidate();
 			}
 		} 
 	} 

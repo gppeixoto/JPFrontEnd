@@ -22,7 +22,7 @@ import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Endereco;
 
 public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
-	static ArrayList<Evento> lista;
+	ArrayList<Evento> lista;
 	protected int ID=0;
 	ListView listV;
 	protected Button Button_criar;

@@ -11,11 +11,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ListView;
 import br.com.JoinAndPlay.Event.AdapterAmigo;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Usuario;
@@ -25,40 +29,88 @@ import android.widget.EditText;
 import android.widget.TabHost.OnTabChangeListener;
 
 public class CriarEventosCompFragment extends Fragment implements OnItemClickListener, OnTabChangeListener {
-	
+
 	private Button bCriarEvento;
 	private Button bParticular;
 	private Button bPublico;
 	private AdapterAmigo adapter;
 
-	private ExpandScrollView grid;
-	
+	private ListView grid;
+
 	private Vector<Usuario> aux;
 	private ArrayList<Usuario> amigos;
 	private Vector<String> convidados;
-		
+
 	private EditText eNomeEvento;
 	private EditText eDescricao;
-	
+
 	private boolean privado;
-	
+
 	private boolean selector[] = null;
-	
+
 	private int ID=0;
-	
+
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
-		
+
 		if(container==null) return null;
-		
+
 		if(getArguments() != null){
 			ID = getArguments().getInt("idTab");
 			Log.v("ID CARREGAR AMIGOS: ", ID+"");
 			MainActivity.self.loadTela(ID);
 		}
-		
+
 		amigos = new ArrayList<Usuario>();
 		convidados = new Vector<String>();
+
+
+		privado = true;
+
+		View view = inflater.inflate(R.layout.criar_evento_comp, container,false);
+
+		//tabhost = (TabHost) view.findViewById(R.id.tabhost);
+		//tabhost.setup();
+		//tabhost.setOnTabChangedListener(this);
+
+		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
+		eDescricao = (EditText) view.findViewById(R.id.descrever_evento);
+
+		grid = (ListView) view.findViewById(R.id.gridView1);
+		//grid.setExpanded(true);
+		grid.setOnItemClickListener(this);
+		grid.addHeaderView(new View(MainActivity.self));
+	
+		
+		
+		
+		
+		grid.setOnTouchListener(new ListView.OnTouchListener() {
+	        @Override
+	        public boolean onTouch(View v, MotionEvent event) {
+	            int action = event.getAction();
+	            switch (action) {
+	            case MotionEvent.ACTION_DOWN:
+	                // Disallow ScrollView to intercept touch events.
+	                grid.getParent().requestDisallowInterceptTouchEvent(true);
+	                break;
+
+	            case MotionEvent.ACTION_UP:
+	                // Allow ScrollView to intercept touch events.
+	            	grid.getParent().requestDisallowInterceptTouchEvent(false);
+	                break;
+	            }
+
+	            // Handle ListView touch events.
+	            v.onTouchEvent(event);
+	            return true;
+	        }
+
+		
+	    });
+		
+		
+		
 		Server.get_friends(MainActivity.self, new Connecter<Vector<Usuario>>(){
 
 			@Override
@@ -69,6 +121,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					for(int i = 0; i < aux.size(); i++){
 						amigos.add((aux.elementAt(i)));
 					}
+
 					grid.post(new Runnable() {
 						@Override
 						public void run() {
@@ -83,34 +136,20 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				}else
 					MainActivity.self.popLoadTela(ID);
 			}
-		});	
-		
-		privado = true;
-		
-		View view = inflater.inflate(R.layout.criar_evento_comp, container,false);
-		
-		//tabhost = (TabHost) view.findViewById(R.id.tabhost);
-		//tabhost.setup();
-		//tabhost.setOnTabChangedListener(this);
-		
-		eNomeEvento = (EditText) view.findViewById(R.id.escolha_nome_evento);
-		eDescricao = (EditText) view.findViewById(R.id.descrever_evento);
-		
-		grid = (ExpandScrollView) view.findViewById(R.id.gridView1);
- 		grid.setExpanded(true);
-		grid.setOnItemClickListener(this);
-		
+		});
+
+
 		bCriarEvento = (Button) view.findViewById(R.id.criar_evento_button);
 		bCriarEvento.setText("Criar Evento");
-		
+
 		final Drawable red = getResources().getDrawable(R.drawable.red_button);
 		final Drawable gray = getResources().getDrawable(R.drawable.gray_button);
-		
+
 		bParticular = (Button) view.findViewById(R.id.particular);
 		bParticular.setPadding(10, 10, 10, 10);
 		bParticular.setText("Particular");
 		bParticular.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -125,7 +164,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		bPublico.setText("Público");
 		bPublico.setPadding(10, 10, 10, 10);
 		bPublico.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -136,50 +175,50 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				privado = false;	
 			}
 		});
-		
+
 		bCriarEvento.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				String descricaoEvento = eDescricao.getText().toString();
-				
+
 				String nomeDoEvento = (String) eNomeEvento.getText().toString();
-				
+
 				if(nomeDoEvento == null || nomeDoEvento.trim().equals("")){
 					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 					builder1.setCancelable(true);
 					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
-					}});
-					
+						}});
+
 					builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_nome, null));
 					AlertDialog alert11 = builder1.create();
-					
+
 					OnShowListener onshow = new OnShowListener() {
 						@Override
 						@SuppressWarnings( "deprecation" )
 						public void onShow(DialogInterface dialog) {
 							Button positiveButton = ((AlertDialog) dialog)
-			                        .getButton(AlertDialog.BUTTON_POSITIVE);
-							
-			                positiveButton.setBackgroundDrawable(getResources()
-			                        .getDrawable(R.drawable.alert_button));
-			                
-			                positiveButton.setText("OK");
-			                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-							
+									.getButton(AlertDialog.BUTTON_POSITIVE);
+
+							positiveButton.setBackgroundDrawable(getResources()
+									.getDrawable(R.drawable.alert_button));
+
+							positiveButton.setText("OK");
+							positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 						}
 					};
 					alert11.setOnShowListener(onshow);
 					alert11.show();
 					return;
 				}
-				
+
 				if(getArguments()!=null){
 					Bundle args = getArguments();
-					
+
 					String esporte = (String) args.getString("esporte");
 					String dia = (String) args.getString("data");
 					String termino = (String) args.getString("horaTermino");
@@ -189,59 +228,59 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					String localNome = (String) args.getString("nomeLocal");
 					String bairro = (String) args.getString("bairro");
 					String cidade = (String) args.getString("cidade");
-					
+
 					Server.create_event(MainActivity.self, localNome, end, 
 							cidade, bairro, esporte, dia, inicio, termino, 
 							descricaoEvento, nomeDoEvento, preco, privado, new Connecter<Evento>(){
 
-								@Override
-								public void onTerminado(Evento in) {
-									// TODO Auto-generated method stub
-									Evento e = (Evento) in;									
-									if(e!= null && !convidados.isEmpty()){
-										Server.invite(Session.getActiveSession().getAccessToken(),
-												e.getId(), convidados, new Connecter<Boolean>(){
+						@Override
+						public void onTerminado(Evento in) {
+							// TODO Auto-generated method stub
+							Evento e = (Evento) in;									
+							if(e!= null && !convidados.isEmpty()){
+								Server.invite(Session.getActiveSession().getAccessToken(),
+										e.getId(), convidados, new Connecter<Boolean>(){
 
-													@Override
-													public void onTerminado(
-															Boolean in) {
-														// TODO Auto-generated method stub
-														boolean a = (boolean) in;
-														
-													}
-										});
-									}		
-														
-								}
+									@Override
+									public void onTerminado(
+											Boolean in) {
+										// TODO Auto-generated method stub
+										boolean a = (boolean) in;
+
+									}
+								});
+							}		
+
+						}
 					});
-					
+
 					((MainActivity)MainActivity.self).retirarAbaAtual();
 					((MainActivity)MainActivity.self).retirarAbaAtual();
-					
+
 				} else {
 					AlertDialog.Builder builder1 = new AlertDialog.Builder(bCriarEvento.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 					builder1.setCancelable(true);
 					builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
-					}});
-					
+						}});
+
 					builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_create_erro, null));
 					AlertDialog alert11 = builder1.create();
-					
+
 					OnShowListener onshow = new OnShowListener() {
 						@Override
 						@SuppressWarnings( "deprecation" )
 						public void onShow(DialogInterface dialog) {
 							Button positiveButton = ((AlertDialog) dialog)
-			                        .getButton(AlertDialog.BUTTON_POSITIVE);
-							
-			                positiveButton.setBackgroundDrawable(getResources()
-			                        .getDrawable(R.drawable.alert_button));
-			                
-			                positiveButton.setText("OK");
-			                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-							
+									.getButton(AlertDialog.BUTTON_POSITIVE);
+
+							positiveButton.setBackgroundDrawable(getResources()
+									.getDrawable(R.drawable.alert_button));
+
+							positiveButton.setText("OK");
+							positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 						}
 					};
 					alert11.setOnShowListener(onshow);
@@ -250,30 +289,30 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 				}				
 			}
 		});
-		
+
 		/**
 		TabHost.TabSpec spec;
-		
+
 		Intent intent = new Intent().setClass(this.MainActivity.self, tabConvite.class);
         spec = tabhost.newTabSpec("First").setIndicator("")
                       .setContent(intent);
-        
+
         intent = new Intent().setClass(this.MainActivity.self, tabConvite.class);
         spec = tabhost.newTabSpec("Second").setIndicator("")
                       .setContent(intent);
-        
+
         intent = new Intent().setClass(this.MainActivity.self, tabConvite.class);
         spec = tabhost.newTabSpec("Third").setIndicator("")
                       .setContent(intent);
-        
+
         tabhost.getTabWidget().setCurrentTab(0);
-        
-		
+
+
 		for (int i = 0; i < 3; i++) {
 			TabSpec tabSpec =tabhost.newTabSpec("Tab"+i).setIndicator("").setContent(new TabFactory(MainActivity.self));
 			tabhost.addTab(tabSpec);
-			
-			
+
+
 		}
 		tabhost.setCurrentTab(0);*/
 		return view;	
@@ -282,20 +321,22 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int i,
 			long id) {
+		if(i-1<0)return;
 		selector[i-1]=!selector[i-1];
+
 		if(adapter!=null){
 			adapter.draw(view, i-1);
 		}
 	}
-	
+
 	public void onBackPressed(){
-		
+
 	}
 
 	@Override
 	public void onTabChanged(String tabId) {
 		// TODO Auto-generated method stub
-		
+
 		/**
 		for(in i=0;i<tabhost.getTabWidget().getChildCount();i++)
         {
@@ -306,13 +347,13 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
             else if(i==2)
                 tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tab_convite);
         }
-		
+
 		if(tabhost.getCurrentTab()==0)
 	        tabhost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.tab_convite);
 	    else if(tabhost.getCurrentTab()==1)
 	        tabhost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.tab_convite);
 	    else if(tabhost.getCurrentTab()==2)
 	        tabhost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.tab_convite);	
-	        */
+		 */
 	}
 }

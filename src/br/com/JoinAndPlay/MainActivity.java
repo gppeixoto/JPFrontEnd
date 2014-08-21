@@ -43,7 +43,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 
 		}
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, inicial).commit();
-		Fragment param = ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState);
+		Fragment param = ListEventosFragment.instantiate(this, CriarEventosCompFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,null,R.drawable.tab_lista);
 		param=PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,null,R.drawable.tab_pesq);

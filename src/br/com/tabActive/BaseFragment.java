@@ -12,34 +12,35 @@ public class BaseFragment extends Fragment implements Runnable {
 	private View load;
 	private ViewGroup pai;
 	synchronized	void   open(){
+		if(load!=null)
+			load.post(new Runnable() {
 
-load.post(new Runnable() {
+				@Override
+				public void run() {
 
-		@Override
-		public void run() {
+					// TODO Auto-generated method stub
+					load.setVisibility(View.VISIBLE);
+					pai.requestLayout();
+					pai.invalidate();
 
-			// TODO Auto-generated method stub
-			load.setVisibility(View.VISIBLE);
-			pai.requestLayout();
-			pai.invalidate();
-
-		}
-	});
+				}
+			});
 
 	}
 	synchronized void close(){
+		if(load!=null)
 
-load.post(new Runnable() {
-	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		load.setVisibility(View.INVISIBLE);
-		pai.requestLayout();
-		pai.invalidate();
+			load.post(new Runnable() {
 
-	}
-});
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					load.setVisibility(View.INVISIBLE);
+					pai.requestLayout();
+					pai.invalidate();
+
+				}
+			});
 	}	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -52,7 +53,7 @@ load.post(new Runnable() {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
 

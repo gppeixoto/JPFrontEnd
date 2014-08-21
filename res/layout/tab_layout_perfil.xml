@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="end"
             android:padding="9dp" >
 
             <LinearLayout
@@ -29,8 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingBottom="15dp	" >
+                    android:orientation="vertical" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -70,39 +69,23 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/pont" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/perfil_relativelayout_primeiralinha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical" >
+                        android:layout_marginTop="12dp" >
 
                         <ImageView
                             android:id="@+id/perfil_imageview_esforcado"
-                            android:layout_width="wrap_content"
+                            android:layout_width="55dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="11dp"
-                            android:layout_toLeftOf="@+id/perfil_linearlayout_votos_esforcado"
+                            android:layout_marginLeft="12dp"
                             android:src="@drawable/icon_esforcado" />
-
-                        <ImageView
-                            android:id="@+id/perfil_imageview_genteboa"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="24dp"
-                            android:src="@drawable/icon_gente_boa" />
 
                         <LinearLayout
                             android:id="@+id/perfil_linearlayout_votos_esforcado"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="24dp"
                             android:gravity="center_horizontal"
                             android:orientation="vertical" >
 
@@ -123,13 +106,23 @@
                                 android:text="@string/perfil_esforcado" />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/perfil_imageview_genteboa"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_gente_boa" />
+
                         <LinearLayout
                             android:id="@+id/perfil_linearlayout_votos_genteboa"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="11dp"
-                            android:layout_toRightOf="@+id/perfil_imageview_genteboa"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="12dp"
                             android:gravity="center"
                             android:orientation="vertical" >
 
@@ -148,40 +141,25 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/perfil_gente_boa" />
                         </LinearLayout>
-                    </RelativeLayout>
+                    </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/perfil_relativelayout_segundalinha"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical|center_horizontal|clip_horizontal" >
+                        android:layout_marginTop="12dp" >
 
                         <ImageView
                             android:id="@+id/perfil_imageview_fairplay"
-                            android:layout_width="wrap_content"
+                            android:layout_width="55dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="11dp"
-                            android:layout_toLeftOf="@+id/perfil_linearlayout_votos_fairplay"
+                            android:layout_marginLeft="12dp"
                             android:src="@drawable/fairplay" />
-
-                        <ImageView
-                            android:id="@+id/perfil_imageview_jogatime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="24dp"
-                            android:src="@drawable/icon_jogaprotime" />
 
                         <LinearLayout
                             android:id="@+id/perfil_linearlayout_votos_fairplay"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="29dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:orientation="vertical" >
 
@@ -201,12 +179,22 @@
                                 android:text="@string/perfil_fair_play" />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/perfil_imageview_jogatime"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_jogaprotime" />
+
                         <LinearLayout
                             android:id="@+id/perfil_linearlayout_votos_jogatime"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/perfil_imageview_jogatime"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
                             android:gravity="center_horizontal"
                             android:orientation="vertical" >
 
@@ -225,62 +213,57 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/perfil_joga_pro_time" />
                         </LinearLayout>
-                    </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="12dp" >
+
+                        <Button
+                            android:id="@+id/perfil_button_amigos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="15"
+                            android:background="@drawable/perfil_buttons"
+                            android:text="@string/perfil_button_num_amigos"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/perfil_imageview_separadorButton"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/pont2" />
+
+                        <Button
+                            android:id="@+id/perfil_button_eventosAnteriores"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"
+                            android:background="@drawable/perfil_buttons"
+                            android:text="@string/perfil_button_eventos_anteriores"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" >
-
-                    <Button
-                        android:id="@+id/perfil_button_amigos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="15"
-                        android:background="@drawable/perfil_buttons"
-                        android:text="@string/perfil_button_num_amigos"
-                        android:textSize="14sp" />
-
-                    <ImageView
-                        android:id="@+id/perfil_imageview_separadorButton"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/pont2" />
-
-                    <Button
-                        android:id="@+id/perfil_button_eventosAnteriores"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="6"
-                        android:background="@drawable/perfil_buttons"
-                        android:text="@string/perfil_button_eventos_anteriores"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@color/cinzafundo" >
-
-                    <br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView
-                        android:id="@+id/perfil_gridview_esportes_expandable"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:clickable="false"
-                        android:descendantFocusability="blocksDescendants"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:horizontalSpacing="10dp"
-                        android:listSelector="#00000000"
-                        android:longClickable="false"
-                        android:numColumns="2"
-                        android:paddingBottom="12dp"
-                        android:paddingTop="12dp"
-                        android:verticalSpacing="10dp" >
-                    </br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView>
-                </RelativeLayout>
+                <br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView
+                    android:id="@+id/perfil_gridview_esportes_expandable"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="15"
+                    android:background="@color/cinzafundo"
+                    android:clickable="false"
+                    android:descendantFocusability="blocksDescendants"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:horizontalSpacing="10dp"
+                    android:listSelector="#00000000"
+                    android:longClickable="false"
+                    android:numColumns="2"
+                    android:paddingTop="12dp"
+                    android:verticalSpacing="10dp" >
+                </br.com.JoinAndPlay.gridViewWithScroll.ExpandableHeightGridView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

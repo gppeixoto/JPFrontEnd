@@ -17,12 +17,37 @@ public class AdapterAmigo extends BaseAdapter{
 	private ArrayList<Usuario> vetor;
 	private LayoutInflater inflater;
 	private boolean[] selector;
+	private int[] ordenado;
 	public AdapterAmigo(ArrayList<Usuario> vetor,LayoutInflater inflater, boolean[] selector){
 		this.vetor=vetor;
+		int[] vet ={0,0,0,0,0};
+		if(vetor!=null && vetor.size()>0){
+			ordenado= new int[vetor.size()];
+
+			for (int i = 0; i < ordenado.length; i++) {
+				ordenado[i]=0;
+				Usuario user = (Usuario) vetor.get(i);
+				if(user.getTags().size()<5)
+					vet[user.getTags().size()]++;
+				else
+					vet[4]++;
+			}
+			for (int i = 1; i < vet.length; i++) {
+				vet[i]+=vet[i-1];
+			}
+			for (int i = 0; i < ordenado.length; i++) {
+				Usuario user = (Usuario) vetor.get(i);
+				int id=user.getTags().size()<5?user.getTags().size():4;
+				ordenado[ordenado.length-vet[id]]= i;
+				vet[id]--;
+			}
+			
+		}
 		this.inflater=inflater;
 		this.selector=selector;
 	}
 	public  void draw(View v,int i){
+		
 		if(selector!=null){
 			if (!selector[i]){			
 				v.setBackgroundResource(R.drawable.campo_cinza_vote);
@@ -48,13 +73,16 @@ public class AdapterAmigo extends BaseAdapter{
 
 	@Override
 	public View getView(int i, View view, ViewGroup arg2) {
+		
+		
 		if(view==null)
 			view = inflater.inflate(R.layout.item_amigos, arg2, false);
-		Usuario user = vetor.get(i);
+		Usuario user = vetor.get(ordenado[i]);
 
 		ImageView imag = (ImageView)view.findViewById(R.id.item_amigos_foto);
 		TextView texto = (TextView)view.findViewById(R.id.item_amigos_texto);
 		ViewGroup bad = (ViewGroup)view.findViewById(R.id.item_amigos_badges);
+imag.setVisibility(View.INVISIBLE);		
 		DownloadImagem.postLoad(imag, user.getPhoto());
 		texto.setText(user.getName());
 		boolean[] b = new boolean[4];
@@ -74,6 +102,9 @@ public class AdapterAmigo extends BaseAdapter{
 		for (int j = 0; j < b.length; j++) {
 			if(b[j]==false){
 				bad.getChildAt(j).setVisibility(View.INVISIBLE);
+
+			}else{
+				bad.getChildAt(j).setVisibility(View.VISIBLE);
 
 			}
 		}

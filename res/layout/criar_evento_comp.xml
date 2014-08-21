@@ -179,19 +179,13 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rel"
+                <ListView
+                    android:id="@+id/gridView1"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-
-                    <br.com.JoinAndPlay.ExpandScrollView
-                        android:id="@+id/gridView1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="300dp"
-                        android:fastScrollAlwaysVisible="false"
-                        android:fastScrollEnabled="true" >
-                    </br.com.JoinAndPlay.ExpandScrollView>
-                </RelativeLayout>
+                    android:layout_height="300dp"
+                    android:fastScrollAlwaysVisible="false"
+                    android:fastScrollEnabled="true" >
+                </ListView>
 
                 <LinearLayout
                     android:id="@+id/criar_evento_button_layout"
