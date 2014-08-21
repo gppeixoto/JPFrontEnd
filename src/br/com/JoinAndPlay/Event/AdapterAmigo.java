@@ -27,6 +27,9 @@ public class AdapterAmigo extends BaseAdapter{
 			for (int i = 0; i < ordenado.length; i++) {
 				ordenado[i]=0;
 				Usuario user = (Usuario) vetor.get(i);
+				if(user.getTags()==null){
+					vet[0]++;}else
+				
 				if(user.getTags().size()<5)
 					vet[user.getTags().size()]++;
 				else
@@ -37,7 +40,7 @@ public class AdapterAmigo extends BaseAdapter{
 			}
 			for (int i = 0; i < ordenado.length; i++) {
 				Usuario user = (Usuario) vetor.get(i);
-				int id=user.getTags().size()<5?user.getTags().size():4;
+				int id=user.getTags()==null?0:( user.getTags().size()<5?user.getTags().size():4);
 				ordenado[ordenado.length-vet[id]]= i;
 				vet[id]--;
 			}
