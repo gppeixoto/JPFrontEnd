@@ -17,7 +17,6 @@ import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -177,10 +176,8 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		Log.v("aba",notifi+" "+getView());
 		if(getView()!=null){
 			if(notifi!=null && list.getAdapter()!=null){
-				Log.v("aba",""+list.getAdapter());
 				Server.get_invites(ConfigJP.UserId,new Connecter<Map<String,Vector<Notificacao>>>() {
 
 					@Override

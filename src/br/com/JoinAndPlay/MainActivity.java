@@ -45,12 +45,12 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, inicial).commit();
 		Fragment param = ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				onResume();
-				}
+				gpsOn();
+			}
 		},R.drawable.tab_lista);
 		param=PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,null,R.drawable.tab_pesq);
@@ -69,9 +69,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		.onActivityResult(this, requestCode, resultCode, data);
 
 	}
-	@Override
-	public void onResume(){
-		super.onResume();
+	public void gpsOn(){
 		lManager = (LocationManager)getSystemService(FragmentActivity.LOCATION_SERVICE);
 		location=lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if(location==null){
@@ -79,6 +77,13 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		}
 		lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 50, this);
 		lManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,2000, 50, this);
+
+
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+		gpsOn();
 	}
 
 	public void loadTela (int i){
