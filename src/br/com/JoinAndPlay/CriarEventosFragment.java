@@ -561,11 +561,15 @@ CalendarDatePickerDialog.OnDateSetListener,Connecter<Vector<Endereco>>,OnClickLi
 	@Override
 	public void onTerminado(Vector<Endereco> in) {
 		vec=in;
-		if(getView()!=null){
-			
+		if(in==null){
+			Bundle args = new Bundle();
+			args.putBoolean("internet",false);
+			BolaForaFragment bfm = new BolaForaFragment();
+			bfm.setArguments(args);
+			MainActivity.self.mudarAba(ID,bfm);
+		}else if(getView()!=null){
 			getView().post(this);
 		}
-
 	}
 	String esporte;
 	String rua ;

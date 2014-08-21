@@ -153,8 +153,14 @@ grid.setOnScrollListener(new OnScrollListener() {
 							MainActivity.self.popLoadTela(ID);
 						}
 					});
-				}else
+				}else{
+					Bundle args = new Bundle();
 					MainActivity.self.popLoadTela(ID);
+					args.putBoolean("internet",false);
+					BolaForaFragment bfm = new BolaForaFragment();
+					bfm.setArguments(args);
+					MainActivity.self.mudarAba(ID,bfm);
+				}
 			}
 		});
 

@@ -7,6 +7,7 @@ import java.util.Vector;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import br.com.JoinAndPlay.BolaForaFragment;
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.CriarEventosFragment;
 import br.com.JoinAndPlay.MainActivity;
@@ -54,6 +55,14 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	static int ID=0;
 	private HashMap<String, Boolean>  map;
 	private boolean hasUser;
+	
+	public void callBolafora(){
+		Bundle args = new Bundle();
+		args.putBoolean("internet",false);
+		BolaForaFragment bfm = new BolaForaFragment();
+		bfm.setArguments(args);
+		MainActivity.self.mudarAba(ID,bfm);
+	}
 	
 	public void alerta(LinearLayout alert,int value){
 		AlertDialog.Builder builder1 = new AlertDialog.Builder(alert.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
@@ -279,22 +288,26 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					Server.get_friends(MainActivity.self, new Connecter<Vector<Usuario>>() {
 						@Override
 						public void onTerminado(Vector<Usuario> in) {
-							Bundle args = new Bundle();
-							args.putString("id_evento",evento.getId());
-							args.putInt("idTab",ID);
-							ArrayList<Usuario> array=new ArrayList<Usuario>();
-							for (Iterator<Usuario> iterator = in.iterator(); iterator
-									.hasNext();) {
-								Usuario usuario = (Usuario) iterator
-										.next();
-								if(map.containsKey(usuario.id)==false) {
-									array.add(usuario);
+							if(in != null){
+								Bundle args = new Bundle();
+								args.putString("id_evento",evento.getId());
+								args.putInt("idTab",ID);
+								ArrayList<Usuario> array=new ArrayList<Usuario>();
+								for (Iterator<Usuario> iterator = in.iterator(); iterator
+										.hasNext();) {
+									Usuario usuario = (Usuario) iterator
+											.next();
+									if(map.containsKey(usuario.id)==false) {
+										array.add(usuario);
+									}
 								}
+								args.putParcelableArrayList("users",array);
+								InviteFriends next = new InviteFriends();
+								next.setArguments(args);
+								((MainActivity)MainActivity.self).mudarAbaAtual(next);
+							}else{
+								callBolafora();
 							}
-							args.putParcelableArrayList("users",array);
-							InviteFriends next = new InviteFriends();
-							next.setArguments(args);
-							((MainActivity)MainActivity.self).mudarAbaAtual(next);
 						}
 					});
 				}
@@ -599,7 +612,9 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				Server.comment(MainActivity.self,myEvent.getId(),myEditText.getText().toString(), new Connecter<Comentario>() {
 					@Override
 					public void onTerminado(final Comentario in) {
-						if(listener.getView()!=null){
+						if(in == null){
+							callBolafora();
+						}else if(listener.getView()!=null){
 							getView().post(new Runnable() {
 								@Override
 								public void run() {
@@ -704,6 +719,9 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 					}
 				});
 			}
+		}else{
+			MainActivity.self.popLoadTela(ID);
+			callBolafora();
 		}
 	}
 
