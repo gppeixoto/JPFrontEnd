@@ -44,13 +44,22 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 		}
 		getSupportFragmentManager().beginTransaction().replace(R.id.tela, inicial).commit();
 		Fragment param = ListEventosFragment.instantiate(this, ListEventosFragment.class.getName(),savedInstanceState);
-		tabs.addFragments(this,param,null,R.drawable.tab_lista);
+		final Runnable listEventos= (Runnable) param;
+		tabs.addFragments(this,param,new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				onResume();
+				(listEventos).run();
+			}
+		},R.drawable.tab_lista);
 		param=PesquisarEventosFragment.instantiate(this, PesquisarEventosFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,null,R.drawable.tab_pesq);
 		param=NotificacaoFragment.instantiate(this, NotificacaoFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,(Runnable)param,R.drawable.tab_notif);
 		param=AgendaEventosFragment.instantiate(this, AgendaEventosFragment.class.getName(),savedInstanceState);
-		tabs.addFragments(this,param,null,R.drawable.tab_cal);
+		tabs.addFragments(this,param,(Runnable)param,R.drawable.tab_cal);
 		param=PerfilAdminFragment.instantiate(this, PerfilAdminFragment.class.getName(),savedInstanceState);
 		tabs.addFragments(this,param,null,R.drawable.tab_perfil);
 	}
