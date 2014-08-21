@@ -1,6 +1,8 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import android.location.Location;
 import android.os.Bundle;
@@ -22,8 +24,9 @@ import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Endereco;
 
-public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>,Runnable{
+public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
 	ArrayList<Evento> lista;
+	Map<String, String> mapaID= new HashMap<String, String>();
 	protected int ID=0;
 	ListView listV;
 	protected Button Button_criar;
@@ -183,6 +186,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		}else{
 			lista=new ArrayList<Evento>();
 			for (int i = 0; i <vector.size(); i++) {
+				mapaID.put(vector.get(i).getId(), vector.get(i).getId());
 				lista.add(vector.get(i));
 			}
 
@@ -210,25 +214,6 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			MainActivity.self.mudarAba(ID,fragment);
 		}
 
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		Log.v("tabs", " "+lista+" "+listV);
-		if(getView()!=null && lista==null && listV!=null && listV.getAdapter()!=null){
-			Location local =((MainActivity)(MainActivity.self)).location;
-			((MainActivity) MainActivity.self).loadTela(ID);
-
-			if(local!=null){
-				Server.get_future_events(MainActivity.self,local.getLatitude()+","+local.getLongitude(),this);	
-			}else{
-				Server.get_future_events(MainActivity.self,this);
-			}
-			//Dando erro dar uma olhada (BG =D)
-//			((BaseAdapter)listV.getAdapter()).notifyDataSetChanged();
-		}
-		
 	}
 
 }

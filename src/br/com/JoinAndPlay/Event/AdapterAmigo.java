@@ -17,7 +17,7 @@ public class AdapterAmigo extends BaseAdapter{
 	private ArrayList<Usuario> vetor;
 	private LayoutInflater inflater;
 	private boolean[] selector;
-	private static int[] badg_cinza={
+	public static int[] badg_cinza={
 		R.drawable.cingenteboa,
 		R.drawable.cintesfor,
 		R.drawable.cinjogatime,
@@ -25,7 +25,7 @@ public class AdapterAmigo extends BaseAdapter{
 	}
 	;
 
-	private static int[] badg={
+	public static int[] badg={
 		R.drawable.votgenteboa,
 		R.drawable.votesfor,
 		R.drawable.votjogatime,

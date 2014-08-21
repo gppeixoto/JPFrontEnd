@@ -1,17 +1,22 @@
 package br.com.JoinAndPlay;
 
 
+import java.util.Iterator;
 import java.util.Vector;
+
+import br.com.JoinAndPlay.ListEvent.AdapterListView;
+import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class AgendaEventosFragment extends ListEventosFragment{
+public class AgendaEventosFragment extends ListEventosFragment implements Runnable{
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -50,8 +55,47 @@ public class AgendaEventosFragment extends ListEventosFragment{
 
 
 		}else
-		super.onTerminado(vector);
+			super.onTerminado(vector);
 	}
-	
-	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Connecter<Vector<Evento>> evento = new Connecter<Vector<Evento>>() {
+
+			@Override
+			public void onTerminado(Vector<Evento> in) {
+				// TODO Auto-generated method stub
+				if(in!=null){
+					for (Iterator<Evento> iterator = in.iterator(); iterator.hasNext();) {
+						Evento evento = (Evento) iterator.next();
+						if(!mapaID.containsKey(evento.getId())){
+							lista.add(evento);
+							mapaID.put(evento.getId(), evento.getId());
+
+
+						}
+					
+
+
+
+					
+					
+					}
+
+				}
+			}
+		};
+		if(ID==4){
+			Server.get_past(MainActivity.self, evento);
+		}else if(ID==3){
+			Server.user_agenda(MainActivity.self, evento);
+		}else{
+			return;	
+		}
+
+
+
+	}
+
+
 }

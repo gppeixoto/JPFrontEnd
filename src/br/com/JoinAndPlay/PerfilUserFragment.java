@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import com.doomonafireball.betterpickers.recurrencepicker.LinearLayoutWithMaxWidth;
 
+import br.com.JoinAndPlay.Event.AdapterAmigo;
 import br.com.JoinAndPlay.Event.AmigosFragment;
 import br.com.JoinAndPlay.Event.EventFragment;
 import br.com.JoinAndPlay.ItemEsportePerfil.AdapterGridView;
@@ -46,7 +47,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 	private boolean cantVote[] = {false,false,false,false};
 	private String namebadges[];
 	String idUser;
-	
+
 	public static void alerta(Button button_amigos2,int value){
 		AlertDialog.Builder builder1 = new AlertDialog.Builder(button_amigos2.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
 		builder1.setCancelable(true);
@@ -88,7 +89,6 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 			idUser=getArguments().getString("idUser");
 			Server.user_profile_id(idUser,MainActivity.self, this);
 			((MainActivity) MainActivity.self).loadTela(ID);
-			badges=getArguments().getStringArray("badges");
 		}
 		config = MainActivity.self.getResources().getConfiguration();
 
@@ -104,12 +104,17 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 			img_jogaTime.setImageResource(R.drawable.perfil_imageview_jogatime_mdpi);
 			img_fairPlay.setImageResource(R.drawable.perfil_imageview_fairplay_mdpi);
 		}
+		initBadges();
+
 		img_genteBoa.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(cantVote[0]==false){
 					award[0]=!award[0];
-					
+					if(award[0]==false) img_genteBoa.setImageResource(AdapterAmigo.badg_cinza[0]);
+					else
+					img_genteBoa.setImageResource(AdapterAmigo.badg[0]);
+
 				}
 			}
 		});
@@ -118,7 +123,11 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 			public void onClick(View v) {
 				if(cantVote[3]==false){
 					award[3]=!award[3];
-					
+					if(award[3]==false) img_fairPlay.setImageResource(AdapterAmigo.badg_cinza[3]);
+					else
+
+					img_fairPlay.setImageResource(AdapterAmigo.badg[3]);
+
 				}
 			}
 		});
@@ -127,7 +136,11 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 			public void onClick(View v) {
 				if(cantVote[2]==false){
 					award[2]=!award[2];
-					
+
+					if(award[2]==false) img_jogaTime.setImageResource(AdapterAmigo.badg_cinza[2]);
+					else
+
+					img_jogaTime.setImageResource(AdapterAmigo.badg[2]);					
 				}
 			}
 		});
@@ -136,7 +149,12 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 			public void onClick(View v) {
 				if(cantVote[1]==false){
 					award[1]=!award[1];
-					
+					if(award[1]==false) img_esforcado.setImageResource(AdapterAmigo.badg_cinza[1]);
+					else
+
+					img_esforcado.setImageResource(AdapterAmigo.badg[1]);
+
+
 				}
 			}
 		});
@@ -146,7 +164,6 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 		namebadges[3] = "Fair Play";
 		namebadges[1] = "Esforcado";
 		namebadges[2] = "Joga Pro Time";
-		initBadges();
 		return v;
 	}
 
@@ -170,6 +187,10 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 
 	@Override
 	public void onTerminado(final Usuario in) {
+		if(in!=null){
+
+
+		}
 		super.onTerminado(in);
 		if(getView()!=null){
 			getView().post(new Runnable() {
