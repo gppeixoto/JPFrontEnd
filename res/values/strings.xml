@@ -109,4 +109,5 @@
     <string name="alerta_enterEvent">Participe do evento antes de confirma que chegou no local.</string>
     <string name="alerta_isInEvent">Você já se encontra no local.</string>
     <string name="alerta_jaVotou">As premiações selecionadas já foram dadas por você.</string>
+    <string name="alerta_notification">Você não possui convites.</string>
 </resources>

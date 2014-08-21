@@ -248,18 +248,28 @@ public final class ConfigJP {
 		login(act,get);
 
 	}
-
+	private static int reload = 0;
 	public static void getUserID(final Activity act,final Connecter<String> connecter) {
 		// TODO Auto-generated method stub
 		if(UserId!=null){
 			connecter.onTerminado(UserId);
+			reload=0;
 		}else{
-
+			if(reload < 10){
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				reload++;
+			}else{
+				reload=0;
+				connecter.onTerminado(null);
+				return;
+			}
 			login(act, new Connecter<String>() {
-
 				@Override
 				public void onTerminado(String in) {
-					// TODO Auto-generated method stub
 					getUserID(act, connecter);
 				}
 			});

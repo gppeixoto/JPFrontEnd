@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 
 	}
 	public void tabChange(int idtab,Fragment arg1,boolean voltar){
-
+		Log.v("ABA FRAGMENT:",idtab + " - " + arg1);
 		if(!voltar){
 			getFragmentManagerAba(idtab).popBackStack();
 		}
@@ -149,7 +150,7 @@ TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
 	}
 
 	public FragmentManager getFragmentManagerAba( int i){
-
+		Log.v("ABA:", i+"");
 		return getFragmentManager().findFragmentByTag("tab"+(i+1)).getChildFragmentManager();
 	}
 	public void onSaveInstanceState(Bundle outState) {

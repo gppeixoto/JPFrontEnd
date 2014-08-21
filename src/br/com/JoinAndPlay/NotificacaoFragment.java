@@ -11,6 +11,9 @@ import br.com.JoinAndPlay.Noticacao.NotificacaoAdapter;
 import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Notificacao;
 import br.com.JoinAndPlay.Server.Server;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -30,7 +34,32 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	ListView list;
 	ArrayList<Notificacao> notifi ;
 	static final int ID=2;
-Map<String,String> conjuntID= new HashMap<String,String>();
+	Map<String,String> conjuntID= new HashMap<String,String>();
+	
+	public void alerta(int value){
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.self,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+		builder1.setCancelable(true);
+		builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}});
+
+		builder1.setView(MainActivity.self.getLayoutInflater().inflate(value, null));
+		AlertDialog alert11 = builder1.create();
+
+		OnShowListener onshow = new OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				Button positiveButton = ((AlertDialog) dialog)
+						.getButton(AlertDialog.BUTTON_POSITIVE);
+				positiveButton.setBackgroundResource(R.drawable.alert_button);
+				positiveButton.setText("OK");
+				positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+			}
+		};
+		alert11.setOnShowListener(onshow);
+		alert11.show();
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +84,15 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 			@Override
 			public void onTerminado(String in) {
 				// TODO Auto-generated method stub
-				Server.get_invites(ConfigJP.UserId,self);
+				if(in==null){
+					Bundle args = new Bundle();
+					MainActivity.self.popLoadTela(ID);
+					args.putBoolean("internet",false);
+					BolaForaFragment bfm = new BolaForaFragment();
+					bfm.setArguments(args);
+					MainActivity.self.mudarAba(ID,bfm);
+				}else
+					Server.get_invites(ConfigJP.UserId,self);
 			}
 		});
 
@@ -74,12 +111,14 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 	public void onTerminado(Map<String, Vector<Notificacao>> in) {
 		if(in==null){
 			list.post(new Runnable() {
-				
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					((MainActivity) MainActivity.self).popLoadTela(ID);
-
+					Bundle args = new Bundle();
+					MainActivity.self.popLoadTela(ID);
+					args.putBoolean("internet",false);
+					BolaForaFragment bfm = new BolaForaFragment();
+					bfm.setArguments(args);
+					MainActivity.self.mudarAba(ID,bfm);
 				}
 			});
 
@@ -87,16 +126,14 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 		}
 		if(in.size()==0){
 			list.post(new Runnable() {
-				
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					((MainActivity) MainActivity.self).popLoadTela(ID);
-
+					//alerta(R.layout.alert_sem_notificacoes);
 				}
 			});return;
 		}
-		
+
 		notifi = new ArrayList<Notificacao>();
 		for (Iterator<Entry<String, Vector<Notificacao>>> iterator = in.entrySet().iterator(); iterator.hasNext();) {
 			Entry<String, Vector<Notificacao>> type = (Entry<String, Vector<Notificacao>>) iterator.next();
@@ -145,7 +182,7 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 			if(notifi!=null && list.getAdapter()!=null){
 				Log.v("aba",""+list.getAdapter());
 				Server.get_invites(ConfigJP.UserId,new Connecter<Map<String,Vector<Notificacao>>>() {
-					
+
 					@Override
 					public void onTerminado(Map<String, Vector<Notificacao>> in) 
 					{
@@ -160,12 +197,12 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 								not.esporte=type.getKey();
 								if(!conjuntID.containsKey(not.getEventId())){
 									notifi.add(not);
-									
+
 								}
-								
+
 							}
 							list.post(new Runnable() {
-								
+
 								@Override
 								public void run() {
 									// TODO Auto-generated method stub
@@ -177,10 +214,10 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 					}
 				});
 
-				
-				
+
+
 			}
-			
+
 		}
 	}
 

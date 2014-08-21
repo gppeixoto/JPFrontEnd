@@ -91,12 +91,20 @@ public class BolaForaFragment extends Fragment implements OnItemClickListener {
 		texto = (TextView) v.findViewById(R.id.bolaForaTxt);
 		lv = (ListView) v.findViewById(R.id.bolaForaListView);
 		lv.setOnItemClickListener(this);
+		Button refresh = (Button) v.findViewById(R.id.refresh);
+		refresh.setText("Atualizar");
+		refresh.setVisibility(View.INVISIBLE);
 
 		if(getArguments()!=null){
 			if(args.getBoolean("internet") == false ){
 				texto.setText("Verifique sua conexão com a Internet.");
-
-				
+				refresh.setVisibility(View.VISIBLE);
+				refresh.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						((MainActivity)MainActivity.self).retirarAbaAtual();
+					}
+				});
 			}else if(args.getBoolean("conflito") == false || args.getParcelableArray("enderecos").length == 0) {
 				texto.setText("Nenhum evento foi encontrado pela sua pesquisa.");
 			} else{

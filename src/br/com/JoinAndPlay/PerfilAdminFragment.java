@@ -78,8 +78,6 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 		if (ret == null ){ 
 			((MainActivity) MainActivity.self).popLoadTela(ID);
 			return;
-
-
 		}
 		ret.post(new Runnable() {
 
@@ -198,9 +196,15 @@ public class PerfilAdminFragment extends Fragment implements Connecter<Usuario>{
 					perfil_gridEsportes_Expandable.setAdapter(new AdapterGridView(MainActivity.self,listaEsportes));
 					perfil_gridEsportes_Expandable.setNumColumns(2);
 					perfil_gridEsportes_Expandable.setExpanded(true);
+					((MainActivity) MainActivity.self).popLoadTela(ID);
+				}else{
+					Bundle args = new Bundle();
+					MainActivity.self.popLoadTela(ID);
+					args.putBoolean("internet",false);
+					BolaForaFragment bfm = new BolaForaFragment();
+					bfm.setArguments(args);
+					MainActivity.self.mudarAba(ID,bfm);
 				}
-				((MainActivity) MainActivity.self).popLoadTela(ID);
-
 			}
 		});
 	}

@@ -75,7 +75,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 							args2.putBoolean("internet",false);
 							BolaForaFragment bfm = new BolaForaFragment();
 							bfm.setArguments(args2);
-							MainActivity.self.replaceTab(bfm);
+							MainActivity.self.mudarAba(ID,bfm);
 
 						}else if (in.size() == 0){
 							MainActivity.self.popLoadTela(ID);
@@ -169,7 +169,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			bfm.setArguments(args2);
 			MainActivity.self.popLoadTela(ID);
 
-			MainActivity.self.replaceTab(bfm);
+			MainActivity.self.mudarAba(ID,bfm);
 		}else if(vector.size()<=0){
 			Bundle args2 = new Bundle();
 			args2.putBoolean("conflito",false);
@@ -207,7 +207,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			arg.putInt("idTab", ID);
 			Fragment fragment = new EventFragment();
 			fragment.setArguments(arg);
-			MainActivity.self.mudarAbaAtual(fragment);
+			MainActivity.self.mudarAba(ID,fragment);
 		}
 
 	}
@@ -222,12 +222,11 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 
 			if(local!=null){
 				Server.get_future_events(MainActivity.self,local.getLatitude()+","+local.getLongitude(),this);	
-
 			}else{
-				Server.get_future_events(MainActivity.self,this);	
-
+				Server.get_future_events(MainActivity.self,this);
 			}
-			((BaseAdapter)listV.getAdapter()).notifyDataSetChanged();
+			//Dando erro dar uma olhada (BG =D)
+//			((BaseAdapter)listV.getAdapter()).notifyDataSetChanged();
 		}
 		
 	}
