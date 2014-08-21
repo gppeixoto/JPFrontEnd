@@ -262,6 +262,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			imagem_evento.setImageResource(ConfigJP.ESPORTE_BITMAP[id_esporte]);
 
 			Button convidar_amigos = (Button)view.findViewById(R.id.convidar_amigos);
+			convidar_amigos.setText("Convidar amigos para este evento");
 
 			map = new HashMap<String, Boolean>();
 			Vector<Usuario> in = evento.getUsers();

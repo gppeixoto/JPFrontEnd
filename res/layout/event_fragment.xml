@@ -215,7 +215,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/cinza"
-                android:drawableLeft="@drawable/convidaramigos"
+                android:drawableStart="@drawable/convidaramigos"
                 android:text="@string/inviteFriends"
                 android:textColor="@color/cinza_escuro" />
         </LinearLayout>
