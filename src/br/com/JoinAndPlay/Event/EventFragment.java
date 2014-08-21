@@ -302,6 +302,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 									}
 								}
 								args.putParcelableArrayList("users",array);
+								args.putInt("idTab", ID);
 								InviteFriends next = new InviteFriends();
 								next.setArguments(args);
 								((MainActivity)MainActivity.self).mudarAbaAtual(next);

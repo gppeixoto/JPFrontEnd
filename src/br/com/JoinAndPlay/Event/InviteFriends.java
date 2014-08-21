@@ -69,11 +69,13 @@ public class InviteFriends extends Fragment implements OnItemClickListener {
 				Server.invite(ConfigJP.UserId, id_evento, conv, new Connecter<Boolean>(){
 					@Override
 					public void onTerminado(Boolean in) {
-						Bundle args = new Bundle();
-						args.putBoolean("internet",false);
-						BolaForaFragment bfm = new BolaForaFragment();
-						bfm.setArguments(args);
-						MainActivity.self.mudarAba(ID,bfm);
+						if(in == null){
+							Bundle args = new Bundle();
+							args.putBoolean("internet",false);
+							BolaForaFragment bfm = new BolaForaFragment();
+							bfm.setArguments(args);
+							MainActivity.self.mudarAba(ID,bfm);
+						}
 					}
 				});
 				((MainActivity)MainActivity.self).retirarAbaAtual();
