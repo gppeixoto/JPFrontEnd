@@ -78,7 +78,7 @@
                         <ImageView
                             android:id="@+id/perfil_imageview_esforcado"
                             android:layout_width="55dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:layout_marginLeft="12dp"
                             android:src="@drawable/icon_esforcado" />
 
@@ -114,7 +114,7 @@
                         <ImageView
                             android:id="@+id/perfil_imageview_genteboa"
                             android:layout_width="55dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:src="@drawable/icon_gente_boa" />
 
                         <LinearLayout
@@ -152,7 +152,7 @@
                         <ImageView
                             android:id="@+id/perfil_imageview_fairplay"
                             android:layout_width="55dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:layout_marginLeft="12dp"
                             android:src="@drawable/fairplay" />
 
@@ -187,7 +187,7 @@
                         <ImageView
                             android:id="@+id/perfil_imageview_jogatime"
                             android:layout_width="55dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:src="@drawable/icon_jogaprotime" />
 
                         <LinearLayout

@@ -48,7 +48,9 @@
         <ListView
             android:id="@+id/lista_view_convites_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:footerDividersEnabled="true" >
+
         </ListView>
     </LinearLayout>
 <!-- 

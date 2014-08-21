@@ -1,6 +1,7 @@
 package br.com.JoinAndPlay;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -28,7 +30,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	ListView list;
 	ArrayList<Notificacao> notifi ;
 	static final int ID=2;
-
+Map<String,String> conjuntID= new HashMap<String,String>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,6 +104,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 					.hasNext();) {
 				Notificacao not = (Notificacao) iterator2.next();
 				not.esporte=type.getKey();
+				conjuntID.put(not.getEventId(), not.getEventId());
 				notifi.add(not);
 			}
 
@@ -137,8 +140,46 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		Log.v("aba",notifi+" "+getView());
 		if(getView()!=null){
-			
+			if(notifi!=null && list.getAdapter()!=null){
+				Log.v("aba",""+list.getAdapter());
+				Server.get_invites(ConfigJP.UserId,new Connecter<Map<String,Vector<Notificacao>>>() {
+					
+					@Override
+					public void onTerminado(Map<String, Vector<Notificacao>> in) 
+					{
+						// TODO Auto-generated method stub
+						if(in==null)return;
+
+						for (Iterator<Entry<String, Vector<Notificacao>>> iterator = in.entrySet().iterator(); iterator.hasNext();) {
+							Entry<String, Vector<Notificacao>> type = (Entry<String, Vector<Notificacao>>) iterator.next();
+							for (Iterator<Notificacao> iterator2 = type.getValue().iterator(); iterator2
+									.hasNext();) {
+								Notificacao not = (Notificacao) iterator2.next();
+								not.esporte=type.getKey();
+								if(!conjuntID.containsKey(not.getEventId())){
+									notifi.add(not);
+									
+								}
+								
+							}
+							list.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									((BaseAdapter)list.getAdapter()).notifyDataSetChanged();
+								}
+							});
+
+						}
+					}
+				});
+
+				
+				
+			}
 			
 		}
 	}

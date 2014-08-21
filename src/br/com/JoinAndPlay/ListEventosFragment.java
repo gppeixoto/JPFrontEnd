@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import br.com.JoinAndPlay.Event.EventFragment;
@@ -21,7 +22,7 @@ import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Endereco;
 
-public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>{
+public class ListEventosFragment extends Fragment implements OnClickListener,OnItemClickListener,Connecter<Vector<Evento>>,Runnable{
 	ArrayList<Evento> lista;
 	protected int ID=0;
 	ListView listV;
@@ -38,10 +39,12 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 		if (container == null) {
 			return null;
 		}
+		lista=null;
 		View tela=inflater.inflate(R.layout.fragment_list_event,container,false) ;
 		listV=(ListView) tela.findViewById(R.id.listView1);
 		listV.setOnItemClickListener(this);
 		listV.setAdapter(null);
+		
 
 		Button_criar = (Button) tela.findViewById(R.id.bigButton);
 		Button_criar.setText("Criar Evento");
@@ -207,6 +210,26 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 			MainActivity.self.mudarAbaAtual(fragment);
 		}
 
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Log.v("tabs", " "+lista+" "+listV);
+		if(getView()!=null && lista==null && listV!=null && listV.getAdapter()!=null){
+			Location local =((MainActivity)(MainActivity.self)).location;
+			((MainActivity) MainActivity.self).loadTela(ID);
+
+			if(local!=null){
+				Server.get_future_events(MainActivity.self,local.getLatitude()+","+local.getLongitude(),this);	
+
+			}else{
+				Server.get_future_events(MainActivity.self,this);	
+
+			}
+			((BaseAdapter)listV.getAdapter()).notifyDataSetChanged();
+		}
+		
 	}
 
 }
