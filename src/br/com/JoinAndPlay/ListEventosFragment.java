@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import br.com.JoinAndPlay.Event.EventFragment;
@@ -214,6 +215,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		Log.v("tabs", " "+lista+" "+listV);
 		if(getView()!=null && lista==null && listV!=null && listV.getAdapter()!=null){
 			Location local =((MainActivity)(MainActivity.self)).location;
 			((MainActivity) MainActivity.self).loadTela(ID);
@@ -225,6 +227,7 @@ public class ListEventosFragment extends Fragment implements OnClickListener,OnI
 				Server.get_future_events(MainActivity.self,this);	
 
 			}
+			((BaseAdapter)listV.getAdapter()).notifyDataSetChanged();
 		}
 		
 	}

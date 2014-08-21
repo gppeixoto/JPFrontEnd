@@ -140,8 +140,10 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		Log.v("aba",notifi+" "+getView());
 		if(getView()!=null){
 			if(notifi!=null && list.getAdapter()!=null){
+				Log.v("aba",""+list.getAdapter());
 				Server.get_invites(ConfigJP.UserId,new Connecter<Map<String,Vector<Notificacao>>>() {
 					
 					@Override
@@ -149,16 +151,18 @@ Map<String,String> conjuntID= new HashMap<String,String>();
 					{
 						// TODO Auto-generated method stub
 						if(in==null)return;
+
 						for (Iterator<Entry<String, Vector<Notificacao>>> iterator = in.entrySet().iterator(); iterator.hasNext();) {
 							Entry<String, Vector<Notificacao>> type = (Entry<String, Vector<Notificacao>>) iterator.next();
 							for (Iterator<Notificacao> iterator2 = type.getValue().iterator(); iterator2
 									.hasNext();) {
 								Notificacao not = (Notificacao) iterator2.next();
 								not.esporte=type.getKey();
-								if(!notifi.contains(not.getEventId())){
+								if(!conjuntID.containsKey(not.getEventId())){
 									notifi.add(not);
 									
 								}
+								
 							}
 							list.post(new Runnable() {
 								
