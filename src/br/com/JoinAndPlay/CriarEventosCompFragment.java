@@ -9,7 +9,6 @@ import android.content.DialogInterface.OnShowListener;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,13 +53,13 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 			Bundle savedInstanceState){
 
 		if(container==null) return null;
+		final Bundle arguments = getArguments()!=null ? new Bundle():null;
 
 		if(getArguments() != null){
-			ID = getArguments().getInt("idTab");
-			Log.v("ID CARREGAR AMIGOS: ", ID+"");
+			ID = arguments.getInt("idTab");
 			MainActivity.self.loadTela(ID);
+			arguments.putAll(getArguments());
 		}
-
 		amigos = new ArrayList<Usuario>();
 		convidados = new Vector<String>();
 
@@ -81,7 +80,25 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		grid.setOnItemClickListener(this);
 		grid.addHeaderView(new View(MainActivity.self));
 	
+grid.setOnScrollListener(new OnScrollListener() {
+	
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
+		if(OnScrollListener.SCROLL_STATE_IDLE == (scrollState&1)){
+        	grid.getParent().requestDisallowInterceptTouchEvent(false);
+			
+		}
+	}
+	
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		// TODO Auto-generated method stub
+	
 		
+	}
+})		;
 		
 		
 		
@@ -109,7 +126,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 		
 	    });
 		
-		
+
 		
 		Server.get_friends(MainActivity.self, new Connecter<Vector<Usuario>>(){
 
@@ -129,6 +146,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 								selector = new boolean[amigos.size()];
 								adapter = new AdapterAmigo(amigos, inflater,selector);
 								grid.setAdapter(adapter);
+
 							}
 							MainActivity.self.popLoadTela(ID);
 						}
@@ -216,8 +234,8 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 					return;
 				}
 
-				if(getArguments()!=null){
-					Bundle args = getArguments();
+				if(arguments!=null){
+					Bundle args = arguments;
 
 					String esporte = (String) args.getString("esporte");
 					String dia = (String) args.getString("data");
@@ -236,6 +254,7 @@ public class CriarEventosCompFragment extends Fragment implements OnItemClickLis
 						@Override
 						public void onTerminado(Evento in) {
 							// TODO Auto-generated method stub
+
 							Evento e = (Evento) in;									
 							if(e!= null && !convidados.isEmpty()){
 								Server.invite(Session.getActiveSession().getAccessToken(),

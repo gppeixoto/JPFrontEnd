@@ -17,6 +17,21 @@ public class AdapterAmigo extends BaseAdapter{
 	private ArrayList<Usuario> vetor;
 	private LayoutInflater inflater;
 	private boolean[] selector;
+	private static int[] badg_cinza={
+		R.drawable.cingenteboa,
+		R.drawable.cintesfor,
+		R.drawable.cinjogatime,
+		R.drawable.cinfairplay
+	}
+	;
+
+	private static int[] badg={
+		R.drawable.votgenteboa,
+		R.drawable.votesfor,
+		R.drawable.votjogatime,
+		R.drawable.votfairplay
+		
+	};
 
 	public AdapterAmigo(ArrayList<Usuario> vetor,LayoutInflater inflater, boolean[] selector){
 		this.vetor=vetor;
@@ -111,14 +126,15 @@ public class AdapterAmigo extends BaseAdapter{
 
 		for (int j = 0; j < b.length; j++) {
 			if(b[j]==false){
-				bad.getChildAt(j).setVisibility(View.INVISIBLE);
+				((ImageView)bad.getChildAt(j)).setImageResource(badg_cinza[j]);
 
 			}else{
-				bad.getChildAt(j).setVisibility(View.VISIBLE);
+				((ImageView)bad.getChildAt(j)).setImageResource(badg[j]);
 
 			}
 		}
 		draw(view, i);
+
 		return view;
 	}
 }
