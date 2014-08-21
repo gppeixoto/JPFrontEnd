@@ -1,5 +1,8 @@
 package br.com.JoinAndPlay.Event;
 
+import java.text.DecimalFormat;
+import java.util.Vector;
+
 import org.joda.time.DateTime;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
@@ -11,6 +14,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Server.Connecter;
+import br.com.JoinAndPlay.Server.Endereco;
 import br.com.JoinAndPlay.Server.Server;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -51,12 +56,37 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 	private Double valor = 0.0;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
-	
+
 	public void paintButton(Button red,Button gray){
 		red.setBackgroundResource(R.drawable.red_button);
 		red.setPadding(10, 10, 10, 10);
 		gray.setBackgroundResource(R.drawable.gray_button);
 		gray.setPadding(10, 10, 10, 10);
+	}
+
+	public void alerta(Button alert,int value){
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(alert.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+		builder1.setCancelable(true);
+		builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}});
+
+		builder1.setView(MainActivity.self.getLayoutInflater().inflate(value, null));
+		AlertDialog alert11 = builder1.create();
+
+		OnShowListener onshow = new OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				Button positiveButton = ((AlertDialog) dialog)
+						.getButton(AlertDialog.BUTTON_POSITIVE);
+				positiveButton.setBackgroundResource(R.drawable.alert_button);
+				positiveButton.setText("OK");
+				positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+			}
+		};
+		alert11.setOnShowListener(onshow);
+		alert11.show();
 	}
 
 	@Override
@@ -85,7 +115,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			final String esporte = args.getString("esporte");
 			final String id_evento = args.getString("id_evento");
 			String local_name = args.getString("local_name");
-			
+
 			final EditText nome_local = (EditText) v.findViewById(R.id.editar_nome_local);
 			nome_local.setText(local_name);
 			final EditText nome_eventoE = (EditText) v.findViewById(R.id.edit_nome_evento);
@@ -111,7 +141,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				preco.setText(valor.toString());
 			}
 			has_price.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					if(has_price.isChecked()){
@@ -125,15 +155,15 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					}
 				}
 			});
-						
+
 			privadoE = (Button) v.findViewById(R.id.botao_privado);
 			publicoE = (Button) v.findViewById(R.id.botao_publico);
-			
+
 			if(privado == true) paintButton(privadoE, publicoE);
 			else paintButton(publicoE,privadoE);
-			
+
 			privadoE.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View view) {
 					// TODO Auto-generated method stub
@@ -142,7 +172,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				}
 			});
 			publicoE.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
@@ -150,7 +180,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					privado = false;
 				}
 			});
-			
+
 			data = new String[3];
 			dataNOW = new int[3];
 			DateTime now = DateTime.now();
@@ -160,7 +190,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			this.data[0] = now.getDayOfMonth()+"";
 			this.data[1] = now.getMonthOfYear()+"";
 			this.data[2] = now.getYear()+"";
-			
+
 			diaE = (Button) v.findViewById(R.id.editar_dia);
 			config = MainActivity.self.getResources().getConfiguration();
 			diaE.setText(dia+"/"+(now.getYear()+""));
@@ -184,10 +214,10 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					}
 				}
 			});
-			
+
 			horabE = (Button) v.findViewById(R.id.editar_hora_inicial);
 			horabE.setText(hora_begin);
-			
+
 			horabE.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -211,8 +241,8 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					begin = true;
 				}
 			});
-			
-			
+
+
 			horaeE = (Button) v.findViewById(R.id.editar_hora_final);
 			horaeE.setText("23:59");
 			horaeE.setOnClickListener(new View.OnClickListener() {
@@ -238,19 +268,64 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					end = true;
 				}
 			});
-			
-			Button confirmar_edicao = (Button) v.findViewById(R.id.botao_confirmarEdicao);
+
+			final Button confirmar_edicao = (Button) v.findViewById(R.id.botao_confirmarEdicao);
 			confirmar_edicao.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
-				public void onClick(View v) {
+				public void onClick(final View v) {
 					// TODO Auto-generated method stub
-					double priceE = 0.0;
-					if(eventoPago){
-						priceE = Double.parseDouble(preco.getText().toString());
+					if(ruaE.getText().toString()==null||ruaE.getText().toString().trim().equals("")){
+						alerta(confirmar_edicao,R.layout.alert_create_rua);
+						return;
+					}else if(nome_local.getText().toString()==null||nome_local.getText().toString().trim().equals("")){
+						alerta(confirmar_edicao,R.layout.alert_create_lugar);
+						return;
+					}else if(bairroE.getText().toString()==null||bairroE.getText().toString().trim().equals("")){
+						alerta(confirmar_edicao,R.layout.alert_create_bairro);
+						return;
+					} else if(cidadeE.getText().toString()==null||cidadeE.getText().toString().trim().equals("")){
+						alerta(confirmar_edicao,R.layout.alert_create_cidade);
+						return;
+					}else if(nome_eventoE.getText().toString() == null || nome_eventoE.getText().toString().trim().equals("")){
+						alerta(confirmar_edicao,R.layout.alert_create_nome);
+						return;
 					}
-					Server.edit_event(MainActivity.self, nome_local.getText().toString(), ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), priceE, privado, id_evento, null);
-					((MainActivity)MainActivity.self).retirarAbaAtual();
+					Server.getAddresses("", ruaE.getText().toString(), bairroE.getText().toString(), cidadeE.getText().toString(), new Connecter<Vector<Endereco>>() {	
+						@Override
+						public void onTerminado(Vector<Endereco> in) {
+							if(in==null || in.isEmpty()){
+								if(v != null){
+									v.post(new Runnable() {
+										@Override
+										public void run() {
+											alerta(confirmar_edicao, R.layout.alert_create_endereco);
+										}
+									});
+								}
+								return;
+							}
+							double priceE = 0.0;
+							if(eventoPago){
+								String aux = preco.getText().toString();					
+								priceE = Double.parseDouble(aux);
+								DecimalFormat df = new DecimalFormat("##0.00");
+								aux = df.format(priceE);
+								for(int i=0;i<aux.length();i++){ 
+									if(aux.charAt(i) == ','){
+										if(i+1 < aux.length())
+											aux = aux.substring(0,i)+'.'+aux.substring(i+1);
+										else 
+											aux = aux.substring(0,i)+'.'+"00";
+										break;
+									}
+								}
+								priceE = Double.parseDouble(aux);
+							}
+							Server.edit_event(MainActivity.self, nome_local.getText().toString(), ruaE.getText().toString(), cidadeE.getText().toString(), bairroE.getText().toString(), esporte, diaE.getText().toString(), horabE.getText().toString(), horaeE.getText().toString(), descricao_eventoE.getText().toString(), nome_eventoE.getText().toString(), priceE, privado, id_evento, null);
+							((MainActivity)MainActivity.self).retirarAbaAtual();
+						}
+					});
 				}
 			});
 		}
@@ -266,22 +341,22 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
-			}});
-			
+				}});
+
 			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_xml, null));
 			AlertDialog alert11 = builder1.create();
-			
+
 			OnShowListener onshow = new OnShowListener() {
 				@Override
 				public void onShow(DialogInterface dialog) {
 					Button positiveButton = ((AlertDialog) dialog)
-	                        .getButton(AlertDialog.BUTTON_POSITIVE);
-					
-	                positiveButton.setBackgroundResource(R.drawable.alert_button);
-	                
-	                positiveButton.setText("OK");
-	                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-					
+							.getButton(AlertDialog.BUTTON_POSITIVE);
+
+					positiveButton.setBackgroundResource(R.drawable.alert_button);
+
+					positiveButton.setText("OK");
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 				}
 			};
 			alert11.setOnShowListener(onshow);
@@ -308,21 +383,21 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					dialog.cancel();
-			}});	
+				}});	
 			builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert_xml, null));
 			AlertDialog alert11 = builder1.create();
-			
+
 			OnShowListener onshow = new OnShowListener() {
 				@Override
 				public void onShow(DialogInterface dialog) {
 					Button positiveButton = ((AlertDialog) dialog)
-	                        .getButton(AlertDialog.BUTTON_POSITIVE);
-					
-	                positiveButton.setBackgroundResource(R.drawable.alert_button);
-	                
-	                positiveButton.setText("OK");
-	                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-					
+							.getButton(AlertDialog.BUTTON_POSITIVE);
+
+					positiveButton.setBackgroundResource(R.drawable.alert_button);
+
+					positiveButton.setText("OK");
+					positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 				}
 			};
 			alert11.setOnShowListener(onshow);
@@ -344,7 +419,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 		String h,m;
 		h = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
 		m = minute < 10 ? "0" + minute : "" + minute;
-		
+
 		if (h.length() > 2) h = "" + hourOfDay;
 		if (m.length() > 2) m = "" + minute;
 
@@ -358,21 +433,21 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-				}});	
+					}});	
 				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
-				
+
 				OnShowListener onshow = new OnShowListener() {
 					@Override
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
-		                        .getButton(AlertDialog.BUTTON_POSITIVE);
-						
-		                positiveButton.setBackgroundResource(R.drawable.alert_button);
-		                
-		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-						
+								.getButton(AlertDialog.BUTTON_POSITIVE);
+
+						positiveButton.setBackgroundResource(R.drawable.alert_button);
+
+						positiveButton.setText("OK");
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 					}
 				};
 				alert11.setOnShowListener(onshow);
@@ -386,21 +461,21 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-				}});	
+					}});	
 				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
-				
+
 				OnShowListener onshow = new OnShowListener() {
 					@Override
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
-		                        .getButton(AlertDialog.BUTTON_POSITIVE);
-						
-		                positiveButton.setBackgroundResource((R.drawable.alert_button));
-		                
-		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-						
+								.getButton(AlertDialog.BUTTON_POSITIVE);
+
+						positiveButton.setBackgroundResource((R.drawable.alert_button));
+
+						positiveButton.setText("OK");
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 					}
 				};
 				alert11.setOnShowListener(onshow);
@@ -420,7 +495,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 
 		if (h.length() > 2) h = "" + hourOfDay;
 		if (m.length() > 2) m = "" + minute;
-		
+
 		if(begin) {
 			if((h + ":" + m).compareTo(horaeE.getText().toString()) < 0){
 				horabE.setText(h + ":" + m);
@@ -431,21 +506,21 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-				}});	
+					}});	
 				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
-				
+
 				OnShowListener onshow = new OnShowListener() {
 					@Override
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
-		                        .getButton(AlertDialog.BUTTON_POSITIVE);
-						
-		                positiveButton.setBackgroundResource(R.drawable.alert_button);
-		                
-		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-						
+								.getButton(AlertDialog.BUTTON_POSITIVE);
+
+						positiveButton.setBackgroundResource(R.drawable.alert_button);
+
+						positiveButton.setText("OK");
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 					}
 				};
 				alert11.setOnShowListener(onshow);
@@ -459,21 +534,21 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 				builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-				}});	
+					}});	
 				builder1.setView(MainActivity.self.getLayoutInflater().inflate(R.layout.alert2_xml, null));
 				AlertDialog alert11 = builder1.create();
-				
+
 				OnShowListener onshow = new OnShowListener() {
 					@Override
 					public void onShow(DialogInterface dialog) {
 						Button positiveButton = ((AlertDialog) dialog)
-		                        .getButton(AlertDialog.BUTTON_POSITIVE);
-						
-		                positiveButton.setBackgroundResource(R.drawable.alert_button);
-		                
-		                positiveButton.setText("OK");
-		                positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
-						
+								.getButton(AlertDialog.BUTTON_POSITIVE);
+
+						positiveButton.setBackgroundResource(R.drawable.alert_button);
+
+						positiveButton.setText("OK");
+						positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+
 					}
 				};
 				alert11.setOnShowListener(onshow);
