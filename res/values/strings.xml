@@ -106,4 +106,6 @@
     <string name="voteMe">Como você me classificaria?</string>
     <string name="voteFriend">Escolha alguém e nos diga quantas estrelas de habilidade e como o classificaria.</string>
     <string name="describeEvent">Descreva seu evento.</string>
+    <string name="alerta_enterEvent">Participe do evento antes de confirma que chegou no local.</string>
+    <string name="alerta_isInEvent">Você já se encontra no local.</string>
 </resources>
