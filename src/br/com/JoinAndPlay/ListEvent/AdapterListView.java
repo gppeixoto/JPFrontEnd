@@ -44,10 +44,12 @@ public class AdapterListView extends BaseAdapter
 
 	public View getView(int position, View view, ViewGroup parent)
 	{
-		if(view==null){
 
+		if(view==null)
 			view = mInflater.inflate(R.layout.item_list, parent,false);
-		}
+
+		if(position<0)return view;
+
 		//Pega o item de acordo com a posção.
 		Evento item = itens.get(position);
 		//infla o layout para podermos preencher os dados
@@ -133,28 +135,28 @@ public class AdapterListView extends BaseAdapter
 		TextView distanciaView = (TextView) view.findViewById(R.id.item_list_distancia);
 		try{
 			int i = Integer.parseInt(evento.getDistance());
-			
+
 			if(i==0){
 				distanciaView.setText("AQUI");
-	
+
 			}else if(i<1000){
 				distanciaView.setText(i+"m");
 
 			}else if(i>Math.pow(10, 9)){
 				distanciaView.setText("");
-				
+
 			}else{
-				
+
 				distanciaView.setText(Math.round(i/1000.0)+"Km");
 
 			}
-			
+
 		}catch(Exception _){
 			distanciaView.setText("");
 
 		}
-		
-		
+
+
 		TextView precoView = (TextView) view.findViewById(R.id.item_list_preco);
 		if(evento.getPrice()==0){
 			precoView.setText("");
@@ -180,7 +182,7 @@ public class AdapterListView extends BaseAdapter
 			}else break;
 		}
 
-		for (int i = 0; i < Math.min(Math.min(evento.getNumFriends()+1,MAX_AMIGOS_QTD),evento.getUsers().size()); i++) {
+		for (int i = 0; i < Math.min(MAX_AMIGOS_QTD,evento.getUsers().size()); i++) {
 			if(content_image.getChildCount()>i){
 				ImageView imagem = (ImageView) content_image.getChildAt(i);
 				DownloadImagem.postLoad(imagem, evento.getUsers().get(i).getPhoto());
