@@ -207,46 +207,17 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <LinearLayout
+            <Button
+                android:id="@+id/convidar_amigos"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/cinza"
-                android:orientation="horizontal"
-                android:padding="0dp" >
-
-                <Button
-                    android:id="@+id/convidar_amigos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/trasparent"
-                    android:drawableLeft="@drawable/convidaramigos"
-                    android:padding="5dp"
-                    android:text="@string/inviteFriends"
-                    android:textColor="@color/cinza_escuro" />
-
-                <View
-                    android:id="@+id/pontilhado1"
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/linha_pontilhada2"
-                    android:gravity="center" />
-
-                <Button
-                    android:id="@+id/compartilhar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/trasparent"
-                    android:drawableLeft="@drawable/compartilhar"
-                    android:padding="5dp"
-                    android:text="@string/compartilhar"
-                    android:textColor="@color/cinza_escuro" />
-            </LinearLayout>
+                android:drawableLeft="@drawable/convidaramigos"
+                android:text="@string/inviteFriends"
+                android:textColor="@color/cinza_escuro" />
         </LinearLayout>
 
         <LinearLayout
@@ -553,6 +524,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/dad_terminar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"

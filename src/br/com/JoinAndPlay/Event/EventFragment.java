@@ -19,7 +19,10 @@ import br.com.JoinAndPlay.Server.Evento;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Tag;
 import br.com.JoinAndPlay.Server.Usuario;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -51,6 +54,31 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	static int ID=0;
 	private HashMap<String, Boolean>  map;
 	private boolean hasUser;
+	
+	public void alerta(LinearLayout alert,int value){
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(alert.getContext(),AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+		builder1.setCancelable(true);
+		builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}});
+
+		builder1.setView(MainActivity.self.getLayoutInflater().inflate(value, null));
+		AlertDialog alert11 = builder1.create();
+
+		OnShowListener onshow = new OnShowListener() {
+			@Override
+			public void onShow(DialogInterface dialog) {
+				Button positiveButton = ((AlertDialog) dialog)
+						.getButton(AlertDialog.BUTTON_POSITIVE);
+				positiveButton.setBackgroundResource(R.drawable.alert_button);
+				positiveButton.setText("OK");
+				positiveButton.setTextAppearance(MainActivity.self, R.style.AlertStyle);
+			}
+		};
+		alert11.setOnShowListener(onshow);
+		alert11.show();
+	}
 
 	public void reloadPage(){
 		EventFragment next = new EventFragment();
@@ -209,11 +237,6 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 	public void setValuesEvent(final View view,final Evento evento){
 		if(evento == null || view==null) return;
 
-		//QUANDO FIZER O SHARE DO FB
-		/*Button compartilhar = (Button) view.findViewById(R.id.compartilhar);
-		compartilhar.setVisibility(View.INVISIBLE);
-		((ViewGroup)view).removeView(compartilhar);*/
-
 		LinearLayout votacao_iniciada = (LinearLayout) view.findViewById(R.id.votacao_iniciada);
 		LinearLayout votacao_nao_iniciada = (LinearLayout) view.findViewById(R.id.votacao_nao_iniciada);
 		TextView descricao_horario = (TextView)view.findViewById(R.id.descricao_horario);
@@ -225,6 +248,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 		descricao_local.setText(evento.getLocalizationName()+" - "+evento.getCity()+"\n"+evento.getLocalizationAddress()+", "+evento.getNeighbourhood());
 
 		TextView butao_terminar = (TextView)view.findViewById(R.id.botao_finalizar);
+		LinearLayout dad = (LinearLayout)view.findViewById(R.id.dad_terminar);
 		hasUser = evento.getUsers().size() > 1 ? true : false;
 
 		if(evento.getIsClosed()==false){
@@ -283,7 +307,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			qtd_confirmados.setText(""+evento.getUsers().size());
 			qtd_no_local.setText(evento.getAtEvent().size()+"");
 
-			LinearLayout estou_no_local = (LinearLayout) view.findViewById(R.id.estou_no_local);
+			final LinearLayout estou_no_local = (LinearLayout) view.findViewById(R.id.estou_no_local);
 			TextView texto_no_local = (TextView) view.findViewById(R.id.texto_no_local);
 			final EventFragment self = this;
 			if(evento.getHasArrived()) texto_no_local.setText("No local");
@@ -295,7 +319,11 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						if(!evento.getHasArrived()){
 							Server.arrive_event(MainActivity.self, evento.getId(), self);
 							reloadPage();
+						}else{
+							alerta(estou_no_local,R.layout.alert_already_there);
 						}
+					}else{
+						alerta(estou_no_local,R.layout.alert_confirm_first);
 					}
 				}
 			});
@@ -388,6 +416,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				}
 				participar.setOnClickListener(this);
 				butao_terminar.setVisibility((View.INVISIBLE));
+				dad.removeView(butao_terminar);
 			}
 			addGuys(pessoas,evento);
 		}else{
@@ -395,6 +424,7 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			votacao_nao_iniciada.removeAllViews();
 
 			butao_terminar.setVisibility(View.INVISIBLE);
+			dad.removeView(butao_terminar);
 
 			TextView num_participantes = (TextView) view.findViewById(R.id.num_participantes);
 			num_participantes.setText(""+evento.getUsers().size());
