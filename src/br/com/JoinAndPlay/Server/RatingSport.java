@@ -5,6 +5,7 @@ public class RatingSport {
 	private String rating;
 	private int qnt_games;
 	private int num_voters;
+	private boolean voted;
 	
 	public RatingSport(String sport_name, String rating, int qnt_games, int num_voters) {
 		this.sport_name = sport_name;
@@ -12,6 +13,11 @@ public class RatingSport {
 		this.qnt_games = qnt_games;
 		this.num_voters = num_voters;
 	}
+	
+	public RatingSport(String sport_name, String rating, int qnt_games, int num_voters, boolean voted) {
+		this(sport_name, rating, qnt_games, num_voters);
+		this.voted = voted;
+	} 
 	
 	/**
 	 * @return o nome desse esporte.
@@ -32,4 +38,6 @@ public class RatingSport {
 	 * @return a quantidade de usuarios que votaram nesse esporte.
 	 * */
 	public int getNumVoters() { return this.num_voters; }
+	
+	public boolean getVoted() { return this.voted; }
 }

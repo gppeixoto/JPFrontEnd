@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1116,17 +1118,37 @@ public class Server implements Serializable {
 			String id = user.get("id")+"";
 			String name = user.getString("name");
 			String photo = user.getString("url");
+			
+			Set<String> set = new TreeSet<String>();
+			if (user.has("sportVotes")) {
+				JSONArray arr2 = user.getJSONArray("sportVotes");
+				for (int i = 0; i < arr2.length(); ++i) {
+					set.add(arr2.getString(i));
+				}
+			}
+			
 			Vector<RatingSport> ratings = new Vector<RatingSport>();
 			JSONArray arr = user.getJSONArray("ratings");
 			for (int i = 0; i < arr.length(); ++i) {
 				JSONArray aux = arr.getJSONArray(i);
-				ratings.add(new RatingSport(aux.getString(0), aux.get(2)+"", aux.getInt(1), aux.getInt(3)));
+				boolean votou = set.contains(aux.getString(0));
+				ratings.add(new RatingSport(aux.getString(0), aux.get(2)+"", aux.getInt(1), aux.getInt(3), votou));
 			}
+			
+			set = new TreeSet<String>();
+			if (user.has("tagVotes")) {
+				JSONArray arr2 = user.getJSONArray("tagVotes");
+				for (int i = 0; i < arr2.length(); ++i) {
+					set.add(arr2.getString(i));
+				}
+			}
+			
 			Vector<Tag> tags = new Vector<Tag>();
 			arr = user.getJSONArray("tags");
 			for (int i = 0; i < arr.length(); ++i) {
 				JSONArray aux = arr.getJSONArray(i);
-				tags.add(new Tag(aux.getString(0), aux.getInt(1)));
+				boolean votou = set.contains(aux.getString(0));
+				tags.add(new Tag(aux.getString(0), aux.getInt(1), votou));
 			}
 			Vector<Esporte> times_sports = new Vector<Esporte>();
 			if (user.has("sportsInfo")) {
@@ -1138,7 +1160,7 @@ public class Server implements Serializable {
 			}
 			int num_friends = user.getInt("friends");
 			boolean has_notification = user.getBoolean("notifications");
-
+			
 			return new Usuario(id, name, "", photo, null, num_friends, ratings, tags, times_sports, has_notification, false);
 		} catch (JSONException a) { a.printStackTrace();}
 		return null;
