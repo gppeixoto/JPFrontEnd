@@ -552,13 +552,19 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 				@Override
 				public void onClick(View arg0) {
 					if(hasUser){
-						if(evento.getUsers().get(ind).getVotedInSport()==false) Server.rate_user(evento.getUsers().get(ind).getId(),MainActivity.self, evento.getSport(), rating+"", null);
+						boolean reloadPage = false;
+						if(evento.getUsers().get(ind).getVotedInSport()==false){
+							Server.rate_user(evento.getUsers().get(ind).getId(),MainActivity.self, evento.getSport(), rating+"", null);
+							reloadPage = true;
+						}
 						for(int i=0;i<4;i++){
 							if(award[i] && cantVote[i]==false){
 								Server.vote_in_tag_user(evento.getUsers().get(ind).getId(), MainActivity.self, badges[i], null);
-								reloadPage();
+								reloadPage = true;
 							}
 						}
+						if(reloadPage) 								
+							reloadPage();//mudar para contador depois
 					}
 				}
 			});
