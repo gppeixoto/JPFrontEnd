@@ -9,6 +9,8 @@ import android.content.DialogInterface.OnShowListener;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -253,26 +255,14 @@ grid.setOnScrollListener(new OnScrollListener() {
 
 						@Override
 						public void onTerminado(Evento in) {
-							// TODO Auto-generated method stub
-
-							Evento e = (Evento) in;									
-							if(e!= null && !convidados.isEmpty()){
-								Server.invite(Session.getActiveSession().getAccessToken(),
-										e.getId(), convidados, new Connecter<Boolean>(){
-
-									@Override
-									public void onTerminado(
-											Boolean in) {
-										// TODO Auto-generated method stub
-										boolean a = (boolean) in;
-
-									}
-								});
-							}		
-
-						}
+							for (int i = 0; i < selector.length; i++) {
+								if (selector[i]){
+									convidados.add(((Usuario)amigos.get(i)).getId());
+								}
+							}
+							if( in != null && convidados.isEmpty() == false)
+								Server.invite(ConfigJP.UserId, in.getId(), convidados, null);						}
 					});
-
 					((MainActivity)MainActivity.self).retirarAbaAtual();
 					((MainActivity)MainActivity.self).retirarAbaAtual();
 
