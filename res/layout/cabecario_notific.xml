@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <LinearLayout
         android:id="@+id/item_list_barra"
         android:layout_width="match_parent"
@@ -18,8 +18,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:scaleType="matrix"
-            android:src="@drawable/avatar_35x335" />
+            android:scaleType="matrix" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +34,6 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-          
         </LinearLayout>
     </LinearLayout>
 

@@ -13,8 +13,7 @@
         <ImageView
             android:id="@+id/item_notif_usuario"
             android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/avatar_35x335" />
+            android:layout_height="35dp"/>
 
         <ImageView
             android:id="@+id/item_notif_esport"

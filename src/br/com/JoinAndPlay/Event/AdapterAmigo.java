@@ -26,10 +26,10 @@ public class AdapterAmigo extends BaseAdapter{
 	;
 
 	public static int[] badg={
-		R.drawable.votgenteboa,
-		R.drawable.votesfor,
-		R.drawable.votjogatime,
-		R.drawable.votfairplay
+		R.drawable.genteboa,
+		R.drawable.tesfor,
+		R.drawable.jogatime,
+		R.drawable.fairplay
 		
 	};
 

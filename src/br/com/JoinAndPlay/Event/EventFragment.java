@@ -445,14 +445,14 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 						rating=0.0;
 						for(int i=0,j=11;i<5;i++,j+=20){
 							if(value >= j){
-								starNum[i].setImageResource(R.drawable.star1);
+								starNum[i].setImageResource(R.drawable.star);
 								rating+=1.0;
 							}
 							else if(value >= j-10){
-								starNum[i].setImageResource(R.drawable.halfstar);
+								starNum[i].setImageResource(R.drawable.starmet);
 								rating+=0.5;
 							}
-							else starNum[i].setImageResource(R.drawable.star2);
+							else starNum[i].setImageResource(R.drawable.starci);
 						}
 					}
 					return false;

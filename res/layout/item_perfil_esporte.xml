@@ -78,31 +78,31 @@
                 android:id="@+id/perfil_imageview_esporte_star1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star2" />
+                android:src="@drawable/starci" />
 
             <ImageView
                 android:id="@+id/perfil_imageview_esporte_star2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star2" />
+                android:src="@drawable/starci" />
 
             <ImageView
                 android:id="@+id/perfil_imageview_esporte_star3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star2" />
+                android:src="@drawable/starci" />
 
             <ImageView
                 android:id="@+id/perfil_imageview_esporte_star4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star2" />
+                android:src="@drawable/starci" />
 
             <ImageView
                 android:id="@+id/perfil_imageview_esporte_star5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star2" />
+                android:src="@drawable/starci" />
         </LinearLayout>
 
         <LinearLayout

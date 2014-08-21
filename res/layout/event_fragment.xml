@@ -384,7 +384,7 @@
                         android:layout_marginLeft="2dp"
                         android:adjustViewBounds="true"
                         android:scaleType="matrix"
-                        android:src="@drawable/star2" />
+                        android:src="@drawable/starci" />
 
                     <ImageView
                         android:id="@+id/starNum2"
@@ -393,7 +393,7 @@
                         android:layout_marginLeft="2dp"
                         android:adjustViewBounds="true"
                         android:scaleType="matrix"
-                        android:src="@drawable/star2" />
+                        android:src="@drawable/starci" />
 
                     <ImageView
                         android:id="@+id/starNum3"
@@ -402,7 +402,7 @@
                         android:layout_marginLeft="2dp"
                         android:adjustViewBounds="true"
                         android:scaleType="matrix"
-                        android:src="@drawable/star2" />
+                        android:src="@drawable/starci" />
 
                     <ImageView
                         android:id="@+id/starNum4"
@@ -411,7 +411,7 @@
                         android:layout_marginLeft="2dp"
                         android:adjustViewBounds="true"
                         android:scaleType="matrix"
-                        android:src="@drawable/star2" />
+                        android:src="@drawable/starci" />
 
                     <ImageView
                         android:id="@+id/starNum5"
@@ -420,7 +420,7 @@
                         android:layout_marginLeft="2dp"
                         android:adjustViewBounds="true"
                         android:scaleType="matrix"
-                        android:src="@drawable/star2" />
+                        android:src="@drawable/starci" />
                 </LinearLayout>
             </LinearLayout>
 

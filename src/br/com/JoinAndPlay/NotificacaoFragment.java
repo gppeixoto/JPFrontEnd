@@ -194,7 +194,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 								not.esporte=type.getKey();
 								if(!conjuntID.containsKey(not.getEventId())){
 									notifi.add(not);
-
+									conjuntID.put(not.getEventId(), not.getEventId());
 								}
 
 							}
