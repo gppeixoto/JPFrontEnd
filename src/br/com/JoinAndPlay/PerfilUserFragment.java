@@ -24,7 +24,6 @@ import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,7 +42,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 	private Button button_amigos;
 	private Configuration config;
 	private boolean award[] = {false,false,false,false};
-	private String badges[]=null;
+	private Vector<Tag> badges=null;
 	private boolean cantVote[] = {false,false,false,false};
 	private String namebadges[];
 	String idUser;
@@ -113,7 +112,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 					award[0]=!award[0];
 					if(award[0]==false) img_genteBoa.setImageResource(AdapterAmigo.badg_cinza[0]);
 					else
-					img_genteBoa.setImageResource(AdapterAmigo.badg[0]);
+						img_genteBoa.setImageResource(AdapterAmigo.badg[0]);
 
 				}
 			}
@@ -126,7 +125,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 					if(award[3]==false) img_fairPlay.setImageResource(AdapterAmigo.badg_cinza[3]);
 					else
 
-					img_fairPlay.setImageResource(AdapterAmigo.badg[3]);
+						img_fairPlay.setImageResource(AdapterAmigo.badg[3]);
 
 				}
 			}
@@ -140,7 +139,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 					if(award[2]==false) img_jogaTime.setImageResource(AdapterAmigo.badg_cinza[2]);
 					else
 
-					img_jogaTime.setImageResource(AdapterAmigo.badg[2]);					
+						img_jogaTime.setImageResource(AdapterAmigo.badg[2]);					
 				}
 			}
 		});
@@ -152,7 +151,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 					if(award[1]==false) img_esforcado.setImageResource(AdapterAmigo.badg_cinza[1]);
 					else
 
-					img_esforcado.setImageResource(AdapterAmigo.badg[1]);
+						img_esforcado.setImageResource(AdapterAmigo.badg[1]);
 
 
 				}
@@ -164,31 +163,49 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 		namebadges[3] = "Fair Play";
 		namebadges[1] = "Esforcado";
 		namebadges[2] = "Joga Pro Time";
+
 		return v;
 	}
 
 	public void initBadges(){
 		for(int i=0;i<4;i++) award[i] = false;
 		if(badges != null){
-			for (int j=0;j<4;j++){
-				String NOME = badges[j];
-				if (NOME.equals("Gente Boa")) award[0]=true;
-				else if (NOME.equals("Fair Play")) award[3]=true;							
-				else if (NOME.equals("Esforcado")) award[1]=true;
-				else if (NOME.equals("Joga Pro Time")) award[2]=true;
+			for (int j=0;j<badges.size();j++){
+				String NOME = badges.get(j).getName();
+				if (NOME.equals("Gente Boa")) award[0]=badges.get(j).getVoted();
+				else if (NOME.equals("Fair Play"))  award[3]=badges.get(j).getVoted();						
+				else if (NOME.equals("Esforcado"))  award[1]=badges.get(j).getVoted();
+				else if (NOME.equals("Joga Pro Time")) award[2]= badges.get(j).getVoted();
 			}
 		}
-		if(award[0]==false) img_genteBoa.setImageResource(R.drawable.cingenteboa);
-		if(award[1]==false) img_esforcado.setImageResource(R.drawable.cintesfor);
-		if(award[2]==false) img_jogaTime.setImageResource(R.drawable.cinjogatime);
-		if(award[3]==false) img_fairPlay.setImageResource(R.drawable.cinfairplay);
+
+		if(award[2]==false) img_jogaTime.setImageResource(AdapterAmigo.badg_cinza[2]);
+		else
+
+			img_jogaTime.setImageResource(AdapterAmigo.badg[2]);
+
+		if(award[1]==false) img_esforcado.setImageResource(AdapterAmigo.badg_cinza[1]);
+		else
+
+			img_esforcado.setImageResource(AdapterAmigo.badg[1]);
+
+		if(award[3]==false) img_fairPlay.setImageResource(AdapterAmigo.badg_cinza[3]);
+		else
+
+			img_fairPlay.setImageResource(AdapterAmigo.badg[3]);
+
+		if(award[0]==false) img_genteBoa.setImageResource(AdapterAmigo.badg_cinza[0]);
+		else
+			img_genteBoa.setImageResource(AdapterAmigo.badg[0]);
 		for(int i=0;i<4;i++) cantVote[i]=award[i];
 	}
 
 	@Override
 	public void onTerminado(final Usuario in) {
-		if(in!=null){
+		final Fragment self=this;
 
+		if(in!=null){
+			badges = in.getTags();
 
 		}
 		super.onTerminado(in);
@@ -196,6 +213,7 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 			getView().post(new Runnable() {
 				@Override
 				public void run() {
+					initBadges();
 					LinearLayout dad_perfil = (LinearLayout) v.findViewById(R.id.dad_perfil);
 					dad_perfil.removeView(dad_perfil.getChildAt(2));
 					dad_perfil.removeView(dad_perfil.getChildAt(1));
@@ -203,16 +221,21 @@ public class PerfilUserFragment extends PerfilAdminFragment {
 					button_amigos.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
+							MainActivity.self.loadTela(ID);
 							boolean votou = false;
 							for(int i=0;i<4;i++){
 								if(award[i] && cantVote[i]==false){
 									Server.vote_in_tag_user(idUser, MainActivity.self, namebadges[i], null);
-									//atualizar a pagina
+									
 									votou = true;
 								}
 							}
 							if(!votou){
+								MainActivity.self.popLoadTela(ID);
+
 								alerta(button_amigos,R.layout.alert_badges);
+							}else{
+								MainActivity.self.replaceTab(self);
 							}
 						}
 					});
