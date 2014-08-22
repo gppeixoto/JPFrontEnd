@@ -1,9 +1,12 @@
 package br.com.JoinAndPlay.Event;
 import java.util.ArrayList;
 import java.util.Vector;
+
+import br.com.JoinAndPlay.BolaForaFragment;
 import br.com.JoinAndPlay.ConfigJP;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
+import br.com.JoinAndPlay.Server.Connecter;
 import br.com.JoinAndPlay.Server.Server;
 import br.com.JoinAndPlay.Server.Usuario;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ public class InviteFriends extends Fragment implements OnItemClickListener {
 	private AdapterAmigo adapter ;
 	private String id_evento;
 	boolean[] selector;
+	private int ID;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){
@@ -38,6 +42,7 @@ public class InviteFriends extends Fragment implements OnItemClickListener {
 		vetor=null;
 		if(getArguments()!=null){
 			vetor= getArguments().getParcelableArrayList("users");
+			ID = getArguments().getInt("idTab");
 			if(vetor.size()>0)
 				selector= new boolean[vetor.size()];
 			if(selector!=null)
@@ -61,7 +66,18 @@ public class InviteFriends extends Fragment implements OnItemClickListener {
 					int position = checked.keyAt(i);
 					if (checked.valueAt(i)) conv.add(((Usuario)(listV.getAdapter().getItem(position))).getId());
 				}				
-				Server.invite(ConfigJP.UserId, id_evento, conv, null);
+				Server.invite(ConfigJP.UserId, id_evento, conv, new Connecter<Boolean>(){
+					@Override
+					public void onTerminado(Boolean in) {
+						if(in == null){
+							Bundle args = new Bundle();
+							args.putBoolean("internet",false);
+							BolaForaFragment bfm = new BolaForaFragment();
+							bfm.setArguments(args);
+							MainActivity.self.mudarAba(ID,bfm);
+						}
+					}
+				});
 				((MainActivity)MainActivity.self).retirarAbaAtual();
 			}
 		});

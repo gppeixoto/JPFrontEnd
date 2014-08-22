@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
+import br.com.JoinAndPlay.BolaForaFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.PerfilUserFragment;
 import br.com.JoinAndPlay.R;
@@ -81,7 +82,11 @@ public class AmigosFragment extends Fragment implements OnItemClickListener ,Con
 
 
 		if(in==null){
-			//bolafora
+			Bundle args = new Bundle();
+			args.putBoolean("internet",false);
+			BolaForaFragment bfm = new BolaForaFragment();
+			bfm.setArguments(args);
+			MainActivity.self.mudarAba(ID,bfm);
 			return;
 		}
 		vetor=new ArrayList<Usuario>();

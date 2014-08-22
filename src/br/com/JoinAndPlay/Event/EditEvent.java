@@ -12,6 +12,8 @@ import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 import com.doomonafireball.betterpickers.timepicker.TimePickerDialogFragment;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import br.com.JoinAndPlay.BolaForaFragment;
 import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.Connecter;
@@ -56,6 +58,7 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 	private Double valor = 0.0;
 	static final String FRAG_TAG_TIME_PICKER = "timePickerDialogFragment";
 	static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
+	private int ID=0;
 
 	public void paintButton(Button red,Button gray){
 		red.setBackgroundResource(R.drawable.red_button);
@@ -115,6 +118,8 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 			final String esporte = args.getString("esporte");
 			final String id_evento = args.getString("id_evento");
 			String local_name = args.getString("local_name");
+			
+			ID = args.getInt("idTab");
 
 			final EditText nome_local = (EditText) v.findViewById(R.id.editar_nome_local);
 			nome_local.setText(local_name);
@@ -294,7 +299,14 @@ TimePickerDialogFragment.TimePickerDialogHandler  {
 					Server.getAddresses("", ruaE.getText().toString(), bairroE.getText().toString(), cidadeE.getText().toString(), new Connecter<Vector<Endereco>>() {	
 						@Override
 						public void onTerminado(Vector<Endereco> in) {
-							if(in==null || in.isEmpty()){
+							if(in == null){
+								Bundle args = new Bundle();
+								args.putBoolean("internet",false);
+								BolaForaFragment bfm = new BolaForaFragment();
+								bfm.setArguments(args);
+								MainActivity.self.mudarAba(ID,bfm);
+							}
+							else if(in.isEmpty()){
 								if(v != null){
 									v.post(new Runnable() {
 										@Override

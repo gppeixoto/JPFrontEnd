@@ -184,7 +184,15 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 					public void onTerminado(Map<String, Vector<Notificacao>> in) 
 					{
 						// TODO Auto-generated method stub
-						if(in==null)return;
+						if(in==null){
+							Bundle args = new Bundle();
+							MainActivity.self.popLoadTela(ID);
+							args.putBoolean("internet",false);
+							BolaForaFragment bfm = new BolaForaFragment();
+							bfm.setArguments(args);
+							MainActivity.self.mudarAba(ID,bfm);
+							return;
+						}
 
 						for (Iterator<Entry<String, Vector<Notificacao>>> iterator = in.entrySet().iterator(); iterator.hasNext();) {
 							Entry<String, Vector<Notificacao>> type = (Entry<String, Vector<Notificacao>>) iterator.next();
