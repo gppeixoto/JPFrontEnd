@@ -215,7 +215,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/cinza"
-                android:drawableStart="@drawable/convidaramigos"
+                android:drawableLeft="@drawable/convidaramigos"
                 android:text="@string/inviteFriends"
                 android:textColor="@color/cinza_escuro" />
         </LinearLayout>
@@ -329,8 +329,9 @@
                 android:layout_marginRight="3dp" >
 
                 <LinearLayout
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="horizontal" >
 
                     <ImageView
@@ -343,7 +344,7 @@
                         android:src="@drawable/cinzaperfil" />
 
                     <LinearLayout
-                        android:layout_width="93dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="7dp"
                         android:layout_marginTop="7dp"
@@ -364,15 +365,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
                 <LinearLayout
                     android:id="@+id/percentual"
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
                     android:background="@drawable/votmargemstar"
                     android:gravity="center"
                     android:orientation="horizontal" >
