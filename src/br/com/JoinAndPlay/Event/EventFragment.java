@@ -442,6 +442,11 @@ public class EventFragment extends Fragment implements OnClickListener, Connecte
 			dad.removeView(butao_terminar);
 
 			TextView num_participantes = (TextView) view.findViewById(R.id.num_participantes);
+			TextView qtd_part = (TextView) view.findViewById(R.id.qtd_part);
+			
+			if(evento.getUsers().size() == 1) 
+				qtd_part.setText("Participante");
+			
 			num_participantes.setText(""+evento.getUsers().size());
 			final ImageView starNum[] = new ImageView[5];
 			starNum[0] = (ImageView) view.findViewById(R.id.starNum1);
