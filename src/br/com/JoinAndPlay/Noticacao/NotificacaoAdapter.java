@@ -2,9 +2,12 @@ package br.com.JoinAndPlay.Noticacao;
 
 import java.util.ArrayList;
 import br.com.JoinAndPlay.ConfigJP;
+import br.com.JoinAndPlay.MainActivity;
 import br.com.JoinAndPlay.R;
 import br.com.JoinAndPlay.Server.DownloadImagem;
 import br.com.JoinAndPlay.Server.Notificacao;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +25,7 @@ public class NotificacaoAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return list.size();
+		return Math.min(1,list.size());
 	}
 
 	@Override
@@ -40,6 +43,17 @@ public class NotificacaoAdapter extends BaseAdapter {
 	@Override
 	public View getView(int arg0, View view, ViewGroup arg2) {
 		// TODO Auto-generated method stub
+		Log.v("LOG:","antes");
+
+		if(list==null || list.size()==0 ){
+			Log.v("LOG:","depois");
+			TextView sem_convite = new TextView(MainActivity.self);
+			sem_convite.setText("Sem nenhum convite no momento.");
+			sem_convite.setPadding(6, 6, 6, 6);
+			sem_convite.setGravity(Gravity.CENTER);
+			return ((View)sem_convite);
+		}
+		
 		if(view==null){
 			view= mInflater.inflate(R.layout.item_notif, arg2,false);
 		}

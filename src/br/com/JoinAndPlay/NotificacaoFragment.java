@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.res.Configuration;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class NotificacaoFragment extends Fragment implements Connecter<Map<String,Vector<Notificacao>>>,OnItemClickListener,Runnable {
@@ -104,6 +106,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 		list.setDivider(getResources().getDrawable(R.drawable.linha));
 		list.setDividerHeight(1);
 		list.setVisibility(View.VISIBLE);
+		list.setAdapter(new NotificacaoAdapter(inflater, new ArrayList<Notificacao>()));
 	}
 
 	@Override
@@ -128,7 +131,7 @@ public class NotificacaoFragment extends Fragment implements Connecter<Map<Strin
 				@Override
 				public void run() {
 					((MainActivity) MainActivity.self).popLoadTela(ID);
-					//alerta(R.layout.alert_sem_notificacoes);
+					//if(getView() != null) alerta(R.layout.alert_sem_notificacoes);
 				}
 			});return;
 		}
