@@ -15,7 +15,7 @@
                     android:src="@drawable/brancolupa" />
             </item>
             <item>
-                <bitmap
+               <bitmap
                     android:gravity="center"
                     android:src="@drawable/cinzalupa" />
             </item>

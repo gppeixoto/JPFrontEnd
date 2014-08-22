@@ -64,7 +64,7 @@ public class NewMessageNotification {
 
                         // Set required fields, including the small icon, the
                         // notification title, and text.
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic)
                 .setContentTitle(title)
                 .setContentText(text)
 

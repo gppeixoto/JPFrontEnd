@@ -15,7 +15,7 @@
                     android:src="@drawable/brancoperfil" />
             </item>
             <item>
-                <bitmap
+               <bitmap
                     android:gravity="center"
                     android:src="@drawable/cinzaperfil" />
             </item>

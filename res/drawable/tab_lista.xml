@@ -10,7 +10,7 @@
         android:top="5dp">
         <selector>
             <item android:state_selected="true">
-                <bitmap
+              <bitmap
                     android:gravity="center"
                     android:src="@drawable/brancolocal" />
             </item>

@@ -161,7 +161,7 @@ public class MainActivity extends FragmentActivity implements LocationListener  
 	public void onAlertEvent (){
 		Intent intent = new Intent(MainActivity.this,MainActivity.class);
 		NewMessageNotification notification = new NewMessageNotification();
-		notification.notify(this, "Nível de óleo baixo", "Toque para detalhes", R.drawable.basquete, "Alerta de risco veicular", intent, 0);
+		notification.notify(this, "Nível de óleo baixo", "Toque para detalhes", R.drawable.apito, "Alerta de risco veicular", intent, 0);
 	}
 
 }
